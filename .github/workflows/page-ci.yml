@@ -1,12 +1,12 @@
-name: CD for github pages
+name: CI for github pages
 
 on:
-  push:
+  pull_request:
     branches:
-      - main  # Set a branch to deploy
+      - main
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -21,12 +21,3 @@ jobs:
 
       - name: Run test script
         run: npm test
-
-      - name: Build production website
-        run: npm run build
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.ORG_PAT }}
-          publish_dir: ./public
