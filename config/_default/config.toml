@@ -1,4 +1,4 @@
-baseurl = "https://doks.netlify.app/"
+baseurl = "https://mlops-for-all.github.io"
 canonifyURLs = false
 disableAliases = true
 disableHugoGeneratorInject = true

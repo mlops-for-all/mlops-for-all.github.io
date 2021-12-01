@@ -1,1 +1,2 @@
 canonifyURLs = false
+baseurl = "https://mlops-for-all.github.io"
