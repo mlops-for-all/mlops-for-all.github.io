@@ -9,3 +9,10 @@ repos:
       - id: mixed-line-ending
       - id: check-added-large-files
         args: ["--maxkb=1000"]
+
+  - repo: local
+    hooks:
+      - id: lint markdwon
+        name: lint markdwon
+        entry: python python/lint_markdown.py
+        language: system
