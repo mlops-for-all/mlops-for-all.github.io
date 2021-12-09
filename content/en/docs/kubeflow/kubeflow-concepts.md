@@ -11,7 +11,7 @@ menu:
 ---
 
 
-컴포넌트(Component)는 컴포넌트 컨첸츠(Component contents)와 컴포넌트 래퍼(Component wrapper)로 구성되어 있습니다.
+컴포넌트(Component)는 컴포넌트 컨텐츠(Component contents)와 컴포넌트 래퍼(Component wrapper)로 구성되어 있습니다.
 하나의 컴포넌트는 컴포넌트 래퍼를 통해 kubeflow에 전달이 되며 전달된 컴포넌트는 정의된 컴포넌트 컨턴츠를 실행(execute)하고 결과물(artifacts)들을 생산합니다.
 
 <img src="/images/docs/kubeflow/concept-0.png" title="concept-image"/>
@@ -32,9 +32,9 @@ Component Contents를 구성하는 것은 총 3가지가 있습니다.
 ```python
 import dill
 import pandas as pd
- 
+
 from sklearn.svm import SVC
- 
+
 train_data = pd.read_csv(train_data_path)
 train_target= pd.read_csv(train_target_path)
 
