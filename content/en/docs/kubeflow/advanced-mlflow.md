@@ -10,7 +10,7 @@ menu:
     parent: "kubeflow"
 ---
 
-[Advanced Usage Component]([Concepts]({{< relref "docs/kubeflow/advanced-component.md" >}})) 에서 학습한 모델을 API Deployment까지 이어지기 위해서는 MLFlow에 모델을 저장해야 합니다.
+[Advanced Usage Component]({{< relref "docs/kubeflow/advanced-component.md" >}}) 에서 학습한 모델을 API Deployment까지 이어지기 위해서는 MLFlow에 모델을 저장해야 합니다.
 
 이번 페이지에서는 MLFlow에 모델을 저장할 수 있는 컴포넌트를 작성하는 과정을 설명합니다.
 
@@ -24,6 +24,8 @@ MLFlow에서 모델을 저장하고 서빙에서 사용하기 위해서는 다�
 - conda_env
 
 간단한 스크립트를 통해서 MLFLow에 모델을 저장하는 과정에 대해서 알아보겠습니다.
+
+### 1. 모델 학습
 
 아래 과정은 iris 데이터를 이용해 SVC 모델을 학습하는 과정입니다.
 
@@ -42,6 +44,8 @@ clf.fit(data, target)
 
 ```
 
+### 2. MLFLow Infos
+
 mlflow에 필요한 정보들을 만드는 과정입니다.
 
 ```python
@@ -52,6 +56,8 @@ input_example = data.sample(1)
 signature = infer_signature(data, clf.predict(data))
 conda_env = _mlflow_conda_env(additional_pip_deps=["dill", "pandas", "scikit-learn"])
 ```
+
+각 변수들의 내용을 확인하면 다음과 같습니다.
 
 - `input_example`
 
@@ -78,7 +84,9 @@ conda_env = _mlflow_conda_env(additional_pip_deps=["dill", "pandas", "scikit-lea
       {'pip': ['mlflow', 'dill', 'pandas', 'scikit-learn']}]}
     ```
 
-학습한 정보들과 모델을 저장합니다.
+### 3. Save MLFLow Infos
+
+다음으로 학습한 정보들과 모델을 저장합니다.
 학습한 모델이 sklearn 패키지를 이용하기 때문에 `mlflow.sklearn` 을 이용하면 쉽게 모델을 저장할 수 있습니다.
 
 ```python
@@ -296,10 +304,13 @@ def upload_sklearn_model_to_mlflow(
         mlflow.log_artifact(model_name)
 ```
 
-## Pipeline
+## MLFlow Pipeline
 
 이제 작성한 컴포넌트들을 연결해서 파이프라인으로 만들어 보겠습니다.
-모델을 학습할 때 쓰는 데이터는 sklearn의 iris 데이터를 이용하겠습니다.
+
+### Data Component
+
+모델을 학습할 때 쓸 데이터는 sklearn의 iris 입니다.
 데이터를 생성하는 컴포넌트를 작성합니다.
 
 ```python
@@ -328,6 +339,8 @@ def load_iris_data(
     target.to_csv(target_path)
 
 ```
+
+### Pipeline
 
 파이프라인 코드는 다음과 같이 작성할 수 있습니다.
 

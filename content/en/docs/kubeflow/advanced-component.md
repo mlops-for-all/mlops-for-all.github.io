@@ -10,7 +10,7 @@ menu:
     parent: "kubeflow"
 ---
 
-이번 실습에서는 [Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md#component-contents" >}})에서 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
+이번 페이지에서는 [Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md#component-contents" >}})에서 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
 
 ## Component Contents
 
@@ -72,8 +72,10 @@ Kubeflow에서는 이를 해결하기 위해 복잡한 객체는 메모리 대�
 이를 위해서 kubeflow에서는 입력롸 출력의 경로와 관련된 매직을 제공하는데 바로 `InputPath`와 `OutputPath` 입니다.
 
 `InputPath`는 단어 그대로 입력 경로를 `OutputPath` 는 단어 그대로 출력 경로를 의미합니다.
+
 예를 들어서 데이터를 생성하고 반환하는 컴포넌트에서는 `data_path: OutputPath()`를 argument로 만듭니다.
 그리고 데이터를 받는 컴포넌트에서는 `data_path: InputPath()`을 argument로 생성합니다.
+
 이렇게 만든 후 파이프라인에서 서로 연결을 하면 kubeflow에서 필요한 경로를 자동으로 생성후 입력해 주기 때문에 더 이상 유저는 경로를 신경쓰지 않고 컴포넌트간의 관계만 신경쓰면 됩니다.
 
 이제 이 내용을 바탕으로 다시 컴포넌트 래퍼를 작성하면 다음과 같이 됩니다.
@@ -242,7 +244,7 @@ def create_component_from_func(
 - `base_image`: component wrapper가 실행할 이미지
 - `packages_to_install`: 컴퍼넌트에서 사용해서 추가로 설치해야 하는 패키지
 
-### 1. Base Image
+### 1. base_image
 
 Component가 실행되는 순서를 좀 더 자세히 들여다 보면 다음과 같습니다.
 
