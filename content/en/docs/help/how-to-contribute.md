@@ -63,3 +63,21 @@ title: "Jonh Doe"
 draft: false
 ---
 ```
+
+## Before Commit
+
+프로젝트에서는 각 글들의 일관성을 위해서 여러 lint를 적용하고 있습니다.
+다음 명령어를 실행해 test를 진행합니다.
+
+pre-commit을 통해 대부분의 test를 통과할 수 있습니다.
+
+```bash
+pip install pre-commit
+pre-commit run -a
+```
+
+pre-commit 후 test를 진행합니다.
+
+```bash
+npm test
+```
