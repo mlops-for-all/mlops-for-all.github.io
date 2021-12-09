@@ -23,14 +23,16 @@ MLOps 를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구
 
 이 글에서 다루는 구성요소가 모두 Standard 를 의미하는 것은 아니며, 여러분의 상황에 맞게 적절한 툴을 취사 선택하시는 것을 권장합니다.
 
-
 ## 구성 요소
+
 이 글에서 만들어 볼 MLOps 시스템의 구성 요소들과 각 버전은 다음 버전에서 검증되었습니다.
 
 원활한 환경에서 테스트하기 위해 서버와 클라이언트를 분리하여 설명드릴 예정입니다. 서버는 쉬고 있는 데스크탑을, 클라이언트는 여러분이 자주 사용하시는 노트북 혹은 데스크탑을 사용하시는 것을 권장드리지만, 꼭 서버와 클라이언트를 분리하실 필요는 없습니다. 데스크탑 하나를 동시에 서버와 클라이언트 용도로 사용하셔도 괜찮습니다.
 
 [TODO] - table 로
+
 ### 서버
+
 - Ubuntu : 20.04.3 LTS
 - Docker (Server) : 20.10.11
 - Nvidia-Driver : 470.86
@@ -40,12 +42,13 @@ MLOps 를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구
   - Nvidia-device-plugin : (Optional)
 - Kubeflow : v1.4.0
 - MLFlow :
-- Seldon-Core : 
-- Prometheus : 
-- Grafana : 
-- Istio : 
+- Seldon-Core :
+- Prometheus :
+- Grafana :
+- Istio :
 
 ### 클라이언트
+
 - kubectl : v1.21.7
 - helm : v3.7.1
 - kustomize : v3.10.0
@@ -53,7 +56,9 @@ MLOps 를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구
 ## Prerequisite
 
 ### Computing Spec
+
 모두의 MLOps 를 설치할 서버는 다음과 같은 사양을 만족시키는 것을 권장합니다. 이는 Kubernetes 및 Kubeflow 의 최소 사양에 의존합니다.
+
 - CPU : 6 core
 - RAM : 12 GB
 - DISK : 50 GB
