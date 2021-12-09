@@ -10,6 +10,7 @@ menu:
     parent: "kubeflow"
 ---
 
+## Component
 
 컴포넌트(Component)는 컴포넌트 컨텐츠(Component contents)와 컴포넌트 래퍼(Component wrapper)로 구성되어 있습니다.
 하나의 컴포넌트는 컴포넌트 래퍼를 통해 kubeflow에 전달이 되며 전달된 컴포넌트는 정의된 컴포넌트 컨턴츠를 실행(execute)하고 결과물(artifacts)들을 생산합니다.

@@ -33,7 +33,7 @@ print(number)
 그런데 이 스크립트를 실행할 경우 에러가 나고 동작하지 않습니다.
 출력해야 할 `number`가 정의되어 있지 않기 때문입니다.
 
-[Concepts]({{< relref "docs/kubeflow/../../kubeflow-concepts.md" >}})에서 `number` 와 같이 컴포넌트 컨텐츠에서 필요한 값들은 **config**로 정의한다고 했습니다.
+[Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md" >}})에서 `number` 와 같이 컴포넌트 컨텐츠에서 필요한 값들은 **config**로 정의한다고 했습니다.
 이러한 config들은 컴포넌트 래퍼에서 전달이 되어야 합니다.
 
 ## Component Wrapper
