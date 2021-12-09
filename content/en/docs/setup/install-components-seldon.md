@@ -1,0 +1,131 @@
+---
+title : "Install Components - Seldon-Core"
+description: "구성요소 설치 - Seldon-Core"
+date: 2020-12-03T08:48:23+00:00
+lastmod: 2020-12-03T08:48:23+00:00
+draft: false
+weight: 222
+contributors: ["Jaeyeon Kim"]
+menu:
+  docs:
+    parent: "setup"
+images: []
+---
+
+## Install Seldon-Core
+
+### Ambassador
+ambassador 는 ~~입니다. seldon-core 는 ambassador 와 함께 사용할 예정입니다.
+
+#### helm repo 추가
+```
+helm repo add datawire https://www.getambassador.io
+```
+
+다음과 같은 메시지가 출력되면 정상적으로 추가된 것을 의미합니다.
+```
+"datawire" has been added to your repositories
+```
+
+#### helm repo 업데이트
+```
+helm repo update
+```
+
+다음과 같은 메시지가 출력되면 정상적으로 업데이트된 것을 의미합니다.
+```
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "datawire" chart repository
+Update Complete. ⎈Happy Helming!⎈
+```
+
+#### helm install
+```
+helm install ambassador datawire/ambassador \
+  --namespace seldon-system \
+  --create-namespace \
+  --set image.repository=quay.io/datawire/ambassador \
+  --set enableAES=false \
+  --set crds.keep=false \
+  --version 6.9.3
+```
+
+다음과 같은 메시지가 출력되어야 합니다.
+```
+생략...
+
+W1206 17:01:36.026326   26635 warnings.go:70] rbac.authorization.k8s.io/v1beta1 Role is deprecated in v1.17+, unavailable in v1.22+; use rbac.authorization.k8s.io/v1 Role
+W1206 17:01:36.029764   26635 warnings.go:70] rbac.authorization.k8s.io/v1beta1 RoleBinding is deprecated in v1.17+, unavailable in v1.22+; use rbac.authorization.k8s.io/v1 RoleBinding
+NAME: ambassador
+LAST DEPLOYED: Mon Dec  6 17:01:34 2021
+NAMESPACE: seldon-system
+STATUS: deployed
+REVISION: 1
+NOTES:
+-------------------------------------------------------------------------------
+  Congratulations! You've successfully installed Ambassador!
+
+-------------------------------------------------------------------------------
+To get the IP address of Ambassador, run the following commands:
+NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+     You can watch the status of by running 'kubectl get svc -w  --namespace seldon-system ambassador'
+
+  On GKE/Azure:
+  export SERVICE_IP=$(kubectl get svc --namespace seldon-system ambassador -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+  On AWS:
+  export SERVICE_IP=$(kubectl get svc --namespace seldon-system ambassador -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
+  echo http://$SERVICE_IP:
+
+For help, visit our Slack at http://a8r.io/Slack or view the documentation online at https://www.getambassador.io.
+```
+
+seldon-system 에 4 개의 pod 가 Running 이 될 때까지 기다립니다.
+```
+kubectl get pod -n seldon-system
+```
+
+```
+ambassador-7f596c8b57-4s9xh                  1/1     Running   0          7m15s
+ambassador-7f596c8b57-dt6lr                  1/1     Running   0          7m15s
+ambassador-7f596c8b57-h5l6f                  1/1     Running   0          7m15s
+ambassador-agent-77bccdfcd5-d5jxj            1/1     Running   0          7m15s
+```
+
+### Seldon-Core
+
+#### Helm Install
+
+```
+helm install seldon-core seldon-core-operator \
+    --repo https://storage.googleapis.com/seldon-charts \
+    --namespace seldon-system \
+    --set usageMetrics.enabled=true \
+    --set ambassador.enabled=true \
+    --version 1.11.2
+```
+
+다음과 같은 메시지가 출력되어야 합니다.
+```
+생략...
+
+W1206 17:05:38.336391   28181 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
+NAME: seldon-core
+LAST DEPLOYED: Mon Dec  6 17:05:34 2021
+NAMESPACE: seldon-system
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+
+
+seldon-system namespace 에 1 개의 seldon-controller-manager pod 가 Running 이 될 때까지 기다립니다.
+```
+kubectl get pod -n seldon-system | grep seldon-controller
+```
+
+```
+seldon-controller-manager-8457b8b5c7-r2frm   1/1     Running   0          2m22s
+```
+
