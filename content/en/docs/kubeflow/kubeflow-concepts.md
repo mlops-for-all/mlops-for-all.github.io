@@ -15,13 +15,17 @@ menu:
 컴포넌트(Component)는 컴포넌트 컨텐츠(Component contents)와 컴포넌트 래퍼(Component wrapper)로 구성되어 있습니다.
 하나의 컴포넌트는 컴포넌트 래퍼를 통해 kubeflow에 전달이 되며 전달된 컴포넌트는 정의된 컴포넌트 컨텐츠를 실행(execute)하고 결과물(artifacts)들을 생산합니다.
 
-<img src="/images/docs/kubeflow/concept-0.png" title="kubeflow-component-concept"/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-0.png" title="kubeflow-component-concept"/>
+</p>
 
 ### Component Contents
 
 Component Contents를 구성하는 것은 총 3가지가 있습니다.
 
-<img src="/images/docs/kubeflow/concept-1.png" title="component-contents" width=50%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-1.png" title="component-contents" width=50%/>
+</p>
 
 1. Environemnt
 2. Python code w\ config
@@ -50,7 +54,9 @@ with open(model_path, mode="wb") as file_writer:
 
 위의 파이썬 코드는 다음과 같이 컴포넌트 컨텐츠로 나눌 수 있습니다.
 
-<img src="/images/docs/kubeflow/concept-2.png" title="concept-image"/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-2.png" title="concept-image"/>
+</p>
 
 Environment는 파이썬 코드에서 사용하는 패키지들을 import하는 부분입니다.
 다음으로 Config & Python Code에서는 주어진 Config를 이용해 실제로 학습을 수행합니다.
@@ -60,19 +66,25 @@ Environment는 파이썬 코드에서 사용하는 패키지들을 import하는 
 
 컴포넌트 래퍼는 컴포넌트 컨첸츠에 필요한 config를 전달하고 실행시키는 작업을 합니다.
 
-<img src="/images/docs/kubeflow/concept-3.png" title="before-component-wrapper" width=90%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-3.png" title="before-component-wrapper" width=90%/>
+</p>
 
 Kubeflow에서는 컴포넌트 래퍼를 위의 `train_scv_from_`csv와 같이 함수의 형태로 정의합니다.
 컴포넌트 래퍼가 컨텐츠를 감싸면 다음과 같이 됩니다.
 
-<img src="/images/docs/kubeflow/concept-4.png" title="after-component-wrapper" width=45%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-4.png" title="after-component-wrapper" width=45%/>
+</p>
 
 ### Artifacts
 
 위의 설명에서 컴포넌트는 Artifacts를 생성한다고 했습니다. Artifacts란 파일, log 등 어떤 형태로든 파일로 생성되는 것을 통틀어서 칭하는 용어입니다.
 그 중 우리의 관심을 갖는 유의미한 것들은 다음과 같은 것들이 있습니다.
 
-<img src="/images/docs/kubeflow/concept-5.png" title="artifacts"/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-5.png" title="artifacts"/>
+</p>
 
 - Model
 - Data
@@ -97,24 +109,32 @@ Metric은 동적 지표와 정적 지표 두 가지로 나누었습니다.
 
 파이프라인은 컴포넌트의 집합과 컴포넌트를 실행시키는 순서도로 구성되어 있습니다.
 
-<img src="/images/docs/kubeflow/concept-6.png" title="pipeline-concept" width=90%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-6.png" title="pipeline-concept" width=90%/>
+</p>
 
 ### Pipeline Config
 
 앞서 컴포넌트를 실행시키기 위해서는 config가 필요하다고 설명했습니다. Pipeline은 컴포넌트의 집합이기 때문에 각 컴포넌트의 config를 모아둔 것이 파이프라인 config입니다.
 
-<img src="/images/docs/kubeflow/concept-7.png" title="pipeline-config" width=90%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-7.png" title="pipeline-config" width=90%/>
+</p>
 
 ## Run
 
 파이프라인을 실행시킬 config가 주어진다면 파이프라인은 실행(RUN)이 됩니다.
 이러한 이유로 파이프라인이 실행된 결과를 run이라고 부릅니다.
 
-<img src="/images/docs/kubeflow/concept-8.png" title="run" width=90%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-8.png" title="run" width=90%/>
+</p>
 
 파이프라인이 실행되면 각 컴포넌트들이 artifacts들을 생성합니다.
 kubeflow에서는 이를 임의의 run_id를 만들고 전부 저장을 합니다.
 
-<img src="/images/docs/kubeflow/concept-9.png" title="kubeflow-run" width=90%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/concept-9.png" title="kubeflow-run" width=90%/>
+</p>
 
 그러면 이제 직접 컴포넌트와 파이프라인을 작성하는 방법에 대해서 알아보도록 하겠습니다.

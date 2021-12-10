@@ -60,6 +60,10 @@ if __name__ == "__main__":
 
 이 스크립트를 실행해서 나온 `example_pipeline.yaml`을 확인하면 다음과 같습니다.
 
+<p>
+  <details>
+    <summary>example_pipeline.yaml</summary>
+
 ```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
@@ -313,6 +317,9 @@ spec:
     - {name: number_2}
   serviceAccountName: pipeline-runner
 ```
+
+  </details>
+</p>
 
 이 전의 파일과 비교하면 `pipelines.kubeflow.org/task_display_name` key가 새로 생성되었습니다.
 

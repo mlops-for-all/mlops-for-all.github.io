@@ -188,8 +188,9 @@ with mlflow.start_run():
 저장을 하고 `mlruns` 가 생성된 경로에서 `mlflow ui` 명령어를 이용해 mlflow 대쉬보드를 띄웁니다.
 그리고 생성된 run을 클릭하면 다음과 같이 보입니다.
 
-<img src="/images/docs/kubeflow/mlflow-0.png" title="mlflow-dashboard"/>
-
+<p align="center">
+    <img src="/images/docs/kubeflow/mlflow-0.png" title="mlflow-dashboard"/>
+</p>
 (해당 화면은 mlflow 버전에 따라 상이할 수 있습니다.)
 
 ## MLFlow Component

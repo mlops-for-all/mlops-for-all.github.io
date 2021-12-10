@@ -48,7 +48,9 @@ menu:
 필요한 컴포넌트의 집합을 만들었으면, 다음으로는 이들의 순서도를 만들어 줍니다.
 우리가 만들 파이프라인의 순서도를 표현하면 다음과 같이 됩니다.
 
-<img src="/images/docs/kubeflow/pipeline-0.png" title="pipeline-order" width=50%/>
+<p align="center">
+  <img src="/images/docs/kubeflow/pipeline-0.png" title="pipeline-order" width=50%/>
+</p>
 
 이제 이 순서도를 코드로 옮겨야 합니다.
 우선 위의 `print_and_return_number_1` 과 `print_and_return_number_2` 를 작성하면 다음과 같이 됩니다.
