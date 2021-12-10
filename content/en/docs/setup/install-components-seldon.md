@@ -12,35 +12,46 @@ menu:
 images: []
 ---
 
-## Install Seldon-Core
+## Seldon-Core
 
-### Ambassador
-ambassador 는 ~~입니다. seldon-core 는 ambassador 와 함께 사용할 예정입니다.
+Seldon-Core는 쿠버네티스 환경에 수많은 머신러닝 모델을 배포하고 관리할 수 있는 오픈소스 프레임워크 중 하나입니다. 보다 자세한 내용은 Seldon-Core 의 공식 [제품 설명 페이지](https://www.seldon.io/tech/products/core/) 와 [깃헙](https://github.com/SeldonIO/seldon-core) 그리고 API Deployment 파트를 참고해주시기 바랍니다.
 
-#### helm repo 추가
-```
+
+## Selon-Core 설치
+
+Seldon-Core를 사용하기 위해서는 쿠버네티스의 인그레스(Ingress)를 담당하는 Ambassador 와 Istio 와 같은 [모듈이 필요합니다](https://docs.seldon.io/projects/seldon-core/en/latest/workflow/install.html). Seldon-Core 에서는 Ambassador 와 Istio 만을 공식적으로 지원하며, *모두의 MLOps*에서는 Ambassador를 사용할 예정이므로 먼저 Ambassador 를 설치하겠습니다.
+
+### Ambassador - Helm Repository 추가
+
+```sh
 helm repo add datawire https://www.getambassador.io
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 추가된 것을 의미합니다.
-```
+
+```text
 "datawire" has been added to your repositories
 ```
 
-#### helm repo 업데이트
-```
+### Ambassador - Helm Repository 업데이트
+
+```sh
 helm repo update
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 업데이트된 것을 의미합니다.
-```
+
+```text
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "datawire" chart repository
 Update Complete. ⎈Happy Helming!⎈
 ```
 
-#### helm install
-```
+### Ambassador - Helm Install
+
+ambassador Chart 6.9.3 버전을 설치합니다.
+
+```sh
 helm install ambassador datawire/ambassador \
   --namespace seldon-system \
   --create-namespace \
@@ -51,7 +62,8 @@ helm install ambassador datawire/ambassador \
 ```
 
 다음과 같은 메시지가 출력되어야 합니다.
-```
+
+```text
 생략...
 
 W1206 17:01:36.026326   26635 warnings.go:70] rbac.authorization.k8s.io/v1beta1 Role is deprecated in v1.17+, unavailable in v1.22+; use rbac.authorization.k8s.io/v1 Role
@@ -86,18 +98,18 @@ seldon-system 에 4 개의 pod 가 Running 이 될 때까지 기다립니다.
 kubectl get pod -n seldon-system
 ```
 
-```
+```text
 ambassador-7f596c8b57-4s9xh                  1/1     Running   0          7m15s
 ambassador-7f596c8b57-dt6lr                  1/1     Running   0          7m15s
 ambassador-7f596c8b57-h5l6f                  1/1     Running   0          7m15s
 ambassador-agent-77bccdfcd5-d5jxj            1/1     Running   0          7m15s
 ```
 
-### Seldon-Core
+### Seldon-Core - Helm Install
 
-#### Helm Install
+seldon-core-operator Chart 1.11.2 버전을 설치합니다.
 
-```
+```sh
 helm install seldon-core seldon-core-operator \
     --repo https://storage.googleapis.com/seldon-charts \
     --namespace seldon-system \
@@ -107,7 +119,8 @@ helm install seldon-core seldon-core-operator \
 ```
 
 다음과 같은 메시지가 출력되어야 합니다.
-```
+
+```text
 생략...
 
 W1206 17:05:38.336391   28181 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
@@ -121,11 +134,11 @@ TEST SUITE: None
 
 
 seldon-system namespace 에 1 개의 seldon-controller-manager pod 가 Running 이 될 때까지 기다립니다.
-```
+
+```sh
 kubectl get pod -n seldon-system | grep seldon-controller
 ```
 
-```
+```text
 seldon-controller-manager-8457b8b5c7-r2frm   1/1     Running   0          2m22s
 ```
-

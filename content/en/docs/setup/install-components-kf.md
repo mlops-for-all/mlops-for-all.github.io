@@ -14,7 +14,7 @@ images: []
 
 ## 설치 파일 준비
 
-- kubeflow v1.4.0 버전을 설치하기 위해서, 설치에 필요한 manifests 파일들을 준비합니다.
+kubeflow v1.4.0 버전을 설치하기 위해서, 설치에 필요한 manifests 파일들을 준비합니다.
 
 ```sh
 # kubeflow/manifests repo clone
@@ -29,9 +29,9 @@ git checkout tags/v1.4.0
 
 ## 각 구성요소별 설치
 
-- kubeflow/manifests Repository 에 각 구성요소별 설치 커맨드가 적혀져있지만, 설치하며 발생할 수 있는 이슈 혹은 정상적으로 설치되었는지 확인할 수 있는 방법 등이 적혀져있지 않아 처음 설치하는 경우 어려움을 겪는 경우가 많습니다.
-- 따라서, 각 구성요소별로 정상적으로 설치되었는지 확인하는 방법을 함께 작성합니다.
-- 또한, 본 문서에서는 **모두의 MLOps** 에서 다루지 않는 구성요소인 Knative, KFServing, MPI Operator 의 설치는 리소스의 효율적 사용을 위해 따로 설치하지 않습니다.
+kubeflow/manifests Repository 에 각 구성요소별 설치 커맨드가 적혀져있지만, 설치하며 발생할 수 있는 이슈 혹은 정상적으로 설치되었는지 확인할 수 있는 방법 등이 적혀져있지 않아 처음 설치하는 경우 어려움을 겪는 경우가 많습니다.
+따라서, 각 구성요소별로 정상적으로 설치되었는지 확인하는 방법을 함께 작성합니다.
+또한, 본 문서에서는 **모두의 MLOps** 에서 다루지 않는 구성요소인 Knative, KFServing, MPI Operator 의 설치는 리소스의 효율적 사용을 위해 따로 설치하지 않습니다.
 
 ### cert-manager
 

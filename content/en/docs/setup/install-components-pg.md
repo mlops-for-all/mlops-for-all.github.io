@@ -51,6 +51,8 @@ Update Complete. ⎈Happy Helming!⎈
 
 ### Helm Install
 
+kube-prometheus-stack Chart 21.0.0 버전을 설치합니다.
+
 ```sh
 helm install prom-stack prometheus-community/kube-prometheus-stack \
   --namespace monitoring-system \
