@@ -1,9 +1,9 @@
 ---
-title : "[Advanced Usage] Component"
+title : "Component Envrionment"
 description: ""
 lead: ""
 draft: false
-weight: 320
+weight: 321
 contributors: ["Jongseob Jeon"]
 menu:
   docs:

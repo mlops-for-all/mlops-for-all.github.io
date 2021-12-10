@@ -1,9 +1,9 @@
 ---
-title : "[Kubeflow] Concepts"
+title : "Concepts"
 description: ""
 lead: ""
 draft: false
-weight: 302
+weight: 303
 contributors: ["Jongseob Jeon"]
 menu:
   docs:

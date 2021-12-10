@@ -1,9 +1,9 @@
 ---
-title : "[Advanced Usage] Pipeline"
+title : "Pipeline Setting"
 description: ""
 lead: ""
 draft: false
-weight: 322
+weight: 323
 contributors: ["Jongseob Jeon"]
 menu:
   docs:

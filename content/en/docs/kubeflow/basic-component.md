@@ -1,9 +1,9 @@
 ---
-title : "[Basic Usage] Component"
+title : "Component"
 description: ""
 lead: ""
 draft: false
-weight: 310
+weight: 311
 contributors: ["Jongseob Jeon"]
 menu:
   docs:

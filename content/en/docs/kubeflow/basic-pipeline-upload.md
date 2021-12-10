@@ -1,9 +1,9 @@
 ---
-title : "[Basic Usage] Pipeline Upload"
+title : "Pipeline Upload"
 description: ""
 lead: ""
 draft: false
-weight: 312
+weight: 313
 contributors: ["Jongseob Jeon"]
 menu:
   docs:

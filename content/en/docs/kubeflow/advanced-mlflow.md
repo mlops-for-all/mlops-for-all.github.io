@@ -1,9 +1,9 @@
 ---
-title : "[Advanced Usage] MLFlow"
+title : "MLFlow Component"
 description: ""
 lead: ""
 draft: false
-weight: 321
+weight: 322
 contributors: ["Jongseob Jeon"]
 menu:
   docs:
