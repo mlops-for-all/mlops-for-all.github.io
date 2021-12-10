@@ -21,20 +21,18 @@ menu:
 
 ## Component Contents
 
-컴포넌트 컨텐츠는 우리가 흔히 작성하는 파이썬 스크립트 방식과 다르지 않습니다.
+컴포넌트 컨텐츠는 우리가 흔히 작성하는 파이썬 코드와 다르지 않습니다.
 예를 들어서 숫자를 입력으로 받고 입력받은 숫자를 출력한 뒤 반환하는 컴포넌트를 작성해 보겠습니다.
-
-파이썬 스크립트는 다음과 같이 됩니다.
+파이썬 코드는 다음과 같이 됩니다.
 
 ```python
 print(number)
 ```
 
-그런데 이 스크립트를 실행할 경우 에러가 나고 동작하지 않습니다.
+그런데 이 코드를 실행할 경우 에러가 나고 동작하지 않습니다.
 출력해야 할 `number`가 정의되어 있지 않기 때문입니다.
 
-[Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md" >}})에서 `number` 와 같이 컴포넌트 컨텐츠에서 필요한 값들은 **config**로 정의한다고 했습니다.
-이러한 config들은 컴포넌트 래퍼에서 전달이 되어야 합니다.
+[Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md" >}})에서 `number` 와 같이 컴포넌트 컨텐츠에서 필요한 값들은 **config**로 정의한다고 했습니다. 이러한 config들은 컴포넌트 래퍼에서 전달이 되어야 합니다.
 
 ## Component Wrapper
 
@@ -48,10 +46,7 @@ def print_and_return_number():
     return number
 ```
 
-이제 컨텐츠에서 필요한 `config` 를 래퍼의 argument로 추가합니다.
-다만, argument 만을 적는 것이 아니라 argument의 타입 힌트도 작성해야 합니다.
-Kubeflow에서는 파이프라인을 생성하기 전 각 컴포넌트의 입력과 출력의 타입을 체크합니다.
-만약 입력과 출력이 일치하지 않을 경우 파이프라인 생성을 할 수 없습니다.
+이제 컨텐츠에서 필요한 `config` 를 래퍼의 argument로 추가합니다. 다만, argument 만을 적는 것이 아니라 argument의 타입 힌트도 작성해야 합니다. Kubeflow에서는 파이프라인을 생성하기 전 각 컴포넌트의 입력과 출력의 타입을 체크합니다. 만약 입력과 출력이 일치하지 않을 경우 파이프라인 생성을 할 수 없습니다.
 
 그렇기 때문에 다음과 같이 argumet와 그 타입, 그리고 반환하는 타입을 적어서 컴포넌트 래퍼를 완성합니다.
 
@@ -92,8 +87,7 @@ def divde_and_return_number(
 
 ## Convert to Kubeflow Format
 
-이제 작성한 컴포넌트를 kubeflow에서 사용할 수 있는 포맷으로 변환해야 합니다.
-변환은 `kfp.components.create_component_from_func` 를 이용하면 됩니다.
+이제 작성한 컴포넌트를 kubeflow에서 사용할 수 있는 포맷으로 변환해야 합니다. 변환은 `kfp.components.create_component_from_func` 를 통해서 할 수 있습니다.
 
 ```python
 from kfp.components import create_component_from_func
@@ -107,8 +101,7 @@ if __name__ == "__main__":
     print_and_return_number.component_spec.save("print_and_return_number.yaml")
 ```
 
-작성한 스크립트를 실행하면 `print_and_return_number.yaml` 파일이 생성됩니다.
-파일을 확인하면 다음과 같습니다.
+작성한 스크립트를 실행하면 `print_and_return_number.yaml` 파일이 생성됩니다. 파일을 확인하면 다음과 같습니다.
 
 ```yaml
 name: Print and return number
@@ -170,7 +163,6 @@ implementation:
 ```
 
 kubeflow에서 컴포넌트가 실행되는 순서는 정의된 이미지를 pull 후 해당 이미지에서 컴포넌트 컨텐츠를 실행합니다.
-
 `print_and_return_number.yaml` 를 예시로 들자면 실행되는 순서는 다음과 같습니다.
 
 1. `docker pull python:3.7`

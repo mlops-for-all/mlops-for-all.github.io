@@ -14,8 +14,7 @@ menu:
 
 ## Before Run
 
-제일 처음 실행을 할 경우 Experiment를 생성해야 합니다.
-생성되어 있다면 넘어가도 무방합니다.
+제일 처음 실행을 할 경우 Experiment를 생성해야 합니다. 생성되어 있다면 넘어가도 무방합니다.
 
 ### 1. Create Experiment
 
@@ -50,12 +49,11 @@ Experiment로 사용할 이름을 입력합니다.
 ## Run Result
 
 파이프라인이 실행되면 Runs 탭에 결과들이 모이게 됩니다.
-자세한 내용을 확인해 보겠습니다. 우선 생성된 Run을 클릭합니다
+자세한 내용을 확인해 보기 위해서 생성된 Run을 클릭합니다
 
 <img src="/images/docs/kubeflow/run-5.png" title="run"/>
 
-클릭하면 다음과 같은 화면이 나옵니다.
-아직 실행되지 않았을 때에는 회색 표시로 나옵니다.
+클릭하면 다음과 같은 화면이 나옵니다. 아직 실행되지 않았을 때에는 회색 표시로 나옵니다.
 
 <img src="/images/docs/kubeflow/run-6.png" title="run"/>
 
