@@ -10,6 +10,8 @@ menu:
     parent: "introduction"
 ---
 
+## Practitioners guide to MLOps
+
  2021년 5월에 발표된 구글의 [white paper : Practitioners guide to MLOps: A framework for continuous delivery and authmation of machine learning](https://services.google.com/fh/files/misc/practitioners_guide_to_mlops_whitepaper.pdf)에서는 MLOps의 핵심 기능들로 다음과 같은 것들을 언급하였습니다.
 
 <p>
