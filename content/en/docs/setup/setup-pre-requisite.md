@@ -15,7 +15,6 @@ images: []
 
 이 페이지에서는 쿠버네티스를 설치하기에 앞서, **서버에** 설치해 두어야 하는 컴포넌트들에 대한 설치 매뉴얼을 설명합니다.
 
-
 ### Install Docker
 
 apt 패키지 매니저를 업데이트하고, Prerequisite 패키지들을 설치합니다.
@@ -89,6 +88,7 @@ For more examples and ideas, visit:
 ```
 
 docker 관련 command를 sudo 키워드 없이 사용할 수 있도록 하기 위해 다음 명령어를 통해 권한을 추가합니다.
+
 ```text
 sudo groupadd docker
 sudo usermod -aG docker $USER
@@ -96,6 +96,7 @@ newgrp docker
 ```
 
 sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한 번 docker run을 실행합니다.
+
 ```text
 mlops@ubuntu:~$ docker run hello-world
 

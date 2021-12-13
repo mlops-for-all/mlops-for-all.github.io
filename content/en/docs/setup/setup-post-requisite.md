@@ -100,7 +100,6 @@ Available Commands:
 ...
 ```
 
-
 ## CSI Plugin : Local Path Provisioner
 
 CSI Plugin 은 kubernetes 내의 스토리지를 담당하는 모듈입니다. 단일 노드 클러스터에서 쉽게 사용할 수 있는 CSI Plugin 인 Local Path Provisioner 를 설치합니다.
@@ -151,11 +150,9 @@ NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE
 local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  2h
 ```
 
-
 ## (Optional for GPU) NVIDIA-Docker
 
 쿠버네티스 및 Kubeflow 등에서 GPU 를 사용하기 위해서는 다음 작업이 필요합니다.
-
 
 ### 1. [Optional] Install NVIDIA Driver
 
@@ -199,7 +196,6 @@ sudo apt update && sudo apt install -y ubuntu-drivers-common
 sudo ubuntu-drivers autoinstall
 sudo reboot
 ```
-
 
 #### 1. NVIDIA-Docker 설치
 
@@ -288,7 +284,6 @@ mlops@ubuntu:~$ docker info | grep nvidia
  Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux nvidia runc
  Default Runtime: nvidia
 ```
-
 
 ### Nvidia-Device-Plugin
 

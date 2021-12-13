@@ -18,8 +18,8 @@ images: []
 
 [Setup Prerequisite]({{< relref "docs/setup/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **서버에** 설치해 주시기 바랍니다.
 
-
 쿠버네티스를 위한 네트워크의 설정을 변경합니다.
+
 ```text
 sudo modprobe br_netfilter
 
@@ -36,11 +36,11 @@ sudo sysctl --system
 
 kubelet 이 정상적으로 동작하게 하기 위해서는 swap이라고 불리는 가상메모리를 꺼 두어야 합니다.
 다음 명령어를 통해 swap을 꺼 둡니다.
+
 ```text
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 sudo swapoff -a
 ```
-
 
 ## 2. 쿠버네티스 클러스터 셋업
 
@@ -71,6 +71,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 kubeadm, kubelet, kubectl 이 잘 설치되었는지 확인합니다.
+
 ```text
 mlops@ubuntu:~$ kubeadm
 
@@ -100,7 +101,6 @@ Basic Commands (Beginner):
   set           Set specific features on objects
 ...
 ```
-
 
 이제 kubeadm을 사용하여 쿠버네티스를 설치합니다.
 
@@ -134,7 +134,6 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.13.0/Do
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
-
 ## 3. 쿠버네티스 클라이언트 셋업
 
 ## 4. 쿠버네티스 기본 모듈 설치
@@ -146,18 +145,16 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 - CSI plugin
 - [Optional] nvidia-docker, nvidia-device-plugin
 
-
 ## 5. 정상 설치 확인
 
 다음 명령어를 통해 노드의 STATUS가 Ready 상태가 되었는지 확인합니다.
+
 ```text
 kubectl get nodes
 NAME     STATUS   ROLES                  AGE     VERSION
 ubuntu   Ready    control-plane,master   2m55s   v1.21.7
 ```
 
-
 ## 6. References
 
 - [kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm)
-
