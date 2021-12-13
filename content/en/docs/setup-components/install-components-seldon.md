@@ -14,12 +14,12 @@ images: []
 
 ## Seldon-Core
 
-Seldon-Core는 쿠버네티스 환경에 수많은 머신러닝 모델을 배포하고 관리할 수 있는 오픈소스 프레임워크 중 하나입니다.
+Seldon-Core는 쿠버네티스 환경에 수많은 머신러닝 모델을 배포하고 관리할 수 있는 오픈소스 프레임워크 중 하나입니다.  
 보다 자세한 내용은 Seldon-Core 의 공식 [제품 설명 페이지](https://www.seldon.io/tech/products/core/) 와 [깃헙](https://github.com/SeldonIO/seldon-core) 그리고 API Deployment 파트를 참고해주시기 바랍니다.
 
 ## Selon-Core 설치
 
-Seldon-Core를 사용하기 위해서는 쿠버네티스의 인그레스(Ingress)를 담당하는 Ambassador 와 Istio 와 같은 [모듈이 필요합니다](https://docs.seldon.io/projects/seldon-core/en/latest/workflow/install.html).
+Seldon-Core를 사용하기 위해서는 쿠버네티스의 인그레스(Ingress)를 담당하는 Ambassador 와 Istio 와 같은 [모듈이 필요합니다](https://docs.seldon.io/projects/seldon-core/en/latest/workflow/install.html).  
 Seldon-Core 에서는 Ambassador 와 Istio 만을 공식적으로 지원하며, *모두의 MLOps*에서는 Ambassador를 사용해 Seldon-core를 사용하므로 Ambassador를 설치하겠습니다.
 
 ### Ambassador - Helm Repository 추가

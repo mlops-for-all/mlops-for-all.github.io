@@ -25,8 +25,8 @@ cd manifests
 
 ## 각 구성요소별 설치
 
-kubeflow/manifests Repository 에 각 구성요소별 설치 커맨드가 적혀져 있지만, 설치하며 발생할 수 있는 이슈 혹은 정상적으로 설치되었는지 확인할 수 있는 방법 등이 적혀져있지 않아 처음 설치하는 경우 어려움을 겪는 경우가 많습니다.
-따라서, 각 구성요소별로 정상적으로 설치되었는지 확인하는 방법을 함께 작성합니다.
+kubeflow/manifests Repository 에 각 구성요소별 설치 커맨드가 적혀져 있지만, 설치하며 발생할 수 있는 이슈 혹은 정상적으로 설치되었는지 확인할 수 있는 방법 등이 적혀져있지 않아 처음 설치하는 경우 어려움을 겪는 경우가 많습니다.  
+따라서, 각 구성요소별로 정상적으로 설치되었는지 확인하는 방법을 함께 작성합니다.  
 
 또한, 본 문서에서는 **모두의 MLOps** 에서 다루지 않는 구성요소인 Knative, KFServing, MPI Operator 의 설치는 리소스의 효율적 사용을 위해 따로 설치하지 않습니다.
 
@@ -61,7 +61,7 @@ kustomize build common/cert-manager/kubeflow-issuer/base | kubectl apply -f -
 
 - cert-manager-webhook 이슈
 
-  cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하기시 바랍니다.
+  cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하기시 바랍니다.  
   해당 에러가 발생한 경우, cert-manager 의 3 개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
 
   ```text
@@ -242,7 +242,7 @@ kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubect
 따라서 경우에 따라 다음과 비슷한 에러가 발생할 수 있습니다.
 
 ```text
-"error: unable to recognize "STDIN": no matches for kind "CompositeController" in version "metacontroller.k8s.io/v1alpha1""
+"error: unable to recognize "STDIN": no matches for kind "CompositeController" in version "metacontroller.k8s.io/v1alpha1""  
 ```
 
 위와 비슷한 에러가 발생한다면, 10 초 정도 기다린 뒤 다시 위의 명령을 수행합니다.
