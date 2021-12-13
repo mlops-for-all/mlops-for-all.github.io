@@ -16,6 +16,8 @@ images: []
 
 쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성요소들을 **서버에** 설치합니다.
 
+[Setup Prerequisite]({{< relref "docs/setup/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **서버에** 설치해 주시기 바랍니다.
+
 
 ### Minikube binary
 
@@ -232,7 +234,6 @@ ubuntu   Ready    control-plane,master   2d3h   v1.21.7
 ### CNI Plugin
 
 CNI Plugin 은 kubernetes 내의 네트워크를 담당하는 모듈입니다. Minikube 설치 시에는 추가적인 CNI Plugin 설치가 필요하지 않으므로 생략합니다.
-
 
 
 ## 5. 정상 설치 확인

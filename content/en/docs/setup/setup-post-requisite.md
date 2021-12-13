@@ -12,7 +12,7 @@ menu:
 images: []
 ---
 
-### helm
+## helm
 
 Helm 은 여러 쿠버네티스 리소스를 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
 
@@ -58,7 +58,7 @@ Environment variables:
 ...
 ```
 
-### kustomize
+## kustomize
 
 kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
 
@@ -101,12 +101,12 @@ Available Commands:
 ```
 
 
-### CSI Plugin : Local Path Provisioner
+## CSI Plugin : Local Path Provisioner
 
 CSI Plugin 은 kubernetes 내의 스토리지를 담당하는 모듈입니다. 단일 노드 클러스터에서 쉽게 사용할 수 있는 CSI Plugin 인 Local Path Provisioner 를 설치합니다.
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/local-path-storage.yaml
 ```
 
 다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
@@ -135,26 +135,7 @@ local-path-provisioner-d744ccf98-xfcbk   1/1       Running   0          7m
 다음을 수행하여 default storage class 로 변경합니다.
 
 ```sh
-kubectl edit sc local-path
-```
-
-`storageclass.kubernetes.io/is-default-class: "true"` 를 `metadata.annotations` 에 추가한 뒤, 저장합니다.
-
-```text
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{},"name":"local-path"},"provisioner":"rancher.io/local-path","reclaimPolicy":"Delete","volumeBindingMode":"WaitForFirstConsumer"}
-    storageclass.kubernetes.io/is-default-class: "true" <<<<< 이 부분을 추가합니다.
-  creationTimestamp: "2021-12-06T09:02:26Z"
-  name: local-path
-  resourceVersion: "4162777"
-  uid: 4ac5af43-b79f-4d1d-b76e-3cb78a42d880
-provisioner: rancher.io/local-path
-reclaimPolicy: Delete
-volumeBindingMode: WaitForFirstConsumer
+kubectl patch storageclass local-path  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
 default storage class 로 설정되었는지 확인합니다.
@@ -171,25 +152,14 @@ local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsu
 ```
 
 
-### (Optional for GPU) NVIDIA-Docker
+## (Optional for GPU) NVIDIA-Docker
 
 쿠버네티스 및 Kubeflow 등에서 GPU 를 사용하기 위해서는 다음 작업이 필요합니다.
 
 
-#### 0. Install NVIDIA Driver
+### 1. [Optional] Install NVIDIA Driver
 
-```sh
-sudo add-apt-repository ppa:graphics-drivers/ppa
-sudo apt update && sudo apt install -y ubuntu-drivers-common
-sudo ubuntu-drivers autoinstall
-sudo reboot
-```
-
-
-#### 1. NVIDIA-Docker 설치
-
-우선 NVIDIA Driver 가 설치되어있어야 합니다.
-서버의 GPU 에 맞는 버전의 NVIDIA Driver 가 정상적으로 설치되어 있는 경우, `nvidia-smi` 수행 시 다음과 같은 결과가 출력됩니다.
+`nvidia-smi` 수행 시 다음과 같은 화면이 출력된다면 이 단계는 스킵해 주시기 바랍니다.
 
 ```text
 mlops@ubuntu:~$ nvidia-smi 
@@ -219,10 +189,21 @@ Wed Dec  8 09:06:59 2021
 |    0   N/A  N/A      1893      G   /usr/bin/gnome-shell               10MiB |
 |    1   N/A  N/A      1644      G   /usr/lib/xorg/Xorg                  4MiB |
 +-----------------------------------------------------------------------------+
-
 ```
 
-이제 NVIDIA-Docker 를 설치합니다. 다음 커맨드를 순서대로 수행합니다.
+`nvidia-smi`의 출력 결과가 다음과 같지 않다면, 다음과 같이 nvidia driver를 설치해 주시기 바랍니다.
+
+```sh
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt update && sudo apt install -y ubuntu-drivers-common
+sudo ubuntu-drivers autoinstall
+sudo reboot
+```
+
+
+#### 1. NVIDIA-Docker 설치
+
+NVIDIA-Docker 를 설치합니다. 다음 커맨드를 순서대로 수행합니다.
 
 ```sh
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
@@ -315,7 +296,7 @@ mlops@ubuntu:~$ docker info | grep nvidia
 kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.10.0/nvidia-device-plugin.yml
 ```
 
-nvidia-device-plugin 은 daemonset 으로 생성되지만, minikube 를 single node 로 생성했으므로 1 개의 pod 이 RUNNING 상태로 생성되었는지 확인합니다.
+nvidia-device-plugin pod이 RUNNING 상태로 생성되었는지 확인합니다.
 
 ```sh
 kubectl get pod -n kube-system | grep nvidia
