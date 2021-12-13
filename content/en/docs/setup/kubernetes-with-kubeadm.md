@@ -20,7 +20,7 @@ images: []
 
 
 쿠버네티스를 위한 네트워크의 설정을 변경합니다.
-```sh
+```text
 sudo modprobe br_netfilter
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -36,7 +36,7 @@ sudo sysctl --system
 
 kubelet 이 정상적으로 동작하게 하기 위해서는 swap이라고 불리는 가상메모리를 꺼 두어야 합니다.
 다음 명령어를 통해 swap을 꺼 둡니다.
-```sh
+```text
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 sudo swapoff -a
 ```
@@ -58,7 +58,7 @@ EOF
 다음 명령어를 통해 kubeadm, kubelet, kubectl을 설치합니다.
 실수로 이 컴포넌트들의 버전이 변경할 경우, 예기치 않은 장애를 낳을 수 있으므로 컴포넌트들이 변경되지 않도록 설정합니다.
 
-```sh
+```text
 # kubeadm, kubelet, kubectl
 $ sudo apt-get update
 $ sudo apt-get install -y apt-transport-https ca-certificates curl
@@ -72,7 +72,7 @@ $ sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 kubeadm, kubelet, kubectl 이 잘 설치되었는지 확인합니다.
-```sh
+```text
 mlops@ubuntu:~$ kubeadm
 
 
@@ -105,7 +105,7 @@ Basic Commands (Beginner):
 
 이제 kubeadm을 사용하여 쿠버네티스를 설치합니다.
 
-```sh
+```text
 kubeadm config images list
 kubeadm config images pull
 
@@ -114,7 +114,7 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 kubectl을 통해서 쿠버네티스 클러스터를 제어할 수 있도록 admin 인증서를 $HOME/.kube/config 경로에 복사합니다.
 
-```sh
+```text
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -123,7 +123,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 CNI를 설치합니다.
 쿠버네티스 내부의 네트워크 설정을 전담하는 CNI는 여러 종류가 있으며, *모두의 MLOps*에서는 flannel을 사용합니다.
 
-```sh
+```text
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.13.0/Documentation/kube-flannel.yml
 ```
 
@@ -131,7 +131,7 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.13.0/Do
 안정성을 위하여 `마스터 노드`에는 쿠버네티스 클러스터를 제어하는 작업들만 실행되도록 하는 것이 일반적이지만,
 이 매뉴얼에서는 싱글 클러스터를 가정하고 있으므로 마스터 노드에 모든 종류의 작업이 실행될 수 있도록 설정합니다.
 
-```sh
+```text
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
@@ -151,7 +151,7 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 ## 5. 정상 설치 확인
 
 다음 명령어를 통해 노드의 STATUS가 Ready 상태가 되었는지 확인합니다.
-```sh
+```text
 kubectl get nodes
 NAME     STATUS   ROLES                  AGE     VERSION
 ubuntu   Ready    control-plane,master   2m55s   v1.21.7

@@ -4,7 +4,7 @@ description: "Install Helm, Kustomize, nvidia docker, nvidia device plugin"
 date: 2021-12-13T13:45:04+09:00
 lastmod: 2021-12-13T13:45:04+09:00
 draft: false
-weight: 205
+weight: 220
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
@@ -18,20 +18,20 @@ Helm 은 여러 쿠버네티스 리소스를 한 번에 배포하고 관리할 �
 
 현재 폴더에 Helm v3.7.1 버전을 다운받습니다.
 
-```sh
+```text
 wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
 ```
 
 helm 을 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
-```sh
+```text
 tar -zxvf helm-v3.5.4-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin/helm
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 helm help
 ```
 
@@ -64,20 +64,20 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 현재 폴더에 kustomize v3.10.0 버전을 다운받습니다.
 
-```sh
+```text
 wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
 ```
 
 kustomize 를 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
-```sh
+```text
 tar -zxvf kustomize_v3.10.0_linux_amd64.tar.gz
 sudo mv kustomize_3.2.0_linux_amd64 /usr/local/bin/kustomize
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kustomize help
 ```
 
@@ -105,7 +105,7 @@ Available Commands:
 
 CSI Plugin 은 kubernetes 내의 스토리지를 담당하는 모듈입니다. 단일 노드 클러스터에서 쉽게 사용할 수 있는 CSI Plugin 인 Local Path Provisioner 를 설치합니다.
 
-```sh
+```text
 kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/local-path-storage.yaml
 ```
 
@@ -123,7 +123,7 @@ configmap/local-path-config created
 
 또한, 다음과 같이 local-path-storage namespace 에 provisioner pod 가 Running 인지 확인합니다.
 
-```sh
+```text
 kubectl -n local-path-storage get pod
 ```
 
@@ -134,13 +134,13 @@ local-path-provisioner-d744ccf98-xfcbk   1/1       Running   0          7m
 
 다음을 수행하여 default storage class 로 변경합니다.
 
-```sh
+```text
 kubectl patch storageclass local-path  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
 default storage class 로 설정되었는지 확인합니다.
 
-```sh
+```text
 kubectl get sc
 ```
 
@@ -193,7 +193,7 @@ Wed Dec  8 09:06:59 2021
 
 `nvidia-smi`의 출력 결과가 다음과 같지 않다면, 다음과 같이 nvidia driver를 설치해 주시기 바랍니다.
 
-```sh
+```text
 sudo add-apt-repository ppa:graphics-drivers/ppa
 sudo apt update && sudo apt install -y ubuntu-drivers-common
 sudo ubuntu-drivers autoinstall
@@ -205,7 +205,7 @@ sudo reboot
 
 NVIDIA-Docker 를 설치합니다. 다음 커맨드를 순서대로 수행합니다.
 
-```sh
+```text
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
 curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
 sudo apt-get update
@@ -215,7 +215,7 @@ sudo systemctl restart docker
 
 정상적으로 설치되었는지 확인하기 위해, GPU 를 사용하는 도커 컨테이너를 실행해봅니다.
 
-```sh
+```text
 sudo docker run --rm --gpus all nvidia/cuda:9.0-base nvidia-smi
 ```
 
@@ -254,7 +254,7 @@ Minikube 는 기본적으로 Docker-CE 를 Default Runtime 로 사용합니다. 
 
 `/etc/docker/daemon.json` 파일을 열어 다음과 같이 수정합니다.
 
-```sh
+```text
 sudo vi /etc/docker/daemon.json
 
 {
@@ -270,14 +270,14 @@ sudo vi /etc/docker/daemon.json
 
 파일이 변경된 것을 확인한 후, Docker 를 재시작합니다.
 
-```sh
+```text
 sudo systemctl daemon-reload
 sudo service docker restart
 ```
 
 변경 사항이 반영되었는지 확인합니다.
 
-```sh
+```text
 sudo docker info | grep nvidia
 ```
 
@@ -292,13 +292,13 @@ mlops@ubuntu:~$ docker info | grep nvidia
 
 ### Nvidia-Device-Plugin
 
-```sh
+```text
 kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.10.0/nvidia-device-plugin.yml
 ```
 
 nvidia-device-plugin pod이 RUNNING 상태로 생성되었는지 확인합니다.
 
-```sh
+```text
 kubectl get pod -n kube-system | grep nvidia
 ```
 
@@ -310,7 +310,7 @@ kube-system                 nvidia-device-plugin-daemonset-nlqh2                
 
 node 정보에 gpu 가 사용가능하도록 설정되었는지 확인합니다.
 
-```sh
+```text
 kubectl get nodes "-o=custom-columns=NAME:.metadata.name,GPU:.status.allocatable.nvidia\.com/gpu"
 ```
 

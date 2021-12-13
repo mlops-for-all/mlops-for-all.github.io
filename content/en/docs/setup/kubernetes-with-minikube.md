@@ -23,14 +23,14 @@ images: []
 
 Minikube 를 사용하기 위해, v1.24.0 버전의 Minikube 바이너리를 설치합니다.
 
-```sh
+```text
 wget https://github.com/kubernetes/minikube/releases/download/v1.24.0/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 minikube version
 ```
 
@@ -49,13 +49,13 @@ GPU 의 원활한 사용과, 서버-클라이언트 간 통신을 간편하게 �
 
 root user 로 전환합니다.
 
-```sh
+```text
 sudo su
 ```
 
 `minikube start` 를 수행하여 쿠버네티스 클러스터 구축을 진행합니다. Kubeflow 의 원활한 사용을 위해, 쿠버네티스 버전은 v1.21.7 로 지정하여 구축하며 `--extra-config` 를 추가합니다.
 
-```sh
+```text
 minikube start --driver=none \
   --kubernetes-version=v1.21.7 \
   --extra-config=apiserver.service-account-signing-key-file=/var/lib/minikube/certs/sa.key \
@@ -66,14 +66,14 @@ minikube start --driver=none \
 
 Minikube 를 설치하면 Default 로 설치되는 addon 이 존재합니다. 이 중 저희가 사용하지 않을 addon 을 비활성화합니다.
 
-```sh
+```text
 minikube addons disable storage-provisioner
 minikube addons disable default-storageclass
 ```
 
 모든 addon 이 비활성화된 것을 확인합니다.
 
-```sh
+```text
 minikube addons list
 ```
 
@@ -127,19 +127,19 @@ kubectl 은 쿠버네티스 클러스터에게 API 를 요청할 때, 자주 사
 
 현재 폴더에 kubectl v1.21.7 버전을 다운받습니다.
 
-```sh
+```text
 curl -LO https://dl.k8s.io/release/v1.21.7/bin/linux/amd64/kubectl
 ```
 
 kubectl 을 사용할 수 있도록 파일의 권한과 위치를 변경합니다.
 
-```sh
+```text
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl --help
 ```
 
@@ -166,7 +166,7 @@ expose it as a new Kubernetes service
 
 우선 서버에서 다음 명령을 수행합니다.
 
-```sh
+```text
 minikube kubectl -- config view --flatten
 ```
 
@@ -209,7 +209,7 @@ users:
 
 클라이언트에서 다음을 수행합니다.
 
-```sh
+```text
 mkdir -p /home/$USER/.kube
 vi /home/$USER/.kube/config
 ```
@@ -218,7 +218,7 @@ vi /home/$USER/.kube/config
 
 클라이언트에서 다음을 수행하여 정상적으로 서버와 통신이 가능한지 확인합니다.
 
-```sh
+```text
 kubectl get nodes
 ```
 
@@ -240,7 +240,7 @@ CNI Plugin 은 kubernetes 내의 네트워크를 담당하는 모듈입니다. M
 
 최종적으로 node 가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
 
-```sh
+```text
 kubectl get nodes -o wide
 ```
 

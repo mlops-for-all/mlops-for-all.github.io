@@ -4,7 +4,7 @@ description: "Install docker"
 date: 2021-12-13T13:45:04+09:00
 lastmod: 2021-12-13T13:45:04+09:00
 draft: false
-weight: 205
+weight: 210
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
@@ -17,19 +17,19 @@ images: []
 
 apt 패키지 매니저를 업데이트하고, Prerequisite 패키지들을 설치합니다.
 
-```sh
+```text
 sudo apt-get update && sudo apt-get install ca-certificates curl gnupg lsb-release
 ```
 
 도커의 공식 GPG key 를 추가합니다.
 
-```sh
+```text
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 ```
 
 apt 패키지 매니저로 도커를 설치할 때, stable Repository 에서 받아오도록 설정합니다.
 
-```sh
+```text
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
@@ -37,19 +37,19 @@ echo \
 
 현재 설치 가능한 도커 버전을 확인합니다.
 
-```sh
+```text
 apt-cache madison docker-ce
 ```
 
 `5:20.10.11~3-0~ubuntu-focal` 버전이 있는지 확인하고, 해당 버전의 도커를 설치합니다.
 
-```sh
+```text
 sudo apt-get install containerd.io docker-ce=5:20.10.11~3-0~ubuntu-focal docker-ce-cli=5:20.10.11~3-0~ubuntu-focal
 ```
 
 도커가 정상적으로 설치된 것을 확인합니다.
 
-```sh
+```text
 sudo docker run hello-world
 ```
 
@@ -86,14 +86,14 @@ For more examples and ideas, visit:
 ```
 
 docker 관련 command를 sudo 키워드 없이 사용할 수 있도록 하기 위해 다음 명령어를 통해 권한을 추가합니다.
-```sh
+```text
 # Manage Docker as a non-root user
 $ sudo groupadd docker
 $ sudo usermod -aG docker $USER
 $ newgrp docker
 ```
 
-```sh
+```text
 # verify previlige setting
 $ docker run hello-world
 ```
@@ -103,6 +103,6 @@ $ docker run hello-world
 추후 클라이언트와 서버의 원활한 통신을 위해서는 Port-Forwarding 을 수행해야 할 일이 있습니다.
 Port-forwarding 을 위해서는 서버에 다음 패키지를 설치해주어야 합니다.
 
-```sh
+```text
 apt-get install -y socat
 ```
