@@ -8,7 +8,7 @@ weight: 221
 contributors: ["Youngcheol Jang"]
 menu:
   docs:
-    parent: "setup"
+    parent: "setup-kubernetes"
 images: []
 ---
 
@@ -16,7 +16,7 @@ images: []
 
 쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성요소들을 **클러스터에** 설치합니다.
 
-[Setup Prerequisite]({{< relref "docs/setup/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
+[Setup Prerequisite]({{< relref "docs/setup-kubernetes/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
 
 쿠버네티스를 위한 네트워크의 설정을 변경합니다.
 
@@ -137,7 +137,7 @@ scp -p {CLUSTER_USER_ID}@{CLUSTER_IP}:~/.kube/config ~/.kube/config
 
 ## 4. 쿠버네티스 기본 모듈 설치
 
-[Setup Kubernetes Modules]({{< relref "docs/setup/setup-kubernetes-module.md" >}})을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
+[Setup Kubernetes Modules]({{< relref "docs/setup-kubernetes/setup-kubernetes-module.md" >}})을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
 
 - helm
 - kustomize

@@ -8,7 +8,7 @@ weight: 210
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
-    parent: "setup"
+    parent: "setup-kubernetes"
 images: []
 ---
 

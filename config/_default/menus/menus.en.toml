@@ -27,10 +27,16 @@
   weight = 10
 
 [[docs]]
-  name = "Setup"
-  url = "/docs/setup/"
-  identifier = "setup"
+  name = "Setup Kubernetes"
+  url = "/docs/setup-kubernetes/"
+  identifier = "setup-kubernetes"
   weight = 20
+
+[[docs]]
+  name = "Setup Components"
+  url = "/docs/setup-conmponens/"
+  identifier = "setup-components"
+  weight = 25
 
 [[docs]]
   name = "Kubeflow"
