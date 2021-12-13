@@ -14,68 +14,6 @@ images: []
 
 ## 1. Prerequisite
 
-### 1.1. Install Docker
-
-```bash
-$ sudo apt-get update
-$ sudo apt-get install -y \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-$ echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-$ sudo apt-get update
-$ sudo apt-get install -y \
-  docker-ce=5:20.10.11~3-0~ubuntu-focal \
-  docker-ce-cli=5:20.10.11~3-0~ubuntu-focal \
-  containerd.io
-
-# verify install
-$ sudo docker run hello-world
-
-# Manage Docker as a non-root user
-$ sudo groupadd docker
-$ sudo usermod -aG docker $USER
-$ newgrp docker
-
-# verify previlige setting
-$ docker run hello-world
-```
-
-### 1.2. [Optional] Install nvidia-driver & nvidia-docker
-
-```bash
-sudo add-apt-repository ppa:graphics-drivers/ppa
-sudo apt update && sudo apt install -y ubuntu-drivers-common
-sudo ubuntu-drivers autoinstall
-sudo reboot
-```
-
-```bash
-stribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
-   && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
-   && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-sudo apt-get update
-sudo apt-get install -y nvidia-docker2
-sudo systemctl restart docker
-docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
-
-# enable the nvidia runtime as your default runtime
-# /etc/docker/daemon.json
-{
-    "default-runtime": "nvidia",
-    "runtimes": {
-        "nvidia": {
-            "path": "/usr/bin/nvidia-container-runtime",
-            "runtimeArgs": []
-        }
-    }
-}
-```
 
 ## 2. 쿠버네티스 클러스터 셋업
 
@@ -153,7 +91,13 @@ local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsu
 ```
 
 ### 4.2. [Optional] Install nvidia-device-plugin
-```
+```bash
+$ helm repo add nvdp https://nvidia.github.io/k8s-device-plugin
+$ helm repo update
+$ helm install \
+    --version=0.10.0 \
+    --generate-name \
+    nvdp/nvidia-device-plugin
 ```
 
 ## 5. 정상 설치 확인
