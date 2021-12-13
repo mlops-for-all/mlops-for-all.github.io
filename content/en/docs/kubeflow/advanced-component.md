@@ -1,5 +1,5 @@
 ---
-title : "Component Envrionment"
+title : "8. Component Envrionment"
 description: ""
 lead: ""
 draft: false

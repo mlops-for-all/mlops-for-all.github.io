@@ -1,5 +1,5 @@
 ---
-title : "Pipeline Setting"
+title : "10. Pipeline Setting"
 description: ""
 lead: ""
 draft: false

@@ -1,5 +1,5 @@
 ---
-title : "Component Debugging"
+title : "12. Component Debugging"
 description: ""
 lead: ""
 draft: false
