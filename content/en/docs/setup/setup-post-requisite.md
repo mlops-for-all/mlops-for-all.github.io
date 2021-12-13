@@ -4,7 +4,7 @@ description: "Install Helm, Kustomize, nvidia docker, nvidia device plugin"
 date: 2021-12-13T13:45:04+09:00
 lastmod: 2021-12-13T13:45:04+09:00
 draft: false
-weight: 220
+weight: 221
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
@@ -322,3 +322,8 @@ ubuntu     1
 ```
 
 설정되지 않은 경우, GPU 의 value 가 <none> 으로 표시됩니다.
+
+## References
+
+- [Helm install: From the Binary Releases](https://helm.sh/docs/intro/install/#from-the-binary-releases)
+- [local-path-provistioner#installation](https://helm.sh/docs/intro/install/#from-the-binary-releases)

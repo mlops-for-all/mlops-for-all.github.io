@@ -4,13 +4,16 @@ description: "Install docker"
 date: 2021-12-13T13:45:04+09:00
 lastmod: 2021-12-13T13:45:04+09:00
 draft: false
-weight: 210
+weight: 220
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
     parent: "setup"
 images: []
 ---
+
+
+이 페이지에서는 쿠버네티스를 설치하기에 앞서, **서버에** 설치해 두어야 하는 컴포넌트들에 대한 설치 매뉴얼을 설명합니다.
 
 
 ### Install Docker
@@ -87,15 +90,35 @@ For more examples and ideas, visit:
 
 docker 관련 command를 sudo 키워드 없이 사용할 수 있도록 하기 위해 다음 명령어를 통해 권한을 추가합니다.
 ```text
-# Manage Docker as a non-root user
-$ sudo groupadd docker
-$ sudo usermod -aG docker $USER
-$ newgrp docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
 ```
 
+sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한 번 docker run을 실행합니다.
 ```text
-# verify previlige setting
-$ docker run hello-world
+mlops@ubuntu:~$ docker run hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
 ```
 
 ### 기본적인 apt 패키지
@@ -106,3 +129,7 @@ Port-forwarding 을 위해서는 서버에 다음 패키지를 설치해주어�
 ```text
 apt-get install -y socat
 ```
+
+## References
+
+- [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)

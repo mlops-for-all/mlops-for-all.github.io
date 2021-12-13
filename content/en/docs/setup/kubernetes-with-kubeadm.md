@@ -59,16 +59,15 @@ EOF
 실수로 이 컴포넌트들의 버전이 변경할 경우, 예기치 않은 장애를 낳을 수 있으므로 컴포넌트들이 변경되지 않도록 설정합니다.
 
 ```text
-# kubeadm, kubelet, kubectl
-$ sudo apt-get update
-$ sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl
 
-$ sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
-$ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-$ sudo apt-get update
-$ sudo apt-get install -y kubelet=1.21.7-00 kubeadm=1.21.7-00 kubectl=1.21.7-00
-$ sudo apt-mark hold kubelet kubeadm kubectl
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet=1.21.7-00 kubeadm=1.21.7-00 kubectl=1.21.7-00
+sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
 kubeadm, kubelet, kubectl 이 잘 설치되었는지 확인합니다.
