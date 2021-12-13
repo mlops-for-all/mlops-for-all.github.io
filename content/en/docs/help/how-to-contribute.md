@@ -15,19 +15,19 @@ toc: true
 
 1. 필요한 node module을 설치합니다.
 
-```bash
+```text
 npm install
 ```
 
 2. 글 수정 및 추가를 후 ci 를 실행합니다.
 
-```bash
+```text
 npm ci
 ```
 
-3. node 서버를 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
+3. node 클러스터를 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
 
-```bash
+```text
 npm run start
 ```
 
@@ -71,13 +71,13 @@ draft: false
 
 pre-commit을 통해 대부분의 test를 통과할 수 있습니다.
 
-```bash
+```text
 pip install pre-commit
 pre-commit run -a
 ```
 
 pre-commit 후 test를 진행합니다.
 
-```bash
+```text
 npm test
 ```
