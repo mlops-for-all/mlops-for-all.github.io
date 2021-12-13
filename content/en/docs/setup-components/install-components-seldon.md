@@ -1,28 +1,30 @@
 ---
-title : "Install Components - Seldon-Core"
+title : "Seldon-Core"
 description: "구성요소 설치 - Seldon-Core"
-date: 2020-12-03T08:48:23+00:00
-lastmod: 2020-12-03T08:48:23+00:00
+date: 2021-12-13
+lastmod: 2021-12-13
 draft: false
-weight: 222
+weight: 255
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
-    parent: "setup"
+    parent: "setup-components"
 images: []
 ---
 
 ## Seldon-Core
 
-Seldon-Core는 쿠버네티스 환경에 수많은 머신러닝 모델을 배포하고 관리할 수 있는 오픈소스 프레임워크 중 하나입니다. 보다 자세한 내용은 Seldon-Core 의 공식 [제품 설명 페이지](https://www.seldon.io/tech/products/core/) 와 [깃헙](https://github.com/SeldonIO/seldon-core) 그리고 API Deployment 파트를 참고해주시기 바랍니다.
+Seldon-Core는 쿠버네티스 환경에 수많은 머신러닝 모델을 배포하고 관리할 수 있는 오픈소스 프레임워크 중 하나입니다.  
+보다 자세한 내용은 Seldon-Core 의 공식 [제품 설명 페이지](https://www.seldon.io/tech/products/core/) 와 [깃헙](https://github.com/SeldonIO/seldon-core) 그리고 API Deployment 파트를 참고해주시기 바랍니다.
 
 ## Selon-Core 설치
 
-Seldon-Core를 사용하기 위해서는 쿠버네티스의 인그레스(Ingress)를 담당하는 Ambassador 와 Istio 와 같은 [모듈이 필요합니다](https://docs.seldon.io/projects/seldon-core/en/latest/workflow/install.html). Seldon-Core 에서는 Ambassador 와 Istio 만을 공식적으로 지원하며, *모두의 MLOps*에서는 Ambassador를 사용할 예정이므로 먼저 Ambassador 를 설치하겠습니다.
+Seldon-Core를 사용하기 위해서는 쿠버네티스의 인그레스(Ingress)를 담당하는 Ambassador 와 Istio 와 같은 [모듈이 필요합니다](https://docs.seldon.io/projects/seldon-core/en/latest/workflow/install.html).  
+Seldon-Core 에서는 Ambassador 와 Istio 만을 공식적으로 지원하며, *모두의 MLOps*에서는 Ambassador를 사용해 Seldon-core를 사용하므로 Ambassador를 설치하겠습니다.
 
 ### Ambassador - Helm Repository 추가
 
-```sh
+```text
 helm repo add datawire https://www.getambassador.io
 ```
 
@@ -34,7 +36,7 @@ helm repo add datawire https://www.getambassador.io
 
 ### Ambassador - Helm Repository 업데이트
 
-```sh
+```text
 helm repo update
 ```
 
@@ -50,7 +52,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 ambassador Chart 6.9.3 버전을 설치합니다.
 
-```sh
+```text
 helm install ambassador datawire/ambassador \
   --namespace seldon-system \
   --create-namespace \
@@ -94,7 +96,7 @@ For help, visit our Slack at http://a8r.io/Slack or view the documentation onlin
 
 seldon-system 에 4 개의 pod 가 Running 이 될 때까지 기다립니다.
 
-```sh
+```text
 kubectl get pod -n seldon-system
 ```
 
@@ -109,7 +111,7 @@ ambassador-agent-77bccdfcd5-d5jxj            1/1     Running   0          7m15s
 
 seldon-core-operator Chart 1.11.2 버전을 설치합니다.
 
-```sh
+```text
 helm install seldon-core seldon-core-operator \
     --repo https://storage.googleapis.com/seldon-charts \
     --namespace seldon-system \
@@ -134,10 +136,13 @@ TEST SUITE: None
 
 seldon-system namespace 에 1 개의 seldon-controller-manager pod 가 Running 이 될 때까지 기다립니다.
 
-```sh
+```text
 kubectl get pod -n seldon-system | grep seldon-controller
 ```
 
 ```text
 seldon-controller-manager-8457b8b5c7-r2frm   1/1     Running   0          2m22s
 ```
+
+# TODO (jaeyeon.kim) Seldon Deployment 생성 후, prometheus, grafana 연동 스크린샷
+

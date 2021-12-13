@@ -8,7 +8,7 @@ weight: 223
 contributors: ["Jongseob Jeon"]
 menu:
   docs:
-    parent: "setup"
+    parent: "setup-kubernetes"
 images: []
 ---
 
@@ -48,7 +48,7 @@ sudo chown mrx:mrx .kube/config
 
 ## 4. 쿠버네티스 기본 모듈 설치
 
-[Setup Kubernetes Modules]({{< relref "docs/setup/setup-kubernetes-module.md" >}})을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
+[Setup Kubernetes Modules]({{< relref "docs/setup-kubernetes/setup-kubernetes-module.md" >}})을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
 
 - helm
 - kustomize

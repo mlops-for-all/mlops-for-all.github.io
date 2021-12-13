@@ -1,51 +1,46 @@
 ---
-title : "Install Components - Kubeflow"
+title : "Kubeflow"
 description: "구성요소 설치 - Kubeflow"
-date: 2020-12-03T08:48:23+00:00
-lastmod: 2020-12-03T08:48:23+00:00
+date: 2021-12-13
+lastmod: 2021-12-13
 draft: false
-weight: 221
+weight: 252
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
-    parent: "setup"
+    parent: "setup-components"
 images: []
 ---
 
 ## 설치 파일 준비
 
-kubeflow v1.4.0 버전을 설치하기 위해서, 설치에 필요한 manifests 파일들을 준비합니다.
+Kubeflow **v1.4.0** 버전을 설치하기 위해서, 설치에 필요한 manifests 파일들을 준비합니다.
 
-[kubeflow/manifests Repository](https://github.com/kubeflow/manifests) 를 깃 클론한 뒤, 해당 폴더로 이동합니다.
+[kubeflow/manifests Repository](https://github.com/kubeflow/manifests) 를 **v1.4.0** 태그로 깃 클론한 뒤, 해당 폴더로 이동합니다.
 
-```sh
-git clone git@github.com:kubeflow/manifests.git
+```text
+git clone -b v1.4.0 git@github.com:kubeflow/manifests.git
 cd manifests
-```
-
-v1.4.0 태그로 체크아웃합니다.
-
-```sh
-git checkout tags/v1.4.0
 ```
 
 ## 각 구성요소별 설치
 
-kubeflow/manifests Repository 에 각 구성요소별 설치 커맨드가 적혀져있지만, 설치하며 발생할 수 있는 이슈 혹은 정상적으로 설치되었는지 확인할 수 있는 방법 등이 적혀져있지 않아 처음 설치하는 경우 어려움을 겪는 경우가 많습니다.  
+kubeflow/manifests Repository 에 각 구성요소별 설치 커맨드가 적혀져 있지만, 설치하며 발생할 수 있는 이슈 혹은 정상적으로 설치되었는지 확인할 수 있는 방법 등이 적혀져있지 않아 처음 설치하는 경우 어려움을 겪는 경우가 많습니다.  
 따라서, 각 구성요소별로 정상적으로 설치되었는지 확인하는 방법을 함께 작성합니다.  
+
 또한, 본 문서에서는 **모두의 MLOps** 에서 다루지 않는 구성요소인 Knative, KFServing, MPI Operator 의 설치는 리소스의 효율적 사용을 위해 따로 설치하지 않습니다.
 
 ### cert-manager
 
-cert-manager 를 배포합니다.
+cert-manager 를 설치합니다.
 
-```sh
+```text
 kustomize build common/cert-manager/cert-manager/base | kubectl apply -f -
 ```
 
 cert-manager namespace 의 3 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
 
-```sh
+```text
 kubectl get pod -n cert-manager
 ```
 
@@ -58,44 +53,47 @@ cert-manager-cainjector-64c949654c-2scxr   1/1     Running   0          2m10s
 cert-manager-webhook-6b57b9b886-7q6g2      1/1     Running   0          2m10s
 ```
 
-kubeflow-issuer 를 배포합니다.
+kubeflow-issuer 를 설치합니다.
 
-```sh
+```text
 kustomize build common/cert-manager/kubeflow-issuer/base | kubectl apply -f -
 ```
 
-- cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 배포되지 않을 수 있음에 주의하기시 바랍니다. 해당 에러가 발생한 경우, cert-manager 의 3 개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
+- cert-manager-webhook 이슈
 
-```text
-Error from server: error when retrieving current configuration of:
-Resource: "cert-manager.io/v1alpha2, Resource=clusterissuers", GroupVersionKind: "cert-manager.io/v1alpha2, Kind=ClusterIssuer"
-Name: "kubeflow-self-signing-issuer", Namespace: ""
-from server for: "STDIN": conversion webhook for cert-manager.io/v1, Kind=ClusterIssuer failed: Post "https://cert-manager-webhook.cert-manager.svc:443/convert?timeout=30s": dial tcp 10.101.177.157:443: connect: connection refused
-```
+  cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하기시 바랍니다.  
+  해당 에러가 발생한 경우, cert-manager 의 3 개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
+
+  ```text
+  Error from server: error when retrieving current configuration of:
+  Resource: "cert-manager.io/v1alpha2, Resource=clusterissuers", GroupVersionKind: "cert-manager.io/v1alpha2, Kind=ClusterIssuer"
+  Name: "kubeflow-self-signing-issuer", Namespace: ""
+  from server for: "STDIN": conversion webhook for cert-manager.io/v1, Kind=ClusterIssuer failed: Post "https://cert-manager-webhook.cert-manager.svc:443/convert?timeout=30s": dial tcp 10.101.177.157:443: connect: connection refused
+  ```
 
 ### Istio
 
-istio 관련 Custom Resource Definition(CRD) 를 배포합니다.
+istio 관련 Custom Resource Definition(CRD) 를 설치합니다.
 
-```sh
+```text
 kustomize build common/istio-1-9/istio-crds/base | kubectl apply -f -
 ```
 
-istio namespace 를 배포합니다.
+istio namespace 를 설치합니다.
 
-```sh
+```text
 kustomize build common/istio-1-9/istio-namespace/base | kubectl apply -f -
 ```
 
-istio 를 배포합니다.
+istio 를 설치합니다.
 
-```sh
+```text
 kustomize build common/istio-1-9/istio-install/base | kubectl apply -f -
 ```
 
 istio-system namespace 의 2 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
 
-```sh
+```text
 kubectl get po -n istio-system
 ```
 
@@ -109,15 +107,15 @@ istiod-86457659bb-5h58w                1/1     Running   0          16s
 
 ### Dex
 
-dex 를 배포합니다.
+dex 를 설치합니다.
 
-```sh
+```text
 kustomize build common/dex/overlays/istio | kubectl apply -f -
 ```
 
 auth namespace 의 1 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
 
-```sh
+```text
 kubectl get po -n auth
 ```
 
@@ -130,15 +128,15 @@ dex-5ddf47d88d-458cs   1/1     Running   1          12s
 
 ### OIDC AuthService
 
-OIDC AuthService 를 배포합니다.
+OIDC AuthService 를 설치합니다.
 
-```sh
+```text
 kustomize build common/oidc-authservice/base | kubectl apply -f -
 ```
 
 istio-system namespace 에 authservice-0 pod 가 Running 이 될 때까지 기다립니다.
 
-```sh
+```text
 kubectl get po -n istio-system -w
 ```
 
@@ -155,13 +153,13 @@ istiod-86457659bb-5h58w                1/1     Running   0          2m37s
 
 kubeflow namespace 를 생성합니다.
 
-```sh
+```text
 kustomize build common/kubeflow-namespace/base | kubectl apply -f -
 ```
 
 kubeflow namespace 를 조회합니다.
 
-```sh
+```text
 kubectl get ns kubeflow
 ```
 
@@ -174,15 +172,15 @@ kubeflow   Active   8s
 
 ### Kubeflow Roles
 
-kubeflow-roles 를 배포합니다.
+kubeflow-roles 를 설치합니다.
 
-```sh
+```text
 kustomize build common/kubeflow-roles/base | kubectl apply -f -
 ```
 
 방금 생성한 kubeflow roles 를 조회합니다.
 
-```sh
+```text
 kubectl get clusterrole | grep kubeflow
 ```
 
@@ -199,15 +197,15 @@ kubeflow-view                                                          2021-12-0
 
 ### Kubeflow Istio Resources
 
-kubeflow-istio-resources 를 배포합니다.
+kubeflow-istio-resources 를 설치합니다.
 
-```sh
+```text
 kustomize build common/istio-1-9/kubeflow-istio-resources/base | kubectl apply -f -
 ```
 
 방금 생성한 kubeflow roles 를 조회합니다.
 
-```sh
+```text
 kubectl get clusterrole | grep kubeflow-istio
 ```
 
@@ -221,7 +219,7 @@ kubeflow-istio-view                                                    2021-12-0
 
 kubeflow namespace 에 gateway 가 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get gateway -n kubeflow
 ```
 
@@ -234,9 +232,9 @@ kubeflow-gateway   31s
 
 ### Kubeflow Pipelines
 
-kubeflow pipelines 를 배포합니다.
+kubeflow pipelines 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubectl apply -f -
 ```
 
@@ -249,7 +247,7 @@ kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubect
 
 위와 비슷한 에러가 발생한다면, 10 초 정도 기다린 뒤 다시 위의 명령을 수행합니다.
 
-```sh
+```text
 kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubectl apply -f -
 ```
 
@@ -283,27 +281,29 @@ workflow-controller-5cbbb49bd8-5zrwx                     2/2     Running   1    
 
 추가적으로 ml-pipeline UI 가 정상적으로 접속되는지 확인합니다.
 
-```sh
+```text
 kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
 ```
 
-웹 브라우저를 열어 `http://localhost:8888/pipelines/` 경로에 접속합니다.
+웹 브라우저를 열어 [http://localhost:8888/pipelines/](http://localhost:8888/pipelines/) 경로에 접속합니다.
 
 다음과 같은 화면이 출력되는 것을 확인합니다.
 
-<img src="/images/docs/setup/pipeline-ui.png" title="pipeline-ui"/>
+<p align="center">
+  <img src="/images/docs/setup/pipeline-ui.png" title="pipeline-ui"/>
+</p>
 
 ### Katib
 
-Katib 를 배포합니다.
+Katib 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/katib/upstream/installs/katib-with-kubeflow | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep katib
 ```
 
@@ -318,27 +318,29 @@ katib-ui-64bb96d5bf-d89kp                                1/1     Running   0    
 
 추가적으로 katib UI 가 정상적으로 접속되는지 확인합니다.
 
-```sh
+```text
 kubectl port-forward svc/katib-ui -n kubeflow 8081:80
 ```
 
-웹 브라우저를 열어 `http://localhost:8081/katib/` 경로에 접속합니다.
+웹 브라우저를 열어 [http://localhost:8081/katib/](http://localhost:8081/katib/) 경로에 접속합니다.
 
 다음과 같은 화면이 출력되는 것을 확인합니다.
 
-<img src="/images/docs/setup/katib-ui.png" title="katib-ui"/>
+<p align="center">
+  <img src="/images/docs/setup/katib-ui.png" title="katib-ui"/>
+</p>
 
-#### Central Dashboard
+### Central Dashboard
 
-Dashboard 를 배포합니다.
+Dashboard 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/centraldashboard/upstream/overlays/istio | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep centraldashboard
 ```
 
@@ -350,25 +352,27 @@ centraldashboard-8fc7d8cc-xl7ts                          1/1     Running   0    
 
 추가적으로 Central Dashboard UI 가 정상적으로 접속되는지 확인합니다.
 
-```sh
+```text
 kubectl port-forward svc/centraldashboard -n kubeflow 8082:80
 ```
 
-웹 브라우저를 열어 `http://localhost:8082/` 경로에 접속합니다.
+웹 브라우저를 열어 [http://localhost:8082/](http://localhost:8082/) 경로에 접속합니다.
 
 다음과 같은 화면이 출력되는 것을 확인합니다.
 
-<img src="/images/docs/setup/central-dashboard.png" title="central-dashboard"/>
+<p align="center">
+  <img src="/images/docs/setup/central-dashboard.png" title="central-dashboard"/>
+</p>
 
-#### Admission Webhook
+### Admission Webhook
 
-```sh
+```text
 kustomize build apps/admission-webhook/upstream/overlays/cert-manager | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep admission-webhook
 ```
 
@@ -378,17 +382,17 @@ kubectl get po -n kubeflow | grep admission-webhook
 admission-webhook-deployment-667bd68d94-2hhrx            1/1     Running   0          11s
 ```
 
-#### Notebooks & Jupyter Web App
+### Notebooks & Jupyter Web App
 
-Notebook controller 를 배포합니다.
+Notebook controller 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/jupyter/notebook-controller/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep notebook-controller
 ```
 
@@ -398,15 +402,15 @@ kubectl get po -n kubeflow | grep notebook-controller
 notebook-controller-deployment-75b4f7b578-w4d4l          1/1     Running   0          105s
 ```
 
-Jupyter Web App 을 배포합니다.
+Jupyter Web App 을 설치합니다.
 
-```sh
+```text
 kustomize build apps/jupyter/jupyter-web-app/upstream/overlays/istio | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep jupyter-web-app
 ```
 
@@ -416,17 +420,17 @@ kubectl get po -n kubeflow | grep jupyter-web-app
 jupyter-web-app-deployment-6f744fbc54-p27ts              1/1     Running   0          2m
 ```
 
-#### Profiles + KFAM
+### Profiles + KFAM
 
-Profile Controller 를 배포합니다.
+Profile Controller 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/profiles/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep profiles-deployment
 ```
 
@@ -436,17 +440,17 @@ kubectl get po -n kubeflow | grep profiles-deployment
 profiles-deployment-89f7d88b-qsnrd                       2/2     Running   0          42s
 ```
 
-#### Volumes Web App
+### Volumes Web App
 
-Volumes Web App 을 배포합니다.
+Volumes Web App 을 설치합니다.
 
-```sh
+```text
 kustomize build apps/volumes-web-app/upstream/overlays/istio | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep volumes-web-app
 ```
 
@@ -456,17 +460,17 @@ kubectl get po -n kubeflow | grep volumes-web-app
 volumes-web-app-deployment-8589d664cc-62svl              1/1     Running   0          27s
 ```
 
-#### Tensorboard & Tensorboard Web App
+### Tensorboard & Tensorboard Web App
 
-Tensorboard Web App 를 배포합니다.
+Tensorboard Web App 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/tensorboard/tensorboards-web-app/upstream/overlays/istio | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep tensorboards-web-app
 ```
 
@@ -476,15 +480,15 @@ kubectl get po -n kubeflow | grep tensorboards-web-app
 tensorboards-web-app-deployment-6ff79b7f44-qbzmw            1/1     Running             0          22s
 ```
 
-Tensorboard Controller 를 배포합니다.
+Tensorboard Controller 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/tensorboard/tensorboard-controller/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep tensorboard-controller
 ```
 
@@ -494,17 +498,17 @@ kubectl get po -n kubeflow | grep tensorboard-controller
 tensorboard-controller-controller-manager-954b7c544-vjpzj   3/3     Running   1          73s
 ```
 
-#### Training Operator
+### Training Operator
 
-Training Operator 를 배포합니다.
+Training Operator 를 설치합니다.
 
-```sh
+```text
 kustomize build apps/training-operator/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```sh
+```text
 kubectl get po -n kubeflow | grep training-operator
 ```
 
@@ -514,17 +518,17 @@ kubectl get po -n kubeflow | grep training-operator
 training-operator-7d98f9dd88-6887f                          1/1     Running   0          28s
 ```
 
-#### User Namespace
+### User Namespace
 
 Kubeflow 사용을 위해, 사용할 User 의 Kubeflow Profile 을 생성합니다.
 
-```sh
+```text
 kustomize build common/user-namespace/base | kubectl apply -f -
 ```
 
 kubeflow-user-example-com profile 이 생성된 것을 확인합니다.
 
-```sh
+```text
 kubectl get profile
 ```
 
@@ -532,23 +536,25 @@ kubectl get profile
 kubeflow-user-example-com   37s
 ```
 
-### 정상 설치 확인
+## 정상 설치 확인
 
 kubeflow central dashboard 에 web browser 로 접속하기 위해 port-forward 합니다.
 
-```sh
+```text
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 ```
 
-Web Browser 를 열어 http://localhost:8080 으로 접속하여, 다음과 같은 화면이 출력되는 것을 확인합니다.
+Web Browser 를 열어 [http://localhost:8080](http://localhost:8080) 으로 접속하여, 다음과 같은 화면이 출력되는 것을 확인합니다.
 
-<img src="/images/docs/setup/login-after-install.png" title="login-ui"/>
-<br>
-<br>
+<p align="center">
+  <img src="/images/docs/setup/login-after-install.png" title="login-ui"/>
+</p>
 
 다음 접속 정보를 입력하여 접속합니다.
 
 - Email Address: `user@example.com`
 - Password: `12341234`
 
-<img src="/images/docs/setup/after-login.png" title="central-dashboard"/>
+<p align="center">
+  <img src="/images/docs/setup/after-login.png" title="central-dashboard"/>
+</p>

@@ -1,14 +1,14 @@
 ---
-title : "Install Components - MLFlow"
+title : "MLFlow"
 description: "구성요소 설치 - MLFlow"
-date: 2020-12-03T08:48:23+00:00
-lastmod: 2020-12-03T08:48:23+00:00
+date: 2021-12-13
+lastmod: 2021-12-13
 draft: false
-weight: 223
+weight: 253
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
-    parent: "setup"
+    parent: "setup-components"
 images: []
 ---
 
