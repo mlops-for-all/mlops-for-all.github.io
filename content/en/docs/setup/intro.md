@@ -33,19 +33,18 @@ MLOps 를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구
 
 ### 서버
 
-- Ubuntu : 20.04.3 LTS
-- Docker (Server) : 20.10.11
-- Nvidia-Driver : 470.86
-- Kubernetes : v1.21.7
-  - CNI : k8s 설치 tool 에 따라 상이
-  - CSI : local-path-provisioner : v0.0.20
-  - Nvidia-device-plugin : (Optional)
-- Kubeflow : v1.4.0
-- MLFlow :
-- Seldon-Core :
-- Prometheus :
-- Grafana :
-- Istio :
+| Software        | Version     |
+| --------------- | ----------- |
+| Ubuntu          | 20.04.3 LTS |
+| Docker (Server) | 20.10.11    |
+| Nvidia-Driver   | 470.86      |
+| Kubernetes      | v1.21.7     |
+| Kubeflow        | v1.4.0      |
+| MLFlow          |             |
+| Seldon-Core     |             |
+| Prometheus      |             |
+| Grafana         |             |
+| Istio           |             |
 
 ### 클라이언트
 
