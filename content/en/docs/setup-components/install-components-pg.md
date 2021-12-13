@@ -96,4 +96,4 @@ prom-stack-prometheus-node-exporter-zkwq9                1/1     Running   0    
 prometheus-prom-stack-kube-prometheus-prometheus-0       2/2     Running   0          61s
 ```
 
-# TODO(jaeyeon.kim) 정상 설치 확인 UI 스크린샷 추가
+#### TODO(jaeyeon.kim) 정상 설치 확인 UI 스크린샷 추가

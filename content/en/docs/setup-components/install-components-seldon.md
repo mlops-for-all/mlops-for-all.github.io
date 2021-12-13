@@ -144,5 +144,4 @@ kubectl get pod -n seldon-system | grep seldon-controller
 seldon-controller-manager-8457b8b5c7-r2frm   1/1     Running   0          2m22s
 ```
 
-# TODO (jaeyeon.kim) Seldon Deployment 생성 후, prometheus, grafana 연동 스크린샷
-
+#### TODO (jaeyeon.kim) Seldon Deployment 생성 후, prometheus, grafana 연동 스크린샷
