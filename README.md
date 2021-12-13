@@ -2,17 +2,17 @@
 
 ### How to Start
 1. 필요한 node module을 설치합니다.
-```bash
+```text
 npm install
 ```
 
 2. 글 수정 및 추가를 후 ci 를 실행합니다.
-```bash
+```text
 npm ci
 ```
 
-3. node 서버를 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
-```bash
+3. node 클러스터를 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
+```text
 npm run start
 ```
 

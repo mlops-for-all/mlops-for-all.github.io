@@ -1,10 +1,10 @@
 ---
-title: "Setup Kubernetes - Kubeadm"
+title: "4.1. Setup Kubernetes - Kubeadm"
 description: ""
-date: 2021-12-02T18:36:04+09:00
-lastmod: 2021-12-02T18:36:04+09:00
+date: 2021-12-13
+lastmod: 2021-12-13
 draft: false
-weight: 211
+weight: 221
 contributors: ["Youngcheol Jang"]
 menu:
   docs:
@@ -14,9 +14,9 @@ images: []
 
 ## 1. Prerequisite
 
-쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성요소들을 **서버에** 설치합니다.
+쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성요소들을 **클러스터에** 설치합니다.
 
-[Setup Prerequisite]({{< relref "docs/setup/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **서버에** 설치해 주시기 바랍니다.
+[Setup Prerequisite]({{< relref "docs/setup/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
 
 쿠버네티스를 위한 네트워크의 설정을 변경합니다.
 
@@ -34,17 +34,9 @@ EOF
 sudo sysctl --system
 ```
 
-kubelet 이 정상적으로 동작하게 하기 위해서는 swap이라고 불리는 가상메모리를 꺼 두어야 합니다.
-다음 명령어를 통해 swap을 꺼 둡니다.
-
-```text
-sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-sudo swapoff -a
-```
-
 ## 2. 쿠버네티스 클러스터 셋업
 
-```bash
+```exit
 $ sudo modprobe br_netfilter
 
 $ cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -136,9 +128,16 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 ## 3. 쿠버네티스 클라이언트 셋업
 
+클러스터에 생성된 kubeconfig 파일을 **클라이언트**에 복사하여 kubectl을 통해 클러스터를 제어할 수 있도록 합니다.
+
+```text
+mkdir -p $HOME/.kube
+scp -p {CLUSTER_USER_ID}@{CLUSTER_IP}:~/.kube/config ~/.kube/config
+```
+
 ## 4. 쿠버네티스 기본 모듈 설치
 
-[Setup Postrequisite]({{< relref "docs/setup/setup-post-requisite.md" >}})을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
+[Setup Kubernetes Modules]({{< relref "docs/setup/setup-kubernetes-module.md" >}})을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
 
 - helm
 - kustomize

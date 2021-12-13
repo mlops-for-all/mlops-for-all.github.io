@@ -1,8 +1,8 @@
 ---
-title : "Setup Kubernetes"
+title : "2. Setup Kubernetes"
 description: "Setup Kubernetes"
-date: 2020-10-06T08:48:23+00:00
-lastmod: 2020-10-06T08:48:23+00:00
+date: 2021-12-13
+lastmod: 2021-12-13
 draft: false
 weight: 202
 contributors: ["Jaeyeon Kim"]
@@ -25,18 +25,15 @@ images: []
 
 Ubuntu OS 까지는 설치되어 있는 데스크탑을 k8s cluster 로 구축한 뒤, 외부 클라이언트 노드에서 쿠버네티스 클러스터에 접근하는 것을 확인하는 것까지가 본 **Setup Kubernetes**단원의 범위입니다.
 
-자세한 구축 방법은 3 가지 도구마다 다르지만 모두 다음과 같은 흐름으로 구성되어 있습니다.
+자세한 구축 방법은 3 가지 도구마다 다르기에 다음과 같은 흐름으로 구성되어 있습니다.
 
 ```text
-1. Prerequisite
-
-2. 쿠버네티스 클러스터 셋업
-
-3. 쿠버네티스 클라이언트 셋업
-
-4. 쿠버네티스 기본 모듈 설치
-
-5. 정상 설치 확인
+3. Setup Prerequisite
+4. Setup Kubernetes
+  4.1. with kubeadm
+  4.2. with minikube
+  4.3. with k3s
+5. Setup Kubernetes Modules
 ```
 
 그럼 이제 각각의 도구를 활용해 쿠버네티스 클러스터를 구축해보겠습니다. 반드시 모든 도구를 사용해 볼 필요는 없으며, 이 중 여러분이 익숙하신 도구를 활용해주시면 충분합니다.
