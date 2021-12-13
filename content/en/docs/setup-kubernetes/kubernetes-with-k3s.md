@@ -12,10 +12,11 @@ menu:
 images: []
 ---
 
-**해당 과정은 클러스터로 사용하는 데스크탑에서 진행됩니다.**
-로컬과 클러스터가 분리된 경우 꼭 클러스터에서 설치되도록 확인해 주세요.
-
 ## 1. Prerequisite
+
+쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성요소들을 **클러스터에** 설치합니다.
+
+[Setup Prerequisite]({{< relref "docs/setup-kubernetes/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
 
 k3s 에서는 기본값으로 containerd를 백엔드로 이용해 설치합니다.
 하지만 저희는 GPU를 사용하기 위해서 docker를 백엔드로 사용해야 하기 때문에 `--docker` 옵션을 통해 백엔드를 docker로 설치하겠습니다.
@@ -44,7 +45,6 @@ sudo chown mrx:mrx .kube/config
 
 이제 클러스터에서 설정한 kubeconfig를 로컬로 이동합니다.
 로컬에서는 경로를 `~/.kube/config`로 설정합니다.
-정상적으로 작동하는지 확인합니다.
 
 ## 4. 쿠버네티스 기본 모듈 설치
 
