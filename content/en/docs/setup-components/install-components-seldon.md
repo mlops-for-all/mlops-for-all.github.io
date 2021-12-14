@@ -1,5 +1,5 @@
 ---
-title : "Seldon-Core"
+title : "4. Seldon-Core"
 description: "구성요소 설치 - Seldon-Core"
 date: 2021-12-13
 lastmod: 2021-12-13

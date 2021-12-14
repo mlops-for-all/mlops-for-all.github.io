@@ -1,7 +1,9 @@
 ---
-title : "Why Kuberntes?"
+title : "3. Why Kuberntes?"
 description: "Reason for using k8s in MLOps"
 lead: ""
+date: 2021-12-03
+lastmod: 2021-12-10
 draft: false
 weight: 103
 contributors: ["Jaeyeon Kim"]
