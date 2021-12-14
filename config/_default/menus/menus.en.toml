@@ -4,6 +4,11 @@
 # url = "/docs/1.0/prologue/introduction/"
   weight = 10
 
+# [[main]]
+#   name = "Blog"
+#   url = "/blog/"
+#   weight = 15
+
 [[main]]
   name = "Contributors"
   url = "/contributors/"
