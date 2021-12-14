@@ -147,10 +147,14 @@ curl -X POST http://172.25.0.129:32193/seldon/seldon-system/sklearn/api/v1.0/pre
   <img src="/images/docs/setup-modules/repeat-curl.png" title="grafana"/>
 </p>
 
-다음과 같이 Global Request Rate 이 `0 ops` 에서 순간적으로 올라가는 것을 확인할 수 있습니다.
+다음과 같이 Global Request Rate 이 `0 ops` 에서 순간적으로 상승하는 것을 확인할 수 있습니다.
 
 <p align="center">
   <img src="/images/docs/setup-modules/repeat-raise.png" title="grafana"/>
 </p>
 
 이렇게 프로메테우스와 그라파나가 정상적으로 설치된 것을 확인할 수 있습니다.
+
+## References
+
+- [Seldon-Core-Analytics Helm Chart](https://github.com/SeldonIO/seldon-core/tree/master/helm-charts/seldon-core-analytics)

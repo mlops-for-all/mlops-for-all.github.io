@@ -238,6 +238,7 @@ curl -X POST http://172.25.0.129:32193/seldon/seldon-system/sklearn/api/v1.0/pre
 ```
 
 다음과 같은 응답이 오면 Seldon-Core 가 정상적으로 설치된 것을 의미합니다.
+
 ```text
 {"data":{"names":["t:0","t:1","t:2"],"ndarray":[[0.0006985194531162835,0.00366803903943666,0.995633441507447]]},"meta":{"requestPath":{"classifier":"seldonio/sklearnserver:1.11.2"}}}
 ```
