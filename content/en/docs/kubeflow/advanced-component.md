@@ -16,8 +16,6 @@ menu:
 
 아래 코드는 [Kubeflow Concepts]({{&lt; relref "docs/kubeflow/kubeflow-concepts.md#component-contents" &gt;}})에서 사용했던 컴포넌트 콘텐츠입니다.
 
-
-
 ```python
 import dill
 import pandas as pd
