@@ -58,7 +58,7 @@ kube-prometheus-stack Chart 21.0.0 버전을 설치합니다.
 ```text
 helm install prom-stack prometheus-community/kube-prometheus-stack \
   --namespace monitoring-system \
-  --create-namespace
+  --create-namespace \
   --version 21.0.0
 ```
 
@@ -96,4 +96,41 @@ prom-stack-prometheus-node-exporter-zkwq9                1/1     Running   0    
 prometheus-prom-stack-kube-prometheus-prometheus-0       2/2     Running   0          61s
 ```
 
-#### TODO(jaeyeon.kim) 정상 설치 확인 UI 스크린샷 추가
+### 정상 설치 확인
+
+Grafana 웹 브라우저에 접속하여, 정상적으로 로그인되는지 확인합니다.
+
+**클라이언트** 노드에서 grafana service 를 포트포워딩합니다.
+
+```
+kubectl port-forward svc/prom-stack-grafana -n monitoring-system 9080:80
+```
+
+웹 브라우저를 열어 [localhost:9080](localhost:9080) 으로 접속하여, 다음과 같은 페이지가 나오는지 확인합니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/grafana-install.png" title="grafana-install"/>
+</p>
+
+다음과 같은 디폴트 접속 정보를 입력하여 로그인합니다.
+
+- Email or username: `admin`
+- Password: `prom-operator`
+
+다음과 같은 페이지가 나옵니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/grafana-login.png" title="grafana-login"/>
+</p>
+
+다음과 같이 좌측의 Dashboards 아이콘 클릭 후, Manage 버튼을 클릭하여, 디폴트 대시보드들이 정상적으로 출력되는지 확인합니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/grafana-dashboard-icon.png" title="grafana-dashboard"/>
+</p>
+
+그 중 `Kubernetes / Compute Resources / Cluster`를 클릭하여 다음과 같이 데이터가 정상적으로 출력되는지 확인합니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/grafana-dashboard-cluster.png" title="grafana-dashboard-cluster"/>
+</p>
