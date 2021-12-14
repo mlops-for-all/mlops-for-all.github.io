@@ -1,7 +1,9 @@
 ---
-title : "MLOps의 구성 요소"
+title : "2. Components of MLOps"
 description: "Describe MLOps Components"
 lead: ""
+date: 2021-12-03
+lastmod: 2021-12-10
 draft: false
 weight: 102
 contributors: ["Youngcheol Jang"]

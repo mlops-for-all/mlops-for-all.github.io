@@ -1,5 +1,5 @@
 ---
-title : "Kubeflow"
+title : "1. Kubeflow"
 description: "구성요소 설치 - Kubeflow"
 date: 2021-12-13
 lastmod: 2021-12-13
@@ -242,7 +242,7 @@ kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubect
 따라서 경우에 따라 다음과 비슷한 에러가 발생할 수 있습니다.
 
 ```text
-"error: unable to recognize "STDIN": no matches for kind "CompositeController" in version "metacontroller.k8s.io/v1alpha1"" 
+"error: unable to recognize "STDIN": no matches for kind "CompositeController" in version "metacontroller.k8s.io/v1alpha1""  
 ```
 
 위와 비슷한 에러가 발생한다면, 10 초 정도 기다린 뒤 다시 위의 명령을 수행합니다.

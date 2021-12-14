@@ -1,5 +1,5 @@
 ---
-title : "MLFlow"
+title : "2. MLFlow"
 description: "구성요소 설치 - MLFlow"
 date: 2021-12-13
 lastmod: 2021-12-13
