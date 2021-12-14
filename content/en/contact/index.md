@@ -16,7 +16,7 @@ images: []
 ### Kubernetes Setup 관련
 
 - 김재연
-- {{< email user="anecore94" domain="gmail.com" >}}
+- {{< email user="anencore94" domain="gmail.com" >}}
 
 ### API Deployment 관련
 
