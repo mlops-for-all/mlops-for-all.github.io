@@ -162,7 +162,8 @@ implementation:
     - {outputPath: Output}
 ```
 
-kubeflow에서 컴포넌트가 실행되는 순서는 정의된 이미지를 pull 후 해당 이미지에서 컴포넌트 컨텐츠를 실행합니다.
+kubeflow에서 컴포넌트가 실행되는 순서는 정의된 컴포넌트의 실행 환경 정보가 담긴 이미지를 pull 후 해당 이미지에서 컴포넌트 컨텐츠를 실행합니다.
+`@create_component_from_func` 의 default image 는 python:3.7 이므로 해당 이미지를 기준으로 컴포넌트 컨텐츠를 실행하게 됩니다.
 `print_and_return_number.yaml` 를 예시로 들자면 실행되는 순서는 다음과 같습니다.
 
 1. `docker pull python:3.7`
