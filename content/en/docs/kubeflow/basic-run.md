@@ -19,8 +19,8 @@ menu:
 ### 1. Create Experiment
 
 Experiment란 Kubeflow 에서 실행되는 Run을 논리적으로 관리하는 단위입니다.  
-Kubeflow를 최초 실행한 경우 Experiment가 없습니다. 따라서 파이프라인을 최초 실행할 경우에는 Experiment를 먼저 생성해두어야 합니다.  
-Experiment 를 미리 생성해 두었다면 [Run Pipeline]({{< relref "docs/kubeflow/basic-run.md#run-pipeline-1" >}})으로 넘어가도 무방합니다.
+Kubeflow를 최초 실행하면 Experiment가 없습니다. 따라서 파이프라인을 최초 실행할 때 Experiment를 먼저 생성해두어야 합니다.  
+Experiment 를 미리 생성해두었다면 [Run Pipeline]({{< relref "docs/kubeflow/basic-run.md#run-pipeline-1" >}})으로 넘어가도 무방합니다.
 
 Experiment는 Create Experiment 버튼을 통해 생성할 수 있습니다.
 
@@ -55,7 +55,7 @@ Experiment로 사용할 이름을 입력합니다.
 
 ### 3. Pipeline Config 입력
 
-파이프라인을 생성할 때 입력한 Config 값들을 채워넣습니다.
+파이프라인을 생성할 때 입력한 Config 값들을 채워 넣습니다.
 <p align="center">
   <img src="/images/docs/kubeflow/run-3.png" title="run"/>
 </p>

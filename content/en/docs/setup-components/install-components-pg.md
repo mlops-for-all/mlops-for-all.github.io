@@ -15,10 +15,10 @@ images: []
 ## Prometheus & Grafana
 
 프로메테우스(Prometheus) 와 그라파나(Grafana) 는 모니터링을 위한 도구입니다.  
-안정적인 서비스 운영을 위해서는 서비스와 서비스가 운영되고 있는 인프라의 상태를 지속적으로 관찰하고, 관찰한 메트릭을 바탕으로 문제가 생길 경우 빠르게 대응해야 합니다.  
+안정적인 서비스 운영을 위해서는 서비스와 서비스가 운영되고 있는 인프라의 상태를 지속해서 관찰하고, 관찰한 메트릭을 바탕으로 문제가 생길 때 빠르게 대응해야 합니다.  
 이러한 모니터링을 효율적으로 수행하기 위한 많은 도구 중 *모두의 MLOps*에서는 오픈소스인 프로메테우스와 그라파나를 사용할 예정입니다.
 
-보다 자세한 내용은 [Prometheus 공식 문서](https://prometheus.io/docs/introduction/overview/), [Grafana 공식 문서](https://grafana.com/docs/)를 확인해주시기 바랍니다.
+더 자세한 내용은 [Prometheus 공식 문서](https://prometheus.io/docs/introduction/overview/), [Grafana 공식 문서](https://grafana.com/docs/)를 확인해주시기를 바랍니다.
 
 프로메테우스는 다양한 대상으로부터 Metric 을 수집하는 도구이며, 그라파나는 모인 데이터를 시각화하는 것을 도와주는 도구입니다. 서로 간의 종속성은 없지만 상호 보완적으로 사용할 수 있어 함께 사용되는 경우가 많습니다.
 
@@ -85,7 +85,7 @@ Visit https://github.com/prometheus-operator/kube-prometheus for instructions on
 kubectl get pod -n monitoring-system | grep prom-stack
 ```
 
-monitoring-system namespace 에 6 개의 prom-stack 관련 pod 가 Running 이 될 때까지 기다립니다.
+monitoring-system namespace 에 6개의 prom-stack 관련 pod 가 Running 이 될 때까지 기다립니다.
 
 ```text
 alertmanager-prom-stack-kube-prometheus-alertmanager-0   2/2     Running   0          62s

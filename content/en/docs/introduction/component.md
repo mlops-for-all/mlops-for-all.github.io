@@ -14,13 +14,13 @@ menu:
 
 ## Practitioners guide to MLOps
 
- 2021년 5월에 발표된 구글의 [white paper : Practitioners guide to MLOps: A framework for continuous delivery and authmation of machine learning](https://services.google.com/fh/files/misc/practitioners_guide_to_mlops_whitepaper.pdf)에서는 MLOps의 핵심 기능들로 다음과 같은 것들을 언급하였습니다.
+ 2021년 5월에 발표된 구글의 [white paper : Practitioners guide to MLOps: A framework for continuous delivery and automation of machine learning](https://services.google.com/fh/files/misc/practitioners_guide_to_mlops_whitepaper.pdf)에서는 MLOps의 핵심 기능들로 다음과 같은 것들을 언급하였습니다.
 
 <p>
   <img src="/images/docs/introduction/mlops-component.png" title="mlops-component"/>
 </p>
 
- 각 기능들이 어떤 역할을 하는지 살펴보겠습니다.
+ 각 기능이 어떤 역할을 하는지 살펴보겠습니다.
 
 ### 1. Experimentation
 
@@ -35,9 +35,9 @@ menu:
  데이터 처리(Data Processing)은 머신러닝 모델 개발 단계, 지속적인 학습(Continuous Training) 단계, 그리고 API 배포(API Deployment) 단계에서 많은 양의 데이터를 사용할 수 있게 해 주는 다음과 같은 기능을 제공합니다.
 
 - 다양한 데이터 소스와 서비스에 호환되는 데이터 커넥터(connector) 기능 제공
-- 다양한 형태의 데이터와 호환되는 데이터 인코터(encoder) & 디코더(decoder) 기능 제공
-- 다양한 형태의 데이터에 대한 데이터 변환과 피쳐 엔지니어링(feature engineering) 기능 제공
-- 학습과 서빙을 위한 확장가능한 배치, 스트림 데이터 처리 기능 제공
+- 다양한 형태의 데이터와 호환되는 데이터 인코더(encoder) & 디코더(decoder) 기능 제공
+- 다양한 형태의 데이터에 대한 데이터 변환과 피처 엔지니어링(feature engineering) 기능 제공
+- 학습과 서빙을 위한 확장 가능한 배치, 스트림 데이터 처리 기능 제공
 
 ### 3. Model training
 
@@ -45,16 +45,16 @@ menu:
 
 - ML 프레임워크의 실행을 위한 환경 제공
 - 다수의 GPU / 분산 학습 사용을 위한 분산 학습 환경 제공
-- 하이퍼파라미터 튜닝과 최적화 기능 제공
+- 하이퍼 파라미터 튜닝과 최적화 기능 제공
 
 ### 4. Model evaluation
 
  모델 평가(Model evaluation)은 실험 환경과 상용 환경에서 동작하는 모델의 성능을 관찰할 수 있는 다음과 같은 기능을 제공합니다.
 
 - 평가 데이터에 대한 모델 성능 평가 기능
-- 서로 다른 지속 학습 실행결과에 대한 예측 성능 추적
+- 서로 다른 지속 학습 실행 결과에 대한 예측 성능 추적
 - 서로 다른 모델의 성능 비교와 시각화
-- 해석 가능한 AI 기술을 이용한 모델 출력 해석 기능 제공
+- 해석할 수 있는 AI 기술을 이용한 모델 출력 해석 기능 제공
 
 ### 5. Model serving
 
@@ -68,19 +68,19 @@ menu:
 
 ### 6. Online experimentation
 
- 온라인 실험(Online experimentation)은 새로운 모델이 생성되었을 때, 이 모델을 배포하면 어느 정도의 성능을 보일 것인지 검증하는 기능을 제공한다. 이 기능은 새 모델을 배포하는 것 까지 연동하기 위해 모델 저장소(Model Registry)와 연동되어야 한다.
+ 온라인 실험(Online experimentation)은 새로운 모델이 생성되었을 때, 이 모델을 배포하면 어느 정도의 성능을 보일 것인지 검증하는 기능을 제공한다. 이 기능은 새 모델을 배포하는 것까지 연동하기 위해 모델 저장소(Model Registry)와 연동되어야 한다.
 
-- 카나리(canary) & 섀도우(shadow) 배포 기능 제공
+- 카나리(canary) & 섀도(shadow) 배포 기능 제공
 - A/B 테스트 기능 제공
 - 멀티 암드 밴딧(Multi-armed bandit) 테스트 기능 제공
 
 ### 7. Model Monitoring
 
-모델 모니터링(Model Monitoring)은 상용 환경에 배포되어 있는 모델이 정상적으로 동작하고 있는지를 모니터링 하는 기능을 제공한다. 이 기능은 모델의 성능이 떨어져 업데이트가 필요한지에 대한 정보를 제공해준다.
+모델 모니터링(Model Monitoring)은 상용 환경에 배포된 모델이 정상적으로 동작하고 있는지를 모니터링 하는 기능을 제공한다. 이 기능은 모델의 성능이 떨어져 업데이트가 필요한지에 대한 정보를 제공해준다.
 
 ### 8. ML Pipeline
 
-머신러닝 파이프라인(ML Pipeline)은 상용 환경에서 복잡한 ML 학습과 추론 작업을 구성하고 제어하고 자동화 하기 위한 다음과 같은 기능을 제공한다.
+머신러닝 파이프라인(ML Pipeline)은 상용 환경에서 복잡한 ML 학습과 추론 작업을 구성하고 제어하고 자동화하기 위한 다음과 같은 기능을 제공한다.
 
 - 다양한 이벤트를 소스를 통한 파이프라인 실행 기능
 - 파이프라인 파라미터와 생성되는 산출물 관리를 위한 머신러닝 메타데이터 추적과 연동 기능
@@ -108,4 +108,4 @@ menu:
 - ML 산출물에 대한 히스토리 관리 기능
 - 실험과 파이프라인 파라미터 설정에 대한 추적, 공유 기능
 - ML 산출물에 대한 저장, 접근, 시각화, 다운로드 기능 제공
-- 기타 다른 MLOps 기능과의 통합 기능 제공
+- 다른 MLOps 기능과의 통합 기능 제공
