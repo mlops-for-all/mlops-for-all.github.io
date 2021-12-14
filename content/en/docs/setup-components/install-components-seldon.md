@@ -1,10 +1,10 @@
 ---
-title : "4. Seldon-Core"
+title : "3. Seldon-Core"
 description: "구성요소 설치 - Seldon-Core"
 date: 2021-12-13
 lastmod: 2021-12-13
 draft: false
-weight: 255
+weight: 254
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
@@ -144,4 +144,104 @@ kubectl get pod -n seldon-system | grep seldon-controller
 seldon-controller-manager-8457b8b5c7-r2frm   1/1     Running   0          2m22s
 ```
 
-#### TODO (jaeyeon.kim) Seldon Deployment 생성 후, prometheus, grafana 연동 스크린샷
+### 정상 설치 확인
+
+Sample SeldonDeployment이 생성되는지 확인해보는 것으로 정상 설치되었는지 확인합니다.
+
+새로운 파일을 생성합니다.
+
+```text
+vi sample-sklearn.yaml
+```
+
+다음 내용을 해당 파일에 복사한 뒤, 저장합니다.
+
+```text
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: sklearn
+  namespace: seldon-system
+spec:
+  predictors:
+  - graph:
+      name: classifier
+      implementation: SKLEARN_SERVER
+      modelUri: gs://seldon-models/v1.13.0-dev/sklearn/iris
+    name: default
+    replicas: 1
+    svcOrchSpec:
+      env:
+      - name: SELDON_LOG_LEVEL
+        value: DEBUG
+```
+
+SeldonDeployment 를 배포합니다.
+
+```text
+kubectl apply -f sample-sklearn.yaml
+```
+
+seldon-system namespace 에 1 개의 `sklearn-defulat-xxx` 라는 이름의 pod 가 Running 이 될 때까지 기다립니다.
+
+```text
+NAME                                                            READY   STATUS    RESTARTS   AGE
+ambassador-7f596c8b57-k8sxq                                     1/1     Running   0          4h53m
+ambassador-7f596c8b57-q4zsf                                     1/1     Running   0          4h53m
+ambassador-7f596c8b57-tgxcr                                     1/1     Running   0          4h53m
+ambassador-agent-77bccdfcd5-jx789                               1/1     Running   0          4h53m
+seldon-controller-manager-8457b8b5c7-cf58w                      1/1     Running   0          4h52m
+seldon-core-analytics-grafana-657c956c88-ng8wn                  2/2     Running   0          8m13s
+seldon-core-analytics-kube-state-metrics-94bb6cb9-svs82         1/1     Running   0          8m13s
+seldon-core-analytics-prometheus-alertmanager-64cf7b8f5-nxbl8   2/2     Running   0          8m13s
+seldon-core-analytics-prometheus-node-exporter-5rrj5            1/1     Running   0          8m13s
+seldon-core-analytics-prometheus-pushgateway-8476474cff-sr4n6   1/1     Running   0          8m13s
+seldon-core-analytics-prometheus-seldon-685c664894-7cr45        2/2     Running   0          8m13s
+sklearn-default-0-classifier-9df66d44f-xxprt                    2/2     Running   0          3m33s
+```
+
+SeldonDeployment 로 API Request 를 보내기 위해, ambassador 서비스의 IP 를 확인합니다.
+
+```text
+kubectl get svc -n seldon-system
+```
+
+```text
+NAME                                             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+ambassador                                       LoadBalancer   10.98.241.143    <pending>     80:32193/TCP,443:30875/TCP   4h54m
+ambassador-admin                                 ClusterIP      10.105.233.154   <none>        8877/TCP,8005/TCP            4h54m
+seldon-core-analytics-grafana                    ClusterIP      10.103.205.237   <none>        80/TCP                       9m5s
+seldon-core-analytics-kube-state-metrics         ClusterIP      10.111.64.38     <none>        8080/TCP                     9m5s
+seldon-core-analytics-prometheus-alertmanager    ClusterIP      10.104.100.234   <none>        80/TCP                       9m5s
+seldon-core-analytics-prometheus-node-exporter   ClusterIP      None             <none>        9100/TCP                     9m5s
+seldon-core-analytics-prometheus-pushgateway     ClusterIP      10.97.106.255    <none>        9091/TCP                     9m5s
+seldon-core-analytics-prometheus-seldon          ClusterIP      10.101.12.152    <none>        80/TCP                       9m5s
+seldon-webhook-service                           ClusterIP      10.103.13.214    <none>        443/TCP                      4h53m
+sklearn-default                                  ClusterIP      10.98.139.98     <none>        8000/TCP,5001/TCP            4m
+sklearn-default-classifier                       ClusterIP      10.103.231.187   <none>        9000/TCP,9500/TCP            4m25s
+```
+
+ambassador 라는 이름의 서비스가 LoadBalancer 타입으로 생성되어있으며, PORT 에 80:<SOME_PORT> 으로 매핑이 되어있음을 확인할 수 있습니다.(위의 예시에서는 <SOME_PORT> == 32193 입니다.)
+
+`<클러스터의 IP>:<SOME_PORT>/seldon/seldon-system/sklearn/api/v1.0/doc/` 주소로 접속합니다. 본 문서에서 검증한 환경에서는 `http://172.25.0.129:32193/seldon/seldon-system/sklearn/api/v1.0/doc/` 주소로 접속하겠습니다.
+
+다음과 같은 Swagger UI 화면이 생성되어있는 것을 확인할 수 있습니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/seldon-api.png" title="seldon-api"/>
+</p>
+
+그럼 이제 방금 생성한 SeldonDeployment 로 API Request 를 요청해봅니다. 아래 예시의 `172.25.0.129:32193` 부분을 여러분의 `<클러스터의 IP>:<SOME_PORT>`로 변경해주시기 바랍니다.
+
+```text
+curl -X POST http://172.25.0.129:32193/seldon/seldon-system/sklearn/api/v1.0/predictions     -H 'Content-Type: application/json'     -d '{ "data": { "ndarray": [[1,2,3,4]] } }'
+```
+
+다음과 같은 응답이 오면 Seldon-Core 가 정상적으로 설치된 것을 의미합니다.
+```text
+{"data":{"names":["t:0","t:1","t:2"],"ndarray":[[0.0006985194531162835,0.00366803903943666,0.995633441507447]]},"meta":{"requestPath":{"classifier":"seldonio/sklearnserver:1.11.2"}}}
+```
+
+## References
+
+- [Example Model Servers with Seldon](https://docs.seldon.io/projects/seldon-core/en/latest/examples/server_examples.html#examples-server-examples--page-root)
