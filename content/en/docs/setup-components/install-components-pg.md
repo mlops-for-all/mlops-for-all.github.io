@@ -49,7 +49,6 @@ helm repo update
 ```text
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "seldonio" chart repository
-...Successfully got an update from the "prometheus-community" chart repository
 ...Successfully got an update from the "datawire" chart repository
 Update Complete. ⎈Happy Helming!⎈
 ```
@@ -102,7 +101,7 @@ seldon-core-analytics-prometheus-seldon-685c664894-7cr45        2/2     Running 
 kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 ```
 
-웹 브라우저를 열어 [localhost:8090](localhost:8090)으로 접속하면 다음과 같은 화면이 출력됩니다.
+웹 브라우저를 열어 [localhost:8090](http://localhost:8090)으로 접속하면 다음과 같은 화면이 출력됩니다.
 
 <p align="center">
   <img src="/images/docs/setup-modules/grafana-install.png" title="grafana-install"/>
