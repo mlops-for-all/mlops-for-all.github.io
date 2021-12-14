@@ -1,16 +1,18 @@
 ---
-title : "9. MLFlow Component"
+title : "11. MLFlow Component"
 description: ""
 lead: ""
 draft: false
-weight: 322
+weight: 329
 contributors: ["Jongseob Jeon"]
 menu:
   docs:
     parent: "kubeflow"
 ---
 
-[Advanced Usage Component]({{< relref "docs/kubeflow/advanced-component.md" >}}) 에서 학습한 모델을 API Deployment까지 이어지기 위해서는 MLFlow에 모델을 저장해야 합니다.
+## MLFlow Component
+
+[Advanced Usage Component]({{< relref "docs/kubeflow/advanced-component.md" >}}) 에서 학습한 모델이 API Deployment까지 이어지기 위해서는 MLFlow에 모델을 저장해야 합니다.
 
 이번 페이지에서는 MLFlow에 모델을 저장할 수 있는 컴포넌트를 작성하는 과정을 설명합니다.
 
@@ -61,9 +63,9 @@ conda_env = _mlflow_conda_env(additional_pip_deps=["dill", "pandas", "scikit-lea
 
 - `input_example`
 
-    |  | sepal length (cm) | sepal width (cm) | petal length (cm) | petal width (cm) |
-    | --- | --- | --- | --- | --- |
-    | 64 | 65 | 6.7 | 3.1 | 4.4 |
+    | sepal length (cm) | sepal width (cm) | petal length (cm) | petal width (cm) |
+    | --- | --- | --- | --- |
+    | 6.5 | 6.7 | 3.1 | 4.4 |
 
 - `signature`
 
@@ -104,13 +106,13 @@ save_model(
 
 로컬에서 작업할 경우 다음과 같은 svc 폴더가 생기며 아래와 같은 파일들이 생성됩니다.
 
-```bash
+```text
 ls svc
 ```
 
 위의 명령어를 실행할 경우 다음의 출력값을 확인할 수 있습니다.
 
-```bash
+```text
 MLmodel            conda.yaml         input_example.json model.pkl          requirements.txt
 ```
 
@@ -118,7 +120,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - MLmodel
 
-    ```bash
+    ```text
     flavors:
       python_function:
         env: conda.yaml
@@ -143,7 +145,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - conda.yaml
 
-    ```yaml
+    ```text
     channels:
     - conda-forge
     dependencies:
@@ -159,13 +161,25 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - input_example.json
 
-    ```json
-    {"columns": ["sepal length (cm)", "sepal width (cm)", "petal length (cm)", "petal width (cm)"], "data": [[6.7, 3.1, 4.4, 1.4]]}
+    ```text
+    {
+        "columns": 
+        [
+            "sepal length (cm)",
+            "sepal width (cm)",
+            "petal length (cm)",
+            "petal width (cm)"
+        ],
+        "data": 
+        [
+            [6.7, 3.1, 4.4, 1.4]
+        ]
+    }
     ```
 
 - requirements.txt
 
-    ```bash
+    ```text
     mlflow
     dill
     pandas
@@ -185,8 +199,8 @@ with mlflow.start_run():
     mlflow.log_artifact("svc/")
 ```
 
-저장을 하고 `mlruns` 가 생성된 경로에서 `mlflow ui` 명령어를 이용해 mlflow 대쉬보드를 띄웁니다.
-그리고 생성된 run을 클릭하면 다음과 같이 보입니다.
+저장을 하고 `mlruns` 가 생성된 경로에서 `mlflow ui` 명령어를 이용해 mlflow 서버와 대쉬보드를 띄웁니다.
+mlflow 대쉬보드에 접속하여 생성된 run을 클릭하면 다음과 같이 보입니다.
 
 <p align="center">
     <img src="/images/docs/kubeflow/mlflow-0.png" title="mlflow-dashboard"/>
@@ -366,6 +380,6 @@ def mlflow_pipeline(kernel: str, model_name: str):
     )
 ```
 
-한 가지 이상한 점을 확인하셨나요?
-바로 입력과 출력에서 받는 argument중 경로와 관련된 것들에 `_path` 접미사가 모두 사라졌습니다.
-이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 로 생성된 경로들은 파이프라인에서 작성될 때 접미사가 없어집니다.
+한 가지 이상한 점을 확인하셨나요?  
+바로 입력과 출력에서 받는 argument중 경로와 관련된 것들에 `_path` 접미사가 모두 사라졌습니다. 즉, `iris_data.outputs["data_path"]` 가 아닌 `iris_data.outputs["data"]` 로 접근하는 것을 확인할 수 있습니다.  
+이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 로 생성된 경로들은 파이프라인에서 접근할 때는 접미사를 생략하여 접근합니다.

@@ -1,5 +1,5 @@
 ---
-title : "11. Run Result"
+title : "10. Run Result"
 description: ""
 lead: ""
 draft: false
@@ -26,7 +26,7 @@ Run 실행 결과를 눌러보면 3개의 탭이 존재합니다.
   <img src="/images/docs/kubeflow/advanced-run-1.png" title="run-graph"/>
 </p>
 
-그래프에서는 실행된 컴포넌트를 누르면 컴포넌트의 정보를 확인할 수 있습니다.
+그래프에서는 실행된 컴포넌트를 누르면 컴포넌트의 실행 정보를 확인할 수 있습니다.
 
 ### Input/Output
 

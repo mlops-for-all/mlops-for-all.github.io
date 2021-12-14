@@ -10,50 +10,53 @@ menu:
     parent: "kubeflow"
 ---
 
-컴포넌트는 독립적으로 시행되지 않고 파이프라인을 통해서만 실행됩니다.
+## Pipeline
+
+컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다.  
+그렇기 때문에 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다.
+
+이번 페이지에서는 숫자를 입력받고 출력하는 컴포넌트와, 두 개의 컴포넌트로 부터 숫자를 받아서 합을 출력하는 컴포넌트가 있는 파이프라인을 만들어 보도록 하겠습니다.
 
 파이프라인을 작성하기 위해서는 컴포넌트의 집합과 컴포넌트의 실행 순서가 필요합니다.
 
-이번 페이지에서는 숫자를 입력받고 출력하는 컴포넌트 두 개와 앞의 두 개의 숫자를 받아서 합을 출력하는 컴포넌트가 있는 파이프라인을 만들어 보도록 하겠습니다.
-
 ## Component set
 
-우선 사용할 컴포넌트들을 정의해 보겠습니다.
+우선 파이프라인에서 사용할 컴포넌트들을 작성합니다.
 
 1. `print_and_return_number`
 
-    입력받은 숫자를 출력하고 반환하는 컴포넌트입니다. 컴포넌트가 반환값이 있음을 알려주기 위해서 타입힌트를 추가하겠습니다. 입력받은 값을 출력함으로 int를 return 힌트로 입력합니다.
+  입력받은 숫자를 출력하고 반환하는 컴포넌트입니다. 컴포넌트가 반환값이 있음을 알려주기 위해서 타입힌트를 추가하겠습니다. 입력받은 값을 출력함으로 int를 return 타입힌트로 입력합니다.
 
-    ```python
-    @create_component_from_func
-    def print_and_return_number(number: int) -> int:
-        print(number)
-        return number
-    ```
+  ```python
+  @create_component_from_func
+  def print_and_return_number(number: int) -> int:
+      print(number)
+      return number
+  ```
 
 1. `sum_and_print_numbers`
 
-    입력 받은 두개의 숫자의 합을 출력하는 컴포넌트입니다.
+  입력 받은 두개의 숫자의 합을 출력하는 컴포넌트입니다.
 
-    ```python
-    @create_component_from_func
-    def sum_and_print_numbers(number_1: int, number_2: int) -> int:
-        sum_num = number_1 + number_2
-        print(sum_num)
-        return sum_num
-    ```
+  ```python
+  @create_component_from_func
+  def sum_and_print_numbers(number_1: int, number_2: int) -> int:
+      sum_num = number_1 + number_2
+      print(sum_num)
+      return sum_num
+  ```
 
 ## Component Order
 
-필요한 컴포넌트의 집합을 만들었으면, 다음으로는 이들의 순서도를 만들어 줍니다.
-우리가 만들 파이프라인의 순서도를 표현하면 다음과 같이 됩니다.
+필요한 컴포넌트의 집합을 만들었으면, 다음으로는 이들의 순서를 정의해야 합니다.  
+이번 페이지에서 만들 파이프라인의 순서를 그림으로 표현하면 다음과 같이 됩니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/pipeline-0.png" title="pipeline-order" width=50%/>
 </p>
 
-이제 이 순서도를 코드로 옮겨야 합니다.
-우선 위의 `print_and_return_number_1` 과 `print_and_return_number_2` 를 작성하면 다음과 같이 됩니다.
+이제 이 순서를 코드로 옮겨보겠습니다.  
+우선 위의 그림에서 `print_and_return_number_1` 과 `print_and_return_number_2` 를 작성하면 다음과 같이 됩니다.
 
 ```python
 def example_pipeline():
@@ -61,10 +64,11 @@ def example_pipeline():
     number_2_result = print_and_return_number(number_2)
 ```
 
-컴포넌트를 실행하고 그 반환 값을 각각 `number_1_result` 와 `number_2_result` 에 저장합니다. `number_1_result` 의 반환값은 `number_1_resulst.output` 를 통해 사용할 수 있습니다.
+컴포넌트를 실행하고 그 반환 값을 각각 `number_1_result` 와 `number_2_result` 에 저장합니다.  
+`number_1_result` 의 반환값은 `number_1_resulst.output` 를 통해 사용할 수 있습니다.
 
-위의 예시에서 컴포넌트는 단일 값만을 반환하기 때문에 `output`을 이용해 바로 사용할 수 있었습니다.
-만약, 여러 개의 반환값이 있다면 `outputs`에 저장이 됩니다.
+위의 예시에서 컴포넌트는 단일 값만을 반환하기 때문에 `output`을 이용해 바로 사용할 수 있습니다.  
+만약, 여러 개의 반환값이 있다면 `outputs`에 저장이 됩니다.  
 `outputs`는 dict 형태로서 key를 이용해 원하는 반환 값을 사용할 수 있습니다.
 
 이제 이 두 값의 결과를 `sum_and_print_numbers` 에 전달합니다.
@@ -78,7 +82,7 @@ def example_pipeline():
     )
 ```
 
-다음으로 각 컴포넌트에 필요한 config들을 모아서 파이프라인 config로 정의 합니다.
+다음으로 각 컴포넌트에 필요한 Config들을 모아서 파이프라인 Config로 정의 합니다.
 
 ```python
 def example_pipeline(number_1: int, number_2:int):
@@ -91,7 +95,7 @@ def example_pipeline(number_1: int, number_2:int):
 
 ## Convert to Kubeflow Format
 
-마지막으로 kubeflow에서 사용할 수 있는 형식으로 변환합니다. 변환은 `kfp.dsl.pipeline` 함수를 이용해 할 수 잇씁니다.
+마지막으로 kubeflow에서 사용할 수 있는 형식으로 변환합니다. 변환은 `kfp.dsl.pipeline` 함수를 이용해 할 수 있습니다.
 
 ```python
 from kfp.dsl import pipeline
@@ -106,7 +110,8 @@ def example_pipeline(number_1: int, number_2: int):
     )
 ```
 
-파이프라인을 yaml 형식으로 컴파일합니다.
+Kubeflow에서 파이프라인을 실행하기 위해서는 yaml 형식으로만 가능하기 때문에 생성한 파이프라인을 정해진 yaml 형식으로 컴파일(Compile) 해주어야 합니다.
+컴파일은 다음 명령어를 이용해 생성할 수 있습니다.
 
 ```python
 if __name__ == "__main__":
@@ -149,7 +154,7 @@ if __name__ == "__main__":
 <details>
   <summary>example_pipeline.yaml</summary>
 
-```yaml
+```text
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:

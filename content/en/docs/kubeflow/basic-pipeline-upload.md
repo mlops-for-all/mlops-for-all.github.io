@@ -10,11 +10,10 @@ menu:
     parent: "kubeflow"
 ---
 
-이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.
-
 ## Upload Pipeline
 
-파이프라인을 업로드는 kubeflow 대쉬보드에서 ui를 통해 진행할 수 있습니다.
+이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.  
+파이프라인 업로드는 kubeflow 대시보드 UI를 통해 진행할 수 있습니다.
 
 ### 1. Pipelines 탭 선택
 
@@ -60,15 +59,6 @@ menu:
 <p align="center">
   <img src="/images/docs/kubeflow/pipeline-gui-4.png" title="pipeline-gui"/>
 </p>
-
-이제 화면에 나오는 각 메뉴들에 대해서 설명하겠습니다.
-
-- Create Run: 현재 버전의 파이프라인을 실행합니다.
-- Upload Version: 파이프라인을 새로 업로드하여서 버전을 올립니다.
-- Create Experiment: Experiment를 생성합니다.
-
-> Experiment?
-> Kubeflow에서는 실행되는 run을 Experiment단위로 관리를 합니다.
 
 Upload Version을 클릭하면 다음과 같이 파이프라인을 업로드할 수 있는 화면이 생성됩니다.
 

@@ -17,16 +17,16 @@ menu:
 - requirements.txt
 
   ```text
-  kfp
-  scikit-learn
-  mlflow
-  pandas
-  dill
+  kfp==1.8.9
+  scikit-learn==1.0.1
+  mlflow==1.21.0
+  pandas==1.3.4
+  dill==0.3.4
   ```
 
 패키지 설치를 진행합니다.
 
-```bash
+```text
 pip3 install -U pip
-pip3 install  kfp scikit-learn mlflow pandas dill
+pip3 install kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 pandas==1.3.4 dill==0.3.4
 ```
