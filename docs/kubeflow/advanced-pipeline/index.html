@@ -1,0 +1,406 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/vendor/jost/jost-v4-latin-regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/vendor/jost/jost-v4-latin-700.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/KaTeX_Main-Regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/KaTeX_Math-Italic.woff2 type=font/woff2 crossorigin><script>(()=>{var b=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,a=localStorage.getItem("theme");b&&a===null&&(localStorage.setItem("theme","dark"),document.documentElement.setAttribute("data-dark-mode","")),b&&a==="dark"&&document.documentElement.setAttribute("data-dark-mode",""),a==="dark"&&document.documentElement.setAttribute("data-dark-mode","")})()</script><link rel=stylesheet href=https://mlops-for-all.github.io/main.b322a9a3364f1882721e852e80a8e044248b358e2ff6e31b579a6720391d26a1f333b3b69d78d5d52fa55aa6d7b7c13aa4f79124d35cd62ace77628e3dc1d71d.css integrity="sha512-syKpozZPGIJyHoUugKjgRCSLNY4v9uMbV5pnIDkdJqHzM7O2nXjV1S+lWqbXt8E6pPeRJNNc1irOd2KOPcHXHQ==" crossorigin=anonymous><noscript><style>img.lazyload{display:none}</style></noscript><meta name=robots content="index, follow"><meta name=googlebot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><meta name=bingbot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><title>9. Pipeline Setting - 모두의 MLOps</title><meta name=description content="Pipeline Setting # 이번 페이지에서는 파이프라인에서 설정할 수 있는 값들에 대해 알아보겠습니다.
+Display Name # 생성된 파이프라인 내에서 컴포넌트는 두 개의 이름을 갖습니다.
+ task_name: 컴포넌트를 작성할 때 작성한 함수 이름 display_name: kubeflow ui상에서 보여지는 이름  예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.
+set_display_name # 이를 위한 것이 바로 display_name 입니다.
+설정하는 방법은 파이프라인에서 컴포넌트에 다음과 같이 set_display_name attribute를 이용하면 됩니다."><link rel=canonical href=https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:title" content="9. Pipeline Setting"><meta property="og:description" content="Pipeline Setting # 이번 페이지에서는 파이프라인에서 설정할 수 있는 값들에 대해 알아보겠습니다.
+Display Name # 생성된 파이프라인 내에서 컴포넌트는 두 개의 이름을 갖습니다.
+ task_name: 컴포넌트를 작성할 때 작성한 함수 이름 display_name: kubeflow ui상에서 보여지는 이름  예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.
+set_display_name # 이를 위한 것이 바로 display_name 입니다.
+설정하는 방법은 파이프라인에서 컴포넌트에 다음과 같이 set_display_name attribute를 이용하면 됩니다."><meta property="og:url" content="https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/"><meta property="og:site_name" content="모두의 MLOps"><meta property="og:image" content="https://mlops-for-all.github.io/doks.png"><meta property="og:image:alt" content="모두의 MLOps"><meta name=twitter:card content="summary_large_image"><meta name=twitter:site content><meta name=twitter:creator content><meta name=twitter:title content="9. Pipeline Setting"><meta name=twitter:description content><meta name=twitter:image content="https://mlops-for-all.github.io/doks.png"><meta name=twitter:image:alt content="9. Pipeline Setting"><script type=application/ld+json>{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://mlops-for-all.github.io/#/schema/organization/1","name":"Doks","url":"https://mlops-for-all.github.io/","sameAs":["https://github.com/mlops-for-all/mlops-for-all.github.io"],"logo":{"@type":"ImageObject","@id":"https://mlops-for-all.github.io/#/schema/image/1","url":"https://mlops-for-all.github.io/logo-doks.png","width":512,"height":512,"caption":"Doks"},"image":{"@id":"https://mlops-for-all.github.io/#/schema/image/1"}},{"@type":"WebSite","@id":"https://mlops-for-all.github.io/#/schema/website/1","url":"https://mlops-for-all.github.io/","name":"모두의 MLOps","description":"모두가 쉽게 시작할 수 있는 MLOps 자료를 제작합니다.","publisher":{"@id":"https://mlops-for-all.github.io/#/schema/organization/1"}},{"@type":"WebPage","@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/","url":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/","name":"9. Pipeline Setting","description":"","isPartOf":{"@id":"https://mlops-for-all.github.io/#/schema/website/1"},"about":{"@id":"https://mlops-for-all.github.io/#/schema/organization/1"},"datePublished":"0001-01-01T00:00:00CET","dateModified":"0001-01-01T00:00:00CET","breadcrumb":{"@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/#/schema/breadcrumb/1"},"primaryImageOfPage":{"@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/#/schema/image/2"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/"]}]},{"@type":"BreadcrumbList","@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/#/schema/breadcrumb/1","name":"Breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://mlops-for-all.github.io","url":"https://mlops-for-all.github.io","name":"Home"}},{"@type":"ListItem","position":3,"item":{"@type":"WebPage","@id":"https://mlops-for-all.github.io/docs/","url":"https://mlops-for-all.github.io/docs/","name":"Docs"}},{"@type":"ListItem","position":4,"item":{"@type":"WebPage","@id":"https://mlops-for-all.github.io/docs/kubeflow/","url":"https://mlops-for-all.github.io/docs/kubeflow/","name":"Kubeflow"}},{"@type":"ListItem","position":5,"item":{"@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/"}}]},{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://mlops-for-all.github.io/#/schema/article/1","headline":"9. Pipeline Setting","description":"","isPartOf":{"@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/"},"mainEntityOfPage":{"@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/"},"datePublished":"0001-01-01T00:00:00CET","dateModified":"0001-01-01T00:00:00CET","author":{"@id":"https://mlops-for-all.github.io/#/schema/person/2"},"publisher":{"@id":"https://mlops-for-all.github.io/#/schema/organization/1"},"image":{"@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/#/schema/image/2"}}]},{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://mlops-for-all.github.io/#/schema/person/2","name":"Henk Verlinde","sameAs":["https://github.com/mlops-for-all"]}]},{"@context":"https://schema.org","@graph":[{"@type":"ImageObject","@id":"https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/#/schema/image/2","url":"https://mlops-for-all.github.io/doks.png","contentUrl":"https://mlops-for-all.github.io/doks.png","caption":"9. Pipeline Setting"}]}]}</script><meta name=theme-color content="#fff"><link rel=apple-touch-icon sizes=180x180 href=https://mlops-for-all.github.io/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://mlops-for-all.github.io/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://mlops-for-all.github.io/favicon-16x16.png><link rel=manifest crossorigin=use-credentials href=https://mlops-for-all.github.io/site.webmanifest></head><body class="docs single"><div class=header-bar></div><header class="navbar navbar-expand-md navbar-light doks-navbar"><nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation"><a class="navbar-brand p-0 me-auto" href=/ aria-label="모두의 MLOps">모두의 MLOps</a>
+<button class="btn btn-menu d-block d-md-none order-5" type=button data-bs-toggle=offcanvas data-bs-target=#offcanvasDoks aria-controls=offcanvasDoks aria-label="Open main menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><div class="offcanvas offcanvas-start border-0 py-md-1" tabindex=-1 id=offcanvasDoks data-bs-backdrop=true aria-labelledby=offcanvasDoksLabel><div class="header-bar d-md-none"></div><div class="offcanvas-header d-md-none"><h2 class="h5 offcanvas-title ps-2" id=offcanvasDoksLabel><a class=text-dark href=/>모두의 MLOps</a></h2><button type=button class="btn-close text-reset me-2" data-bs-dismiss=offcanvas aria-label="Close main menu"></button></div><div class="offcanvas-body px-4"><h3 class="h6 text-uppercase mb-3 d-md-none">Main</h3><ul class="nav flex-column flex-md-row ms-md-n3"><li class=nav-item><a class="nav-link ps-0 py-1 active" href=/docs/prologue/welcome/>Docs</a></li><li class=nav-item><a class="nav-link ps-0 py-1" href=/contributors/>Contributors</a></li><li class=nav-item><a class="nav-link ps-0 py-1" href=/contact/>Contact</a></li></ul><hr class="text-black-50 my-4 d-md-none"><h3 class="h6 text-uppercase mb-3 d-md-none">Socials</h3><ul class="nav flex-column flex-md-row ms-md-auto me-md-n5 pe-md-2"><li class=nav-item><a class="nav-link ps-0 py-1" href=https://github.com/mlops-for-all/mlops-for-all.github.io><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg><small class="ms-2 d-md-none">GitHub</small></a></li></ul></div></div><button id=mode class="btn btn-link order-md-1" type=button aria-label="Toggle user interface mode">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button></nav></header><nav class="doks-subnavbar py-2 sticky-lg-top" aria-label="Secondary navigation"><div class="container-xxl d-flex align-items-md-center"><form class="doks-search position-relative flex-grow-1 me-auto"><input id=search class="form-control is-search" type=search placeholder="Search docs..." aria-label="Search docs..." autocomplete=off><div id=suggestions class="shadow bg-white rounded d-none"></div></form><button class="btn doks-sidebar-toggle d-lg-none ms-3 order-3 collapsed" type=button data-bs-toggle=collapse data-bs-target=#doks-docs-nav aria-controls=doks-docs-nav aria-expanded=false aria-label="Toggle documentation navigation"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="doks doks-expand" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>Expand</title><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="doks doks-collapse" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>Collapse</title><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg></button></div></nav><div class=container-xxl><aside class=doks-sidebar><nav id=doks-docs-nav class="collapse d-lg-none" aria-label="Tertiary navigation"><h3 class="h6 text-uppercase">Prologue</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/prologue/welcome/>Welcome to MLOps for ALL!</a></li></ul><h3 class="h6 text-uppercase">Introduction</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/introduction/intro/>1. What is MLOps?</a></li><li><a class=docs-link href=/docs/introduction/component/>2. Components of MLOps</a></li><li><a class=docs-link href=/docs/introduction/why_kubernetes/>3. Why Kuberntes?</a></li></ul><h3 class="h6 text-uppercase">Setup Kubernetes</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/setup-kubernetes/intro/>1. Introduction</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes/>2. Setup Kubernetes</a></li><li><a class=docs-link href=/docs/setup-kubernetes/setup-pre-requisite/>3. Setup Prerequisite</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes-with-kubeadm/>4.1. Setup Kubernetes - Kubeadm</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes-with-minikube/>4.2. Setup Kubernetes - Minikube</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes-with-k3s/>4.3. Setup Kubernetes - K3s</a></li><li><a class=docs-link href=/docs/setup-kubernetes/setup-kubernetes-module/>5. Setup Kubernetes Modules</a></li><li><a class=docs-link href=/docs/setup-kubernetes/setup-nvidia-gpu/>6. (Optional) Setup GPU</a></li></ul><h3 class="h6 text-uppercase">Setup Components</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/setup-components/install-components-kf/>1. Kubeflow</a></li><li><a class=docs-link href=/docs/setup-components/install-components-mlflow/>2. MLFlow</a></li><li><a class=docs-link href=/docs/setup-components/install-components-pg/>3. Prometheus & Grafana</a></li><li><a class=docs-link href=/docs/setup-components/install-components-seldon/>4. Seldon-Core</a></li></ul><h3 class="h6 text-uppercase">Kubeflow</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/kubeflow/kubeflow-intro/>1. Kubeflow Introduction</a></li><li><a class=docs-link href=/docs/kubeflow/kubeflow-concepts/>2. Concepts</a></li><li><a class=docs-link href=/docs/kubeflow/basic-requirements/>3. Install Requirements</a></li><li><a class=docs-link href=/docs/kubeflow/basic-component/>4. Write Component</a></li><li><a class=docs-link href=/docs/kubeflow/basic-pipeline/>5. Write Pipeline</a></li><li><a class=docs-link href=/docs/kubeflow/basic-pipeline-upload/>6. Pipeline Upload</a></li><li><a class=docs-link href=/docs/kubeflow/basic-run/>7. Run Pipeline</a></li><li><a class=docs-link href=/docs/kubeflow/advanced-component/>8. Component Envrionment</a></li><li><a class="docs-link active" href=/docs/kubeflow/advanced-pipeline/>9. Pipeline Setting</a></li><li><a class=docs-link href=/docs/kubeflow/advanced-run/>10. Run Result</a></li><li><a class=docs-link href=/docs/kubeflow/advanced-mlflow/>11. MLFlow Component</a></li><li><a class=docs-link href=/docs/kubeflow/how-to-debug/>12. Component Debugging</a></li></ul><h3 class="h6 text-uppercase">API Deployment</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/api-deployment/example/>API Deployment example</a></li></ul><h3 class="h6 text-uppercase">help</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/help/how-to-contribute/>How to Contribute</a></li></ul></nav></aside></div><div class="wrap container-xxl" role=document><div class=content><div class="row flex-xl-nowrap"><div class="col-lg-5 col-xl-4 docs-sidebar d-none d-lg-block"><nav class=docs-links aria-label="Main navigation"><h3 class="h6 text-uppercase">Prologue</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/prologue/welcome/>Welcome to MLOps for ALL!</a></li></ul><h3 class="h6 text-uppercase">Introduction</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/introduction/intro/>1. What is MLOps?</a></li><li><a class=docs-link href=/docs/introduction/component/>2. Components of MLOps</a></li><li><a class=docs-link href=/docs/introduction/why_kubernetes/>3. Why Kuberntes?</a></li></ul><h3 class="h6 text-uppercase">Setup Kubernetes</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/setup-kubernetes/intro/>1. Introduction</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes/>2. Setup Kubernetes</a></li><li><a class=docs-link href=/docs/setup-kubernetes/setup-pre-requisite/>3. Setup Prerequisite</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes-with-kubeadm/>4.1. Setup Kubernetes - Kubeadm</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes-with-minikube/>4.2. Setup Kubernetes - Minikube</a></li><li><a class=docs-link href=/docs/setup-kubernetes/kubernetes-with-k3s/>4.3. Setup Kubernetes - K3s</a></li><li><a class=docs-link href=/docs/setup-kubernetes/setup-kubernetes-module/>5. Setup Kubernetes Modules</a></li><li><a class=docs-link href=/docs/setup-kubernetes/setup-nvidia-gpu/>6. (Optional) Setup GPU</a></li></ul><h3 class="h6 text-uppercase">Setup Components</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/setup-components/install-components-kf/>1. Kubeflow</a></li><li><a class=docs-link href=/docs/setup-components/install-components-mlflow/>2. MLFlow</a></li><li><a class=docs-link href=/docs/setup-components/install-components-pg/>3. Prometheus & Grafana</a></li><li><a class=docs-link href=/docs/setup-components/install-components-seldon/>4. Seldon-Core</a></li></ul><h3 class="h6 text-uppercase">Kubeflow</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/kubeflow/kubeflow-intro/>1. Kubeflow Introduction</a></li><li><a class=docs-link href=/docs/kubeflow/kubeflow-concepts/>2. Concepts</a></li><li><a class=docs-link href=/docs/kubeflow/basic-requirements/>3. Install Requirements</a></li><li><a class=docs-link href=/docs/kubeflow/basic-component/>4. Write Component</a></li><li><a class=docs-link href=/docs/kubeflow/basic-pipeline/>5. Write Pipeline</a></li><li><a class=docs-link href=/docs/kubeflow/basic-pipeline-upload/>6. Pipeline Upload</a></li><li><a class=docs-link href=/docs/kubeflow/basic-run/>7. Run Pipeline</a></li><li><a class=docs-link href=/docs/kubeflow/advanced-component/>8. Component Envrionment</a></li><li><a class="docs-link active" href=/docs/kubeflow/advanced-pipeline/>9. Pipeline Setting</a></li><li><a class=docs-link href=/docs/kubeflow/advanced-run/>10. Run Result</a></li><li><a class=docs-link href=/docs/kubeflow/advanced-mlflow/>11. MLFlow Component</a></li><li><a class=docs-link href=/docs/kubeflow/how-to-debug/>12. Component Debugging</a></li></ul><h3 class="h6 text-uppercase">API Deployment</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/api-deployment/example/>API Deployment example</a></li></ul><h3 class="h6 text-uppercase">help</h3><ul class=list-unstyled><li><a class=docs-link href=/docs/help/how-to-contribute/>How to Contribute</a></li></ul></nav></div><nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#pipeline-setting>Pipeline Setting</a></li><li><a href=#display-name>Display Name</a><ul><li><a href=#set_display_name>set_display_name</a></li><li><a href=#ui-in-kubeflow>UI in Kubeflow</a></li></ul></li><li><a href=#resources>Resources</a><ul><li><a href=#gpu>GPU</a></li><li><a href=#cpu>CPU</a></li><li><a href=#memory>Memory</a></li></ul></li></ul></nav></div></nav><main class="docs-content col-lg-11 col-xl-9 mx-xl-auto"><h1>9. Pipeline Setting</h1><p class=lead></p><nav class=d-xl-none aria-label="Quaternary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#pipeline-setting>Pipeline Setting</a></li><li><a href=#display-name>Display Name</a><ul><li><a href=#set_display_name>set_display_name</a></li><li><a href=#ui-in-kubeflow>UI in Kubeflow</a></li></ul></li><li><a href=#resources>Resources</a><ul><li><a href=#gpu>GPU</a></li><li><a href=#cpu>CPU</a></li><li><a href=#memory>Memory</a></li></ul></li></ul></nav></div></nav><h2 id=pipeline-setting>Pipeline Setting <a href=#pipeline-setting class=anchor aria-hidden=true>#</a></h2><p>이번 페이지에서는 파이프라인에서 설정할 수 있는 값들에 대해 알아보겠습니다.</p><h2 id=display-name>Display Name <a href=#display-name class=anchor aria-hidden=true>#</a></h2><p>생성된 파이프라인 내에서 컴포넌트는 두 개의 이름을 갖습니다.</p><ul><li>task_name: 컴포넌트를 작성할 때 작성한 함수 이름</li><li>display_name: kubeflow ui상에서 보여지는 이름</li></ul><p>예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.</p><p align=center><img src=/images/docs/kubeflow/run-7.png title=run></p><h3 id=set_display_name>set_display_name <a href=#set_display_name class=anchor aria-hidden=true>#</a></h3><p>이를 위한 것이 바로 display_name 입니다.<br>설정하는 방법은 파이프라인에서 컴포넌트에 다음과 같이 <code>set_display_name</code> <a href=https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html#kfp.dsl.ContainerOp.set_display_name>attribute</a>를 이용하면 됩니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>kfp</span>
+<span class=kn>from</span> <span class=nn>kfp.components</span> <span class=kn>import</span> <span class=n>create_component_from_func</span>
+<span class=kn>from</span> <span class=nn>kfp.dsl</span> <span class=kn>import</span> <span class=n>pipeline</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>print_and_return_number</span><span class=p>(</span><span class=n>number</span><span class=p>:</span> <span class=nb>int</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>int</span><span class=p>:</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>number</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>sum_and_print_numbers</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number_1</span> <span class=o>+</span> <span class=n>number_2</span><span class=p>)</span>
+
+
+<span class=nd>@pipeline</span><span class=p>(</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;example_pipeline&#34;</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>example_pipeline</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=n>number_1_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_1</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 1&#34;</span><span class=p>)</span>
+    <span class=n>number_2_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_2</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 2&#34;</span><span class=p>)</span>
+    <span class=n>sum_result</span> <span class=o>=</span> <span class=n>sum_and_print_numbers</span><span class=p>(</span>
+        <span class=n>number_1</span><span class=o>=</span><span class=n>number_1_result</span><span class=o>.</span><span class=n>output</span><span class=p>,</span> <span class=n>number_2</span><span class=o>=</span><span class=n>number_2_result</span><span class=o>.</span><span class=n>output</span>
+    <span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is sum of number 1 and number 2&#34;</span><span class=p>)</span>
+
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+    <span class=n>kfp</span><span class=o>.</span><span class=n>compiler</span><span class=o>.</span><span class=n>Compiler</span><span class=p>()</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=n>example_pipeline</span><span class=p>,</span> <span class=s2>&#34;example_pipeline.yaml&#34;</span><span class=p>)</span>
+</code></pre></div><p>이 스크립트를 실행해서 나온 <code>example_pipeline.yaml</code>을 확인하면 다음과 같습니다.</p><p><details><summary>example_pipeline.yaml</summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: example-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.9, pipelines.kubeflow.org/pipeline_compilation_time: &#39;2021-12-09T18:11:43.193190&#39;,
+    pipelines.kubeflow.org/pipeline_spec: &#39;{&#34;inputs&#34;: [{&#34;name&#34;: &#34;number_1&#34;, &#34;type&#34;:
+      &#34;Integer&#34;}, {&#34;name&#34;: &#34;number_2&#34;, &#34;type&#34;: &#34;Integer&#34;}], &#34;name&#34;: &#34;example_pipeline&#34;}&#39;}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.9}
+spec:
+  entrypoint: example-pipeline
+  templates:
+  - name: example-pipeline
+    inputs:
+      parameters:
+      - {name: number_1}
+      - {name: number_2}
+    dag:
+      tasks:
+      - name: print-and-return-number
+        template: print-and-return-number
+        arguments:
+          parameters:
+          - {name: number_1, value: &#39;{{inputs.parameters.number_1}}&#39;}
+      - name: print-and-return-number-2
+        template: print-and-return-number-2
+        arguments:
+          parameters:
+          - {name: number_2, value: &#39;{{inputs.parameters.number_2}}&#39;}
+      - name: sum-and-print-numbers
+        template: sum-and-print-numbers
+        dependencies: [print-and-return-number, print-and-return-number-2]
+        arguments:
+          parameters:
+          - {name: print-and-return-number-2-Output, value: &#39;{{tasks.print-and-return-number-2.outputs.parameters.print-and-return-number-2-Output}}&#39;}
+          - {name: print-and-return-number-Output, value: &#39;{{tasks.print-and-return-number.outputs.parameters.print-and-return-number-Output}}&#39;}
+  - name: print-and-return-number
+    container:
+      args: [--number, &#39;{{inputs.parameters.number_1}}&#39;, &#39;----output-paths&#39;, /tmp/outputs/Output/data]
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def print_and_return_number(number):
+            print(number)
+            return number
+
+        def _serialize_int(int_value: int) -&gt; str:
+            if isinstance(int_value, str):
+                return int_value
+            if not isinstance(int_value, int):
+                raise TypeError(&#39;Value &#34;{}&#34; has type &#34;{}&#34; instead of int.&#39;.format(
+                    str(int_value), str(type(int_value))))
+            return str(int_value)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Print and return number&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--number&#34;, dest=&#34;number&#34;, type=int, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;----output-paths&#34;, dest=&#34;_output_paths&#34;, type=str, nargs=1)
+        _parsed_args = vars(_parser.parse_args())
+        _output_files = _parsed_args.pop(&#34;_output_paths&#34;, [])
+
+        _outputs = print_and_return_number(**_parsed_args)
+
+        _outputs = [_outputs]
+
+        _output_serializers = [
+            _serialize_int,
+
+        ]
+
+        import os
+        for idx, output_file in enumerate(_output_files):
+            try:
+                os.makedirs(os.path.dirname(output_file))
+            except OSError:
+                pass
+            with open(output_file, &#39;w&#39;) as f:
+                f.write(_output_serializers[idx](_outputs[idx]))
+      image: python:3.7
+    inputs:
+      parameters:
+      - {name: number_1}
+    outputs:
+      parameters:
+      - name: print-and-return-number-Output
+        valueFrom: {path: /tmp/outputs/Output/data}
+      artifacts:
+      - {name: print-and-return-number-Output, path: /tmp/outputs/Output/data}
+    metadata:
+      annotations: {pipelines.kubeflow.org/task_display_name: This is number 1, pipelines.kubeflow.org/component_spec: &#39;{&#34;implementation&#34;:
+          {&#34;container&#34;: {&#34;args&#34;: [&#34;--number&#34;, {&#34;inputValue&#34;: &#34;number&#34;}, &#34;----output-paths&#34;,
+          {&#34;outputPath&#34;: &#34;Output&#34;}], &#34;command&#34;: [&#34;sh&#34;, &#34;-ec&#34;, &#34;program_path=$(mktemp)\nprintf
+          \&#34;%s\&#34; \&#34;$0\&#34; &gt; \&#34;$program_path\&#34;\npython3 -u \&#34;$program_path\&#34; \&#34;$@\&#34;\n&#34;,
+          &#34;def print_and_return_number(number):\n    print(number)\n    return number\n\ndef
+          _serialize_int(int_value: int) -&gt; str:\n    if isinstance(int_value, str):\n        return
+          int_value\n    if not isinstance(int_value, int):\n        raise TypeError(&#39;&#39;Value
+          \&#34;{}\&#34; has type \&#34;{}\&#34; instead of int.&#39;&#39;.format(\n            str(int_value),
+          str(type(int_value))))\n    return str(int_value)\n\nimport argparse\n_parser
+          = argparse.ArgumentParser(prog=&#39;&#39;Print and return number&#39;&#39;, description=&#39;&#39;&#39;&#39;)\n_parser.add_argument(\&#34;--number\&#34;,
+          dest=\&#34;number\&#34;, type=int, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;----output-paths\&#34;,
+          dest=\&#34;_output_paths\&#34;, type=str, nargs=1)\n_parsed_args = vars(_parser.parse_args())\n_output_files
+          = _parsed_args.pop(\&#34;_output_paths\&#34;, [])\n\n_outputs = print_and_return_number(**_parsed_args)\n\n_outputs
+          = [_outputs]\n\n_output_serializers = [\n    _serialize_int,\n\n]\n\nimport
+          os\nfor idx, output_file in enumerate(_output_files):\n    try:\n        os.makedirs(os.path.dirname(output_file))\n    except
+          OSError:\n        pass\n    with open(output_file, &#39;&#39;w&#39;&#39;) as f:\n        f.write(_output_serializers[idx](_outputs[idx]))\n&#34;],
+          &#34;image&#34;: &#34;python:3.7&#34;}}, &#34;inputs&#34;: [{&#34;name&#34;: &#34;number&#34;, &#34;type&#34;: &#34;Integer&#34;}],
+          &#34;name&#34;: &#34;Print and return number&#34;, &#34;outputs&#34;: [{&#34;name&#34;: &#34;Output&#34;, &#34;type&#34;:
+          &#34;Integer&#34;}]}&#39;, pipelines.kubeflow.org/component_ref: &#39;{}&#39;, pipelines.kubeflow.org/arguments.parameters: &#39;{&#34;number&#34;:
+          &#34;{{inputs.parameters.number_1}}&#34;}&#39;}
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.9
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: &#34;true&#34;
+  - name: print-and-return-number-2
+    container:
+      args: [--number, &#39;{{inputs.parameters.number_2}}&#39;, &#39;----output-paths&#39;, /tmp/outputs/Output/data]
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def print_and_return_number(number):
+            print(number)
+            return number
+
+        def _serialize_int(int_value: int) -&gt; str:
+            if isinstance(int_value, str):
+                return int_value
+            if not isinstance(int_value, int):
+                raise TypeError(&#39;Value &#34;{}&#34; has type &#34;{}&#34; instead of int.&#39;.format(
+                    str(int_value), str(type(int_value))))
+            return str(int_value)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Print and return number&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--number&#34;, dest=&#34;number&#34;, type=int, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;----output-paths&#34;, dest=&#34;_output_paths&#34;, type=str, nargs=1)
+        _parsed_args = vars(_parser.parse_args())
+        _output_files = _parsed_args.pop(&#34;_output_paths&#34;, [])
+
+        _outputs = print_and_return_number(**_parsed_args)
+
+        _outputs = [_outputs]
+
+        _output_serializers = [
+            _serialize_int,
+
+        ]
+
+        import os
+        for idx, output_file in enumerate(_output_files):
+            try:
+                os.makedirs(os.path.dirname(output_file))
+            except OSError:
+                pass
+            with open(output_file, &#39;w&#39;) as f:
+                f.write(_output_serializers[idx](_outputs[idx]))
+      image: python:3.7
+    inputs:
+      parameters:
+      - {name: number_2}
+    outputs:
+      parameters:
+      - name: print-and-return-number-2-Output
+        valueFrom: {path: /tmp/outputs/Output/data}
+      artifacts:
+      - {name: print-and-return-number-2-Output, path: /tmp/outputs/Output/data}
+    metadata:
+      annotations: {pipelines.kubeflow.org/task_display_name: This is number 2, pipelines.kubeflow.org/component_spec: &#39;{&#34;implementation&#34;:
+          {&#34;container&#34;: {&#34;args&#34;: [&#34;--number&#34;, {&#34;inputValue&#34;: &#34;number&#34;}, &#34;----output-paths&#34;,
+          {&#34;outputPath&#34;: &#34;Output&#34;}], &#34;command&#34;: [&#34;sh&#34;, &#34;-ec&#34;, &#34;program_path=$(mktemp)\nprintf
+          \&#34;%s\&#34; \&#34;$0\&#34; &gt; \&#34;$program_path\&#34;\npython3 -u \&#34;$program_path\&#34; \&#34;$@\&#34;\n&#34;,
+          &#34;def print_and_return_number(number):\n    print(number)\n    return number\n\ndef
+          _serialize_int(int_value: int) -&gt; str:\n    if isinstance(int_value, str):\n        return
+          int_value\n    if not isinstance(int_value, int):\n        raise TypeError(&#39;&#39;Value
+          \&#34;{}\&#34; has type \&#34;{}\&#34; instead of int.&#39;&#39;.format(\n            str(int_value),
+          str(type(int_value))))\n    return str(int_value)\n\nimport argparse\n_parser
+          = argparse.ArgumentParser(prog=&#39;&#39;Print and return number&#39;&#39;, description=&#39;&#39;&#39;&#39;)\n_parser.add_argument(\&#34;--number\&#34;,
+          dest=\&#34;number\&#34;, type=int, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;----output-paths\&#34;,
+          dest=\&#34;_output_paths\&#34;, type=str, nargs=1)\n_parsed_args = vars(_parser.parse_args())\n_output_files
+          = _parsed_args.pop(\&#34;_output_paths\&#34;, [])\n\n_outputs = print_and_return_number(**_parsed_args)\n\n_outputs
+          = [_outputs]\n\n_output_serializers = [\n    _serialize_int,\n\n]\n\nimport
+          os\nfor idx, output_file in enumerate(_output_files):\n    try:\n        os.makedirs(os.path.dirname(output_file))\n    except
+          OSError:\n        pass\n    with open(output_file, &#39;&#39;w&#39;&#39;) as f:\n        f.write(_output_serializers[idx](_outputs[idx]))\n&#34;],
+          &#34;image&#34;: &#34;python:3.7&#34;}}, &#34;inputs&#34;: [{&#34;name&#34;: &#34;number&#34;, &#34;type&#34;: &#34;Integer&#34;}],
+          &#34;name&#34;: &#34;Print and return number&#34;, &#34;outputs&#34;: [{&#34;name&#34;: &#34;Output&#34;, &#34;type&#34;:
+          &#34;Integer&#34;}]}&#39;, pipelines.kubeflow.org/component_ref: &#39;{}&#39;, pipelines.kubeflow.org/arguments.parameters: &#39;{&#34;number&#34;:
+          &#34;{{inputs.parameters.number_2}}&#34;}&#39;}
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.9
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: &#34;true&#34;
+  - name: sum-and-print-numbers
+    container:
+      args: [--number-1, &#39;{{inputs.parameters.print-and-return-number-Output}}&#39;, --number-2,
+        &#39;{{inputs.parameters.print-and-return-number-2-Output}}&#39;]
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def sum_and_print_numbers(number_1, number_2):
+            print(number_1 + number_2)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Sum and print numbers&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--number-1&#34;, dest=&#34;number_1&#34;, type=int, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--number-2&#34;, dest=&#34;number_2&#34;, type=int, required=True, default=argparse.SUPPRESS)
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = sum_and_print_numbers(**_parsed_args)
+      image: python:3.7
+    inputs:
+      parameters:
+      - {name: print-and-return-number-2-Output}
+      - {name: print-and-return-number-Output}
+    metadata:
+      annotations: {pipelines.kubeflow.org/task_display_name: This is sum of number
+          1 and number 2, pipelines.kubeflow.org/component_spec: &#39;{&#34;implementation&#34;:
+          {&#34;container&#34;: {&#34;args&#34;: [&#34;--number-1&#34;, {&#34;inputValue&#34;: &#34;number_1&#34;}, &#34;--number-2&#34;,
+          {&#34;inputValue&#34;: &#34;number_2&#34;}], &#34;command&#34;: [&#34;sh&#34;, &#34;-ec&#34;, &#34;program_path=$(mktemp)\nprintf
+          \&#34;%s\&#34; \&#34;$0\&#34; &gt; \&#34;$program_path\&#34;\npython3 -u \&#34;$program_path\&#34; \&#34;$@\&#34;\n&#34;,
+          &#34;def sum_and_print_numbers(number_1, number_2):\n    print(number_1 + number_2)\n\nimport
+          argparse\n_parser = argparse.ArgumentParser(prog=&#39;&#39;Sum and print numbers&#39;&#39;,
+          description=&#39;&#39;&#39;&#39;)\n_parser.add_argument(\&#34;--number-1\&#34;, dest=\&#34;number_1\&#34;,
+          type=int, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--number-2\&#34;,
+          dest=\&#34;number_2\&#34;, type=int, required=True, default=argparse.SUPPRESS)\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = sum_and_print_numbers(**_parsed_args)\n&#34;],
+          &#34;image&#34;: &#34;python:3.7&#34;}}, &#34;inputs&#34;: [{&#34;name&#34;: &#34;number_1&#34;, &#34;type&#34;: &#34;Integer&#34;},
+          {&#34;name&#34;: &#34;number_2&#34;, &#34;type&#34;: &#34;Integer&#34;}], &#34;name&#34;: &#34;Sum and print numbers&#34;}&#39;,
+        pipelines.kubeflow.org/component_ref: &#39;{}&#39;, pipelines.kubeflow.org/arguments.parameters: &#39;{&#34;number_1&#34;:
+          &#34;{{inputs.parameters.print-and-return-number-Output}}&#34;, &#34;number_2&#34;: &#34;{{inputs.parameters.print-and-return-number-2-Output}}&#34;}&#39;}
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.9
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: &#34;true&#34;
+  arguments:
+    parameters:
+    - {name: number_1}
+    - {name: number_2}
+  serviceAccountName: pipeline-runner
+</code></pre></div></details></p><p>이 전의 파일과 비교하면 <code>pipelines.kubeflow.org/task_display_name</code> key가 새로 생성되었습니다.</p><h3 id=ui-in-kubeflow>UI in Kubeflow <a href=#ui-in-kubeflow class=anchor aria-hidden=true>#</a></h3><p>위에서 만든 파일을 이용해 이전에 생성한 <a href=/docs/kubeflow/basic-pipeline-upload/#upload-pipeline-version>파이프라인</a>의 버전을 올리겠습니다.</p><p align=center><img src=/images/docs/kubeflow/adv-pipeline-0.png title=run></p><p>그러면 위와 같이 설정한 이름이 노출되는 것을 확인할 수 있습니다.</p><h2 id=resources>Resources <a href=#resources class=anchor aria-hidden=true>#</a></h2><h3 id=gpu>GPU <a href=#gpu class=anchor aria-hidden=true>#</a></h3><p>특별한 설정이 없다면 파이프라인은 컴포넌트를 쿠버네티스 파드(pod)로 실행할 때, 기본 리소스 스펙으로 실행하게 됩니다.<br>만약 GPU를 사용해 모델을 학습해야 할 경우 쿠버네티스 상에서 GPU를 할당받지 못해 제대로 학습이 이루어지지 않습니다.<br>이를 위해 <code>set_gpu_limit()</code> <a href="https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.UserContainer.set_gpu_limit">attribute</a>를 지원합니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>kfp</span>
+<span class=kn>from</span> <span class=nn>kfp.components</span> <span class=kn>import</span> <span class=n>create_component_from_func</span>
+<span class=kn>from</span> <span class=nn>kfp.dsl</span> <span class=kn>import</span> <span class=n>pipeline</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>print_and_return_number</span><span class=p>(</span><span class=n>number</span><span class=p>:</span> <span class=nb>int</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>int</span><span class=p>:</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>number</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>sum_and_print_numbers</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number_1</span> <span class=o>+</span> <span class=n>number_2</span><span class=p>)</span>
+
+
+<span class=nd>@pipeline</span><span class=p>(</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;example_pipeline&#34;</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>example_pipeline</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=n>number_1_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_1</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 1&#34;</span><span class=p>)</span>
+    <span class=n>number_2_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_2</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 2&#34;</span><span class=p>)</span>
+    <span class=n>sum_result</span> <span class=o>=</span> <span class=n>sum_and_print_numbers</span><span class=p>(</span>
+        <span class=n>number_1</span><span class=o>=</span><span class=n>number_1_result</span><span class=o>.</span><span class=n>output</span><span class=p>,</span> <span class=n>number_2</span><span class=o>=</span><span class=n>number_2_result</span><span class=o>.</span><span class=n>output</span>
+    <span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is sum of number 1 and number 2&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>set_gpu_limit</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span>
+
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+    <span class=n>kfp</span><span class=o>.</span><span class=n>compiler</span><span class=o>.</span><span class=n>Compiler</span><span class=p>()</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=n>example_pipeline</span><span class=p>,</span> <span class=s2>&#34;example_pipeline.yaml&#34;</span><span class=p>)</span>
+</code></pre></div><p>위의 스크립트를 실행할 경우 생성된 파일에서 <code>sum-and-print-numbers</code>를 자세히 보면 resources에 <code>{nvidia.com/gpu: 1}</code> 도 추가된 것을 볼 수 있습니다.
+이를 통해 GPU를 할당 받을 수 있습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>  - name: sum-and-print-numbers
+    container:
+      args: [--number-1, &#39;{{inputs.parameters.print-and-return-number-Output}}&#39;, --number-2,
+        &#39;{{inputs.parameters.print-and-return-number-2-Output}}&#39;]
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def sum_and_print_numbers(number_1, number_2):
+            print(number_1 + number_2)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Sum and print numbers&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--number-1&#34;, dest=&#34;number_1&#34;, type=int, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--number-2&#34;, dest=&#34;number_2&#34;, type=int, required=True, default=argparse.SUPPRESS)
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = sum_and_print_numbers(**_parsed_args)
+      image: python:3.7
+      resources:
+        limits: {nvidia.com/gpu: 1}
+</code></pre></div><h3 id=cpu>CPU <a href=#cpu class=anchor aria-hidden=true>#</a></h3><p>cpu의 개수를 정하기 위해서 이용하는 함수는 <code>.set_cpu_limit</code> 입니다.<br>gpu와는 다른 점은 string으로 입력해야 한다는 점입니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>kfp</span>
+<span class=kn>from</span> <span class=nn>kfp.components</span> <span class=kn>import</span> <span class=n>create_component_from_func</span>
+<span class=kn>from</span> <span class=nn>kfp.dsl</span> <span class=kn>import</span> <span class=n>pipeline</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>print_and_return_number</span><span class=p>(</span><span class=n>number</span><span class=p>:</span> <span class=nb>int</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>int</span><span class=p>:</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>number</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>sum_and_print_numbers</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number_1</span> <span class=o>+</span> <span class=n>number_2</span><span class=p>)</span>
+
+
+<span class=nd>@pipeline</span><span class=p>(</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;example_pipeline&#34;</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>example_pipeline</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=n>number_1_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_1</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 1&#34;</span><span class=p>)</span>
+    <span class=n>number_2_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_2</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 2&#34;</span><span class=p>)</span>
+    <span class=n>sum_result</span> <span class=o>=</span> <span class=n>sum_and_print_numbers</span><span class=p>(</span>
+        <span class=n>number_1</span><span class=o>=</span><span class=n>number_1_result</span><span class=o>.</span><span class=n>output</span><span class=p>,</span> <span class=n>number_2</span><span class=o>=</span><span class=n>number_2_result</span><span class=o>.</span><span class=n>output</span>
+    <span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is sum of number 1 and number 2&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>set_gpu_limit</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=o>.</span><span class=n>set_cpu_limit</span><span class=p>(</span><span class=s2>&#34;16&#34;</span><span class=p>)</span>
+
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+    <span class=n>kfp</span><span class=o>.</span><span class=n>compiler</span><span class=o>.</span><span class=n>Compiler</span><span class=p>()</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=n>example_pipeline</span><span class=p>,</span> <span class=s2>&#34;example_pipeline.yaml&#34;</span><span class=p>)</span>
+</code></pre></div><p>바뀐 부분만 확인하면 다음과 같습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>      resources:
+        limits: {nvidia.com/gpu: 1, cpu: &#39;16&#39;}
+</code></pre></div><h3 id=memory>Memory <a href=#memory class=anchor aria-hidden=true>#</a></h3><p>메모리는 <code>set_memory_limit</code>을 이용해 설정할 수 있습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>import</span> <span class=nn>kfp</span>
+<span class=kn>from</span> <span class=nn>kfp.components</span> <span class=kn>import</span> <span class=n>create_component_from_func</span>
+<span class=kn>from</span> <span class=nn>kfp.dsl</span> <span class=kn>import</span> <span class=n>pipeline</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>print_and_return_number</span><span class=p>(</span><span class=n>number</span><span class=p>:</span> <span class=nb>int</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=nb>int</span><span class=p>:</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number</span><span class=p>)</span>
+    <span class=k>return</span> <span class=n>number</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>sum_and_print_numbers</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=nb>print</span><span class=p>(</span><span class=n>number_1</span> <span class=o>+</span> <span class=n>number_2</span><span class=p>)</span>
+
+
+<span class=nd>@pipeline</span><span class=p>(</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;example_pipeline&#34;</span><span class=p>)</span>
+<span class=k>def</span> <span class=nf>example_pipeline</span><span class=p>(</span><span class=n>number_1</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span> <span class=n>number_2</span><span class=p>:</span> <span class=nb>int</span><span class=p>):</span>
+    <span class=n>number_1_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_1</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 1&#34;</span><span class=p>)</span>
+    <span class=n>number_2_result</span> <span class=o>=</span> <span class=n>print_and_return_number</span><span class=p>(</span><span class=n>number_2</span><span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is number 2&#34;</span><span class=p>)</span>
+    <span class=n>sum_result</span> <span class=o>=</span> <span class=n>sum_and_print_numbers</span><span class=p>(</span>
+        <span class=n>number_1</span><span class=o>=</span><span class=n>number_1_result</span><span class=o>.</span><span class=n>output</span><span class=p>,</span> <span class=n>number_2</span><span class=o>=</span><span class=n>number_2_result</span><span class=o>.</span><span class=n>output</span>
+    <span class=p>)</span><span class=o>.</span><span class=n>set_display_name</span><span class=p>(</span><span class=s2>&#34;This is sum of number 1 and number 2&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>set_gpu_limit</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span><span class=o>.</span><span class=n>set_memory_limit</span><span class=p>(</span><span class=s2>&#34;1G&#34;</span><span class=p>)</span>
+
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+    <span class=n>kfp</span><span class=o>.</span><span class=n>compiler</span><span class=o>.</span><span class=n>Compiler</span><span class=p>()</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=n>example_pipeline</span><span class=p>,</span> <span class=s2>&#34;example_pipeline.yaml&#34;</span><span class=p>)</span>
+
+</code></pre></div><p>바뀐 부분만 확인하면 다음과 같습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>      resources:
+        limits: {nvidia.com/gpu: 1, memory: 1G}
+</code></pre></div><p class=edit-page><a href=https://github.com/mlops-for-all/mlops-for-all.github.io/blob/main/content/en/docs/kubeflow/advanced-pipeline.md><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828.0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Edit this page on GitHub</a></p><div class="docs-navigation d-flex justify-content-between"><a href=/docs/kubeflow/advanced-component/><div class="card my-1"><div class="card-body py-2">&larr; 8. Component Envrionment</div></div></a><a class=ms-auto href=/docs/kubeflow/advanced-run/><div class="card my-1"><div class="card-body py-2">10. Run Result &rarr;</div></div></a></div></main></div></div></div><footer class="footer text-muted"><div class=container-xxl><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a></li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-end"><ul class=list-inline></ul></div></div></div></footer><script src=/js/bootstrap.min.592b9faf6c83a2bda564a377cf82f9a67546b198510a93fdb0728f9622ec22729d44be02fb2ea16c3fe5365ae1806259cd111932ca28e68b66462d6937635bab.js integrity="sha512-WSufr2yDor2lZKN3z4L5pnVGsZhRCpP9sHKPliLsInKdRL4C+y6hbD/lNlrhgGJZzREZMsoo5otmRi1pN2Nbqw==" crossorigin=anonymous defer></script>
+<script src=/js/highlight.min.e13cfba4c5524e30386cb9ea71f0f191f39d15b25b222f4b67549689f7c076158f42a2282446044f5cdacc76a6d003efbfa252a84aea0116703803b6339ae35f.js integrity="sha512-4Tz7pMVSTjA4bLnqcfDxkfOdFbJbIi9LZ1SWiffAdhWPQqIoJEYET1zazHam0APvv6JSqErqARZwOAO2M5rjXw==" crossorigin=anonymous defer></script>
+<script src=/js/vendor/katex/dist/katex.min.849bcb0a26d9f709f5e2355f5188d1c21e07bb04544918a1c2a6d290dc2ebcb9b787ba92911f609242c898b7ce8009c541be9153a357e673818164f829d917fe.js integrity="sha512-hJvLCibZ9wn14jVfUYjRwh4HuwRUSRihwqbSkNwuvLm3h7qSkR9gkkLImLfOgAnFQb6RU6NX5nOBgWT4KdkX/g==" crossorigin=anonymous defer></script>
+<script src=/js/vendor/katex/dist/contrib/auto-render.min.916823ec103cf367b71e28a6f01513cb9c3ac6708ccb5229402ec46b8e30a8b25003db694df35d80e9dd666a371f327c6152790617b6256390c164109a90bd4c.js integrity="sha512-kWgj7BA882e3Hiim8BUTy5w6xnCMy1IpQC7Ea44wqLJQA9tpTfNdgOndZmo3HzJ8YVJ5Bhe2JWOQwWQQmpC9TA==" crossorigin=anonymous defer></script>
+<script src=/main.min.647c6f9869eb8e24d3f5183f467970dbadd12adeec725e66830376db069558e917e21eb7dd363563443d2c91c5c6557ea3b2864d1f2a78c3f65e676fa19b961b.js integrity="sha512-ZHxvmGnrjiTT9Rg/Rnlw263RKt7scl5mgwN22waVWOkX4h633TY1Y0Q9LJHFxlV+o7KGTR8qeMP2XmdvoZuWGw==" crossorigin=anonymous defer></script>
+<script src=https://mlops-for-all.github.io/index.min.ea751b7900885a0c94cec34cd483928a98d1ca9d819680ecca921b97871067be042fff1c431ac8feafafb48d3d101b97556bf168f45380ecb35cc102ff4e9ea3.js integrity="sha512-6nUbeQCIWgyUzsNM1IOSipjRyp2BloDsypIbl4cQZ74EL/8cQxrI/q+vtI09EBuXVWvxaPRTgOyzXMEC/06eow==" crossorigin=anonymous defer></script></body></html>
