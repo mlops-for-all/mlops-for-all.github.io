@@ -107,7 +107,7 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
 ## 3. NVIDIA-Docker 를 Default Container Runtime 으로 설정
 
 쿠버네티스는 기본적으로 Docker-CE 를 Default Container Runtime 으로 사용합니다.
-따라서, Docker Container 내에서 NVIDIA GPU 를 사용하기 위해서는 NVIDIA-Docker 를 Container Runtime 으로 사용하여 pod 를 생성할 수 있도록 Default Runtime 을 수정해주어야 합니다.
+따라서, Docker Container 내에서 NVIDIA GPU 를 사용하기 위해서는 NVIDIA-Docker 를 Container Runtime 으로 사용하여 pod 를 생성할 수 있도록 Default Runtime 을 수정해 주어야 합니다.
 
 1. `/etc/docker/daemon.json` 파일을 열어 다음과 같이 수정합니다.
 
@@ -173,7 +173,7 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   ```
 
   다음과 같은 메시지가 보이면 정상적으로 설정된 것을 의미합니다.  
-  (*모두의 MLOps* 에서 실습을 진행한 클러스터는 2개의 GPU가 있기 때문에 2가 출력이 됩니다.
+  (*모두의 MLOps* 에서 실습을 진행한 클러스터는 2개의 GPU가 있어서 2가 출력이 됩니다.
   본인의 클러스터의 GPU 개수와 맞는 숫자가 출력된다면 됩니다.)
 
   ```text

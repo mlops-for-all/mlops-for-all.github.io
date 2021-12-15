@@ -19,7 +19,7 @@ menu:
 생성된 파이프라인 내에서 컴포넌트는 두 개의 이름을 갖습니다.
 
 - task_name: 컴포넌트를 작성할 때 작성한 함수 이름
-- display_name: kubeflow ui상에서 보여지는 이름
+- display_name: kubeflow UI상에서 보여지는 이름
 
 예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.
 
@@ -342,7 +342,7 @@ spec:
 ### GPU
 
 특별한 설정이 없다면 파이프라인은 컴포넌트를 쿠버네티스 파드(pod)로 실행할 때, 기본 리소스 스펙으로 실행하게 됩니다.  
-만약 GPU를 사용해 모델을 학습해야 할 경우 쿠버네티스 상에서 GPU를 할당받지 못해 제대로 학습이 이루어지지 않습니다.  
+만약 GPU를 사용해 모델을 학습해야 할 때 쿠버네티스상에서 GPU를 할당받지 못해 제대로 학습이 이루어지지 않습니다.  
 이를 위해 `set_gpu_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.UserContainer.set_gpu_limit)를 지원합니다.
 
 ```python
@@ -375,8 +375,8 @@ if __name__ == "__main__":
     kfp.compiler.Compiler().compile(example_pipeline, "example_pipeline.yaml")
 ```
 
-위의 스크립트를 실행할 경우 생성된 파일에서 `sum-and-print-numbers`를 자세히 보면 resources에 `{nvidia.com/gpu: 1}` 도 추가된 것을 볼 수 있습니다.
-이를 통해 GPU를 할당 받을 수 있습니다.
+위의 스크립트를 실행하면 생성된 파일에서 `sum-and-print-numbers`를 자세히 보면 resources에 `{nvidia.com/gpu: 1}` 도 추가된 것을 볼 수 있습니다.
+이를 통해 GPU를 할당받을 수 있습니다.
 
 ```text
   - name: sum-and-print-numbers

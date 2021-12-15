@@ -59,7 +59,7 @@ signature = infer_signature(data, clf.predict(data))
 conda_env = _mlflow_conda_env(additional_pip_deps=["dill", "pandas", "scikit-learn"])
 ```
 
-각 변수들의 내용을 확인하면 다음과 같습니다.
+각 변수의 내용을 확인하면 다음과 같습니다.
 
 - `input_example`
 
@@ -104,19 +104,19 @@ save_model(
 )
 ```
 
-로컬에서 작업할 경우 다음과 같은 svc 폴더가 생기며 아래와 같은 파일들이 생성됩니다.
+로컬에서 작업하면 다음과 같은 svc 폴더가 생기며 아래와 같은 파일들이 생성됩니다.
 
 ```text
 ls svc
 ```
 
-위의 명령어를 실행할 경우 다음의 출력값을 확인할 수 있습니다.
+위의 명령어를 실행하면 다음의 출력값을 확인할 수 있습니다.
 
 ```text
 MLmodel            conda.yaml         input_example.json model.pkl          requirements.txt
 ```
 
-각 파일들을 확인하면 다음과 같습니다.
+각 파일을 확인하면 다음과 같습니다.
 
 - MLmodel
 
@@ -199,31 +199,45 @@ with mlflow.start_run():
     mlflow.log_artifact("svc/")
 ```
 
-저장을 하고 `mlruns` 가 생성된 경로에서 `mlflow ui` 명령어를 이용해 mlflow 서버와 대쉬보드를 띄웁니다.
-mlflow 대쉬보드에 접속하여 생성된 run을 클릭하면 다음과 같이 보입니다.
+저장하고 `mlruns` 가 생성된 경로에서 `mlflow ui` 명령어를 이용해 mlflow 서버와 대시보드를 띄웁니다.
+mlflow 대시보드에 접속하여 생성된 run을 클릭하면 다음과 같이 보입니다.
 
 <p align="center">
     <img src="/images/docs/kubeflow/mlflow-0.png" title="mlflow-dashboard"/>
 </p>
-(해당 화면은 mlflow 버전에 따라 상이할 수 있습니다.)
+(해당 화면은 mlflow 버전에 따라 다를 수 있습니다.)
 
 ## MLFlow Component
 
 이제 Kubeflow에서 재사용할 수 있는 컴포넌트를 작성해 보겠습니다.
 
-재사용할 수 있는 컴포넌트를 작성하기 위한 방법은 크게 3가지가 있습니다.
+재사용할 수 있는 컴포넌트를 작성하는 방법은 크게 3가지가 있습니다.
 
 1. 모델을 학습하는 컴포넌트에서 필요한 환경을 저장 후 MLFlow 컴포넌트는 업로드만 담당
+
+    <p align="center">
+        <img src="/images/docs/kubeflow/mlflow-1.png" title="mlflow-architecture" width=40%/>
+    </p>
+
 2. 학습된 모델과 데이터를 MLFlow 컴포넌트에 전달 후 컴포넌트에서 저장과 업로드 담당
+
+    <p align="center">
+        <img src="/images/docs/kubeflow/mlflow-2.png" title="mlflow-architecture" width=60%/>
+    </p>
+
 3. 모델을 학습하는 컴포넌트에서 저장과 업로드를 담당
 
+    <p align="center">
+        <img src="/images/docs/kubeflow/mlflow-3.png" title="mlflow-architecture" width=50%/>
+    </p>
+
 저희는 이 중 1번의 접근 방법을 통해 모델을 관리하려고 합니다.
-이유는 MLFlow 모델을 업로드하는 코드는 바뀌지 않기 때문에 매번 3번 처럼 컴포넌트 작성마다 작성할 필요는 없기 때문입니다.
+이유는 MLFlow 모델을 업로드하는 코드는 바뀌지 않기 때문에 매번 3번처럼 컴포넌트 작성마다 작성할 필요는 없기 때문입니다.
 
 컴포넌트를 재활용하는 방법은 1번과 2번의 방법으로 가능합니다.
-다만 2번의 경우 모델이 학습된 이미지와 패키지들을 전달해야 하기 때문에 결국 컴포넌트에 대한 추가 정보를 전달해야 합니다.
+다만 2번의 경우 모델이 학습된 이미지와 패키지들을 전달해야 하므로 결국 컴포넌트에 대한 추가 정보를 전달해야 합니다.
 
-1번의 방법으로 진행하기 위해서는 학습하는 컴포넌트 또한 변경이 되어야 합니다.
+1번의 방법으로 진행하기 위해서는 학습하는 컴포넌트 또한 변경되어야 합니다.
 모델을 저장하는데 필요한 환경들을 저장해주는 코드가 추가되어야 합니다.
 
 ```python
@@ -381,5 +395,5 @@ def mlflow_pipeline(kernel: str, model_name: str):
 ```
 
 한 가지 이상한 점을 확인하셨나요?  
-바로 입력과 출력에서 받는 argument중 경로와 관련된 것들에 `_path` 접미사가 모두 사라졌습니다. 즉, `iris_data.outputs["data_path"]` 가 아닌 `iris_data.outputs["data"]` 로 접근하는 것을 확인할 수 있습니다.  
-이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 로 생성된 경로들은 파이프라인에서 접근할 때는 접미사를 생략하여 접근합니다.
+바로 입력과 출력에서 받는 argument중 경로와 관련된 것들에 `_path` 접미사가 모두 사라졌습니다. 즉, `iris_data.outputs["data_path"]` 가 아닌 `iris_data.outputs["data"]` 으로 접근하는 것을 확인할 수 있습니다.  
+이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 으로 생성된 경로들은 파이프라인에서 접근할 때는 접미사를 생략하여 접근합니다.

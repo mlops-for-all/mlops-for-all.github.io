@@ -126,7 +126,7 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
   kubectl -n local-path-storage get pod
   ```
 
-  정상적으로 수행할 경우 아래와 같이 출력됩니다.
+  정상적으로 수행되면 아래와 같이 출력됩니다.
 
   ```text
   NAME                                     READY     STATUS    RESTARTS   AGE
