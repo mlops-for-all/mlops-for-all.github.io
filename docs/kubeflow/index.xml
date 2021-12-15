@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubeflow on</title><link>https://mlops-for-all.github.io/docs/kubeflow/</link><description>Recent content in Kubeflow on</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 06 Oct 2020 08:48:23 +0000</lastBuildDate><atom:link href="https://mlops-for-all.github.io/docs/kubeflow/index.xml" rel="self" type="application/rss+xml"/><item><title>1. Kubeflow Introduction</title><link>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-intro/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-intro/</guid><description>Kubeflow를 사용하기 위해서는 컴포넌트(Component)와 파이프라인(Pipeline)을 작성해야 합니다.
-모두의 MLOps에서 설명하는 방식은 Kubeflow Pipeline 공식 홈페이지에서 설명하는 방식과는 다소 차이가 있습니다. 여기에서는 Kubeflow Pipeline을 워크플로우(Workflow)가 아닌 앞서 설명한 MLOps를 구성하는 요소 중 하나의 컴포넌트로 사용하기 때문입니다.
-그럼 이제 컴포넌트와 파이프라인은 무엇이며 어떻게 작성할 수 있는지 알아보도록 하겠습니다.</description></item><item><title>2. Concepts</title><link>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-concepts/</guid><description>Component # 컴포넌트(Component)는 컴포넌트 컨텐츠(Component contents)와 컴포넌트 래퍼(Component wrapper)로 구성되어 있습니다. 하나의 컴포넌트는 컴포넌트 래퍼를 통해 kubeflow에 전달되며 전달된 컴포넌트는 정의된 컴포넌트 컨텐츠를 실행(execute)하고 아티팩트(artifacts)들을 생산합니다.
-Component Contents # 컴포넌트 컨텐츠를 구성하는 것은 총 3가지가 있습니다.
-Environemnt Python code w\ Config Generates Artifacts 예시와 함께 각 구성 요소들이 어떤 것인지 알아보도록 하겠습니다. 다음과 같이 데이터를 불러와 SVC(Support Vector Classifier)를 학습한 후 SVC 모델을 저장하는 과정을 적은 파이썬 코드가 있습니다.</description></item><item><title>3. Install Requirements</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</guid><description>실습을 위해 권장하는 파이썬 버전은 python&amp;gt;=3.7 입니다.
+모두의 MLOps에서 설명하는 방식은 Kubeflow Pipeline 공식 홈페이지에서 설명하는 방식과는 다소 차이가 있습니다. 여기에서는 Kubeflow Pipeline을 워크플로(Workflow)가 아닌 앞서 설명한 MLOps를 구성하는 요소 중 하나의 컴포넌트로 사용하기 때문입니다.
+그럼 이제 컴포넌트와 파이프라인은 무엇이며 어떻게 작성할 수 있는지 알아보도록 하겠습니다.</description></item><item><title>2. Concepts</title><link>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-concepts/</guid><description>Component # 컴포넌트(Component)는 컴포넌트 콘텐츠(Component contents)와 컴포넌트 래퍼(Component wrapper)로 구성되어 있습니다. 하나의 컴포넌트는 컴포넌트 래퍼를 통해 kubeflow에 전달되며 전달된 컴포넌트는 정의된 컴포넌트 콘텐츠를 실행(execute)하고 아티팩트(artifacts)들을 생산합니다.
+Component Contents # 컴포넌트 콘텐츠를 구성하는 것은 총 3가지가 있습니다.
+Environemnt Python code w\ Config Generates Artifacts 예시와 함께 각 구성 요소가 어떤 것인지 알아보도록 하겠습니다. 다음과 같이 데이터를 불러와 SVC(Support Vector Classifier)를 학습한 후 SVC 모델을 저장하는 과정을 적은 파이선 코드가 있습니다.</description></item><item><title>3. Install Requirements</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</guid><description>실습을 위해 권장하는 파이선 버전은 python&amp;gt;=3.7입니다.
 실습을 진행하기에서 필요한 패키지들과 버전은 다음과 같습니다.
 requirements.txt
 kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 pandas==1.3.4 dill==0.3.4 패키지 설치를 진행합니다.
 pip3 install -U pip pip3 install kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 pandas==1.3.4 dill==0.3.4</description></item><item><title>4. Write Component</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-component/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-component/</guid><description>Component # 컴포넌트(Component)를 작성하기 위해서는 다음과 같은 내용들을 작성해야 합니다.
-컴포넌트 컨텐츠(Component Contents) 작성 컴포넌트 래퍼(Component Wrapper) 작성 이제 각 과정들에 대해서 알아보도록 하겠습니다.
-Component Contents # 컴포넌트 컨텐츠는 우리가 흔히 작성하는 파이썬 코드와 다르지 않습니다.
+컴포넌트 콘텐츠(Component Contents) 작성 컴포넌트 래퍼(Component Wrapper) 작성 이제 각 과정에 대해서 알아보도록 하겠습니다.
+Component Contents # 컴포넌트 콘텐츠는 우리가 흔히 작성하는 파이선 코드와 다르지 않습니다.
 예를 들어서 숫자를 입력으로 받고 입력받은 숫자를 출력한 뒤 반환하는 컴포넌트를 작성해 보겠습니다.
-파이썬 코드로 작성하면 다음과 같이 작성할 수 있습니다.
-print(number) 그런데 이 코드를 실행할 경우 에러가 나고 동작하지 않는데 그 이유는 출력해야 할 number가 정의되어 있지 않기 때문입니다.</description></item><item><title>5. Write Pipeline</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</guid><description>Pipeline # 컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다.
-그렇기 때문에 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다.
-이번 페이지에서는 숫자를 입력받고 출력하는 컴포넌트와, 두 개의 컴포넌트로 부터 숫자를 받아서 합을 출력하는 컴포넌트가 있는 파이프라인을 만들어 보도록 하겠습니다.
+파이선 코드로 작성하면 다음과 같이 작성할 수 있습니다.
+print(number) 그런데 이 코드를 실행하면 에러가 나고 동작하지 않는데 그 이유는 출력해야 할 number가 정의되어 있지 않기 때문입니다.</description></item><item><title>5. Write Pipeline</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</guid><description>Pipeline # 컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다.
+그러므로 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다.
+이번 페이지에서는 숫자를 입력받고 출력하는 컴포넌트와 두 개의 컴포넌트로 부터 숫자를 받아서 합을 출력하는 컴포넌트가 있는 파이프라인을 만들어 보도록 하겠습니다.
 파이프라인을 작성하기 위해서는 컴포넌트의 집합과 컴포넌트의 실행 순서가 필요합니다.
 Component set # 우선 파이프라인에서 사용할 컴포넌트들을 작성합니다.
-print_and_return_number 입력받은 숫자를 출력하고 반환하는 컴포넌트입니다. 컴포넌트가 반환값이 있음을 알려주기 위해서 타입힌트를 추가하겠습니다. 입력받은 값을 출력함으로 int를 return 타입힌트로 입력합니다.</description></item><item><title>6. Pipeline Upload</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</guid><description>Upload Pipeline # 이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.
+print_and_return_number 입력받은 숫자를 출력하고 반환하는 컴포넌트입니다. 컴포넌트가 반환 값이 있음을 알려주기 위해서 타입 힌트를 추가하겠습니다. 입력받은 값을 출력함으로 int를 return 타입 힌트로 입력합니다.</description></item><item><title>6. Pipeline Upload</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</guid><description>Upload Pipeline # 이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.
 파이프라인 업로드는 kubeflow 대시보드 UI를 통해 진행할 수 있습니다.
 1. Pipelines 탭 선택 # 2. Upload Pipeline 선택 # 3. Choose file 선택 # 4. 생성된 yaml파일 업로드 # 5. Create # Upload Pipeline Version # 업로드된 파이프라인은 업로드를 통해서 버전을 관리할 수 있습니다. 다만 깃헙과 같은 코드 차원의 버전 관리가 아닌 같은 이름의 파이프라인을 모아서 보여주는 역할을 합니다.</description></item><item><title>7. Run Pipeline</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</guid><description>Run Pipeline # 이제 우리가 업로드한 파이프라인을 실행시켜 보겠습니다.
 Before Run # 1. Create Experiment # Experiment란 Kubeflow 에서 실행되는 Run을 논리적으로 관리하는 단위입니다.
-Kubeflow를 최초 실행한 경우 Experiment가 없습니다. 따라서 파이프라인을 최초 실행할 경우에는 Experiment를 먼저 생성해두어야 합니다.
-Experiment 를 미리 생성해 두었다면 Run Pipeline으로 넘어가도 무방합니다.
+Kubeflow를 최초 실행하면 Experiment가 없습니다. 따라서 파이프라인을 최초 실행할 때 Experiment를 먼저 생성해두어야 합니다.
+Experiment 를 미리 생성해두었다면 Run Pipeline으로 넘어가도 무방합니다.
 Experiment는 Create Experiment 버튼을 통해 생성할 수 있습니다.
 2. Name 입력 # Experiment로 사용할 이름을 입력합니다.
-Run Pipeline # 1. Create Run 선택 # 2.</description></item><item><title>8. Component Envrionment</title><link>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</guid><description>이번 페이지에서는 Kubeflow Concepts에서 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
-Component Contents # 아래 코드는 Kubeflow Concepts에서 사용했던 컴포넌트 컨텐츠입니다.
+Run Pipeline # 1. Create Run 선택 # 2.</description></item><item><title>8. Component Envrionment</title><link>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</guid><description>이번 페이지에서는 [Kubeflow Concepts]( 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
+Component Contents # 아래 코드는 [Kubeflow Concepts]({{&amp;lt; relref &amp;ldquo;docs/kubeflow/kubeflow-concepts.md#component-contents&amp;rdquo; &amp;gt;}})에서 사용했던 컴포넌트 콘텐츠입니다.
 import dill import pandas as pd from sklearn.svm import SVC train_data = pd.read_csv(train_data_path) train_target = pd.read_csv(train_target_path) clf = SVC(kernel=kernel) clf.fit(train_data, train_target) with open(model_path, mode=&amp;#34;wb&amp;#34;) as file_writer: dill.dump(clf, file_writer) Component Wrapper # Define a standalone Python function # 컴포넌트 래퍼에 필요한 Config들과 함께 작성하면 다음과 같이 됩니다.
 def train_from_csv( train_data_path: str, train_target_path: str, model_path: str, kernel: str, ): import dill import pandas as pd from sklearn.</description></item><item><title>9. Pipeline Setting</title><link>https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/advanced-pipeline/</guid><description>Pipeline Setting # 이번 페이지에서는 파이프라인에서 설정할 수 있는 값들에 대해 알아보겠습니다.
 Display Name # 생성된 파이프라인 내에서 컴포넌트는 두 개의 이름을 갖습니다.
-task_name: 컴포넌트를 작성할 때 작성한 함수 이름 display_name: kubeflow ui상에서 보여지는 이름 예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.
+task_name: 컴포넌트를 작성할 때 작성한 함수 이름 display_name: kubeflow UI상에서 보여지는 이름 예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.
 set_display_name # 이를 위한 것이 바로 display_name 입니다.
 설정하는 방법은 파이프라인에서 컴포넌트에 다음과 같이 set_display_name attribute를 이용하면 됩니다.</description></item><item><title>10. Run Result</title><link>https://mlops-for-all.github.io/docs/kubeflow/advanced-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/advanced-run/</guid><description>Run Result # Run 실행 결과를 눌러보면 3개의 탭이 존재합니다. 각각 Graph, Run output, Config 입니다.
 Graph # 그래프에서는 실행된 컴포넌트를 누르면 컴포넌트의 실행 정보를 확인할 수 있습니다.
 Input/Output # Input/Output 탭은 컴포넌트에서 사용한 Config들과 Input, Output Artifacts를 확인하고 다운로드 받을 수 있습니다.
-Logs # Logs에서는 파이썬 코드 실행 중 나오는 모든 stdout을 확인할 수 있습니다. 다만 pod은 일정 시간이 지난 후 지워지기 때문에 일정 시간이 지나면 이 탭에서는 확인할 수 없습니다.</description></item></channel></rss>
+Logs # Logs에서는 파이선 코드 실행 중 나오는 모든 stdout을 확인할 수 있습니다. 다만 pod은 일정 시간이 지난 후 지워지기 때문에 일정 시간이 지나면 이 탭에서는 확인할 수 없습니다.</description></item></channel></rss>
