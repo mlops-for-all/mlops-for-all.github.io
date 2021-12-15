@@ -9,15 +9,15 @@ cat /etc/rancher/k3s/k3s.yaml 2.</description></item><item><title>1. Kubeflow In
 모두의 MLOps에서 설명하는 방식은 Kubeflow Pipeline 공식 홈페이지에서 설명하는 방식과는 다소 차이가 있습니다. 여기에서는 Kubeflow Pipeline을 워크플로(Workflow)가 아닌 앞서 설명한 MLOps를 구성하는 요소 중 하나의 컴포넌트로 사용하기 때문입니다.
 그럼 이제 컴포넌트와 파이프라인은 무엇이며 어떻게 작성할 수 있는지 알아보도록 하겠습니다.</description></item><item><title>2. Concepts</title><link>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/kubeflow-concepts/</guid><description>Component # 컴포넌트(Component)는 컴포넌트 콘텐츠(Component contents)와 컴포넌트 래퍼(Component wrapper)로 구성되어 있습니다. 하나의 컴포넌트는 컴포넌트 래퍼를 통해 kubeflow에 전달되며 전달된 컴포넌트는 정의된 컴포넌트 콘텐츠를 실행(execute)하고 아티팩트(artifacts)들을 생산합니다.
 Component Contents # 컴포넌트 콘텐츠를 구성하는 것은 총 3가지가 있습니다.
-Environemnt Python code w\ Config Generates Artifacts 예시와 함께 각 구성 요소가 어떤 것인지 알아보도록 하겠습니다. 다음과 같이 데이터를 불러와 SVC(Support Vector Classifier)를 학습한 후 SVC 모델을 저장하는 과정을 적은 파이선 코드가 있습니다.</description></item><item><title>3. Install Requirements</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</guid><description>실습을 위해 권장하는 파이선 버전은 python&amp;gt;=3.7입니다.
+Environemnt Python code w\ Config Generates Artifacts 예시와 함께 각 구성 요소가 어떤 것인지 알아보도록 하겠습니다. 다음과 같이 데이터를 불러와 SVC(Support Vector Classifier)를 학습한 후 SVC 모델을 저장하는 과정을 적은 파이썬 코드가 있습니다.</description></item><item><title>3. Install Requirements</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-requirements/</guid><description>실습을 위해 권장하는 파이썬 버전은 python&amp;gt;=3.7입니다.
 실습을 진행하기에서 필요한 패키지들과 버전은 다음과 같습니다.
 requirements.txt
 kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 pandas==1.3.4 dill==0.3.4 패키지 설치를 진행합니다.
 pip3 install -U pip pip3 install kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 pandas==1.3.4 dill==0.3.4</description></item><item><title>4. Write Component</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-component/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-component/</guid><description>Component # 컴포넌트(Component)를 작성하기 위해서는 다음과 같은 내용들을 작성해야 합니다.
 컴포넌트 콘텐츠(Component Contents) 작성 컴포넌트 래퍼(Component Wrapper) 작성 이제 각 과정에 대해서 알아보도록 하겠습니다.
-Component Contents # 컴포넌트 콘텐츠는 우리가 흔히 작성하는 파이선 코드와 다르지 않습니다.
+Component Contents # 컴포넌트 콘텐츠는 우리가 흔히 작성하는 파이썬 코드와 다르지 않습니다.
 예를 들어서 숫자를 입력으로 받고 입력받은 숫자를 출력한 뒤 반환하는 컴포넌트를 작성해 보겠습니다.
-파이선 코드로 작성하면 다음과 같이 작성할 수 있습니다.
+파이썬 코드로 작성하면 다음과 같이 작성할 수 있습니다.
 print(number) 그런데 이 코드를 실행하면 에러가 나고 동작하지 않는데 그 이유는 출력해야 할 number가 정의되어 있지 않기 때문입니다.</description></item><item><title>5. Write Pipeline</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</guid><description>Pipeline # 컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다.
 그러므로 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다.
 이번 페이지에서는 숫자를 입력받고 출력하는 컴포넌트와 두 개의 컴포넌트로 부터 숫자를 받아서 합을 출력하는 컴포넌트가 있는 파이프라인을 만들어 보도록 하겠습니다.
