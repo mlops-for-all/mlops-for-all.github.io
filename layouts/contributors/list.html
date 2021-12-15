@@ -8,7 +8,7 @@
 				{{ range .Data.Pages -}}
 					<div class="card">
 						<div class="card-body">
-							<h2 class="h3"><a class="stretched-link text-body" href="{{ .RelPermalink }}">{{ .Params.title }}</a></h2>
+							<h2 class="h4"><a class="stretched-link text-body" href="{{ .RelPermalink }}">{{ .Params.title }}</a></h2>
 							{{ if eq .Section "blog" -}}
 								<p>{{ .Params.lead | safeHTML }}</p>
 								{{ partial "main/blog-meta.html" . -}}

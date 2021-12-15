@@ -14,18 +14,18 @@ images: []
 
 ## 1. Prerequisite
 
-쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성요소들을 **클러스터에** 설치합니다.
+쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성 요소들을 **클러스터에** 설치합니다.
 
 [Setup Prerequisite]({{< relref "docs/setup-kubernetes/setup-pre-requisite.md" >}})을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
 
 k3s 에서는 기본값으로 containerd를 백엔드로 이용해 설치합니다.
-하지만 저희는 GPU를 사용하기 위해서 docker를 백엔드로 사용해야 하기 때문에 `--docker` 옵션을 통해 백엔드를 docker로 설치하겠습니다.
+하지만 저희는 GPU를 사용하기 위해서 docker를 백엔드로 사용해야 하므로 `--docker` 옵션을 통해 백엔드를 docker로 설치하겠습니다.
 
 ```text
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.7+k3s1 sh -s - server --disable traefik --disable servicelb --disable local-storage --docker
 ```
 
-k3s를 설치후 k3s config를 확인합니다
+k3s를 설치 후 k3s config를 확인합니다
 
 ```text
 cat /etc/rancher/k3s/k3s.yaml
