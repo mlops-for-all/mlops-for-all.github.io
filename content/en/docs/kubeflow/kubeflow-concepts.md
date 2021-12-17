@@ -1,5 +1,5 @@
 ---
-title : "2. Concepts"
+title : "2. Kubeflow Concepts"
 description: ""
 lead: ""
 draft: false
