@@ -18,6 +18,8 @@ MLflow는 대표적인 오픈소스 ML 실험 관리 도구입니다. MLflow는 
 
 *모두의 MLOps*에서는 MLflow 를 주로 실험 관리 용도로 사용하기 위해, 관리하는 데이터를 저장하고 UI를 제공하는 MLflow Tracking Server를 쿠버네티스 클러스터에 배포하여 사용할 예정입니다.
 
+## Before Install MLflow
+
 ### PostgreSQL DB 설치
 
 MLflow Tracking Server가 Backend Store로 사용할 용도의 PostgreSQL DB를 쿠버네티스 클러스터에 배포합니다.
@@ -45,6 +47,47 @@ mlflow-system namespace 에 1 개의 postgresql 관련 pod 가 Running 이 될 �
 ```text
 kubectl get pod -n mlflow-system | grep postgresql
 ```
+
+### Minio 설정
+
+MLflow Tracking Server가 Artifacts Store로 사용할 용도의 Minio는 이전 Kubeflow 설치 단계에서 설치한 Minio를 활용합니다.
+
+단, kubeflow 용도와 mlflow 용도를 분리하기 위해, mlflow 전용 버킷을 생성하겠습니다.
+
+minio 에 접속하여 bucket 을 생성하기 위해, 우선 minio-service 를 포트포워딩합니다.
+
+```text
+kubectl port-forward svc/minio-service -n kubeflow 9000:9000
+```
+
+웹 브라우저를 열어 [localhost:9000](http://localhost:9000)으로 접속하면 다음과 같은 화면이 출력됩니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/minio-install.png" title="minio-install"/>
+</p>
+
+다음과 같은 접속정보를 입력하여 로그인합니다.
+
+- Username: `minio`
+- Password: `minio123`
+
+우측 하단의 **`+`** 버튼을 클릭하여, `Create Bucket`를 클릭합니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/create-bucket.png" title="create-bucket"/>
+</p>
+
+`Bucket Name`에 `mlflow`를 입력하여 Bucket을 생성합니다.
+
+정상적으로 생성되면 다음과 같이 좌측에 `mlflow`라는 이름의 Bucket이 생성됩니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/mlflow-bucket.png" title="mlflow-bucket"/>
+</p>
+
+---
+
+## Let's Install MLflow
 
 ### Helm Repository 추가
 
