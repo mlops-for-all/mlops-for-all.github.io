@@ -17,8 +17,8 @@ images: []
 
 ## Install apt packages
 
-추후 클라이언트와 클러스터의 원활한 통신을 위해서는 Port-Forwarding 을 수행해야 할 일이 있습니다.
-Port-forwarding 을 위해서는 **클러스터**에 다음 패키지를 설치해주어야 합니다.
+추후 클라이언트와 클러스터의 원활한 통신을 위해서는 Port-Forwarding을 수행해야 할 일이 있습니다.
+Port-Forwarding을 위해서는 **클러스터**에 다음 패키지를 설치해 주어야 합니다.
 
 ```text
 sudo apt-get update
@@ -47,7 +47,7 @@ sudo apt-get install -y socat
    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
    ```
 
-4. 현재 설치 가능한 도커 버전을 확인합니다.
+4. 현재 설치할 수 있는 도커 버전을 확인합니다.
 
    ```text
    apt-cache madison docker-ce
@@ -92,7 +92,7 @@ sudo apt-get install -y socat
    https://docs.docker.com/get-started/
    ```
 
-6. docker 관련 command를 sudo 키워드 없이 사용할 수 있도록 하기 위해 다음 명령어를 통해 권한을 추가합니다.
+6. docker 관련 command를 sudo 키워드 없이 사용할 수 있게 하도록 다음 명령어를 통해 권한을 추가합니다.
 
    ```text
    sudo groupadd docker
@@ -100,7 +100,7 @@ sudo apt-get install -y socat
    newgrp docker
    ```
 
-7. sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한 번 docker run을 실행합니다.
+7. sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한번 docker run을 실행합니다.
 
    ```text
    mlops@ubuntu:~$ docker run hello-world
@@ -129,8 +129,8 @@ sudo apt-get install -y socat
 
 ## Turn off Swap Memory
 
-kubelet 이 정상적으로 동작하게 하기 위해서는 **클러스터** 노드에 swap이라고 불리는 가상메모리를 꺼 두어야 합니다. 다음 명령어를 통해 swap을 꺼 둡니다.  
-**(클러스터와 클라이언트를 동일한 데스크탑에서 사용할 때 swap 메모리를 종료할 경우 속도의 저하가 있을 수 있습니다.)**  
+kubelet 이 정상적으로 동작하게 하기 위해서는 **클러스터** 노드에서 swap이라고 불리는 가상메모리를 꺼 두어야 합니다. 다음 명령어를 통해 swap을 꺼 둡니다.  
+**(클러스터와 클라이언트를 같은 데스크탑에서 사용할 때 swap 메모리를 종료하면 속도의 저하가 있을 수 있습니다.)**  
 
 ```text
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
@@ -139,7 +139,7 @@ sudo swapoff -a
 
 ## Install Kubectl
 
-kubectl 은 쿠버네티스 클러스터에게 API 를 요청할 때 사용하는 클라이언트 툴 입니다. **클라이언트** 노드에 설치해두어야 합니다.
+kubectl 은 쿠버네티스 클러스터에 API 를 요청할 때 사용하는 클라이언트 툴 입니다. **클라이언트** 노드에 설치해두어야 합니다.
 
 1. 현재 폴더에 kubectl v1.21.7 버전을 다운받습니다.
 

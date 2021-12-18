@@ -33,7 +33,7 @@ npm run start
 
 ## How to Contribute
 
-### 1. 새로운 포스트를 작성하는 경우
+### 1. 새로운 포스트를 작성할 때
 
 새로운 포스트는 각 챕터와 포스트의 위치에 맞는 weight를 설정합니다.
 
@@ -43,19 +43,19 @@ npm run start
 - API Deployment: 4xx
 - Help: 10xx
 
-### 2. 기존의 포스트를 수정하는 경우
+### 2. 기존의 포스트를 수정할 때
 
-기존의 포스트를 수정할 경우 Contributor에 본인의 이름을 입력합니다.
+기존의 포스트를 수정할 때 Contributor에 본인의 이름을 입력합니다.
 
 ```markdown
 contributors: ["John Doe", "Adam Smith"]
 ```
 
-### 3. 프로젝트에 처음 기여하는 경우
+### 3. 프로젝트에 처음 기여할 때
 
-만약 프로젝트에 처음 기여 할 경우 `content/en/contributors`에 본인의 이름의 마크다운 파일을 작성합니다.
+만약 프로젝트에 처음 기여 할 때 `content/en/contributors`에 본인의 이름의 마크다운 파일을 작성합니다.
 마크다운 파일은 `john-doe`을 파일명으로 하며 다음의 내용을 작성합니다.
-파일 명은 lowercase를 title은 upper camelcase를 이용해 작성합니다.
+파일명은 lowercase를 title은 upper camelcase를 이용해 작성합니다.
 
 ```markdown
 ---
@@ -66,7 +66,7 @@ draft: false
 
 ## Before Commit
 
-프로젝트에서는 각 글들의 일관성을 위해서 여러 lint를 적용하고 있습니다.
+프로젝트에서는 각 글의 일관성을 위해서 여러 lint를 적용하고 있습니다.
 다음 명령어를 실행해 test를 진행합니다.
 
 pre-commit을 통해 대부분의 test를 통과할 수 있습니다.
