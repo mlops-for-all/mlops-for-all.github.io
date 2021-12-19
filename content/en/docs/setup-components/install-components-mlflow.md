@@ -80,7 +80,7 @@ kubectl port-forward svc/minio-service -n kubeflow 9000:9000
 
 `Bucket Name`에 `mlflow`를 입력하여 버킷을 생성합니다.
 
-정상적으로 생성되면 다음과 같이 좌측에 `mlflow`라는 이름의 Bucket이 생성됩니다.
+정상적으로 생성되면 다음과 같이 왼쪽에 `mlflow`라는 이름의 버킷이 생성됩니다.
 
 <p align="center">
   <img src="/images/docs/setup-modules/mlflow-bucket.png" title="mlflow-bucket"/>
