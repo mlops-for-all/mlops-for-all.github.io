@@ -19,7 +19,7 @@ images: []
 SeldonDeployment는 쿠버네티스(Kubernetes)에 모델을 REST/gRPC 서버의 형태로 배포하기 위해 정의된 CRD(CustomResourceDefinition)입니다.
 
 SeldonDeployment 관련된 실습은 seldon-deploy라는 새로운 네임스페이스(namespace)에서 진행하도록 하겠습니다.
-네임스페이스를 생성한 뒤, seldon-deploy를 기본 네임스페이스로 설정합니다.
+네임스페이스를 생성한 뒤, seldon-deploy를 현재 네임스페이스로 설정합니다.
 
 ```text
 kubectl create namespace seldon-deploy
@@ -77,3 +77,4 @@ curl -X POST -H "Content-Type: application/json" \
   http://localhost:8000/api/v1.0/predictions
 {"data":{"names":["t:0","t:1","t:2"],"ndarray":[[9.912315378486697e-07,0.0007015931307746079,0.9992974156376876]]},"meta":{"requestPath":{"classifier":"seldonio/sklearnserver:1.11.2"}}}
 ```
+
