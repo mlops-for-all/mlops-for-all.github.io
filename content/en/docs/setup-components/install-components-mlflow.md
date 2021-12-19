@@ -53,7 +53,7 @@ kubectl get pod -n mlflow-system | grep postgresql
 
 MLflow Tracking Server가 Artifacts Store로 사용할 용도의 Minio는 이전 Kubeflow 설치 단계에서 설치한 Minio를 활용합니다.
 
-단, kubeflow 용도와 mlflow 용도를 분리하기 위해, mlflow 전용 버킷을 생성하겠습니다.
+단, kubeflow 용도와 mlflow 용도를 분리하기 위해, mlflow 전용 버킷(bucket)을 생성하겠습니다.
 
 minio 에 접속하여 bucket 을 생성하기 위해, 우선 minio-service 를 포트포워딩합니다.
 
