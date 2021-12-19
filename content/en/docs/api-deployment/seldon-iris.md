@@ -62,19 +62,25 @@ sklearn-default-0-classifier-5fdfd7bb77-ls9tr   2/2     Running   0          5m
 ```
 
 이제 배포된 모델에 추론 요청(predict request)를 보내서 추론 결과값을 받아옵니다.
-팟(pod)에 바로 추론 요청을 보내기 위해서 포트 포워딩을 열어줍니다.
+ambassador ingress gateway를 통해 추론 요청을 보내기 위해 ingress url을 알아내야 합니다.
 
 ```text
-kubectl port-forward --address 0.0.0.0 -n seldon-deploy \
-  $(kubectl get pods --selector=seldon-app=sklearn-default -o=jsonpath='{.items[0].metadata.name}') 8000 &
+export NODE_IP=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="InternalIP")].address }')
+export NODE_PORT=$(kubectl get service ambassador -n seldon-system -o jsonpath="{.spec.ports[0].nodePort}")
 ```
 
-이제 해당 팟에 바로 추론 요청을 보내서 결과값을 받아봅니다.
+이제 ingress url을 이용해서 추론 요청을 보내 봅시다.
 
 ```text
 curl -X POST -H "Content-Type: application/json" \
   -d '{"data": {"ndarray":[[1.0, 2.0, 5.0, 6.0]]}}' \
-  http://localhost:8000/api/v1.0/predictions
+  http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions
 {"data":{"names":["t:0","t:1","t:2"],"ndarray":[[9.912315378486697e-07,0.0007015931307746079,0.9992974156376876]]},"meta":{"requestPath":{"classifier":"seldonio/sklearnserver:1.11.2"}}}
 ```
 
+방금 사용한 url의 각 경로의 의미를 살펴보겠습니다.
+*seldon/seldon-deploy/sklearn/api/v1.0/predictions*
+
+- seldon: seldon-core에 의해 생성된 url임을 의미합니다.
+- seldon-deploy: SeldonDeploument가 배포되어 있는 네임스페이스를 의미합니다.
+- sklearn: 배포되어 있는 SeldonDeployment의 이름을 의미합니다.
