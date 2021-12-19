@@ -43,7 +43,7 @@ postgresql DB를 `mlflow-system` namespace 에 생성합니다.
 kubectl -n mlflow-system apply -f https://raw.githubusercontent.com/mlops-for-all/helm-charts/b94b5fe4133f769c04b25068b98ccfa7a505aa60/mlflow/manifests/postgres.yaml 
 ```
 
-mlflow-system namespace 에 1 개의 postgresql 관련 pod 가 Running 이 될 때까지 기다립니다.
+mlflow-system namespace 에 1개의 postgresql 관련 pod 가 Running 이 될 때까지 기다립니다.
 
 ```text
 kubectl get pod -n mlflow-system | grep postgresql
