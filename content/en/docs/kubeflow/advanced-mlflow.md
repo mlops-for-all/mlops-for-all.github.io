@@ -395,5 +395,6 @@ def mlflow_pipeline(kernel: str, model_name: str):
 ```
 
 한 가지 이상한 점을 확인하셨나요?  
-바로 입력과 출력에서 받는 argument중 경로와 관련된 것들에 `_path` 접미사가 모두 사라졌습니다. 즉, `iris_data.outputs["data_path"]` 가 아닌 `iris_data.outputs["data"]` 으로 접근하는 것을 확인할 수 있습니다.  
-이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 으로 생성된 경로들은 파이프라인에서 접근할 때는 접미사를 생략하여 접근합니다.
+바로 입력과 출력에서 받는 argument중 경로와 관련된 것들에 `_path` 접미사가 모두 사라졌습니다.  
+`iris_data.outputs["data_path"]` 가 아닌 `iris_data.outputs["data"]` 으로 접근하는 것을 확인할 수 있습니다.  
+이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 으로 생성된 경로들은 파이프라인에서 접근할 때는 `_path` 접미사를 생략하여 접근합니다.

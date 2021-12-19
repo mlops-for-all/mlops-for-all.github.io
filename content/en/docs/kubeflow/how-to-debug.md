@@ -129,34 +129,32 @@ if __name__ == "__main__":
 1. 데이터를 불러오는 `load_iris_data` 컴포넌트에서 `sepal length (cm)` 피처에 `None` 값을 주입
 2. `drop_na_from_csv` 컴포넌트에서 `drop_na()` 함수를 이용해 na 값이 포함된 `row`를 제거
 
-이제 파이프라인을 업로드하고 실행해 보겠습니다.
+이제 파이프라인을 업로드하고 실행해 보겠습니다.  
+실행후 Run을 눌러서 확인해보면 `Train from csv` 컴포넌트에서 실패를 했다고 나옵니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/debug-0.png" title="run-0"/>
 </p>
 
-실행하면 `Train from csv` 컴포넌트에서 실패를 했다고 나옵니다.
-
-<p align="center">
-  <img src="/images/docs/kubeflow/debug-1.png" title="run-1"/>
-</p>
-
-로그를 확인해서 왜 실패했는지 보겠습니다.
+실패한 컴포넌트를 클릭하고 로그를 확인해서 실패한 이유를 확인해 보겠습니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/debug-2.png" title="run-2"/>
 </p>
 
-보면 데이터의 shape이 맞지 않는다고 나옵니다.
-왜 데이터의 shape이 맞지 않는지 확인해보겠습니다.
+로그를 확인하면 데이터의 개수가 0이여서 실행되지 않았다고 나옵니다.  
+분명 정상적으로 데이터를 전달했는데 왜 데이터의 개수가 0개 일까요?  
 
-우선 컴포넌트의 입력값으로 들어간 데이터들을 다운로드 받습니다.
+이제 입력받은 데이터에 어떤 문제가 있었는지 확인해 보겠습니다.  
+우선 컴포넌트를 클릭하고 Input/Ouput 탭에서 입력값으로 들어간 데이터들을 다운로드 받습니다.  
+다운로드는 빨간색 네모로 표시되어 있는 곳의 링크를 클릭하면 됩니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/debug-5.png" title="run-2"/>
 </p>
 
-두 개의 파일을 다운로드하면 다음과 같습니다.
+두 개의 파일을 같은 경로에 다운로드합니다.  
+그리고 해당 경로로 이동해서 파일을 확인합니다.
 
 ```text
 ls
@@ -175,14 +173,14 @@ tar -xzvf load-iris-data-target.tgz ; mv data target.csv
 tar -xzvf drop-na-from-csv-output.tgz ; mv data data.csv
 ```
 
-그리고 이를 로컬에서 주피터 노트북을 이용해 컴포넌트 코드를 실행합니다.
+그리고 이를 주피터 노트북을 이용해 컴포넌트 코드를 실행합니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/debug-3.png" title="jupyter cell-0"/>
   <img src="/images/docs/kubeflow/debug-4.png" title="jupyter cell-1"/>
 </p>
 
-보면 dropna 할 때 column을 기준으로 drop을 해야 하는데 row를 기준으로 drop을 해서 데이터가 모두 사라졌습니다.
+디버깅을 해본 결과 dropna 할 때 column을 기준으로 drop을 해야 하는데 row를 기준으로 drop을 해서 데이터가 모두 사라졌습니다.
 이제 문제의 원인을 알아 냈으니 column을 기준으로 drop이 되게 컴포넌트를 수정합니다.
 
 ```python
