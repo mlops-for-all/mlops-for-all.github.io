@@ -1,5 +1,5 @@
 ---
-title : "11. MLFlow Component"
+title : "11. Component - MLFlow"
 description: ""
 lead: ""
 draft: false
@@ -364,8 +364,8 @@ def load_iris_data(
     data = pd.DataFrame(iris["data"], columns=iris["feature_names"])
     target = pd.DataFrame(iris["target"], columns=["target"])
 
-    data.to_csv(data_path)
-    target.to_csv(target_path)
+    data.to_csv(data_path, index=False)
+    target.to_csv(target_path, index=False)
 
 ```
 

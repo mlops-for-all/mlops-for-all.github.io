@@ -1,5 +1,5 @@
 ---
-title : "8. Component Envrionment"
+title : "8. Component - Environment"
 description: ""
 lead: ""
 draft: false
@@ -10,11 +10,14 @@ menu:
     parent: "kubeflow"
 ---
 
-이번 페이지에서는 [Kubeflow Concepts]( 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
+
+## Component Environment
+
+이번 페이지에서는 [Kubeflow Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md#component-contents" >}}) 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
 
 ## Component Contents
 
-아래 코드는 [Kubeflow Concepts]({{&lt; relref "docs/kubeflow/kubeflow-concepts.md#component-contents" &gt;}})에서 사용했던 컴포넌트 콘텐츠입니다.
+아래 코드는 [Kubeflow Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md#component-contents" >}})에서 사용했던 컴포넌트 콘텐츠입니다.
 
 ```python
 import dill
@@ -250,14 +253,20 @@ def create_component_from_func(
 
 만약 컴포넌트가 사용하는 base_image에 패키지들이 전부 설치되어 있다면 추가적인 패키지 설치 없이 바로 사용할 수 있습니다.
 
-[도커 허브에 올리는 법 docker 를 만드는 법] ← 따로 글 만들어서
-
-다음과 같은 Dockerfile을 작성 후 업로드 하도록 하겠습니다.
+예를 들어, 이번 페이지에서는 다음과 같은 Dockerfile을 작성하겠습니다.
 
 ```docker
 BASE_IMAGE=python:3.7
 
 RUN pip install dill pandas scikit-learn
+```
+
+위의 Dockerfile을 이용해 이미지를 빌드해 보겠습니다. 실습에서 사용해볼 도커 허브는 ghcr입니다.  
+각자 환경에 맞추어서 도커 허브를 선택 후 업로드하면 됩니다.
+
+```text
+docker build . -f Dockerfile -t ghcr.io/mlops-for-all/base-image
+docker push ghcr.io/mlops-for-all/base-image
 ```
 
 이제 base_image를 입력해 보겠습니다.

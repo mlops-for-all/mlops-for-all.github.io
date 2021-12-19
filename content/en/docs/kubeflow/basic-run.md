@@ -1,5 +1,5 @@
 ---
-title : "7. Run Pipeline"
+title : "7. Pipeline - Run"
 description: ""
 lead: ""
 draft: false

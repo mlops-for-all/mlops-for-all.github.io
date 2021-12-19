@@ -1,5 +1,5 @@
 ---
-title : "4. Write Component"
+title : "4. Component - Write"
 description: ""
 lead: ""
 draft: false
