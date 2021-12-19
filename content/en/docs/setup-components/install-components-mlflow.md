@@ -67,7 +67,7 @@ kubectl port-forward svc/minio-service -n kubeflow 9000:9000
   <img src="/images/docs/setup-modules/minio-install.png" title="minio-install"/>
 </p>
 
-다음과 같은 접속정보를 입력하여 로그인합니다.
+다음과 같은 접속 정보를 입력하여 로그인합니다.
 
 - Username: `minio`
 - Password: `minio123`
