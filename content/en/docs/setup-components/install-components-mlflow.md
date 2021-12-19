@@ -55,7 +55,7 @@ MLflow Tracking Server가 Artifacts Store로 사용할 용도의 Minio는 이전
 
 단, kubeflow 용도와 mlflow 용도를 분리하기 위해, mlflow 전용 버킷(bucket)을 생성하겠습니다.
 
-minio 에 접속하여 bucket 을 생성하기 위해, 우선 minio-service 를 포트포워딩합니다.
+minio 에 접속하여 버킷을 생성하기 위해, 우선 minio-service 를 포트포워딩합니다.
 
 ```text
 kubectl port-forward svc/minio-service -n kubeflow 9000:9000
