@@ -413,7 +413,6 @@ def mlflow_pipeline(kernel: str, model_name: str):
 `iris_data.outputs["data_path"]` 가 아닌 `iris_data.outputs["data"]` 으로 접근하는 것을 확인할 수 있습니다.  
 이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 으로 생성된 경로들은 파이프라인에서 접근할 때는 `_path` 접미사를 생략하여 접근합니다.
 
-
 ### Run
 
 위에서 작성된 컴포넌트와 파이프라인을 한 스크립트에 모으면 다음과 같습니다.
@@ -563,7 +562,6 @@ if __name__ == "__main__":
 <p align="center">
   <img src="/images/docs/kubeflow/mlflow-svc-0.png" title="kubeflow-run"/>
 </p>
-
 
 mlflow service를 포트포워딩 해서 ui를 확인합니다.
 
