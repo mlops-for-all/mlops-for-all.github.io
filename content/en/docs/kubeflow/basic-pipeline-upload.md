@@ -20,7 +20,7 @@ menu:
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 ```
 
-[http://localhost:8080]( http://localhost:8080 )에 접속해 대시보드를 열어줍니다.
+[http://localhost:8080](http://localhost:8080)에 접속해 대시보드를 열어줍니다.
 
 ### 1. Pipelines 탭 선택
 
