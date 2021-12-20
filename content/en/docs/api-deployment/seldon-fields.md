@@ -3,7 +3,7 @@ title : "Seldon Fields"
 description: ""
 lead: ""
 draft: false
-weight: 429
+weight: 440
 contributors: ["Jongseob Jeon"]
 menu:
   docs:
@@ -77,51 +77,51 @@ spec:
 
 ```
 
-Seldon Core를 사용하기 위해서는 spec는 `name` 과 `predictors` 필드가 정의되어야 합니다.
-`name`은 쿠버네티스 상에서 pod의 구분을 위한 이름으로 크게 영향을 미치지 않습니다.
-`predictors`는 한 개로 구성된 array로 `name`, `componentSpecs` 와 `graph` 가 정의되어야 합니다.
-여기서도 `name`은 pod의 구분을 위한 이름으로 크게 영향을 미치지 않습니다.
+Seldon Core를 사용하기 위해서는 spec는 `name` 과 `predictors` 필드가 정의되어야 합니다.  
+`name`은 쿠버네티스 상에서 pod의 구분을 위한 이름으로 크게 영향을 미치지 않습니다.  
+`predictors`는 한 개로 구성된 array로 `name`, `componentSpecs` 와 `graph` 가 정의되어야 합니다.  
+여기서도 `name`은 pod의 구분을 위한 이름으로 크게 영향을 미치지 않습니다.  
 
 이제 `componentSpecs` 와 `graph` 에서 정의해야 할 필드들에 대해서 알아보겠습니다.
 
 ## componentSpecs
 
-`componentSpecs` 는 하나로 구성된 array로 `spec` 키 값이 정의되어야 합니다.
+`componentSpecs` 는 하나로 구성된 array로 `spec` 키 값이 정의되어야 합니다.  
 `spec` 에는 `volumes`, `initContainers`, `containers` 의 필드가 정의되어야 합니다.
 
 ### volumes
 
 ```text
-        volumes:
-        - name: model-provision-location
-          emptyDir: {}
+volumes:
+- name: model-provision-location
+  emptyDir: {}
 ```
 
-`volumes`은 initContainer에서 다운로드 받는 모델을 저장하기 위한 공간을 의미합니다.
-array로 되어 있으며 array에 정의되어야 하는 값은 `name`과 `emptyDir` 입니다.
+`volumes`은 initContainer에서 다운로드 받는 모델을 저장하기 위한 공간을 의미합니다.  
+array로 입력을 받으며 array의 구성 요소는 `name`과 `emptyDir` 입니다.  
 이 값들은 모델을 다운로드 받고 옮길 때 한번 사용되므로 크게 수정하지 않아도 됩니다.
 
-### initContianer
+### initContainer
 
 ```text
-        - name: model-initializer
-          image: gcr.io/kfserving/storage-initializer:v0.4.0
-          args:
-            - "gs://seldon-models/v1.12.0-dev/sklearn/iris"
-            - "/mnt/models"
-          volumeMounts:
-          - mountPath: /mnt/models
-            name: model-provision-location
+- name: model-initializer
+  image: gcr.io/kfserving/storage-initializer:v0.4.0
+  args:
+    - "gs://seldon-models/v1.12.0-dev/sklearn/iris"
+    - "/mnt/models"
+  volumeMounts:
+  - mountPath: /mnt/models
+    name: model-provision-location
 ```
 
-initContainer는 API에서 사용할 모델을 다운로드 받는 역할을 합니다.
+initContainer는 API에서 사용할 모델을 다운로드 받는 역할을 합니다.  
 그래서 사용되는 필드들은 모델 저장소(Model Registry)로 부터 데이터를 다운로드 받을 때 필요한 정보들을 정해줍니다.
 
 initContainer의 값은 n개의 array로 구성되어 있으며 사용하는 모델마다 각각 지정해주어야 합니다.
 
 #### name
 
-`name`은 쿠버네티스 상에서 보여질 pod의 이름입니다.
+`name`은 쿠버네티스 상에서 보여질 pod의 이름입니다.  
 디버깅을 위해 `{model_name}-initializer` 로 사용하길 권장합니다.
 
 #### image
@@ -142,44 +142,43 @@ seldon core에서 권장하는 이미지는 크게 두 가지 입니다.
 #### args
 
 ```text
-          args:
-            - "gs://seldon-models/v1.12.0-dev/sklearn/iris"
-            - "/mnt/models"
+args:
+  - "gs://seldon-models/v1.12.0-dev/sklearn/iris"
+  - "/mnt/models"
 ```
 
-gcr.io/kfserving/storage-initializer:v0.4.0 도커 이미지의 argument를 입력합니다.
+gcr.io/kfserving/storage-initializer:v0.4.0 도커 이미지가 입력 받는 argument를 입력합니다.  
 array로 구성되며 첫 번째 array의 값은 다운로드 받을 모델의 주소를 적습니다.  
 두 번째 array의 값은 다운로드 받은 모델을 저장할 주소를 적습니다. (seldon core에서는 주로 `/mnt/models`에 저장합니다.)
 
 ### volumeMounts
 
 ```text
-        volumeMounts:
-          - mountPath: /mnt/models
-            name: model-provision-location
+volumeMounts:
+  - mountPath: /mnt/models
+    name: model-provision-location
 ```
 
-`volumneMounts`는 volumes에서 설명한 것과 같이 `/mnt/models`를 쿠버네티스 상에서 공유할 수 있도록 볼륨을 붙여주는 필드입니다.
+`volumneMounts`는 volumes에서 설명한 것과 같이 `/mnt/models`를 쿠버네티스 상에서 공유할 수 있도록 볼륨을 붙여주는 필드입니다.  
 자세한 내용은 [쿠버네티스 Volume](https://kubernetes.io/docs/concepts/storage/volumes/)을 참조 바랍니다.
 
 ### container
 
 ```text
-        containers:
-        - name: model
-          image: seldonio/sklearnserver:1.8.0-dev
-          volumeMounts:
-          - mountPath: /mnt/models
-            name: model-provision-location
-            readOnly: true
-          securityContext:
-            privileged: true
-            runAsUser: 0
-            runAsGroup: 0
+containers:
+- name: model
+  image: seldonio/sklearnserver:1.8.0-dev
+  volumeMounts:
+  - mountPath: /mnt/models
+    name: model-provision-location
+    readOnly: true
+  securityContext:
+    privileged: true
+    runAsUser: 0
+    runAsGroup: 0
 ```
 
-container는 실제로 모델이 API형식으로 띄워지는 곳입니다.
-이를 위해서 모델이 로드하기 위해 필요한 이미지를 설정해줍니다.
+container는 실제로 모델이 API형식으로 띄워지는 곳입니다.  
 
 #### name
 
@@ -187,7 +186,8 @@ container는 실제로 모델이 API형식으로 띄워지는 곳입니다.
 
 #### image
 
-`image` 는 모델을 API로 만들기 위해 사용할 이미지 입니다.
+`image` 는 모델을 API로 만들기 위해 사용할 이미지 입니다.  
+이미지에는 모델이 로드될 때 필요한 패키지들이 모두 설치되어 있어야 합니다.
 
 Seldon Core에서 지원하는 공식 이미지는 다음과 같습니다.
 
@@ -199,22 +199,22 @@ Seldon Core에서 지원하는 공식 이미지는 다음과 같습니다.
 #### volumeMounts
 
 ```text
-          volumeMounts:
-          - mountPath: /mnt/models
-            name: model-provision-location
-            readOnly: true
+volumeMounts:
+- mountPath: /mnt/models
+  name: model-provision-location
+  readOnly: true
 ```
 
-initContainer에서 다운로드 받은 데이터가 있는 경로를 알려주는 필드입니다.
-이 때 모델이 수정되는 것을 방지하기 위해 `readOnly: true`도 같이 줍니다.
+initContainer에서 다운로드 받은 데이터가 있는 경로를 알려주는 필드입니다.  
+이 때 모델이 수정되는 것을 방지하기 위해 `readOnly: true`도 같이 주겠습니다.
 
 #### securityContext
 
 ```text
-          securityContext:
-            privileged: true
-            runAsUser: 0
-            runAsGroup: 0
+securityContext:
+  privileged: true
+  runAsUser: 0
+  runAsGroup: 0
 ```
 
 필요한 패키지를 설치할 경우 pod이 권한이 없어서 패키지 설치를 수행하지 못할 수 있습니다.  
@@ -223,14 +223,14 @@ initContainer에서 다운로드 받은 데이터가 있는 경로를 알려주�
 ## graph
 
 ```text
-    graph:
-      name: model
-      type: MODEL
-      parameters:
-      - name: model_uri
-        type: STRING
-        value: "/mnt/models"
-      children: []
+graph:
+  name: model
+  type: MODEL
+  parameters:
+  - name: model_uri
+    type: STRING
+    value: "/mnt/models"
+  children: []
 ```
 
 모델이 동작하는 순서를 정의한 필드입니다.
@@ -248,11 +248,11 @@ type은 크게 4가지가 있습니다.
 3. OUTPUT_TRANSFORMER
 4. ROUTER
 
-각 type에 대한 자세한 설명은 [Seldon Core Complex Graphs Metadata Example](https://docs.seldon.io/projects/seldon-core/en/latest/examples/graph-metadata.html) 을 참조 바랍니다.
+각 type에 대한 자세한 설명은 [Seldon Core Complex Graphs Metadata Example](https://docs.seldon.io/projects/seldon-core/en/latest/examples/graph-metadata.html)을 참조 바랍니다.
 
 ### parameters
 
-class init 에서 사용되는 값들 입니다.
+class init 에서 사용되는 값들 입니다.  
 sklearnserver에서 필요한 값은 [다음 파일](https://github.com/SeldonIO/seldon-core/blob/master/servers/sklearnserver/sklearnserver/SKLearnServer.py)에서 확인할 수 있습니다.
 
 ```python
