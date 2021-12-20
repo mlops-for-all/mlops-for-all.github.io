@@ -2,7 +2,7 @@
 title : "1. Kubeflow"
 description: "구성요소 설치 - Kubeflow"
 date: 2021-12-13
-lastmod: 2021-12-13
+lastmod: 2021-12-20
 draft: false
 weight: 252
 contributors: ["Jaeyeon Kim"]

@@ -2,7 +2,7 @@
 title: "5. Install Kubernetes Modules"
 description: "Install Helm, Kustomize"
 date: 2021-12-13
-lastmod: 2021-12-13
+lastmod: 2021-12-20
 draft: false
 weight: 230
 contributors: ["Jaeyeon Kim"]

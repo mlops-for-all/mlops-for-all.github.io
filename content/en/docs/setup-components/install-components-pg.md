@@ -2,7 +2,7 @@
 title : "3. Prometheus & Grafana"
 description: "구성요소 설치 - Prometheus & Grafana"
 date: 2021-12-13
-lastmod: 2021-12-13
+lastmod: 2021-12-20
 draft: false
 weight: 254
 contributors: ["Jaeyeon Kim"]
