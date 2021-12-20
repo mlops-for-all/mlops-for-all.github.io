@@ -54,7 +54,7 @@ sudo apt-get install -y socat
    ```
 
    출력되는 버전 중 `5:20.10.11~3-0~ubuntu-focal` 버전이 있는지 확인합니다.
-   
+
    ```text
    apt-cache madison docker-ce | grep 5:20.10.11~3-0~ubuntu-focal
    ```
@@ -112,8 +112,8 @@ sudo apt-get install -y socat
    newgrp docker
    ```
 
-8.  sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한번 docker run을 실행합니다.
-   
+8. sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한번 docker run을 실행합니다.
+
    ```text
    docker run hello-world
    ```

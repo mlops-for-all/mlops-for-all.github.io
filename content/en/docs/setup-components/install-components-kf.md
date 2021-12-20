@@ -107,17 +107,17 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
   validatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
   ```
 
-  - cert-manager-webhook 이슈
+- cert-manager-webhook 이슈
 
-    cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하기시 바랍니다.  
-    해당 에러가 발생한 경우, cert-manager 의 3 개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
+  cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하기시 바랍니다.  
+  해당 에러가 발생한 경우, cert-manager 의 3 개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
 
-    ```text
-    Error from server: error when retrieving current configuration of:
-    Resource: "cert-manager.io/v1alpha2, Resource=clusterissuers", GroupVersionKind: "cert-manager.io/v1alpha2, Kind=ClusterIssuer"
-    Name: "kubeflow-self-signing-issuer", Namespace: ""
-    from server for: "STDIN": conversion webhook for cert-manager.io/v1, Kind=ClusterIssuer failed: Post "https://cert-manager-webhook.cert-manager.svc:443/convert?timeout=30s": dial tcp 10.101.177.157:443: connect: connection refused
-    ```
+  ```text
+  Error from server: error when retrieving current configuration of:
+  Resource: "cert-manager.io/v1alpha2, Resource=clusterissuers", GroupVersionKind: "cert-manager.io/v1alpha2, Kind=ClusterIssuer"
+  Name: "kubeflow-self-signing-issuer", Namespace: ""
+  from server for: "STDIN": conversion webhook for cert-manager.io/v1, Kind=ClusterIssuer failed: Post "https://cert-manager-webhook.cert-manager.svc:443/convert?timeout=30s": dial tcp 10.101.177.157:443: connect: connection refused
+  ```
 
 ### Istio
 

@@ -108,7 +108,6 @@ users:
     <...>
 ```
 
-
 ## 4. 쿠버네티스 기본 모듈 설치
 
 [Setup Kubernetes Modules]({{< relref "docs/setup-kubernetes/install-kubernetes-module.md" >}})을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.

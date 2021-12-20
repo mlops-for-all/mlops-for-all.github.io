@@ -23,13 +23,13 @@ Helm 은 쿠버네티스 패키지와 관련된 리소스를 한 번에 배포�
 
 1. 현재 폴더에 Helm v3.7.1 버전을 다운받습니다.
 
-  - ubuntu
+- ubuntu
 
-    ```text
-    wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
-    ```
+  ```text
+  wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
+  ```
 
-  - 다른 OS는 [공식 홈페이지](https://helm.sh/docs/intro/install/)를 참고하시길 바랍니다.
+- 다른 OS는 [공식 홈페이지](https://helm.sh/docs/intro/install/)를 참고하시길 바랍니다.
 
 2. helm 을 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
@@ -73,13 +73,13 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 1. 현재 폴더에 kustomize v3.10.0 버전을 다운받습니다.
 
-  - ubuntu
-  
-    ```text
-    wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
-    ```
-  
-  - 다른 OS는 [kustomize/v3.10.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/kustomize%2Fv3.10.0)에서 확인 후 다운로드 받습니다.
+- ubuntu
+
+  ```text
+  wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
+  ```
+
+- 다른 OS는 [kustomize/v3.10.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/kustomize%2Fv3.10.0)에서 확인 후 다운로드 받습니다.
 
 2. kustomize 를 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
