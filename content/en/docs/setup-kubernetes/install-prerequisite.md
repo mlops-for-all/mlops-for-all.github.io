@@ -1,8 +1,8 @@
 ---
-title: "3. Setup Prerequisite"
+title: "3. Install Prerequisite"
 description: "Install docker"
 date: 2021-12-13
-lastmod: 2021-12-13
+lastmod: 2021-12-20
 draft: false
 weight: 210
 contributors: ["Jaeyeon Kim"]
@@ -53,7 +53,19 @@ sudo apt-get install -y socat
    apt-cache madison docker-ce
    ```
 
-5. `5:20.10.11~3-0~ubuntu-focal` 버전이 있는지 확인하고, 해당 버전의 도커를 설치합니다.
+   출력되는 버전 중 `5:20.10.11~3-0~ubuntu-focal` 버전이 있는지 확인합니다.
+   
+   ```text
+   apt-cache madison docker-ce | grep 5:20.10.11~3-0~ubuntu-focal
+   ```
+
+   정상적으로 추가가 된 경우 다음과 같이 출력 됩니다.
+
+   ```text
+   docker-ce | 5:20.10.11~3-0~ubuntu-focal | https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
+   ```
+
+5. `5:20.10.11~3-0~ubuntu-focal` 버전의 도커를 설치합니다.
 
    ```text
    sudo apt-get install containerd.io docker-ce=5:20.10.11~3-0~ubuntu-focal docker-ce-cli=5:20.10.11~3-0~ubuntu-focal
@@ -92,7 +104,7 @@ sudo apt-get install -y socat
    https://docs.docker.com/get-started/
    ```
 
-6. docker 관련 command를 sudo 키워드 없이 사용할 수 있게 하도록 다음 명령어를 통해 권한을 추가합니다.
+7. docker 관련 command를 sudo 키워드 없이 사용할 수 있게 하도록 다음 명령어를 통해 권한을 추가합니다.
 
    ```text
    sudo groupadd docker
@@ -100,7 +112,13 @@ sudo apt-get install -y socat
    newgrp docker
    ```
 
-7. sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한번 docker run을 실행합니다.
+8.  sudo 키워드 없이 docker command를 사용할 수 있게 된 것을 확인하기 위해, 다시 한번 docker run을 실행합니다.
+   
+   ```text
+   docker run hello-world
+   ```
+
+   명령어 실행 후 다음과 같은 메시지가 보이면 정상적으로 권한이 추가된 것을 의미합니다.
 
    ```text
    mlops@ubuntu:~$ docker run hello-world

@@ -1,5 +1,5 @@
 ---
-title: "5. Setup Kubernetes Modules"
+title: "5. Install Kubernetes Modules"
 description: "Install Helm, Kustomize"
 date: 2021-12-13
 lastmod: 2021-12-13
@@ -12,20 +12,29 @@ menu:
 images: []
 ---
 
+## Setup Kubernetes Modules
+
+이번 페이지에서는 클러스터에서 사용할 모듈을 클라이언트 노드에서 설치하는 과정에 대해서 설명합니다.  
+앞으로 소개되는 과정은 모두 **클라이언트 노드**에서 진행됩니다.
+
 ## Helm
 
 Helm 은 쿠버네티스 패키지와 관련된 리소스를 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
 
 1. 현재 폴더에 Helm v3.7.1 버전을 다운받습니다.
 
-  ```text
-  wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
-  ```
+  - ubuntu
+
+    ```text
+    wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
+    ```
+
+  - 다른 OS는 [공식 홈페이지](https://helm.sh/docs/intro/install/)를 참고하시길 바랍니다.
 
 2. helm 을 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
   ```text
-  tar -zxvf helm-v3.5.4-linux-amd64.tar.gz
+  tar -zxvf helm-v3.7.1-linux-amd64.tar.gz
   sudo mv linux-amd64/helm /usr/local/bin/helm
   ```
 
@@ -64,15 +73,19 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 1. 현재 폴더에 kustomize v3.10.0 버전을 다운받습니다.
 
-  ```text
-  wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
-  ```
+  - ubuntu
+  
+    ```text
+    wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
+    ```
+  
+  - 다른 OS는 [kustomize/v3.10.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/kustomize%2Fv3.10.0)에서 확인 후 다운로드 받습니다.
 
 2. kustomize 를 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
   ```text
   tar -zxvf kustomize_v3.10.0_linux_amd64.tar.gz
-  sudo mv kustomize_3.2.0_linux_amd64 /usr/local/bin/kustomize
+  sudo mv kustomize /usr/local/bin/kustomize
   ```
 
 3. 정상적으로 설치되었는지 확인합니다.
@@ -137,6 +150,12 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
   ```text
   kubectl patch storageclass local-path  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+  ```
+
+  정상적으로 수행되면 아래와 같이 출력됩니다.
+
+  ```text
+  storageclass.storage.k8s.io/local-path patched
   ```
 
 5. default storage class 로 설정되었는지 확인합니다.
