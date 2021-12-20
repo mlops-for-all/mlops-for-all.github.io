@@ -24,7 +24,7 @@ images: []
 
 본 글에서는 kube-prometheus-stack Helm Chart 21.0.0 버전을 활용해 쿠버네티스 크러스터에 프로메테우스와 그라파나를 함께 설치하겠습니다.
 
-### Helm Repository 추가
+## Helm Repository 추가
 
 ```text
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
@@ -36,7 +36,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 "prometheus-community" has been added to your repositories
 ```
 
-### Helm Repository 업데이트
+## Helm Repository 업데이트
 
 ```text
 helm repo update
@@ -51,14 +51,14 @@ Hang tight while we grab the latest from your chart repositories...
 Update Complete. ⎈Happy Helming!⎈
 ```
 
-### Helm Install
+## Helm Install
 
 kube-prometheus-stack Chart 21.0.0 버전을 설치합니다.
 
 ```text
 helm install prom-stack prometheus-community/kube-prometheus-stack \
   --namespace monitoring-system \
-  --create-namespace
+  --create-namespace \
   --version 21.0.0
 ```
 
@@ -96,4 +96,29 @@ prom-stack-prometheus-node-exporter-zkwq9                1/1     Running   0    
 prometheus-prom-stack-kube-prometheus-prometheus-0       2/2     Running   0          61s
 ```
 
-#### TODO(jaeyeon.kim) 정상 설치 확인 UI 스크린샷 추가
+## 정상 설치 확인
+
+그럼 이제 Grafana Server에 정상적으로 접속되는지 확인해보겠습니다.
+
+우선 클라이언트 노드에서 접속하기 위해, 포트포워딩을 수행합니다.
+
+```text
+kubectl port-forward -n monitoring-system svc/prom-stack-grafana 3000:80
+```
+
+웹 브라우저를 열어 [localhost:3000](http://localhost:3000)으로 접속하면 다음과 같은 화면이 출력됩니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/grafana-0.png" title="grafana-dashboard"/>
+</p>
+
+다음의 정보로 로그인을 합니다.
+
+- username: admin
+- password: prom-operator
+
+정상적으로 설치가 되면 다음과 같은 화면이 나옵니다.
+
+<p align="center">
+  <img src="/images/docs/setup-modules/grafana-1.png" title="grafana-dashboard"/>
+</p>
