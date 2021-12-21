@@ -23,7 +23,7 @@ Helm 은 쿠버네티스 패키지와 관련된 리소스를 한 번에 배포�
 
 1. 현재 폴더에 Helm v3.7.1 버전을 다운받습니다.
 
-- ubuntu
+- For Linux amd64
 
   ```text
   wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
