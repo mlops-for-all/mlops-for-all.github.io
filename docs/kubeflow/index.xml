@@ -17,8 +17,9 @@ print(number) 그런데 이 코드를 실행하면 에러가 나고 동작하지
 파이프라인을 작성하기 위해서는 컴포넌트의 집합과 컴포넌트의 실행 순서가 필요합니다.
 Component set # 우선 파이프라인에서 사용할 컴포넌트들을 작성합니다.
 print_and_return_number 입력받은 숫자를 출력하고 반환하는 컴포넌트입니다. 컴포넌트가 반환 값이 있음을 알려주기 위해서 타입 힌트를 추가하겠습니다. 입력받은 값을 출력함으로 int를 return 타입 힌트로 입력합니다.</description></item><item><title>6. Pipeline - Upload</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</guid><description>Upload Pipeline # 이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.
-파이프라인 업로드는 kubeflow 대시보드 UI를 통해 진행할 수 있습니다.
-1. Pipelines 탭 선택 # 2. Upload Pipeline 선택 # 3. Choose file 선택 # 4. 생성된 yaml파일 업로드 # 5. Create # Upload Pipeline Version # 업로드된 파이프라인은 업로드를 통해서 버전을 관리할 수 있습니다. 다만 깃헙과 같은 코드 차원의 버전 관리가 아닌 같은 이름의 파이프라인을 모아서 보여주는 역할을 합니다.</description></item><item><title>7. Pipeline - Run</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</guid><description>Run Pipeline # 이제 우리가 업로드한 파이프라인을 실행시켜 보겠습니다.
+파이프라인 업로드는 kubeflow 대시보드 UI를 통해 진행할 수 있습니다. Install Kubeflow 에서 사용한 방법을 이용해 포트포워딩합니다.
+kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 http://localhost:8080에 접속해 대시보드를 열어줍니다.
+1. Pipelines 탭 선택 # 2. Upload Pipeline 선택 # 3. Choose file 선택 # 4. 생성된 yaml파일 업로드 # 5. Create # Upload Pipeline Version # 업로드된 파이프라인은 업로드를 통해서 버전을 관리할 수 있습니다.</description></item><item><title>7. Pipeline - Run</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</guid><description>Run Pipeline # 이제 우리가 업로드한 파이프라인을 실행시켜 보겠습니다.
 Before Run # 1. Create Experiment # Experiment란 Kubeflow 에서 실행되는 Run을 논리적으로 관리하는 단위입니다.
 Kubeflow를 최초 실행하면 Experiment가 없습니다. 따라서 파이프라인을 최초 실행할 때 Experiment를 먼저 생성해두어야 합니다.
 Experiment 를 미리 생성해두었다면 Run Pipeline으로 넘어가도 무방합니다.
