@@ -54,12 +54,13 @@ contributors: ["John Doe", "Adam Smith"]
 ### 3. 프로젝트에 처음 기여할 때
 
 만약 프로젝트에 처음 기여 할 때 `content/en/contributors`에 본인의 이름의 마크다운 파일을 작성합니다.
-마크다운 파일은 `john-doe`을 파일명으로 하며 다음의 내용을 작성합니다.
-파일명은 lowercase를 title은 upper camelcase를 이용해 작성합니다.
+
+예를 들어, `minsoo kim`이 본인의 영어 이름이라면, 마크다운 파일은 `minsoo-kim.md`을 파일명으로 하여 다음의 내용을 작성합니다.
+파일명은 하이픈(-)으로 연결한 소문자로, title은 띄어쓰기를 포함한 CamelCase로 작성합니다.
 
 ```markdown
 ---
-title: "Jonh Doe"
+title: "Minsoo Kim"
 draft: false
 ---
 ```
