@@ -10,7 +10,7 @@ menu:
     parent: kubeflow-ui-guide
 ---
 
-Kubeflow 설치를 [완료하면]({{< relref "docs/setup-components/install-components-kf.md" >}}), 다음과 같은 대시보드에 접속할 수 있습니다.
+[Kubeflow 설치]({{< relref "docs/setup-components/install-components-kf.md" >}})를 완료하면, 다음과 같은 대시보드에 접속할 수 있습니다.
 
 <p align="center">
   <img src="/images/docs/setup/after-login.png" title="after-login"/>
