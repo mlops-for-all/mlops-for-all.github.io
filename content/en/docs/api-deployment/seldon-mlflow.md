@@ -127,7 +127,7 @@ spec:
 
         containers:
         - name: model
-          image: seldonio/mlflowserver:1.8.0-dev
+          image: ghcr.io/mlops-for-all/mlflowserver
           volumeMounts:
           - mountPath: /mnt/models
             name: model-provision-location
