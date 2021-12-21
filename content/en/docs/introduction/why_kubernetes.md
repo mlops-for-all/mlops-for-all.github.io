@@ -1,5 +1,5 @@
 ---
-title : "3. Why Kuberntes?"
+title : "3. Why Kubernetes?"
 description: "Reason for using k8s in MLOps"
 lead: ""
 date: 2021-12-03
