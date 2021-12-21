@@ -71,9 +71,9 @@ Helm 은 쿠버네티스 패키지와 관련된 리소스를 한 번에 배포�
 
 kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
 
-1. 현재 폴더에 kustomize v3.10.0 버전을 다운받습니다.
+1. 현재 폴더에 kustomize v3.10.0 버전의 바이너리를 다운받습니다.
 
-- ubuntu
+- For Linux amd64
 
   ```text
   wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz

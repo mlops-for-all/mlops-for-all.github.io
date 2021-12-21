@@ -60,7 +60,6 @@ seldon-core-analytics Helm Chart 1.12.0 버전을 설치합니다.
 ```text
 helm install seldon-core-analytics seldonio/seldon-core-analytics \
   --namespace seldon-system \
-  --create-namespace \
   --version 1.12.0
 ```
 

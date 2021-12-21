@@ -293,8 +293,8 @@ def train_from_csv(
 
 그리고 MLFlow에 업로드하는 컴포넌트를 작성합니다.
 이 때 업로드되는 MLflow의 endpoint를 우리가 설치한 [mlflow service]({{< relref "docs/setup-components/install-components-mlflow.md" >}}) 로 이어지게 설정해주어야 합니다.  
-이 때 endpoint의 주소는 `http://minio-service.kubeflow.svc:9000` 입니다.  
-tracking_uri의 주소는 `http://mlflow-server-service.mlflow-system.svc:5000` 입니다.
+이 때 S3 Endpoint의 주소는 MLflow Server 설치 당시 설치한 minio의 [쿠버네티스 서비스 DNS 네임을 활용](https://kubernetes.io/ko/docs/concepts/services-networking/dns-pod-service/)합니다. 해당  service 는 kubeflow namespace에서 minio-service라는 이름으로 생성되었으므로, `http://minio-service.kubeflow.svc:9000` 로 설정합니다..  
+이와 비슷하게 tracking_uri의 주소는 mlflow server의 쿠버네티스 서비스 DNS 네임을 활용하여, `http://mlflow-server-service.mlflow-system.svc:5000` 로 설정합니다.
 
 ```python
 from functools import partial
@@ -415,7 +415,7 @@ def mlflow_pipeline(kernel: str, model_name: str):
 
 ### Run
 
-위에서 작성된 컴포넌트와 파이프라인을 한 스크립트에 모으면 다음과 같습니다.
+위에서 작성된 컴포넌트와 파이프라인을 하나의 파이썬 파일에 정리하면 다음과 같습니다.
 
 ```python
 from functools import partial
@@ -557,19 +557,19 @@ if __name__ == "__main__":
     kfp.compiler.Compiler().compile(mlflow_pipeline, "mlflow_pipeline.yaml")
 ```
 
-실행후 나온 yaml을 업로드 후 run 결과를 확인합니다.
+실행후 생성된 mlflow_pipeline.yaml 파일을 파이프라인 업로드한 후, 실행하여 run 의 결과를 확인합니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/mlflow-svc-0.png" title="kubeflow-run"/>
 </p>
 
-mlflow service를 포트포워딩 해서 ui를 확인합니다.
+mlflow service를 포트포워딩해서 MLflow ui에 접속합니다.
 
 ```text
 kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
 ```
 
-다음과 같이 run이 생성된 것을 확인할 수 있습니다.
+웹 브라우저를 열어 localhost:5000으로 접속하면, 다음과 같이 run이 생성된 것을 확인할 수 있습니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/mlflow-svc-1.png" title="mlflow-run"/>
