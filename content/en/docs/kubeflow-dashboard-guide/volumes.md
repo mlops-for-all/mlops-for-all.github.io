@@ -24,7 +24,7 @@ menu:
   <img src="/images/docs/kubeflow-dashboard-guide/volumes.png" title="left-tabs"/>
 </p>
 
-Volumes 탭은 Kubernetes의 [볼륨](https://kubernetes.io/ko/docs/concepts/storage/volumes/), 정확히는 [퍼시스턴트 볼륨 클레임(Persistent Volume Claim, 이하 pvc)](https://kubernetes.io/ko/docs/concepts/storage/persistent-volumes/) 중 현재 user의 namespace에 속한 pvc를 관리하는 기능을 제공합니다.
+Volumes 탭은 [Kubernetes의 볼륨(Volume)](https://kubernetes.io/ko/docs/concepts/storage/volumes/), 정확히는 [퍼시스턴트 볼륨 클레임(Persistent Volume Claim, 이하 pvc)](https://kubernetes.io/ko/docs/concepts/storage/persistent-volumes/) 중 현재 user의 namespace에 속한 pvc를 관리하는 기능을 제공합니다.
 
 위 스크린샷을 보면, [1. Notebooks]({{< relref "docs/kubeflow-dashboard-guide/notebooks" >}}) 페이지에서 생성한 Volume의 정보를 확인할 수 있습니다. 해당 Volume의 Storage Class는 쿠버네티스 클러스터 설치 당시 설치한 Default Storage Class인 local-path로 설정되어있음을 확인할 수 있습니다.
 
