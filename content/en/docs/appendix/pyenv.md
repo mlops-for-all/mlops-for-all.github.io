@@ -239,7 +239,7 @@ pyenv virtualenv 3.7.12 demo
 ```
 
 ```text
-mlops@ubuntu:~$ pyenv virtualenv 3.7.12 demo
+$ pyenv virtualenv 3.7.12 demo
 Looking in links: /tmp/tmpffqys0gv
 Requirement already satisfied: setuptools in /home/mlops/.pyenv/versions/3.7.12/envs/demo/lib/python3.7/site-packages (47.1.0)
 Requirement already satisfied: pip in /home/mlops/.pyenv/versions/3.7.12/envs/demo/lib/python3.7/site-packages (20.1.1)
