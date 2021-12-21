@@ -159,7 +159,7 @@ pyenv --help
 다음과 같은 메시지가 출력되면 정상적으로 설정된 것을 의미합니다.
 
 ```text
-mlops@ubuntu:~$ pyenv
+$ pyenv
 pyenv 2.2.2
 Usage: pyenv <command> [<args>]
 
