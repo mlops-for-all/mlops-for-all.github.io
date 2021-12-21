@@ -10,6 +10,8 @@ menu:
     parent: kubeflow-ui-guide
 ---
 
+## Volumes
+
 다음으로는 Central Dashboard의 왼쪽 탭의 Volumes를 클릭해보겠습니다.
 
 <p align="center">
