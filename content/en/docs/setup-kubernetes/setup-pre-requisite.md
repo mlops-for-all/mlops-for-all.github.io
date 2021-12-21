@@ -129,7 +129,7 @@ sudo apt-get install -y socat
 
 ## Turn off Swap Memory
 
-kubelet 이 정상적으로 동작하게 하기 위해서는 **클러스터** 에서 swap이라고 불리는 가상메모리를 꺼 두어야 합니다. 다음 명령어를 통해 swap을 꺼 둡니다.  
+kubelet 이 정상적으로 동작하게 하기 위해서는 **클러스터** 노드에서 swap이라고 불리는 가상메모리를 꺼 두어야 합니다. 다음 명령어를 통해 swap을 꺼 둡니다.  
 **(클러스터와 클라이언트를 같은 데스크탑에서 사용할 때 swap 메모리를 종료하면 속도의 저하가 있을 수 있습니다.)**  
 
 ```text
@@ -180,7 +180,7 @@ kubectl 은 쿠버네티스 클러스터에 API 를 요청할 때 사용하는 �
 여러 개의 kubeconfig 파일 혹은 여러 개의 kube-context 를 효율적으로 관리하는 방법은 다음과 같은 문서를 참고하시기 바랍니다.
 
    - [https://dev.to/aabiseverywhere/configuring-multiple-kubeconfig-on-your-machine-59eo](https://dev.to/aabiseverywhere/configuring-multiple-kubeconfig-on-your-machine-59eo)
-   - [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx))
+   - [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx)
 
 ## References
 
