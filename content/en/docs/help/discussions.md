@@ -11,8 +11,6 @@ weight: 1001
 toc: true
 ---
 
-## Community
-
 ### *모두의 MLOps* 릴리즈 소식
 
 새로운 포스트나 수정사항은 [Announcements](https://github.com/mlops-for-all/mlops-for-all.github.io/discussions/categories/announcements)에서 확인할 수 있습니다.
@@ -23,8 +21,6 @@ toc: true
 
 ### Suggestion
 
-제안점은 [ideas](https://github.com/mlops-for-all/mlops-for-all.github.io/discussions/categories/ideas)를 통해 제안해 주시면 됩니다.
-
+제안점은 [Ideas](https://github.com/mlops-for-all/mlops-for-all.github.io/discussions/categories/ideas)를 통해 제안해 주시면 됩니다.
 
 ### v2.0 Release
-
