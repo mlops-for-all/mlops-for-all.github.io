@@ -51,7 +51,7 @@ pyenv --help
 ```
 
 ```text
-mlops@mlops-MacBook-Pro ~ % pyenv --help
+$ pyenv --help
 Usage: pyenv <command> [<args>]
 
 Some useful pyenv commands are:
