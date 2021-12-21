@@ -1,13 +1,13 @@
 ---
 title: "How to Contribute"
-# date: 2020-11-12T13:26:54+01:00
-# lastmod: 2020-11-12T13:26:54+01:00
+date: 2021-12-21
+lastmod: 2021-12-21
 draft: false
 images: []
 menu:
   docs:
     parent: "help"
-weight: 1001
+weight: 1002
 toc: true
 ---
 
