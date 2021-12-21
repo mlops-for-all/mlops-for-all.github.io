@@ -1,5 +1,5 @@
 ---
-title : "2. Concepts"
+title : "2. Kubeflow Concepts"
 description: ""
 lead: ""
 draft: false
@@ -32,7 +32,7 @@ menu:
 3. Generates Artifacts
 
 예시와 함께 각 구성 요소가 어떤 것인지 알아보도록 하겠습니다.
-다음과 같이 데이터를 불러와 SVC(Support Vector Classifier)를 학습한 후 SVC 모델을 저장하는 과정을 적은 파이선 코드가 있습니다.
+다음과 같이 데이터를 불러와 SVC(Support Vector Classifier)를 학습한 후 SVC 모델을 저장하는 과정을 적은 파이썬 코드가 있습니다.
 
 ```python
 import dill
@@ -52,13 +52,13 @@ with open(model_path, mode="wb") as file_writer:
      dill.dump(clf, file_writer)
 ```
 
-위의 파이선 코드는 다음과 같이 컴포넌트 콘텐츠로 나눌 수 있습니다.
+위의 파이썬 코드는 다음과 같이 컴포넌트 콘텐츠로 나눌 수 있습니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/concept-2.png" title="concept-image"/>
 </p>
 
-Environment는 파이선 코드에서 사용하는 패키지들을 import하는 부분입니다.  
+Environment는 파이썬 코드에서 사용하는 패키지들을 import하는 부분입니다.  
 다음으로 Python Code w\ Config 에서는 주어진 Config를 이용해 실제로 학습을 수행합니다.  
 마지막으로 아티팩트를 저장하는 과정이 있습니다.
 
@@ -95,7 +95,7 @@ Kubeflow에서는 컴포넌트 래퍼를 위의 `train_svc_from_csv`와 같이 �
 
 저희는 모델을 다음과 같이 정의 했습니다.
 
-> 모델이란 파이선 코드와 학습된 Weights와 Network 구조 그리고 이를 실행시키기 위한 환경이 모두 포함된 형태
+> 모델이란 파이썬 코드와 학습된 Weights와 Network 구조 그리고 이를 실행시키기 위한 환경이 모두 포함된 형태
 
 #### Data
 

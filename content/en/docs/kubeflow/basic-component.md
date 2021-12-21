@@ -1,5 +1,5 @@
 ---
-title : "4. Write Component"
+title : "4. Component - Write"
 description: ""
 lead: ""
 draft: false
@@ -22,9 +22,9 @@ menu:
 
 ## Component Contents
 
-컴포넌트 콘텐츠는 우리가 흔히 작성하는 파이선 코드와 다르지 않습니다.  
+컴포넌트 콘텐츠는 우리가 흔히 작성하는 파이썬 코드와 다르지 않습니다.  
 예를 들어서 숫자를 입력으로 받고 입력받은 숫자를 출력한 뒤 반환하는 컴포넌트를 작성해 보겠습니다.  
-파이선 코드로 작성하면 다음과 같이 작성할 수 있습니다.
+파이썬 코드로 작성하면 다음과 같이 작성할 수 있습니다.
 
 ```python
 print(number)
@@ -96,7 +96,7 @@ def divde_and_return_number(
 ### Convert to Kubeflow Format
 
 이제 작성한 컴포넌트를 kubeflow에서 사용할 수 있는 포맷으로 변환해야 합니다. 변환은 `kfp.components.create_component_from_func` 를 통해서 할 수 있습니다.  
-이렇게 변환된 형태는 파이선에서 함수로 import하여서 파이프라인에서 사용할 수 있습니다.
+이렇게 변환된 형태는 파이썬에서 함수로 import하여서 파이프라인에서 사용할 수 있습니다.
 
 ```python
 from kfp.components import create_component_from_func
@@ -109,7 +109,7 @@ def print_and_return_number(number: int) -> int:
 
 ### Share component with yaml file
 
-만약 파이선 코드로 공유를 할 수 없는 경우 YAML 파일로 컴포넌트를 공유해서 사용할 수 있습니다.
+만약 파이썬 코드로 공유를 할 수 없는 경우 YAML 파일로 컴포넌트를 공유해서 사용할 수 있습니다.
 이를 위해서는 우선 컴포넌트를 YAML 파일로 변환한 뒤 `kfp.components.load_component_from_file` 을 이용해 파이프라인에서 사용할 수 있습니다.
 
 우선 작성한 컴포넌트를 YAML 파일로 변환하는 과정에 대해서 설명합니다.

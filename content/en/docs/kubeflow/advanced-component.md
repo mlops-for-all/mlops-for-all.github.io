@@ -1,5 +1,5 @@
 ---
-title : "8. Component Envrionment"
+title : "8. Component - Environment"
 description: ""
 lead: ""
 draft: false
@@ -10,11 +10,14 @@ menu:
     parent: "kubeflow"
 ---
 
-이번 페이지에서는 [Kubeflow Concepts]( 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
+
+## Component Environment
+
+이번 페이지에서는 [Kubeflow Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md#component-contents" >}}) 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
 
 ## Component Contents
 
-아래 코드는 [Kubeflow Concepts]({{&lt; relref "docs/kubeflow/kubeflow-concepts.md#component-contents" &gt;}})에서 사용했던 컴포넌트 콘텐츠입니다.
+아래 코드는 [Kubeflow Concepts]({{< relref "docs/kubeflow/kubeflow-concepts.md#component-contents" >}})에서 사용했던 컴포넌트 콘텐츠입니다.
 
 ```python
 import dill
@@ -62,7 +65,7 @@ def train_from_csv(
 
 [Basic Usage Component]({{< relref "docs/kubeflow/basic-component" >}})에서 설명할 때 입력과 출력에 대한 타입 힌트를 적어야 한다고 설명 했었습니다. 그런데 만약 json에서 사용할 수 있는 기본 타입이 아닌 dataframe, model와 같이 복잡한 객체들은 어떻게 할까요?
 
-파이선에서 함수간에 값을 전달할 때, 객체를 반환해도 그 값이 호스트의 메모리에 저장되어 있으므로 다음 함수에서도 같은 객체를 사용할 수 있습니다. 하지만 kubeflow에서 컴포넌트들은 각각 컨테이너 위에서 서로 독립적으로 실행됩니다. 즉, 같은 메모리를 공유하고 있지 않기 때문에, 보통의 파이선 함수에서 사용하는 방식과 같이 객체를 전달할 수 없습니다. 컴포넌트 간에 넘겨 줄 수 있는 정보는 `json` 으로만 가능합니다. 따라서 Model이나 DataFrame과 같이 json 형식으로 변환할 수 없는 타입의 객체는 다른 방법을 통해야 합니다.
+파이썬에서 함수간에 값을 전달할 때, 객체를 반환해도 그 값이 호스트의 메모리에 저장되어 있으므로 다음 함수에서도 같은 객체를 사용할 수 있습니다. 하지만 kubeflow에서 컴포넌트들은 각각 컨테이너 위에서 서로 독립적으로 실행됩니다. 즉, 같은 메모리를 공유하고 있지 않기 때문에, 보통의 파이썬 함수에서 사용하는 방식과 같이 객체를 전달할 수 없습니다. 컴포넌트 간에 넘겨 줄 수 있는 정보는 `json` 으로만 가능합니다. 따라서 Model이나 DataFrame과 같이 json 형식으로 변환할 수 없는 타입의 객체는 다른 방법을 통해야 합니다.
 
 Kubeflow에서는 이를 해결하기 위해 json-serializable 하지 않은 타입의 객체는 메모리 대신 파일에 데이터를 저장한 뒤, 그 파일을 이용해 정보를 전달합니다. 저장된 파일의 경로는 str이기 때문에 컴포넌트 간에 전달할 수 있기 때문입니다. 그런데 kubeflow에서는 minio를 이용해 파일을 저장하는데 유저는 실행을 하기 전에는 각 파일의 경로를 알 수 없습니다. 이를 위해서 kubeflow에서는 입력롸 출력의 경로와 관련된 매직을 제공하는데 바로 `InputPath`와 `OutputPath` 입니다.
 
@@ -250,14 +253,20 @@ def create_component_from_func(
 
 만약 컴포넌트가 사용하는 base_image에 패키지들이 전부 설치되어 있다면 추가적인 패키지 설치 없이 바로 사용할 수 있습니다.
 
-[도커 허브에 올리는 법 docker 를 만드는 법] ← 따로 글 만들어서
-
-다음과 같은 Dockerfile을 작성 후 업로드 하도록 하겠습니다.
+예를 들어, 이번 페이지에서는 다음과 같은 Dockerfile을 작성하겠습니다.
 
 ```docker
 BASE_IMAGE=python:3.7
 
 RUN pip install dill pandas scikit-learn
+```
+
+위의 Dockerfile을 이용해 이미지를 빌드해 보겠습니다. 실습에서 사용해볼 도커 허브는 ghcr입니다.  
+각자 환경에 맞추어서 도커 허브를 선택 후 업로드하면 됩니다.
+
+```text
+docker build . -f Dockerfile -t ghcr.io/mlops-for-all/base-image
+docker push ghcr.io/mlops-for-all/base-image
 ```
 
 이제 base_image를 입력해 보겠습니다.
