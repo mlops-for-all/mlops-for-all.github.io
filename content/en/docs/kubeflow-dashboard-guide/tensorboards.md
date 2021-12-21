@@ -22,7 +22,6 @@ menu:
   <img src="/images/docs/kubeflow-dashboard-guide/tensorboard.png" title="left-tabs"/>
 </p>
 
-
 Tensorboards 탭은 Tensorflow, PyTorch 등의 프레임워크에서 제공하는 Tensorboard 유틸이 생성한 ML 학습 관련 데이터를 시각화하는 텐서보드 서버(Tensorboard Server) 를 쿠버네티스 클러스터에 생성하는 기능을 제공합니다.
 
 이렇게 생성한 텐서보드 서버는, 일반적인 원격 텐서보드 서버의 사용법과 동일하게 사용할 수도 있으며, [Kubeflow 파이프라인 런에서 바로 텐서보드 서버에 데이터를 저장하는 용도](https://www.kubeflow.org/docs/components/pipelines/sdk/output-viewer/#tensorboard)로 활용할 수 있습니다.

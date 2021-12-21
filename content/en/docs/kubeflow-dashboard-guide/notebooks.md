@@ -98,15 +98,15 @@ Notebooks 탭은 JupyterHub와 비슷하게 유저별로 jupyter notebook 및 co
   <img src="/images/docs/kubeflow-dashboard-guide/notebook-access.png" title="notebook-home"/>
 </p>
 
-**Launcher**의 Notebook, Console, Terminal 아이콘을 클릭하여, 사용할 수 있습니다.
+**Launcher**의 Notebook, Console, Terminal 아이콘을 클릭하여 사용할 수 있습니다.
 
-  - 생성된 Notebook 화면
+  생성된 Notebook 화면
 
   <p align="center">
     <img src="/images/docs/kubeflow-dashboard-guide/notebook-console.png" title="notebook-home"/>
   </p>
 
-  - 생성된 Terminal 화면
+  생성된 Terminal 화면
 
   <p align="center">
     <img src="/images/docs/kubeflow-dashboard-guide/terminal-console.png" title="notebook-home"/>
