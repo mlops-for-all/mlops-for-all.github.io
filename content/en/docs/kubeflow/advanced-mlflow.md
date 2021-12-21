@@ -2,6 +2,8 @@
 title : "11. Component - MLFlow"
 description: ""
 lead: ""
+date: 2021-12-13
+lastmod: 2021-12-20
 draft: false
 weight: 329
 contributors: ["Jongseob Jeon"]
@@ -290,6 +292,9 @@ def train_from_csv(
 ```
 
 그리고 MLFlow에 업로드하는 컴포넌트를 작성합니다.
+이 때 업로드되는 MLflow의 endpoint를 우리가 설치한 [mlflow service]({{< relref "docs/setup-components/install-components-mlflow.md" >}}) 로 이어지게 설정해주어야 합니다.  
+이 때 S3 Endpoint의 주소는 MLflow Server 설치 당시 설치한 minio의 [쿠버네티스 서비스 DNS 네임을 활용](https://kubernetes.io/ko/docs/concepts/services-networking/dns-pod-service/)합니다. 해당  service 는 kubeflow namespace에서 minio-service라는 이름으로 생성되었으므로, `http://minio-service.kubeflow.svc:9000` 로 설정합니다..  
+이와 비슷하게 tracking_uri의 주소는 mlflow server의 쿠버네티스 서비스 DNS 네임을 활용하여, `http://mlflow-server-service.mlflow-system.svc:5000` 로 설정합니다.
 
 ```python
 from functools import partial
@@ -297,7 +302,7 @@ from kfp.components import InputPath, create_component_from_func
 
 @partial(
     create_component_from_func,
-    packages_to_install=["dill", "pandas", "scikit-learn", "mlflow"],
+    packages_to_install=["dill", "pandas", "scikit-learn", "mlflow", "boto3"],
 )
 def upload_sklearn_model_to_mlflow(
     model_name: str,
@@ -306,9 +311,17 @@ def upload_sklearn_model_to_mlflow(
     signature_path: InputPath("dill"),
     conda_env_path: InputPath("dill"),
 ):
+    import os
     import dill
-    import mlflow
     from mlflow.sklearn import save_model
+    
+    from mlflow.tracking.client import MlflowClient
+
+    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://minio-service.kubeflow.svc:9000"
+    os.environ["AWS_ACCESS_KEY_ID"] = "minio"
+    os.environ["AWS_SECRET_ACCESS_KEY"] = "minio123"
+
+    client = MlflowClient("http://mlflow-server-service.mlflow-system.svc:5000")
 
     with open(model_path, mode="rb") as file_reader:
         clf = dill.load(file_reader)
@@ -321,6 +334,7 @@ def upload_sklearn_model_to_mlflow(
 
     with open(conda_env_path, "rb") as file_reader:
         conda_env = dill.load(file_reader)
+
     save_model(
         sk_model=clf,
         path=model_name,
@@ -329,8 +343,8 @@ def upload_sklearn_model_to_mlflow(
         signature=signature,
         input_example=input_example,
     )
-    with mlflow.start_run():
-        mlflow.log_artifact(model_name)
+    run = client.create_run(experiment_id="0")
+    client.log_artifact(run.info.run_id, model_name)
 ```
 
 ## MLFlow Pipeline
@@ -398,3 +412,171 @@ def mlflow_pipeline(kernel: str, model_name: str):
 바로 입력과 출력에서 받는 argument중 경로와 관련된 것들에 `_path` 접미사가 모두 사라졌습니다.  
 `iris_data.outputs["data_path"]` 가 아닌 `iris_data.outputs["data"]` 으로 접근하는 것을 확인할 수 있습니다.  
 이는 kubeflow에서 정한 법칙으로 `InputPath` 와 `OutputPath` 으로 생성된 경로들은 파이프라인에서 접근할 때는 `_path` 접미사를 생략하여 접근합니다.
+
+### Run
+
+위에서 작성된 컴포넌트와 파이프라인을 하나의 파이썬 파일에 정리하면 다음과 같습니다.
+
+```python
+from functools import partial
+
+import kfp
+from kfp.components import InputPath, OutputPath, create_component_from_func
+from kfp.dsl import pipeline
+
+
+@partial(
+    create_component_from_func,
+    packages_to_install=["pandas", "scikit-learn"],
+)
+def load_iris_data(
+    data_path: OutputPath("csv"),
+    target_path: OutputPath("csv"),
+):
+    import pandas as pd
+    from sklearn.datasets import load_iris
+
+    iris = load_iris()
+
+    data = pd.DataFrame(iris["data"], columns=iris["feature_names"])
+    target = pd.DataFrame(iris["target"], columns=["target"])
+
+    data.to_csv(data_path, index=False)
+    target.to_csv(target_path, index=False)
+
+
+@partial(
+    create_component_from_func,
+    packages_to_install=["dill", "pandas", "scikit-learn", "mlflow"],
+)
+def train_from_csv(
+    train_data_path: InputPath("csv"),
+    train_target_path: InputPath("csv"),
+    model_path: OutputPath("dill"),
+    input_example_path: OutputPath("dill"),
+    signature_path: OutputPath("dill"),
+    conda_env_path: OutputPath("dill"),
+    kernel: str,
+):
+    import dill
+    import pandas as pd
+    from sklearn.svm import SVC
+
+    from mlflow.models.signature import infer_signature
+    from mlflow.utils.environment import _mlflow_conda_env
+
+    train_data = pd.read_csv(train_data_path)
+    train_target = pd.read_csv(train_target_path)
+
+    clf = SVC(kernel=kernel)
+    clf.fit(train_data, train_target)
+
+    with open(model_path, mode="wb") as file_writer:
+        dill.dump(clf, file_writer)
+
+    input_example = train_data.sample(1)
+    with open(input_example_path, "wb") as file_writer:
+        dill.dump(input_example, file_writer)
+
+    signature = infer_signature(train_data, clf.predict(train_data))
+    with open(signature_path, "wb") as file_writer:
+        dill.dump(signature, file_writer)
+
+    conda_env = _mlflow_conda_env(
+        additional_pip_deps=["dill", "pandas", "scikit-learn"]
+    )
+    with open(conda_env_path, "wb") as file_writer:
+        dill.dump(conda_env, file_writer)
+
+
+@partial(
+    create_component_from_func,
+    packages_to_install=["dill", "pandas", "scikit-learn", "mlflow", "boto3"],
+)
+def upload_sklearn_model_to_mlflow(
+    model_name: str,
+    model_path: InputPath("dill"),
+    input_example_path: InputPath("dill"),
+    signature_path: InputPath("dill"),
+    conda_env_path: InputPath("dill"),
+):
+    import os
+    import dill
+    from mlflow.sklearn import save_model
+    
+    from mlflow.tracking.client import MlflowClient
+
+    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://minio-service.kubeflow.svc:9000"
+    os.environ["AWS_ACCESS_KEY_ID"] = "minio"
+    os.environ["AWS_SECRET_ACCESS_KEY"] = "minio123"
+
+    client = MlflowClient("http://mlflow-server-service.mlflow-system.svc:5000")
+
+    with open(model_path, mode="rb") as file_reader:
+        clf = dill.load(file_reader)
+
+    with open(input_example_path, "rb") as file_reader:
+        input_example = dill.load(file_reader)
+
+    with open(signature_path, "rb") as file_reader:
+        signature = dill.load(file_reader)
+
+    with open(conda_env_path, "rb") as file_reader:
+        conda_env = dill.load(file_reader)
+
+    save_model(
+        sk_model=clf,
+        path=model_name,
+        serialization_format="cloudpickle",
+        conda_env=conda_env,
+        signature=signature,
+        input_example=input_example,
+    )
+    run = client.create_run(experiment_id="0")
+    client.log_artifact(run.info.run_id, model_name)
+
+
+@pipeline(name="mlflow_pipeline")
+def mlflow_pipeline(kernel: str, model_name: str):
+    iris_data = load_iris_data()
+    model = train_from_csv(
+        train_data=iris_data.outputs["data"],
+        train_target=iris_data.outputs["target"],
+        kernel=kernel,
+    )
+    _ = upload_sklearn_model_to_mlflow(
+        model_name=model_name,
+        model=model.outputs["model"],
+        input_example=model.outputs["input_example"],
+        signature=model.outputs["signature"],
+        conda_env=model.outputs["conda_env"],
+    )
+
+
+if __name__ == "__main__":
+    kfp.compiler.Compiler().compile(mlflow_pipeline, "mlflow_pipeline.yaml")
+```
+
+실행후 생성된 mlflow_pipeline.yaml 파일을 파이프라인 업로드한 후, 실행하여 run 의 결과를 확인합니다.
+
+<p align="center">
+  <img src="/images/docs/kubeflow/mlflow-svc-0.png" title="kubeflow-run"/>
+</p>
+
+mlflow service를 포트포워딩해서 MLflow ui에 접속합니다.
+
+```text
+kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
+```
+
+웹 브라우저를 열어 localhost:5000으로 접속하면, 다음과 같이 run이 생성된 것을 확인할 수 있습니다.
+
+<p align="center">
+  <img src="/images/docs/kubeflow/mlflow-svc-1.png" title="mlflow-run"/>
+</p>
+
+run 을 클릭해서 확인하면 학습한 모델 파일이 있는 것을 확인할 수 있습니다.
+
+<p align="center">
+  <img src="/images/docs/kubeflow/mlflow-svc-2.png" title="mlflow-run"/>
+</p>
