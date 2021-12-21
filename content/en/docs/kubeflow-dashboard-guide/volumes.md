@@ -28,7 +28,7 @@ Volumes 탭은 [Kubernetes의 볼륨(Volume)](https://kubernetes.io/ko/docs/conc
 
 위 스크린샷을 보면, [1. Notebooks]({{< relref "docs/kubeflow-dashboard-guide/notebooks" >}}) 페이지에서 생성한 Volume의 정보를 확인할 수 있습니다. 해당 Volume의 Storage Class는 쿠버네티스 클러스터 설치 당시 설치한 Default Storage Class인 local-path로 설정되어있음을 확인할 수 있습니다.
 
-이외에도 user namespace에 새로운 볼륨(Volume)을 생성하거나, 조회하거나, 삭제하고 싶은 경우에 Volumes 페이지를 활용할 수 있습니다.
+이외에도 user namespace에 새로운 볼륨을 생성하거나, 조회하거나, 삭제하고 싶은 경우에 Volumes 페이지를 활용할 수 있습니다.
 
 ---
 
