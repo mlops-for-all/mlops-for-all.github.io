@@ -32,7 +32,7 @@ apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
   name: seldon-example
-  namespace: seldon
+  namespace: kubeflow-user-example-com
 spec:
   name: model
   predictors:
