@@ -217,7 +217,7 @@ if __name__ == "__main__":
 
 ```
 
-실행하면 다음과 같이 나옵니다.
+파이프라인을 업로드하면 다음과 같이 나옵니다.
 
 <p align="center">
     <img src="/images/docs/api-deployment/children-kubeflow.png" title="kubeflow"/>
@@ -342,7 +342,6 @@ graph의 동작방식은 처음 받은 값을 정해진 predict_method로 변환
 이 경우 scaler -> svc 로 데이터가 전달됩니다.
 
 이제 위의 스펙을 yaml파일로 생성해 보겠습니다.
-
 
 ```text
 cat <<EOF > multi-model.yaml
