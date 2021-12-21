@@ -102,34 +102,6 @@ seldon-core-analytics-prometheus-seldon-685c664894-7cr45        2/2     Running 
 kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 ```
 
-<<<<<<< HEAD
-## 정상 설치 확인
-
-그럼 이제 Grafana Server에 정상적으로 접속되는지 확인해보겠습니다.
-
-우선 클라이언트 노드에서 접속하기 위해, 포트포워딩을 수행합니다.
-
-```text
-kubectl port-forward -n monitoring-system svc/prom-stack-grafana 3000:80
-```
-
-웹 브라우저를 열어 [localhost:3000](http://localhost:3000)으로 접속하면 다음과 같은 화면이 출력됩니다.
-
-<p align="center">
-  <img src="/images/docs/setup-modules/grafana-0.png" title="grafana-dashboard"/>
-</p>
-
-다음의 정보로 로그인을 합니다.
-
-- username: admin
-- password: prom-operator
-
-정상적으로 설치가 되면 다음과 같은 화면이 나옵니다.
-
-<p align="center">
-  <img src="/images/docs/setup-modules/grafana-1.png" title="grafana-dashboard"/>
-</p>
-=======
 웹 브라우저를 열어 [localhost:8090](http://localhost:8090)으로 접속하면 다음과 같은 화면이 출력됩니다.
 
 <p align="center">
@@ -186,4 +158,3 @@ curl -X POST http://172.25.0.129:32193/seldon/seldon-system/sklearn/api/v1.0/pre
 ## References
 
 - [Seldon-Core-Analytics Helm Chart](https://github.com/SeldonIO/seldon-core/tree/master/helm-charts/seldon-core-analytics)
->>>>>>> c5f612077615677ef98b1149a9cee21d3a02d87f
