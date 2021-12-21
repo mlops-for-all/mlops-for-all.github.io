@@ -2,7 +2,7 @@
 title : "4. Prometheus & Grafana"
 description: "구성요소 설치 - Prometheus & Grafana"
 date: 2021-12-13
-lastmod: 2021-12-20
+lastmod: 2021-12-13
 draft: false
 weight: 255
 contributors: ["Jaeyeon Kim"]
@@ -26,7 +26,7 @@ images: []
 
 본 글에서는 seldonio/seldon-core-analytics Helm Chart 1.12.0 버전을 활용해 쿠버네티스 크러스터에 프로메테우스와 그라파나를 설치하고, Seldon-Core 에서 생성한 SeldonDeployment의 Metrics 을 효율적으로 확인하기 위한 대시보드도 함께 설치합니다.
 
-## Helm Repository 추가
+### Helm Repository 추가
 
 ```text
 helm repo add seldonio https://storage.googleapis.com/seldon-charts
@@ -38,7 +38,7 @@ helm repo add seldonio https://storage.googleapis.com/seldon-charts
 "seldonio" has been added to your repositories
 ```
 
-## Helm Repository 업데이트
+### Helm Repository 업데이트
 
 ```text
 helm repo update
@@ -53,7 +53,7 @@ Hang tight while we grab the latest from your chart repositories...
 Update Complete. ⎈Happy Helming!⎈
 ```
 
-## Helm Install
+### Helm Install
 
 seldon-core-analytics Helm Chart 1.12.0 버전을 설치합니다.
 
