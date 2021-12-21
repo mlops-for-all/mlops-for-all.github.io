@@ -43,7 +43,7 @@ Notebooks 탭은 JupyterHub와 비슷하게 유저별로 jupyter notebook 및 co
 
 - **name**:
   - 노트북 서버를 구분할 수 있는 이름으로 생성합니다.
-- namespace :
+- **namespace** :
   - 따로 변경할 수 없습니다. (현재 로그인한 user 계정의 namespace이 자동으로 지정되어 있습니다.)
 - **Image**:
   - sklearn, pytorch, tensorflow 등의 pypi package 가 미리 설치된 jupyter lab 이미지 중 사용할 이미지를 선택합니다.
