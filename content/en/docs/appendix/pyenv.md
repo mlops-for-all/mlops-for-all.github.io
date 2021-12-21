@@ -213,7 +213,7 @@ pyenv install 3.7.12
 정상적으로 설치되면 다음과 같은 메시지가 출력됩니다.
 
 ```text
-mlops@ubuntu:~$ pyenv install 3.7.12
+$ pyenv install 3.7.12
 Downloading Python-3.7.12.tar.xz...
 -> https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tar.xz
 Installing Python-3.7.12...
