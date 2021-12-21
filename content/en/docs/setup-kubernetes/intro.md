@@ -53,8 +53,8 @@ MLOps 를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구
 
 | Helm Chart Repo Name                            | Version     |
 | ----------------------------------------------- | ----------- |
-| datawire/ambassador                             | v6.9.3      |
-| prometheus-community/kube-prometheus-stack      | v21.0.0     |
+| datawire/ambassador                             | 6.9.3      |
+| seldonio/seldon-core-operator                | 1.11.2     |
 
 ### 클라이언트
 
