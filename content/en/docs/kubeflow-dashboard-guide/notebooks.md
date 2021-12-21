@@ -56,7 +56,7 @@ Notebooks 탭은 JupyterHub와 비슷하게 유저별로 jupyter notebook 및 co
     - memory : Gi 단위
 - **GPUs**
   - 주피터 노트북에 할당할 GPU 개수를 입력합니다.
-    - **None**
+    - `None`
       - GPU 자원이 필요하지 않은 경우
     - 1, 2, 4
       - GPU 1, 2, 4 개 할당
