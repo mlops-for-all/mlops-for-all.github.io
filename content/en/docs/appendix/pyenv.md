@@ -204,7 +204,7 @@ For full documentation, see: https://github.com/pyenv/pyenv#readme
 ### Python 버전 설치
 
 `pyenv install <Python-Version>` 명령을 통해 원하는 파이썬 버전을 설치할 수 있습니다.
-예시로 3.7.12 버전을 설치하겠습니다.
+이번 페이지에서는 예시로 kubeflow에서 기본으로 사용하는 파이썬 3.7.12 버전을 설치하겠습니다.
 
 ```text
 pyenv install 3.7.12
