@@ -12,20 +12,19 @@ menu:
 
 ## Pipeline
 
-컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다.  
-그러므로 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다.
+컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다. 그러므로 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다.
+그리고 파이프라인을 작성하기 위해서는 컴포넌트의 집합과 컴포넌트의 실행 순서가 필요합니다.
 
 이번 페이지에서는 숫자를 입력받고 출력하는 컴포넌트와 두 개의 컴포넌트로 부터 숫자를 받아서 합을 출력하는 컴포넌트가 있는 파이프라인을 만들어 보도록 하겠습니다.
 
-파이프라인을 작성하기 위해서는 컴포넌트의 집합과 컴포넌트의 실행 순서가 필요합니다.
-
-## Component set
+## Component Set
 
 우선 파이프라인에서 사용할 컴포넌트들을 작성합니다.
 
 1. `print_and_return_number`
 
-  입력받은 숫자를 출력하고 반환하는 컴포넌트입니다. 컴포넌트가 반환 값이 있음을 알려주기 위해서 타입 힌트를 추가하겠습니다. 입력받은 값을 출력함으로 int를 return 타입 힌트로 입력합니다.
+  입력받은 숫자를 출력하고 반환하는 컴포넌트입니다.  
+  컴포넌트가 입력받은 값을 반환하기 때문에 int를 return의 타입 힌트로 입력합니다.
 
   ```python
   @create_component_from_func
@@ -34,9 +33,10 @@ menu:
       return number
   ```
 
-1. `sum_and_print_numbers`
+2. `sum_and_print_numbers`
 
-  입력받은 두 개의 숫자의 합을 출력하는 컴포넌트입니다.
+  입력받은 두 개의 숫자의 합을 출력하는 컴포넌트입니다.  
+  이 컴포넌트 역시 두 숫자의 합을 반환하기 때문에 int를 return의 타입 힌트로 입력합니다.
 
   ```python
   @create_component_from_func
@@ -48,6 +48,8 @@ menu:
 
 ## Component Order
 
+### Define Order
+
 필요한 컴포넌트의 집합을 만들었으면, 다음으로는 이들의 순서를 정의해야 합니다.  
 이번 페이지에서 만들 파이프라인의 순서를 그림으로 표현하면 다음과 같이 됩니다.
 
@@ -55,7 +57,10 @@ menu:
   <img src="/images/docs/kubeflow/pipeline-0.png" title="pipeline-order" width=50%/>
 </p>
 
+### Single Output
+
 이제 이 순서를 코드로 옮겨보겠습니다.  
+
 우선 위의 그림에서 `print_and_return_number_1` 과 `print_and_return_number_2` 를 작성하면 다음과 같이 됩니다.
 
 ```python
@@ -65,13 +70,27 @@ def example_pipeline():
 ```
 
 컴포넌트를 실행하고 그 반환 값을 각각 `number_1_result` 와 `number_2_result` 에 저장합니다.  
-`number_1_result` 의 반환 값은 `number_1_resulst.output` 를 통해 사용할 수 있습니다.
+저장된 `number_1_result` 의 반환 값은 `number_1_resulst.output` 를 통해 사용할 수 있습니다.
+
+### Multi Output
 
 위의 예시에서 컴포넌트는 단일 값만을 반환하기 때문에 `output`을 이용해 바로 사용할 수 있습니다.  
-만약, 여러 개의 반환 값이 있다면 `outputs`에 저장이 됩니다.  
-`outputs`는 dict 형태로서 key를 이용해 원하는 반환 값을 사용할 수 있습니다.
+만약, 여러 개의 반환 값이 있다면 `outputs`에 저장이 되며 dict 타입이기에 key를 이용해 원하는 반환 값을 사용할 수 있습니다.
+예를 들어서 앞에서 작성한 여러 개를 반환하는 [컴포넌트]({{< relref "docs/kubeflow/basic-component.md#define-a-standalone-python-function" >}}) 의 경우를 보겠습니다.
+`divde_and_return_number` 의 return 값은 `quotient` 와 `remainder` 가 있습니다. 이 두 값을 `print_and_return_number` 에 전달하는 예시를 보면 다음과 같습니다.
 
-이제 이 두 값의 결과를 `sum_and_print_numbers` 에 전달합니다.
+```python
+def multi_pipeline():
+    divided_result = divde_and_return_number(number)
+    num_1_result = print_and_return_number(divided_result.outputs["quotient"])
+    num_2_result = print_and_return_number(divided_result.outputs["remainder"])
+```
+
+`divde_and_return_number`의 결과를 `divided_result`에 저장하고 각각 `divided_result.outputs["quotient"]`, `divided_result.outputs["remainder"]`로 값을 가져올 수 있습니다.
+
+### Write to python code
+
+이제 다시 본론으로 돌아와서 이 두 값의 결과를 `sum_and_print_numbers` 에 전달합니다.
 
 ```python
 def example_pipeline():
@@ -121,7 +140,7 @@ if __name__ == "__main__":
 
 ## Conclusion
 
-앞서 설명한 내용을 한 스크립트로 모으면 다음과 같이 됩니다.
+앞서 설명한 내용을 한 파이썬 코드로 모으면 다음과 같이 됩니다.
 
 ```python
 import kfp
