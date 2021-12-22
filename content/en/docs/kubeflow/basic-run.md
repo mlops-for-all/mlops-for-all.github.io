@@ -1,5 +1,5 @@
 ---
-title : "7. Run Pipeline"
+title : "7. Pipeline - Run"
 description: ""
 lead: ""
 draft: false
@@ -12,15 +12,15 @@ menu:
 
 ## Run Pipeline
 
-이제 우리가 업로드한 파이프라인을 실행시켜 보겠습니다.
+이제 업로드한 파이프라인을 실행시켜 보겠습니다.
 
 ## Before Run
 
 ### 1. Create Experiment
 
 Experiment란 Kubeflow 에서 실행되는 Run을 논리적으로 관리하는 단위입니다.  
-Kubeflow를 최초 실행하면 Experiment가 없습니다. 따라서 파이프라인을 최초 실행할 때 Experiment를 먼저 생성해두어야 합니다.  
-Experiment 를 미리 생성해두었다면 [Run Pipeline]({{< relref "docs/kubeflow/basic-run.md#run-pipeline-1" >}})으로 넘어가도 무방합니다.
+
+Kubeflow에서 namespace를 처음 들어오면 생성되어 있는 Experiment가 없습니다. 따라서 파이프라인을 실행하기 전에 미리 Experiment를 생성해두어야 합니다. Experiment이 있다면 [Run Pipeline]({{< relref "docs/kubeflow/basic-run.md#run-pipeline-1" >}})으로 넘어가도 무방합니다.
 
 Experiment는 Create Experiment 버튼을 통해 생성할 수 있습니다.
 
@@ -56,6 +56,8 @@ Experiment로 사용할 이름을 입력합니다.
 ### 3. Pipeline Config 입력
 
 파이프라인을 생성할 때 입력한 Config 값들을 채워 넣습니다.
+업로드한 파이프라인은 number_1과 number_2를 입력해야 합니다.
+
 <p align="center">
   <img src="/images/docs/kubeflow/run-3.png" title="run"/>
 </p>
@@ -63,6 +65,7 @@ Experiment로 사용할 이름을 입력합니다.
 ### 4. Start
 
 입력 후 Start 버튼을 누르면 파이프라인이 실행됩니다.
+
 <p align="center">
   <img src="/images/docs/kubeflow/run-4.png" title="run"/>
 </p>
