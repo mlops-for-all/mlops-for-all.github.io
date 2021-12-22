@@ -18,21 +18,19 @@ pip3 install -U pip pip3 install kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 p
 Component Contents # 컴포넌트 콘텐츠는 우리가 흔히 작성하는 파이썬 코드와 다르지 않습니다.
 예를 들어서 숫자를 입력으로 받고 입력받은 숫자를 출력한 뒤 반환하는 컴포넌트를 작성해 보겠습니다.
 파이썬 코드로 작성하면 다음과 같이 작성할 수 있습니다.
-print(number) 그런데 이 코드를 실행하면 에러가 나고 동작하지 않는데 그 이유는 출력해야 할 number가 정의되어 있지 않기 때문입니다.</description></item><item><title>5. Pipeline - Write</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</guid><description>Pipeline # 컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다.
-그러므로 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다.
+print(number) 그런데 이 코드를 실행하면 에러가 나고 동작하지 않는데 그 이유는 출력해야 할 number가 정의되어 있지 않기 때문입니다.</description></item><item><title>5. Pipeline - Write</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline/</guid><description>Pipeline # 컴포넌트는 독립적으로 실행되지 않고 파이프라인의 구성요소로써 실행됩니다. 그러므로 컴포넌트를 실행해 보려면 파이프라인을 작성해야 합니다. 그리고 파이프라인을 작성하기 위해서는 컴포넌트의 집합과 컴포넌트의 실행 순서가 필요합니다.
 이번 페이지에서는 숫자를 입력받고 출력하는 컴포넌트와 두 개의 컴포넌트로 부터 숫자를 받아서 합을 출력하는 컴포넌트가 있는 파이프라인을 만들어 보도록 하겠습니다.
-파이프라인을 작성하기 위해서는 컴포넌트의 집합과 컴포넌트의 실행 순서가 필요합니다.
-Component set # 우선 파이프라인에서 사용할 컴포넌트들을 작성합니다.
-print_and_return_number 입력받은 숫자를 출력하고 반환하는 컴포넌트입니다. 컴포넌트가 반환 값이 있음을 알려주기 위해서 타입 힌트를 추가하겠습니다. 입력받은 값을 출력함으로 int를 return 타입 힌트로 입력합니다.</description></item><item><title>6. Pipeline - Upload</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</guid><description>Upload Pipeline # 이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.
+Component Set # 우선 파이프라인에서 사용할 컴포넌트들을 작성합니다.
+print_and_return_number 입력받은 숫자를 출력하고 반환하는 컴포넌트입니다.
+컴포넌트가 입력받은 값을 반환하기 때문에 int를 return의 타입 힌트로 입력합니다.</description></item><item><title>6. Pipeline - Upload</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-pipeline-upload/</guid><description>Upload Pipeline # 이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.
 파이프라인 업로드는 kubeflow 대시보드 UI를 통해 진행할 수 있습니다. Install Kubeflow 에서 사용한 방법을 이용해 포트포워딩합니다.
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 http://localhost:8080에 접속해 대시보드를 열어줍니다.
-1. Pipelines 탭 선택 # 2. Upload Pipeline 선택 # 3. Choose file 선택 # 4. 생성된 yaml파일 업로드 # 5. Create # Upload Pipeline Version # 업로드된 파이프라인은 업로드를 통해서 버전을 관리할 수 있습니다.</description></item><item><title>7. Pipeline - Run</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</guid><description>Run Pipeline # 이제 우리가 업로드한 파이프라인을 실행시켜 보겠습니다.
+1. Pipelines 탭 선택 # 2. Upload Pipeline 선택 # 3. Choose file 선택 # 4. 생성된 yaml파일 업로드 # 5. Create # Upload Pipeline Version # 업로드된 파이프라인은 업로드를 통해서 버전을 관리할 수 있습니다.</description></item><item><title>7. Pipeline - Run</title><link>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/basic-run/</guid><description>Run Pipeline # 이제 업로드한 파이프라인을 실행시켜 보겠습니다.
 Before Run # 1. Create Experiment # Experiment란 Kubeflow 에서 실행되는 Run을 논리적으로 관리하는 단위입니다.
-Kubeflow를 최초 실행하면 Experiment가 없습니다. 따라서 파이프라인을 최초 실행할 때 Experiment를 먼저 생성해두어야 합니다.
-Experiment 를 미리 생성해두었다면 Run Pipeline으로 넘어가도 무방합니다.
+Kubeflow에서 namespace를 처음 들어오면 생성되어 있는 Experiment가 없습니다. 따라서 파이프라인을 실행하기 전에 미리 Experiment를 생성해두어야 합니다. Experiment이 있다면 Run Pipeline으로 넘어가도 무방합니다.
 Experiment는 Create Experiment 버튼을 통해 생성할 수 있습니다.
 2. Name 입력 # Experiment로 사용할 이름을 입력합니다.
-Run Pipeline # 1. Create Run 선택 # 2.</description></item><item><title>8. Component - Environment</title><link>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</guid><description>Component Environment # 이번 페이지에서는 Kubeflow Concepts 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
+Run Pipeline # 1. Create Run 선택 # 2. Experiment 선택 # 3.</description></item><item><title>8. Component - InputPath/OutputPath</title><link>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/kubeflow/advanced-component/</guid><description>Complex Outputs # 이번 페이지에서는 Kubeflow Concepts 예시로 나왔던 코드를 컴포넌트로 작성해 보겠습니다.
 Component Contents # 아래 코드는 Kubeflow Concepts에서 사용했던 컴포넌트 콘텐츠입니다.
 import dill import pandas as pd from sklearn.svm import SVC train_data = pd.read_csv(train_data_path) train_target = pd.read_csv(train_target_path) clf = SVC(kernel=kernel) clf.fit(train_data, train_target) with open(model_path, mode=&amp;#34;wb&amp;#34;) as file_writer: dill.dump(clf, file_writer) Component Wrapper # Define a standalone Python function # 컴포넌트 래퍼에 필요한 Config들과 함께 작성하면 다음과 같이 됩니다.
 def train_from_csv( train_data_path: str, train_target_path: str, model_path: str, kernel: str, ): import dill import pandas as pd from sklearn.</description></item></channel></rss>
