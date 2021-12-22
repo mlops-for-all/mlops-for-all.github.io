@@ -114,6 +114,8 @@ swagger 페이지에 접속하기 위해 사용한 url의 각 경로의 의미�
 
 ### 4. 추론 결과 확인
 
+다음과 같이 추론 결과를 확인할 수 있습니다.
+
 <p>
   <img src="/images/docs/api-deployment/iris-swagger5.png" title="iris-swagger5"/>
 </p>
