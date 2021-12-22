@@ -1,9 +1,9 @@
 ---
 title: "Help"
-description: "Help Doks."
+description: "Help MLOps for ALL."
 lead: ""
-date: 2020-10-06T08:49:15+00:00
-lastmod: 2020-10-06T08:49:15+00:00
+date: 2021-12-21
+lastmod: 2021-12-21
 draft: false
 weight: 9000
 images: []
