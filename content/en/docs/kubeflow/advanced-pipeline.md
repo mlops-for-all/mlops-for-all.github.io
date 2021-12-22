@@ -1,9 +1,9 @@
 ---
-title : "9. Pipeline - Setting"
+title : "10. Pipeline - Setting"
 description: ""
 lead: ""
 draft: false
-weight: 323
+weight: 324
 contributors: ["Jongseob Jeon"]
 menu:
   docs:

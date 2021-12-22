@@ -124,7 +124,7 @@ if __name__ == "__main__":
     print_and_return_number.component_spec.save("print_and_return_number.yaml")
 ```
 
-작성한 스크립트를 실행하면 `print_and_return_number.yaml` 파일이 생성됩니다. 파일을 확인하면 다음과 같습니다.
+작성한 파이썬 코드를 실행하면 `print_and_return_number.yaml` 파일이 생성됩니다. 파일을 확인하면 다음과 같습니다.
 
 ```text
 name: Print and return number
