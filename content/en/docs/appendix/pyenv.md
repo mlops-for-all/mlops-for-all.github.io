@@ -22,7 +22,7 @@ pyenv는 Python 버전을 관리하는 것을 도와주며, pyenv-virtualenv는 
 
 ### Prerequisites
 
-운영체제별로 Prerequisites가 다릅니다. [다음 페이지](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)를 참고하여 필수 패키지들을 설치해주시기 바랍니다.
+운영 체제별로 Prerequisites가 다릅니다. [다음 페이지](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)를 참고하여 필수 패키지들을 설치해주시기 바랍니다.
 
 ### 설치 - macOS
 
