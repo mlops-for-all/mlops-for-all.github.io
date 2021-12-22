@@ -84,6 +84,6 @@ editPage = true
   breadCrumb = false
   highLight = true
   kaTex = true
-  collapsibleSidebar = false
+  collapsibleSidebar = true
   multilingualMode = false
   docsVersioning = false
