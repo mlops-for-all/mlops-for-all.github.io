@@ -64,11 +64,9 @@ Kubeflow에서 반환 값으로 사용할 수 있는 타입은 json에서 표현
 - float
 - str
 
-또한 단일값을 반환하는 것이 아닌 여러 값을 반환하면 `collections.namedtuple` 을 이용해야 합니다.  
+만약 단일 값이 아닌 여러 값을 반환하려면 `collections.namedtuple` 을 이용해야 합니다.  
 자세한 내용은 [Kubeflow 공식 문서](https://www.kubeflow.org/docs/components/pipelines/sdk/python-function-components/#passing-parameters-by-value)를 참고 하시길 바랍니다.  
-
-여러 개를 반환하는 컴포넌트를 한 번 같이 작성해 보겠습니다.  
-예를 들어서 입력받은 숫자를 2로 나눈 몫과 나머지를 반환하는 경우에는 다음과 같이 작성해야 합니다.
+예를 들어서 입력받은 숫자를 2로 나눈 몫과 나머지를 반환하는 컴포넌트는 다음과 같이 작성해야 합니다.
 
 ```python
 from typing import NamedTuple
@@ -110,7 +108,7 @@ def print_and_return_number(number: int) -> int:
 ### Share component with yaml file
 
 만약 파이썬 코드로 공유를 할 수 없는 경우 YAML 파일로 컴포넌트를 공유해서 사용할 수 있습니다.
-이를 위해서는 우선 컴포넌트를 YAML 파일로 변환한 뒤 `kfp.components.load_component_from_file` 을 이용해 파이프라인에서 사용할 수 있습니다.
+이를 위해서는 우선 컴포넌트를 YAML 파일로 변환한 뒤 `kfp.components.load_component_from_file` 을 통해 파이프라인에서 사용할 수 있습니다.
 
 우선 작성한 컴포넌트를 YAML 파일로 변환하는 과정에 대해서 설명합니다.
 
@@ -126,7 +124,7 @@ if __name__ == "__main__":
     print_and_return_number.component_spec.save("print_and_return_number.yaml")
 ```
 
-작성한 스크립트를 실행하면 `print_and_return_number.yaml` 파일이 생성됩니다. 파일을 확인하면 다음과 같습니다.
+작성한 파이썬 코드를 실행하면 `print_and_return_number.yaml` 파일이 생성됩니다. 파일을 확인하면 다음과 같습니다.
 
 ```text
 name: Print and return number
@@ -187,14 +185,25 @@ implementation:
     - {outputPath: Output}
 ```
 
-## How Kubeflow execute Component
+이제 생성된 파일을 공유해서 파이프라인에서 다음과 같이 사용할 수 있습니다.
 
-kubeflow에서 컴포넌트가 실행되는 순서는 정의된 컴포넌트의 실행 환경 정보가 담긴 이미지를 pull 후 해당 이미지에서 컴포넌트 콘텐츠를 실행합니다.  
-`@create_component_from_func` 의 default image 는 python:3.7 이므로 해당 이미지를 기준으로 컴포넌트 콘텐츠를 실행하게 됩니다.  
-`print_and_return_number.yaml` 를 예시로 들자면 실행되는 순서는 다음과 같습니다.
+```python
+from kfp.components import load_component_from_file
+
+print_and_return_number = load_component_from_file("print_and_return_number.yaml")
+```
+
+## How Kubeflow executes component
+
+Kubeflow에서 컴포넌트가 실행되는 순서는 다음과 같습니다.
+
+1. `docker pull <image>`: 정의된 컴포넌트의 실행 환경 정보가 담긴 이미지를 pull
+2. run `command`: pull 한 이미지에서 컴포넌트 콘텐츠를 실행합니다.  
+
+`print_and_return_number.yaml` 를 예시로 들자면 `@create_component_from_func` 의 default image 는 python:3.7 이므로 해당 이미지를 기준으로 컴포넌트 콘텐츠를 실행하게 됩니다.  
 
 1. `docker pull python:3.7`
-2. run `command`
+2. `print(number)`
 
 ## References:
 

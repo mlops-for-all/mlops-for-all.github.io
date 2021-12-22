@@ -1,10 +1,10 @@
 ---
-title : "4. Seldon-Core"
+title : "3. Seldon-Core"
 description: "구성요소 설치 - Seldon-Core"
 date: 2021-12-13
 lastmod: 2021-12-13
 draft: false
-weight: 255
+weight: 254
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:
@@ -144,4 +144,6 @@ kubectl get pod -n seldon-system | grep seldon-controller
 seldon-controller-manager-8457b8b5c7-r2frm   1/1     Running   0          2m22s
 ```
 
-#### TODO (jaeyeon.kim) Seldon Deployment 생성 후, prometheus, grafana 연동 스크린샷
+## References
+
+- [Example Model Servers with Seldon](https://docs.seldon.io/projects/seldon-core/en/latest/examples/server_examples.html#examples-server-examples--page-root)

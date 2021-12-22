@@ -14,6 +14,13 @@ menu:
 
 이제 우리가 만든 파이프라인을 직접 kubeflow에서 업로드 해 보겠습니다.  
 파이프라인 업로드는 kubeflow 대시보드 UI를 통해 진행할 수 있습니다.
+[Install Kubeflow]({{< relref "docs/setup-components/install-components-kf.md#정상-설치-확인" >}}) 에서 사용한 방법을 이용해 포트포워딩합니다.
+
+```text
+kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
+```
+
+[http://localhost:8080](http://localhost:8080)에 접속해 대시보드를 열어줍니다.
 
 ### 1. Pipelines 탭 선택
 

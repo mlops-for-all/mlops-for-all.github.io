@@ -44,6 +44,12 @@
   weight = 25
 
 [[docs]]
+  name = "Kubeflow UI Guide"
+  url = "/docs/kubeflow-dashboard-guide/"
+  identifier = "kubeflow-ui-guide"
+  weight = 26
+
+[[docs]]
   name = "Kubeflow"
   url = "/docs/kubeflow/"
   identifier = "kubeflow"
@@ -54,6 +60,24 @@
   url = "/docs/api-deployment/"
   identifier = "api-deployment"
   weight = 40
+
+[[docs]]
+  name = "Further Readings"
+  url = "/docs/further-readings/"
+  identifier = "further-readings"
+  weight = 50
+
+[[docs]]
+  name = "Appendix"
+  url = "/docs/appendix/"
+  identifier = "appendix"
+  weight = 60
+
+[[docs]]
+  name = "Help"
+  url = "/docs/help/"
+  identifier = "help"
+  weight = 100
 
 [[social]]
   name = "GitHub"
