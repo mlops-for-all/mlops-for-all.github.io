@@ -43,18 +43,30 @@ postgresql DB를 `mlflow-system` namespace 에 생성합니다.
 kubectl -n mlflow-system apply -f https://raw.githubusercontent.com/mlops-for-all/helm-charts/b94b5fe4133f769c04b25068b98ccfa7a505aa60/mlflow/manifests/postgres.yaml 
 ```
 
+정상적으로 수행되면 다음과 같이 출력됩니다.
+
+```text
+service/postgresql-mlflow-service created
+deployment.apps/postgresql-mlflow created
+persistentvolumeclaim/postgresql-mlflow-pvc created
+```
+
 mlflow-system namespace 에 1개의 postgresql 관련 pod 가 Running 이 될 때까지 기다립니다.
 
 ```text
 kubectl get pod -n mlflow-system | grep postgresql
 ```
 
+다음과 비슷하게 출력되면 정상적으로 실행된 것입니다.
+
+```text
+postgresql-mlflow-7b9bc8c79f-srkh7   1/1     Running   0          38s
+```
+
 ### Minio 설정
 
-MLflow Tracking Server가 Artifacts Store로 사용할 용도의 Minio는 이전 Kubeflow 설치 단계에서 설치한 Minio를 활용합니다.
-
-단, kubeflow 용도와 mlflow 용도를 분리하기 위해, mlflow 전용 버킷(bucket)을 생성하겠습니다.
-
+MLflow Tracking Server가 Artifacts Store로 사용할 용도의 Minio는 이전 Kubeflow 설치 단계에서 설치한 Minio를 활용합니다.  
+단, kubeflow 용도와 mlflow 용도를 분리하기 위해, mlflow 전용 버킷(bucket)을 생성하겠습니다.  
 minio 에 접속하여 버킷을 생성하기 위해, 우선 minio-service 를 포트포워딩합니다.
 
 ```text
@@ -146,10 +158,11 @@ TEST SUITE: None
 kubectl get pod -n mlflow-system | grep mlflow-server
 ```
 
-mlflow-system namespace 에 1 개의 mlflow-server 관련 pod 가 Running 이 될 때까지 기다립니다.
+mlflow-system namespace 에 1 개의 mlflow-server 관련 pod 가 Running 이 될 때까지 기다립니다.  
+다음과 비슷하게 출력되면 정상적으로 실행된 것입니다.
 
 ```text
-kubectl get pod -n mlflow-system | grep mlflow-server
+mlflow-server-ffd66d858-6hm62        1/1     Running   0          74s
 ```
 
 ### 정상 설치 확인

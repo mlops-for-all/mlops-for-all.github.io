@@ -44,6 +44,12 @@
   weight = 25
 
 [[docs]]
+  name = "Kubeflow UI Guide"
+  url = "/docs/kubeflow-dashboard-guide/"
+  identifier = "kubeflow-ui-guide"
+  weight = 26
+
+[[docs]]
   name = "Kubeflow"
   url = "/docs/kubeflow/"
   identifier = "kubeflow"

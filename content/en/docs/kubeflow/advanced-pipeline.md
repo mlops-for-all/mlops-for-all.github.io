@@ -1,9 +1,9 @@
 ---
-title : "9. Pipeline - Setting"
+title : "10. Pipeline - Setting"
 description: ""
 lead: ""
 draft: false
-weight: 323
+weight: 324
 contributors: ["Jongseob Jeon"]
 menu:
   docs:
@@ -343,7 +343,7 @@ spec:
 
 특별한 설정이 없다면 파이프라인은 컴포넌트를 쿠버네티스 파드(pod)로 실행할 때, 기본 리소스 스펙으로 실행하게 됩니다.  
 만약 GPU를 사용해 모델을 학습해야 할 때 쿠버네티스상에서 GPU를 할당받지 못해 제대로 학습이 이루어지지 않습니다.  
-이를 위해 `set_gpu_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.UserContainer.set_gpu_limit)를 지원합니다.
+이를 위해 `set_gpu_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.UserContainer.set_gpu_limit)을 이용해 설정할 수 있습니다.
 
 ```python
 import kfp
@@ -408,8 +408,8 @@ if __name__ == "__main__":
 
 ### CPU
 
-cpu의 개수를 정하기 위해서 이용하는 함수는 `.set_cpu_limit` 입니다.  
-gpu와는 다른 점은 string으로 입력해야 한다는 점입니다.
+cpu의 개수를 정하기 위해서 이용하는 함수는 `.set_cpu_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.Sidecar.set_cpu_limit)을 이용해 설정할 수 있습니다.  
+gpu와는 다른 점은 int가 아닌 string으로 입력해야 한다는 점입니다.
 
 ```python
 import kfp
@@ -450,7 +450,7 @@ if __name__ == "__main__":
 
 ### Memory
 
-메모리는 `set_memory_limit`을 이용해 설정할 수 있습니다.
+메모리는 `.set_memory_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.Sidecar.set_memory_limit)을 이용해 설정할 수 있습니다.
 
 ```python
 import kfp

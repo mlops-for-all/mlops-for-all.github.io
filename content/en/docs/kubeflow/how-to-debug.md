@@ -1,9 +1,9 @@
 ---
-title : "12. Component - Debugging"
+title : "13. Component - Debugging"
 description: ""
 lead: ""
 draft: false
-weight: 331
+weight: 332
 contributors: ["Jongseob Jeon"]
 menu:
   docs:
