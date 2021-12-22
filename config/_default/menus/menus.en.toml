@@ -65,7 +65,19 @@
   name = "Further Readings"
   url = "/docs/further-readings/"
   identifier = "further-readings"
-  weight = 40
+  weight = 50
+
+[[docs]]
+  name = "Appendix"
+  url = "/docs/appendix/"
+  identifier = "appendix"
+  weight = 60
+
+[[docs]]
+  name = "Help"
+  url = "/docs/help/"
+  identifier = "help"
+  weight = 100
 
 [[social]]
   name = "GitHub"
