@@ -12,7 +12,7 @@ menu:
 
 ## How Seldon Core works?
 
-Seldon Core가 API를 생성하기 위에 진행되는 과정은 다음과 같습니다.
+Seldon Core가 API 서버를 생성하는 과정은 다음과 같습니다.
 
 <p align="center">
     <img src="/images/docs/api-deployment/seldon-fields-0.png" title="seldon-workflow"/>
@@ -20,8 +20,8 @@ Seldon Core가 API를 생성하기 위에 진행되는 과정은 다음과 같�
 
 1. initContainer는 모델 저장소에서 필요한 모델을 다운로드 받습니다.
 2. 다운로드 받은 모델을 container로 전달합니다.
-3. container는 전달받은 모델을 API로 만들어 줍니다.
-4. container가 API를 생성하면 요청을 통해서 모델의 predict 값을 받을 수 있습니다.
+3. container는 전달받은 모델을 감싼 API 서버를 실행합니다.
+4. 생성된 API 서버 주소로 API 를 요청하여 모델의 추론값을 받을 수 있습니다.
 
 ## Seldon Core Spec
 
