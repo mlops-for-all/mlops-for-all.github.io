@@ -1,11 +1,11 @@
 ---
-title : "[Basic Usage] Deploy SeldonDeployment"
+title : "2. Deploy SeldonDeployment"
 description: ""
 lead: ""
-# date: 2020-10-06T08:48:23+00:00
-# lastmod: 2020-10-06T08:48:23+00:00
+date: 2021-12-22
+lastmod: 2021-12-22
 draft: false
-weight: 420
+weight: 411
 contributors: ["Youngcheol Jang"]
 menu:
   docs:
