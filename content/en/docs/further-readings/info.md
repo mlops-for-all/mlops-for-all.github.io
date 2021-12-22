@@ -19,7 +19,7 @@ toc: true
   <img src="/images/docs/further-readings/open-stacks-0.png" title="open-stacks"/>
 </p>
 
-이 중 *모두의 MLOps* 에서 다룬 스택들은 다음과 같습니다.
+이 중 *모두의 MLOps* 에서 다룬 기술 스택들은 다음과 같습니다.
 
 <p>
   <img src="/images/docs/further-readings/open-stacks-1.png" title="open-stacks"/>
@@ -27,7 +27,7 @@ toc: true
 
 보시는 것처럼 아직 우리가 다루지 못한 많은 MLOps 컴포넌트들이 있습니다.  
 
-시간 관계상 이번에 모두 다루지는 못했지만, 만약 필요하다면 다음과 같은 오픈스택들을 먼저 확인해보면 좋을 것 같습니다.
+시간 관계상 이번에 모두 다루지는 못했지만, 만약 필요하다면 다음과 같은 오픈소스들을 먼저 참고해보면 좋을 것 같습니다.
 
 <p>
   <img src="/images/docs/further-readings/open-stacks-2.png" title="open-stacks"/>
