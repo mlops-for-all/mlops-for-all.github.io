@@ -10,7 +10,7 @@ menu:
     parent: kubeflow-ui-guide
 ---
 
-Central Dashboard의 왼쪽 탭의 Experiments(KFP), Pipelines, Runs, Recurring Runs, ARtifats, Executions 페이지는 모두 Kubeflow Pipeline과 Pipeline Run의 실행과 그 결과를 관리하는 페이지입니다.
+Central Dashboard의 왼쪽 탭의 Experiments(KFP), Pipelines, Runs, Recurring Runs, Artifacts, Executions 페이지들에서는 Kubeflow Pipeline과 Pipeline의 실행 그리고 Pipeline Run의 결과를 관리합니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow-dashboard-guide/left-tabs.png" title="left-tabs"/>
