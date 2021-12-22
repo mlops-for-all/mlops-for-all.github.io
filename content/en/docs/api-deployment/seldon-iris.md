@@ -30,6 +30,7 @@ kubectl config set-context --current --namespace=seldon-deploy
 
 SeldonDeployment를 배포하기 위한 yaml 파일을 생성합니다.
 지금은 공개되어 있는 iris model을 사용하도록 하겠습니다.
+이 iris model은 sklearn 프레임워크를 통해 학습되었기 때문에 SKLEARN_SERVER를 사용합니다.
 
 ```text
 cat <<EOF > iris-sdep.yaml
@@ -69,18 +70,74 @@ export NODE_IP=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(
 export NODE_PORT=$(kubectl get service ambassador -n seldon-system -o jsonpath="{.spec.ports[0].nodePort}")
 ```
 
-이제 ingress url을 이용해서 추론 요청을 보내 봅시다.
+ingress url을 사용해 swagger page로 접근하여 url이 유효한지 확인할 수 있습니다.
+`http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/doc/`으로 접속해봅시다.
 
-```text
-curl -X POST -H "Content-Type: application/json" \
-  -d '{"data": {"ndarray":[[1.0, 2.0, 5.0, 6.0]]}}' \
-  http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions
-{"data":{"names":["t:0","t:1","t:2"],"ndarray":[[9.912315378486697e-07,0.0007015931307746079,0.9992974156376876]]},"meta":{"requestPath":{"classifier":"seldonio/sklearnserver:1.11.2"}}}
-```
+<p>
+  <img src="/images/docs/api-deployment/iris-swagger1.png" title="iris-swagger1"/>
+</p>
 
-방금 사용한 url의 각 경로의 의미를 살펴보겠습니다.
+swagger 페이지에 접속하기 위해 사용한 url의 각 경로의 의미를 살펴보겠습니다.
 *seldon/seldon-deploy/sklearn/api/v1.0/predictions*
 
 - seldon: seldon-core에 의해 생성된 url임을 의미합니다.
 - seldon-deploy: SeldonDeploument가 배포되어 있는 네임스페이스를 의미합니다.
 - sklearn: 배포되어 있는 SeldonDeployment의 이름을 의미합니다.
+
+이제 swagger 페이지에서 추론 요청을 보내 봅시다.
+
+### 1. */seldon/seldon-deploy/sklearn/api/v1.0/predictions* 선택
+
+<p>
+  <img src="/images/docs/api-deployment/iris-swagger2.png" title="iris-swagger2"/>
+</p>
+
+### 2. *Try it out* 선택
+
+<p>
+  <img src="/images/docs/api-deployment/iris-swagger3.png" title="iris-swagger3"/>
+</p>
+
+### 3. Request body에 data입력
+
+<p>
+  <img src="/images/docs/api-deployment/iris-swagger4.png" title="iris-swagger4"/>
+</p>
+
+```text
+{
+  "data": {
+    "ndarray":[[1.0, 2.0, 5.0, 6.0]]
+  }
+}
+```
+
+### 4. 추론 결과 확인
+
+<p>
+  <img src="/images/docs/api-deployment/iris-swagger5.png" title="iris-swagger5"/>
+</p>
+
+```text
+{
+  "data": {
+    "names": [
+      "t:0",
+      "t:1",
+      "t:2"
+    ],
+    "ndarray": [
+      [
+        9.912315378486697e-7,
+        0.0007015931307746079,
+        0.9992974156376876
+      ]
+    ]
+  },
+  "meta": {
+    "requestPath": {
+      "classifier": "seldonio/sklearnserver:1.11.2"
+    }
+  }
+}
+```
