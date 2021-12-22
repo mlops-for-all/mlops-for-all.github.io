@@ -36,7 +36,7 @@ brew install pyenv-virtualenv
 
 2. pyenv 설정
 
-기본 shell로 zsh을 사용하는 경우를 가정하였습니다.
+macOS의 경우 카탈리나 버전 이후 기본 shell이 zsh로 변경되었기 때문에 zsh을 사용하는 경우를 가정하였습니다.
 
 ```text
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
