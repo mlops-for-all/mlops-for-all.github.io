@@ -44,7 +44,7 @@ name, size, storage class, access mode를 지정하여 생성할 수 있습니�
 
 원하는 리소스 스펙을 지정하여 생성하면 다음과 같이 볼륨의 Status가 `Pending`으로 조회됩니다. `Status` 아이콘에 마우스 커서를 가져다대면 *해당 볼륨은 mount하여 사용하는 first consumer가 나타날 때 실제로 생성을 진행한다(This volume will be bound when its first consumer is created.)*는 메시지를 확인할 수 있습니다.  
 이는 실습을 진행하는 [StorageClass](https://kubernetes.io/ko/docs/concepts/storage/storage-classes/)인 `local-path`의 볼륨 생성 정책에 해당하며, **문제 상황이 아닙니다.**  
-해당 페이지에서 Status가 `Pending`� 으로 보이더라도 해당 볼륨을 사용하길 원하는 노트북 서버 혹은 파드(Pod)에서는 해당 볼륨의 이름을 지정하여 사용할 수 있으며, 그 때 실제로 볼륨 생성이 진행됩니다.
+해당 페이지에서 Status가 `Pending` 으로 보이더라도 해당 볼륨을 사용하길 원하는 노트북 서버 혹은 파드(Pod)에서는 해당 볼륨의 이름을 지정하여 사용할 수 있으며, 그 때 실제로 볼륨 생성이 진행됩니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow-dashboard-guide/creating-volume.png" title="left-tabs"/>
