@@ -1,7 +1,7 @@
 ---
 title: "How to Contribute"
-# date: 2020-11-12T13:26:54+01:00
-# lastmod: 2020-11-12T13:26:54+01:00
+date: 2021-12-21
+lastmod: 2021-12-21
 draft: false
 images: []
 menu:
