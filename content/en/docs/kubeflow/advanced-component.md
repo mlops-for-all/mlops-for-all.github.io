@@ -137,14 +137,13 @@ def train_from_csv(
         dill.dump(clf, file_writer)
 ```
 
- ## Rule to use InputPath/OutputPath
+## Rule to use InputPath/OutputPath
 
- InputPath나 OutputPath argument는 파이프라인으로 작성할 때 지켜야하는 규칙이 있습니다.
+InputPath나 OutputPath argument는 파이프라인으로 작성할 때 지켜야하는 규칙이 있습니다.
 
- ### Load Data Component
+### Load Data Component
 
 위에서 작성한 컴포넌트를 실행하기 위해서는 데이터가 필요하므로 데이터를 생성하는 컴포넌트를 작성합니다.
-
 
 ```python
 from functools import partial
@@ -168,7 +167,6 @@ def load_iris_data(
     data.to_csv(data_path, index=False)
     target.to_csv(target_path, index=False)
 ```
-
 
 ### Write Pipeline
 
