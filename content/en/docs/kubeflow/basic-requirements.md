@@ -24,6 +24,12 @@ menu:
   dill==0.3.4
   ```
 
+[앞에서 만든 파이썬 가상환경]({{< relref "docs/appendix/pyenv.md#python-가상환경-생성" >}})을 활성화 시킵니다.
+
+```text
+pyenv activate demo
+```
+
 패키지 설치를 진행합니다.
 
 ```text
