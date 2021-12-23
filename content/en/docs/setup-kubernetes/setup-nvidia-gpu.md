@@ -12,11 +12,11 @@ menu:
 images: []
 ---
 
-쿠버네티스 및 Kubeflow 등에서 GPU 를 사용하기 위해서는 다음 작업이 필요합니다.
+쿠버네티스 및 Kubeflow 등에서 GP 를 사용하기 위해서는 다음 작업이 필요합니다.
 
 ## 1. Install NVIDIA Driver
 
-`nvidia-smi` 수행 시 다음과 같은 화면이 출력된다면 이 단계는 스킵해 주시기 바랍니다.
+`nvidia-smi` 수행 시 다음과 같은 화면이 출력된다면 이 단계는 생략해 주시기 바랍니다.
 
   ```text
   mlops@ubuntu:~$ nvidia-smi 
@@ -47,7 +47,7 @@ images: []
   +-----------------------------------------------------------------------------+
   ```
 
-`nvidia-smi`의 출력 결과가 위와 같지 않다면 장착되어 있는 GPU에 맞는 nvidia driver를 설치해 주시기 바랍니다.
+`nvidia-smi`의 출력 결과가 위와 같지 않다면 장착된 GPU에 맞는 nvidia driver를 설치해 주시기 바랍니다.
 
 만약 nvidia driver의 설치에 익숙하지 않다면 아래 명령어를 통해 설치하시기 바랍니다.
 
@@ -60,7 +60,7 @@ images: []
 
 ## 2. NVIDIA-Docker 설치
 
-NVIDIA-Docker 를 설치합니다.
+NVIDIA-Docker를 설치합니다.
 
 ```text
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
@@ -70,7 +70,7 @@ sudo apt-get install -y nvidia-docker2
 sudo systemctl restart docker
 ```
 
-정상적으로 설치되었는지 확인하기 위해, GPU 를 사용하는 도커 컨테이너를 실행해봅니다.
+정상적으로 설치되었는지 확인하기 위해, GPU를 사용하는 도커 컨테이너를 실행해봅니다.
 
 ```text
 sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
@@ -104,10 +104,10 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   +-----------------------------------------------------------------------------+
   ```
 
-## 3. NVIDIA-Docker 를 Default Container Runtime 으로 설정
+## 3. NVIDIA-Docker를 Default Container Runtime으로 설정
 
-쿠버네티스는 기본적으로 Docker-CE 를 Default Container Runtime 으로 사용합니다.
-따라서, Docker Container 내에서 NVIDIA GPU 를 사용하기 위해서는 NVIDIA-Docker 를 Container Runtime 으로 사용하여 pod 를 생성할 수 있도록 Default Runtime 을 수정해 주어야 합니다.
+쿠버네티스는 기본적으로 Docker-CE를 Default Container Runtime으로 사용합니다.
+따라서, Docker Container 내에서 NVIDIA GPU를 사용하기 위해서는 NVIDIA-Docker 를 Container Runtime 으로 사용하여 pod를 생성할 수 있도록 Default Runtime을 수정해 주어야 합니다.
 
 1. `/etc/docker/daemon.json` 파일을 열어 다음과 같이 수정합니다.
 
@@ -125,7 +125,7 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   }
   ```
 
-2. 파일이 변경된 것을 확인한 후, Docker 를 재시작합니다.
+2. 파일이 변경된 것을 확인한 후, Docker를 재시작합니다.
 
   ```text
   sudo systemctl daemon-reload
@@ -166,14 +166,14 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   kube-system       nvidia-device-plugin-daemonset-nlqh2         1/1     Running   0      1h
   ```
 
-3. node 정보에 gpu 가 사용가능하도록 설정되었는지 확인합니다.
+3. node 정보에 gpu가 사용가능하도록 설정되었는지 확인합니다.
 
   ```text
   kubectl get nodes "-o=custom-columns=NAME:.metadata.name,GPU:.status.allocatable.nvidia\.com/gpu"
   ```
 
   다음과 같은 메시지가 보이면 정상적으로 설정된 것을 의미합니다.  
-  (*모두의 MLOps* 에서 실습을 진행한 클러스터는 2개의 GPU가 있어서 2가 출력이 됩니다.
+  (*모두의 MLOps* 에서 실습을 진행한 클러스터는 2개의 GPU가 있어서 2가 출력됩니다.
   본인의 클러스터의 GPU 개수와 맞는 숫자가 출력된다면 됩니다.)
 
   ```text
@@ -181,4 +181,4 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   ubuntu     2
   ```
 
-설정되지 않은 경우, GPU 의 value 가 `<None>` 으로 표시됩니다.
+설정되지 않은 경우, GPU의 value가 `<None>` 으로 표시됩니다.

@@ -35,4 +35,4 @@ Central Dashboard는 Kubeflow에서 제공하는 모든 기능을 통합하여 �
 - Artifacts
 - Executions
 
-그럼 이제 각 기능별 간단한 사용법을 알아보겠습니다.
+그럼 이제 기능별 간단한 사용법을 알아보겠습니다.

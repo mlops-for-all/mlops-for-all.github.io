@@ -14,14 +14,14 @@ images: []
 
 ## Setup Kubernetes Modules
 
-이번 페이지에서는 클러스터에서 사용할 모듈을 클라이언트 노드에서 설치하는 과정에 대해서 설명합니다.  
+이번 페이지에서는 클러스터에서 사용할 모듈을 클라이언트 노드에서 설치하는 과정에 관해서 설명합니다.  
 앞으로 소개되는 과정은 모두 **클라이언트 노드**에서 진행됩니다.
 
 ## Helm
 
-Helm 은 쿠버네티스 패키지와 관련된 리소스를 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
+Helm은 쿠버네티스 패키지와 관련된 자원을 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
 
-1. 현재 폴더에 Helm v3.7.1 버전을 다운받습니다.
+1. 현재 폴더에 Helm v3.7.1 버전을 내려받습니다.
 
 - For Linux amd64
 
@@ -31,7 +31,7 @@ Helm 은 쿠버네티스 패키지와 관련된 리소스를 한 번에 배포�
 
 - 다른 OS는 [공식 홈페이지](https://github.com/helm/helm/releases/tag/v3.7.1)를 참고하시어, 클라이언트 노드의 OS와 CPU에 맞는 바이너리의 다운 경로를 확인하시기 바랍니다.
 
-2. helm 을 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
+2. helm을 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
   ```text
   tar -zxvf helm-v3.7.1-linux-amd64.tar.gz
@@ -115,7 +115,7 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 ## CSI Plugin : Local Path Provisioner
 
-1. CSI Plugin 은 kubernetes 내의 스토리지를 담당하는 모듈입니다. 단일 노드 클러스터에서 쉽게 사용할 수 있는 CSI Plugin 인 Local Path Provisioner 를 설치합니다.
+1. CSI Plugin은 kubernetes 내의 스토리지를 담당하는 모듈입니다. 단일 노드 클러스터에서 쉽게 사용할 수 있는 CSI Plugin인 Local Path Provisioner를 설치합니다.
 
   ```text
   kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/local-path-storage.yaml
@@ -133,7 +133,7 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
   configmap/local-path-config created
   ```
 
-2. 또한, 다음과 같이 local-path-storage namespace 에 provisioner pod 가 Running 인지 확인합니다.
+2. 또한, 다음과 같이 local-path-storage namespace 에 provisioner pod이 Running 인지 확인합니다.
 
   ```text
   kubectl -n local-path-storage get pod
@@ -146,7 +146,7 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
   local-path-provisioner-d744ccf98-xfcbk   1/1       Running   0          7m
   ```
 
-4. 다음을 수행하여 default storage class 로 변경합니다.
+4. 다음을 수행하여 default storage class로 변경합니다.
 
   ```text
   kubectl patch storageclass local-path  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
@@ -158,13 +158,13 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
   storageclass.storage.k8s.io/local-path patched
   ```
 
-5. default storage class 로 설정되었는지 확인합니다.
+5. default storage class로 설정되었는지 확인합니다.
 
   ```text
   kubectl get sc
   ```
 
-  다음과 같이 NAME 에 `local-path (default)` 인 storage class 가 존재하는 것을 확인합니다.
+  다음과 같이 NAME에 `local-path (default)` 인 storage class가 존재하는 것을 확인합니다.
 
   ```text
   NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE

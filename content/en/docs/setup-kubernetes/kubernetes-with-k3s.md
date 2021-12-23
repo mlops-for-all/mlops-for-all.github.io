@@ -119,7 +119,7 @@ users:
 
 ## 5. 정상 설치 확인
 
-최종적으로 node 가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
+최종적으로 node가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
 
 ```text
 kubectl get nodes -o wide

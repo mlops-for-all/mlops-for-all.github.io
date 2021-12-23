@@ -12,7 +12,7 @@ menu:
 
 ## Multi Models
 
-앞서 설명했던 방법들은 모두 단일 모델을 대상으로 했었습니다.  
+앞서 설명했던 방법들은 모두 단일 모델을 대상으로 했습니다.  
 이번 페이지에서는 여러 개의 모델을 연결하는 방법에 대해서 알아봅니다.
 
 ## Pipeline
@@ -229,7 +229,7 @@ MLflow 대시보드를 확인하면 다음과 같이 두 개의 모델이 생성
     <img src="/images/docs/api-deployment/children-mlflow.png" title="mlflow"/>
 </p>
 
-각각의 run_id를 확인 후 다음과 같은 스펙을 정의합니다.
+각각의 run_id를 확인 후 다음과 같이 SeldonDeployment 스펙을 정의합니다.
 
 ```text
 apiVersion: machinelearning.seldon.io/v1
@@ -313,8 +313,8 @@ spec:
           value: "/mnt/models"
 ```
 
-모델이 두개가 되었으므로 각 모델의 initContainer 와 container를 정의해주어야 합니다.
-이 필드는 입력값을 array로 받으며 순서는 관계 없습니다.
+모델이 두 개가 되었으므로 각 모델의 initContainer와 container를 정의해주어야 합니다.
+이 필드는 입력값을 array로 받으며 순서는 관계없습니다.
 
 모델이 실행하는 순서는 graph에서 정의됩니다.
 
@@ -338,7 +338,7 @@ graph:
       value: "/mnt/models"
 ```
 
-graph의 동작방식은 처음 받은 값을 정해진 predict_method로 변환한 뒤 children으로 정의된 모델에 전달하는 방식입니다.
+graph의 동작 방식은 처음 받은 값을 정해진 predict_method로 변환한 뒤 children으로 정의된 모델에 전달하는 방식입니다.
 이 경우 scaler -> svc 로 데이터가 전달됩니다.
 
 이제 위의 스펙을 yaml파일로 생성해 보겠습니다.
