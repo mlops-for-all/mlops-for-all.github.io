@@ -1,5 +1,5 @@
 ---
-title : "2. MLflow"
+title : "2. MLflow Tracking Server"
 description: "구성요소 설치 - MLflow"
 date: 2021-12-13
 lastmod: 2021-12-13
@@ -12,14 +12,14 @@ menu:
 images: []
 ---
 
-## Install MLflow
+## Install MLflow Tracking Server
 
 MLflow는 대표적인 오픈소스 ML 실험 관리 도구입니다. MLflow는 [실험 관리 용도](https://mlflow.org/docs/latest/tracking.html#tracking) 외에도 [ML Model 패키징](https://mlflow.org/docs/latest/projects.html#projects), [ML 모델 배포 관리](https://mlflow.org/docs/latest/models.html#models), [ML 모델 저장](https://mlflow.org/docs/latest/model-registry.html#registry)과 같은 기능도 제공하고 있습니다.
 
-*모두의 MLOps*에서는 MLflow 를 실험 관리 용도로 사용합니다.  
+*모두의 MLOps*에서는 MLflow를 실험 관리 용도로 사용합니다.  
 그래서 MLflow에서 관리하는 데이터를 저장하고 UI를 제공하는 MLflow Tracking Server를 쿠버네티스 클러스터에 배포하여 사용할 예정입니다.
 
-## Before Install MLflow
+## Before Install MLflow Tracking Server
 
 ### PostgreSQL DB 설치
 
@@ -100,7 +100,7 @@ kubectl port-forward svc/minio-service -n kubeflow 9000:9000
 
 ---
 
-## Let's Install MLflow
+## Let's Install MLflow Tracking Server
 
 ### Helm Repository 추가
 
@@ -130,12 +130,12 @@ Update Complete. ⎈Happy Helming!⎈
 
 ### Helm Install
 
-mlflow-server Helm Chart 0.1.0 버전을 설치합니다.
+mlflow-server Helm Chart 0.2.0 버전을 설치합니다.
 
 ```text
 helm install mlflow-server mlops-for-all/mlflow-server \
   --namespace mlflow-system \
-  --version 0.1.0
+  --version 0.2.0
 ```
 
 - **주의**: 위의 helm chart는 MLflow 의 backend store 와 artifacts store 의 접속 정보를 kubeflow 설치 과정에서 생성한 minio와 위의 [PostgreSQL DB 설치](#postgresql-db-설치)에서 생성한 postgresql 정보를 default로 하여 설치합니다.
