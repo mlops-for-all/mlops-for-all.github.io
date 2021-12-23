@@ -10,7 +10,7 @@ description = "모두가 쉽게 시작할 수 있는 MLOps 자료를 제작합�
 # docsVersion = "0.3"
 
 ## Open Graph
-images = ["doks.png"]
+images = ["mlops-for-all.png"]
 ogLocale = "en_US"
 domainTLD = "mlops-for-all.netlify.app"
 titleHome = "MLOps for ALL"
@@ -22,16 +22,16 @@ titleHome = "MLOps for ALL"
 ## JSON-LD
 # schemaType = "Person"
 schemaType = "Organization"
-schemaName = "Doks"
-schemaAuthor = "Henk Verlinde"
+schemaName = "MLOps-for-ALL"
+schemaAuthor = "MLOps for ALL"
 # schemaAuthorTwitter = "https://twitter.com/henkverlinde"
 # schemaAuthorLinkedIn = "https://www.linkedin.com/in/henkverlinde/"
 schemaAuthorGitHub = "https://github.com/mlops-for-all"
 schemaLocale = "en-US"
-schemaLogo = "logo-doks.png"
+schemaLogo = "logo-mlops-for-all.png"
 schemaLogoWidth = 512
 schemaLogoHeight = 512
-schemaImage = "doks.png"
+schemaImage = "mlops-for-all.png"
 schemaImageWidth = 1280
 schemaImageHeight = 640
 # schemaTwitter = "https://twitter.com/getdoks"
