@@ -77,6 +77,7 @@ MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구�
 - RAM : 12GB
 - DISK : 50GB
 - GPU : NVIDIA GPU (Optional)
+
 ## MLOps 시스템 구축해보기
 
 MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구성해보고 사용해보기가 어렵다는 점입니다. AWS, GCP 등의 퍼블릭 클라우드 혹은 Weight & Bias, neptune.ai 등의 상용 도구를 사용해보기에는 과금에 대한 부담이 존재하고, 처음부터 모든 환경을 혼자서 구성하기에는 어디서부터 시작해야 할지 막막하게 느껴질 수밖에 없습니다.
