@@ -26,13 +26,13 @@ menu:
 
  실험(Experimentation)은 머신러닝 엔지니어들이 데이터를 분석하고, 프로토타입 모델을 만들며 학습 기능을 구현할 수 있도록 하는 다음과 같은 기능을 제공합니다.
 
-- 깃(Git)과 같은 버전 컨트롤 툴과 통합된 노트북(Jupyter Notebook) 환경 제공
+- 깃(Git)과 같은 버전 컨트롤 도구와 통합된 노트북(Jupyter Notebook) 환경 제공
 - 사용한 데이터, 하이퍼 파라미터, 평가 지표를 포함한 실험 추적 기능 제공
 - 데이터와 모델에 대한 분석 및 시각화 기능 제공
 
 ### 2. Data Processing
 
- 데이터 처리(Data Processing)은 머신러닝 모델 개발 단계, 지속적인 학습(Continuous Training) 단계, 그리고 API 배포(API Deployment) 단계에서 많은 양의 데이터를 사용할 수 있게 해 주는 다음과 같은 기능을 제공합니다.
+ 데이터 처리(Data Processing)는 머신러닝 모델 개발 단계, 지속적인 학습(Continuous Training) 단계, 그리고 API 배포(API Deployment) 단계에서 많은 양의 데이터를 사용할 수 있게 해 주는 다음과 같은 기능을 제공합니다.
 
 - 다양한 데이터 소스와 서비스에 호환되는 데이터 커넥터(connector) 기능 제공
 - 다양한 형태의 데이터와 호환되는 데이터 인코더(encoder) & 디코더(decoder) 기능 제공
@@ -49,7 +49,7 @@ menu:
 
 ### 4. Model evaluation
 
- 모델 평가(Model evaluation)은 실험 환경과 상용 환경에서 동작하는 모델의 성능을 관찰할 수 있는 다음과 같은 기능을 제공합니다.
+ 모델 평가(Model evaluation)는 실험 환경과 상용 환경에서 동작하는 모델의 성능을 관찰할 수 있는 다음과 같은 기능을 제공합니다.
 
 - 평가 데이터에 대한 모델 성능 평가 기능
 - 서로 다른 지속 학습 실행 결과에 대한 예측 성능 추적
@@ -61,7 +61,7 @@ menu:
  모델 서빙(Model serving)은 상용 환경에 모델을 배포하고 서빙하기 위한 다음과 같은 기능들을 제공합니다.
 
 - 저 지연 추론과 고가용성 추론 기능 제공
-- 다양한 ML 모델 서빙 프레임워크 지원(Tensorflow Serving, TorchServe, NVIDIA Triton, Scikit-learn, XGGoost .. etc)
+- 다양한 ML 모델 서빙 프레임워크 지원(Tensorflow Serving, TorchServe, NVIDIA Triton, Scikit-learn, XGGoost. etc)
 - 복잡한 형태의 추론 루틴 기능 제공, 예를 들어 전처리(preprocess) 또는 후처리(postprocess) 기능과 최종 결과를 위해 다수의 모델이 사용되는 경우를 말합니다.
 - 순간적으로 치솟는 추론 요청을 처리하기 위한 오토 스케일링(autoscaling) 기능 제공
 - 추론 요청과 추론 결과에 대한 로깅 기능 제공

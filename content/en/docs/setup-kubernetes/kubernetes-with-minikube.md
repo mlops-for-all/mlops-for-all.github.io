@@ -20,7 +20,7 @@ images: []
 
 ### Minikube binary
 
-Minikube 를 사용하기 위해, v1.24.0 버전의 Minikube 바이너리를 설치합니다.
+Minikube를 사용하기 위해, v1.24.0 버전의 Minikube 바이너리를 설치합니다.
 
 ```text
 wget https://github.com/kubernetes/minikube/releases/download/v1.24.0/minikube-linux-amd64
@@ -43,16 +43,16 @@ commit: 76b94fb3c4e8ac5062daf70d60cf03ddcc0a741b
 
 ## 2. 쿠버네티스 클러스터 셋업
 
-이제 Minikube 를 활용해 쿠버네티스 클러스터를 **클러스터에** 구축합니다.
-GPU 의 원활한 사용과, 클러스터-클라이언트 간 통신을 간편하게 수행하기 위해, Minikube 는 `driver=none` 옵션을 활용하여 실행합니다. `driver=none` 옵션은 root user 로 실행해야함에 주의바랍니다.
+이제 Minikube를 활용해 쿠버네티스 클러스터를 **클러스터에** 구축합니다.
+GPU 의 원활한 사용과 클러스터-클라이언트 간 통신을 간편하게 수행하기 위해, Minikube 는 `driver=none` 옵션을 활용하여 실행합니다. `driver=none` 옵션은 root user 로 실행해야 함에 주의 바랍니다.
 
-root user 로 전환합니다.
+root user로 전환합니다.
 
 ```text
 sudo su
 ```
 
-`minikube start` 를 수행하여 쿠버네티스 클러스터 구축을 진행합니다. Kubeflow 의 원활한 사용을 위해, 쿠버네티스 버전은 v1.21.7 로 지정하여 구축하며 `--extra-config` 를 추가합니다.
+`minikube start`를 수행하여 쿠버네티스 클러스터 구축을 진행합니다. Kubeflow의 원활한 사용을 위해, 쿠버네티스 버전은 v1.21.7로 지정하여 구축하며 `--extra-config`를 추가합니다.
 
 ```text
 minikube start --driver=none \
@@ -63,14 +63,14 @@ minikube start --driver=none \
 
 ### Disable default addons
 
-Minikube 를 설치하면 Default 로 설치되는 addon 이 존재합니다. 이 중 저희가 사용하지 않을 addon 을 비활성화합니다.
+Minikube를 설치하면 Default로 설치되는 addon이 존재합니다. 이 중 저희가 사용하지 않을 addon을 비활성화합니다.
 
 ```text
 minikube addons disable storage-provisioner
 minikube addons disable default-storageclass
 ```
 
-모든 addon 이 비활성화된 것을 확인합니다.
+모든 addon이 비활성화된 것을 확인합니다.
 
 ```text
 minikube addons list
@@ -118,9 +118,9 @@ root@ubuntu:/home/mlops# minikube addons list
 ## 3. 쿠버네티스 클라이언트 셋업
 
 이번에는 **클라이언트**에 쿠버네티스의 원활한 사용을 위한 도구를 설치합니다.
-**클라이언트**와 **클러스터** 노드가 분리되지 않은 경우에는 root user 로 모든 작업을 진행해야 함에 주의바랍니다.
+**클라이언트**와 **클러스터** 노드가 분리되지 않은 경우에는 root user로 모든 작업을 진행해야 함에 주의바랍니다.
 
-**클라이언트**와 **클러스터** 노드가 분리된 경우, 우선 kubernetes 의 관리자 인증 정보를 **클라이언트**로 가져옵니다.
+**클라이언트**와 **클러스터** 노드가 분리된 경우, 우선 kubernetes의 관리자 인증 정보를 **클라이언트**로 가져옵니다.
 
 1. **클러스터**에서 config를 확인합니다.
 
@@ -190,7 +190,7 @@ root@ubuntu:/home/mlops# minikube addons list
 
 ## 5. 정상 설치 확인
 
-최종적으로 node 가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
+최종적으로 node가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
 
 ```text
 kubectl get nodes -o wide

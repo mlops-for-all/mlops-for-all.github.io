@@ -16,7 +16,7 @@ menu:
 
 ## Secret
 
-initContainer가 minio에 접근해서 모델을 다운로드 받으려면 credentials를 필요로 합니다.
+initContainer가 minio에 접근해서 모델을 다운로드받으려면 credentials가 필요합니다.
 minio에 접근하기 위한 credentials는 다음과 같습니다.
 
 ```text
@@ -148,12 +148,12 @@ spec:
 ```
 
 이 전에 작성한 [Seldon Fields]({{< relref "docs/api-deployment/seldon-fields.md" >}})와 달라진 점은 크게 두 부분입니다.
-initContainer에 `envFrom` 필드가 추가 되었으며 args의 주소가 `s3://mlflow/mlflow/artifacts/0/74ba8e33994144f599e50b3be176cdb0/artifacts/svc` 로 바뀌었습니다.
+initContainer에 `envFrom` 필드가 추가되었으며 args의 주소가 `s3://mlflow/mlflow/artifacts/0/74ba8e33994144f599e50b3be176cdb0/artifacts/svc` 로 바뀌었습니다.
 
 ### args
 
-앞 서 args의 첫번째 array는 우리가 다운로드 받을 모델의 경로라고 했습니다.  
-그럼 mlflow에 저장되어 있는 모델의 경로는 어떻게 알 수 있을까요?
+앞서 args의 첫번째 array는 우리가 다운로드받을 모델의 경로라고 했습니다.  
+그럼 mlflow에 저장된 모델의 경로는 어떻게 알 수 있을까요?
 
 다시 mlflow에 들어가서 run을 클릭하고 모델을 누르면 다음과 같이 확인할 수 있습니다.
 
@@ -165,7 +165,7 @@ initContainer에 `envFrom` 필드가 추가 되었으며 args의 주소가 `s3:/
 
 ### envFrom
 
-minio에 접근해서 모델을 다운로드 받기 위해 필요한 환경변수를 입력해주는 과정입니다.
+minio에 접근해서 모델을 다운로드 받는 데 필요한 환경변수를 입력해주는 과정입니다.
 앞서 만든 `seldon-init-container-secret`를 이용합니다.
 
 ## API 생성
