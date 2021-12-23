@@ -59,7 +59,7 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
   kustomize build common/cert-manager/kubeflow-issuer/base | kubectl apply -f -
   ```
 
-  정상적으로 설치될 경우 다음과 같이 출력됩니다.
+  정상적으로 설치되면 다음과 같이 출력됩니다.
 
   ```text
   namespace/cert-manager created
@@ -109,8 +109,8 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
 
 - cert-manager-webhook 이슈
 
-  cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하기시 바랍니다.  
-  해당 에러가 발생한 경우, cert-manager 의 3 개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
+  cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하시기 바랍니다.  
+  해당 에러가 발생한 경우, cert-manager 의 3개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
 
   ```text
   Error from server: error when retrieving current configuration of:
@@ -368,7 +368,7 @@ gateway.networking.istio.io/kubeflow-gateway created
 kubectl get clusterrole | grep kubeflow-istio
 ```
 
-다음과 같이 총 3 개의 clusterrole 이 출력됩니다.
+다음과 같이 총 3개의 clusterrole 이 출력됩니다.
 
 ```text
 kubeflow-istio-admin                                                   2021-12-03T08:53:17Z
@@ -376,7 +376,7 @@ kubeflow-istio-edit                                                    2021-12-0
 kubeflow-istio-view                                                    2021-12-03T08:53:17Z
 ```
 
-kubeflow namespace 에 gateway 가 정상적으로 설치되었는지 확인합니다.
+Kubeflow namespace 에 gateway 가 정상적으로 설치되었는지 확인합니다.
 
 ```text
 kubectl get gateway -n kubeflow
@@ -410,7 +410,7 @@ authorizationpolicy.security.istio.io/service-cache-server created
 ```
 
 위 명령어는 여러 resources 를 한 번에 설치하고 있지만, 설치 순서의 의존성이 있는 리소스가 존재합니다.  
-따라서 경우에 따라 다음과 비슷한 에러가 발생할 수 있습니다.
+따라서 때에 따라 다음과 비슷한 에러가 발생할 수 있습니다.
 
 ```text
 "error: unable to recognize "STDIN": no matches for kind "CompositeController" in version "metacontroller.k8s.io/v1alpha1""  
@@ -450,7 +450,7 @@ mysql-f7b9b7dd4-xfnw4                                    2/2     Running   0    
 workflow-controller-5cbbb49bd8-5zrwx                     2/2     Running   1          5m2s
 ```
 
-추가적으로 ml-pipeline UI 가 정상적으로 접속되는지 확인합니다.
+추가로 ml-pipeline UI가 정상적으로 접속되는지 확인합니다.
 
 ```text
 kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
@@ -521,7 +521,7 @@ katib-mysql-7894994f88-scs62                             1/1     Running   0    
 katib-ui-64bb96d5bf-d89kp                                1/1     Running   0          82s
 ```
 
-추가적으로 katib UI 가 정상적으로 접속되는지 확인합니다.
+추가로 katib UI가 정상적으로 접속되는지 확인합니다.
 
 ```text
 kubectl port-forward svc/katib-ui -n kubeflow 8081:80
@@ -570,7 +570,7 @@ kubeflow namespace 에 centraldashboard 관련 1 개의 pod 가 Running 이 될 
 centraldashboard-8fc7d8cc-xl7ts                          1/1     Running   0          52s
 ```
 
-추가적으로 Central Dashboard UI 가 정상적으로 접속되는지 확인합니다.
+추가로 Central Dashboard UI가 정상적으로 접속되는지 확인합니다.
 
 ```text
 kubectl port-forward svc/centraldashboard -n kubeflow 8082:80
@@ -687,7 +687,7 @@ admission-webhook-deployment-667bd68d94-2hhrx            1/1     Running   0    
   kubectl get po -n kubeflow | grep jupyter-web-app
   ```
 
-  1 개의 pod 가 Running 이 될 때까지 기다립니다.
+  1개의 pod 가 Running 이 될 때까지 기다립니다.
 
   ```text
   jupyter-web-app-deployment-6f744fbc54-p27ts              1/1     Running   0          2m
@@ -695,7 +695,7 @@ admission-webhook-deployment-667bd68d94-2hhrx            1/1     Running   0    
 
 ### Profiles + KFAM
 
-Profile Controller 를 설치합니다.
+Profile Controller를 설치합니다.
 
 ```text
 kustomize build apps/profiles/upstream/overlays/kubeflow | kubectl apply -f -
@@ -757,7 +757,7 @@ virtualservice.networking.istio.io/volumes-web-app-volumes-web-app created
 kubectl get po -n kubeflow | grep volumes-web-app
 ```
 
-1 개의 pod 가 Running 이 될 때까지 기다립니다.
+1개의 pod가 Running 이 될 때까지 기다립니다.
 
 ```text
 volumes-web-app-deployment-8589d664cc-62svl              1/1     Running   0          27s
@@ -871,7 +871,7 @@ training-operator-7d98f9dd88-6887f                          1/1     Running   0 
 
 ### User Namespace
 
-Kubeflow 사용을 위해, 사용할 User 의 Kubeflow Profile 을 생성합니다.
+Kubeflow 사용을 위해, 사용할 User의 Kubeflow Profile 을 생성합니다.
 
 ```text
 kustomize build common/user-namespace/base | kubectl apply -f -
@@ -896,7 +896,7 @@ kubeflow-user-example-com   37s
 
 ## 정상 설치 확인
 
-kubeflow central dashboard 에 web browser 로 접속하기 위해 port-forward 합니다.
+Kubeflow central dashboard에 web browser로 접속하기 위해 포트 포워딩합니다.
 
 ```text
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80

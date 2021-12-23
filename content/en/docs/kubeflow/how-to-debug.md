@@ -130,7 +130,7 @@ if __name__ == "__main__":
 2. `drop_na_from_csv` 컴포넌트에서 `drop_na()` 함수를 이용해 na 값이 포함된 `row`를 제거
 
 이제 파이프라인을 업로드하고 실행해 보겠습니다.  
-실행후 Run을 눌러서 확인해보면 `Train from csv` 컴포넌트에서 실패를 했다고 나옵니다.
+실행 후 Run을 눌러서 확인해보면 `Train from csv` 컴포넌트에서 실패했다고 나옵니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/debug-0.png" title="run-0"/>
@@ -143,11 +143,11 @@ if __name__ == "__main__":
 </p>
 
 로그를 확인하면 데이터의 개수가 0이여서 실행되지 않았다고 나옵니다.  
-분명 정상적으로 데이터를 전달했는데 왜 데이터의 개수가 0개 일까요?  
+분명 정상적으로 데이터를 전달했는데 왜 데이터의 개수가 0개일까요?  
 
 이제 입력받은 데이터에 어떤 문제가 있었는지 확인해 보겠습니다.  
 우선 컴포넌트를 클릭하고 Input/Ouput 탭에서 입력값으로 들어간 데이터들을 다운로드 받습니다.  
-다운로드는 빨간색 네모로 표시되어 있는 곳의 링크를 클릭하면 됩니다.
+다운로드는 빨간색 네모로 표시된 곳의 링크를 클릭하면 됩니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/debug-5.png" title="run-2"/>
@@ -160,7 +160,7 @@ if __name__ == "__main__":
 ls
 ```
 
-다음과 같이 두개의 파일이 있습니다.
+다음과 같이 두 개의 파일이 있습니다.
 
 ```text
 drop-na-from-csv-output.tgz load-iris-data-target.tgz
@@ -181,7 +181,7 @@ tar -xzvf drop-na-from-csv-output.tgz ; mv data data.csv
 </p>
 
 디버깅을 해본 결과 dropna 할 때 column을 기준으로 drop을 해야 하는데 row를 기준으로 drop을 해서 데이터가 모두 사라졌습니다.
-이제 문제의 원인을 알아 냈으니 column을 기준으로 drop이 되게 컴포넌트를 수정합니다.
+이제 문제의 원인을 알아냈으니 column을 기준으로 drop이 되게 컴포넌트를 수정합니다.
 
 ```python
 @partial(

@@ -13,7 +13,7 @@ menu:
 
 ## Component
 
-컴포넌트(Component)를 작성하기 위해서는 다음과 같은 내용들을 작성해야 합니다.
+컴포넌트(Component)를 작성하기 위해서는 다음과 같은 내용을 작성해야 합니다.
 
 1. 컴포넌트 콘텐츠(Component Contents) 작성
 2. 컴포넌트 래퍼(Component Wrapper) 작성
@@ -48,7 +48,7 @@ def print_and_return_number():
     return number
 ```
 
-이제 콘텐츠에서 필요한 Config를 래퍼의 argument로 추가합니다. 다만, argument 만을 적는 것이 아니라 argument의 타입 힌트도 작성해야 합니다. Kubeflow에서는 파이프라인을 Kubeflow 포맷으로 변환할 때, 컴포넌트간의 연결에서 정해진 입력과 출력의 타입이 일치하는지 체크합니다. 만약 컴포넌트가 필요로 하는 입력과 다른 컴포넌트로 부터 전달받은 출력의 포맷이 일치하지 않을 경우 파이프라인 생성을 할 수 없습니다.
+이제 콘텐츠에서 필요한 Config를 래퍼의 argument로 추가합니다. 다만, argument 만을 적는 것이 아니라 argument의 타입 힌트도 작성해야 합니다. Kubeflow에서는 파이프라인을 Kubeflow 포맷으로 변환할 때, 컴포넌트 간의 연결에서 정해진 입력과 출력의 타입이 일치하는지 체크합니다. 만약 컴포넌트가 필요로 하는 입력과 다른 컴포넌트로부터 전달받은 출력의 포맷이 일치하지 않을 경우 파이프라인 생성을 할 수 없습니다.
 
 이제 다음과 같이 argument와 그 타입, 그리고 반환하는 타입을 적어서 컴포넌트 래퍼를 완성합니다.
 
@@ -94,7 +94,7 @@ def divde_and_return_number(
 ### Convert to Kubeflow Format
 
 이제 작성한 컴포넌트를 kubeflow에서 사용할 수 있는 포맷으로 변환해야 합니다. 변환은 `kfp.components.create_component_from_func` 를 통해서 할 수 있습니다.  
-이렇게 변환된 형태는 파이썬에서 함수로 import하여서 파이프라인에서 사용할 수 있습니다.
+이렇게 변환된 형태는 파이썬에서 함수로 import 하여서 파이프라인에서 사용할 수 있습니다.
 
 ```python
 from kfp.components import create_component_from_func

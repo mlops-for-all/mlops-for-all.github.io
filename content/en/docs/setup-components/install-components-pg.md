@@ -24,7 +24,7 @@ images: []
 
 이번 페이지에서는 쿠버네티스 클러스터에 프로메테우스와 그라파나를 설치한 뒤, Seldon-Core 로 생성한 SeldonDeployment 로 API 요청을 보내, 정상적으로 Metrics 이 수집되는지 확인해보겠습니다.
 
-본 글에서는 seldonio/seldon-core-analytics Helm Chart 1.12.0 버전을 활용해 쿠버네티스 크러스터에 프로메테우스와 그라파나를 설치하고, Seldon-Core 에서 생성한 SeldonDeployment의 Metrics 을 효율적으로 확인하기 위한 대시보드도 함께 설치합니다.
+본 글에서는 seldonio/seldon-core-analytics Helm Chart 1.12.0 버전을 활용해 쿠버네티스 클러스터에 프로메테우스와 그라파나를 설치하고, Seldon-Core 에서 생성한 SeldonDeployment의 Metrics 을 효율적으로 확인하기 위한 대시보드도 함께 설치합니다.
 
 ### Helm Repository 추가
 
@@ -80,7 +80,7 @@ REVISION: 1
 kubectl get pod -n seldon-system | grep seldon-core-analytics
 ```
 
-seldon-system namespace 에 6 개의 seldon-core-analytics 관련 pod 가 Running 이 될 때까지 기다립니다.
+seldon-system namespace 에 6개의 seldon-core-analytics 관련 pod 가 Running 이 될 때까지 기다립니다.
 
 ```text
 seldon-core-analytics-grafana-657c956c88-ng8wn                  2/2     Running   0          114s
