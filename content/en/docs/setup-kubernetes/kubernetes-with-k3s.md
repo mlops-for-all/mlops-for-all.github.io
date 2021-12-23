@@ -1,10 +1,10 @@
 ---
-title: "4.3. Install Kubernetes - K3s"
+title: "4.1. Install Kubernetes - K3s"
 description: ""
 date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
-weight: 223
+weight: 221
 contributors: ["Jongseob Jeon"]
 menu:
   docs:

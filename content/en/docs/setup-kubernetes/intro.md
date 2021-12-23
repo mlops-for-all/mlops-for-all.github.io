@@ -1,12 +1,12 @@
 ---
-title : "1. Introduction"
+title: "1. Introduction"
 description: "Setup Introduction"
 lead: ""
 date: 2021-12-13
 lastmod: 2021-12-13
 draft: false
 weight: 201
-contributors: ["Jaeyeon Kim"]
+contributors: ["Jaeyeon Kim", "Jongsun Shinn"]
 menu:
   docs:
     parent: "setup-kubernetes"
@@ -53,10 +53,10 @@ MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구�
 
 아래는 Helm을 이용해 설치되어야 할 써드파티 소프트웨어 목록입니다.
 
-| Helm Chart Repo Name                            | Version     |
-| ----------------------------------------------- | ----------- |
-| datawire/ambassador                             | 6.9.3      |
-| seldonio/seldon-core-operator                | 1.11.2     |
+| Helm Chart Repo Name          | Version |
+| ----------------------------- | ------- |
+| datawire/ambassador           | 6.9.3   |
+| seldonio/seldon-core-operator | 1.11.2  |
 
 ### 클라이언트
 
