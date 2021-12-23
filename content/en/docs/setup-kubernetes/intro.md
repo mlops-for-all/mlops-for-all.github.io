@@ -62,11 +62,12 @@ MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구�
 
 클라이언트는 MacOS (Intel CPU), Ubuntu 20.04 에서 검증되었습니다.
 
-| Software  | Version |
-| --------- | ------- |
-| kubectl   | v1.21.7 |
-| helm      | v3.7.1  |
-| kustomize | v3.10.0 |
+
+| Software        | Version     |
+| --------------- | ----------- |
+| kubectl         | v1.21.7     |
+| helm            | v3.7.1      |
+| kustomize       | v3.10.0     |
 
 ### Minimum System Requirements
 
