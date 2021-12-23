@@ -25,7 +25,7 @@ npm install
 npm ci
 ```
 
-3. node 클러스터를 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
+3. 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
 
 ```text
 npm run start
@@ -67,17 +67,8 @@ draft: false
 
 ## Before Commit
 
-프로젝트에서는 각 글의 일관성을 위해서 여러 lint를 적용하고 있습니다.
-다음 명령어를 실행해 test를 진행합니다.
-
-pre-commit을 통해 대부분의 test를 통과할 수 있습니다.
-
-```text
-pip install pre-commit
-pre-commit run -a
-```
-
-pre-commit 후 test를 진행합니다.
+프로젝트에서는 각 글의 일관성을 위해서 여러 markdown lint를 적용하고 있습니다.
+다음 명령어를 실행해 test를 진행한 후 커밋합니다.
 
 ```text
 npm test

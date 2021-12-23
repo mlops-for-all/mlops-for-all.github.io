@@ -31,7 +31,7 @@ kubectl config set-context --current --namespace=seldon-deploy
 ### 2. 스펙 정의
 
 SeldonDeployment를 배포하기 위한 yaml 파일을 생성합니다.
-이번 페이지에서는 공개되어 있는 iris model을 사용하도록 하겠습니다.
+이번 페이지에서는 공개된 iris model을 사용하도록 하겠습니다.
 이 iris model은 sklearn 프레임워크를 통해 학습되었기 때문에 SKLEARN_SERVER를 사용합니다.
 
 ```text
@@ -54,7 +54,7 @@ spec:
 EOF
 ```
 
-yaml 파일을 배포를 합니다.
+yaml 파일을 배포합니다.
 
 ```text
 kubectl apply -f iris-sdep.yaml
@@ -75,8 +75,8 @@ sklearn-default-0-classifier-5fdfd7bb77-ls9tr   2/2     Running   0          5m
 
 ## Ingress URL
 
-이제 배포된 모델에 추론 요청(predict request)를 보내서 추론 결과값을 받아옵니다.
-배포가 된 API는 다음과 같은 규칙으로 생성됩니다.
+이제 배포된 모델에 추론 요청(predict request)를 보내서 추론 결괏값을 받아옵니다.
+배포된 API는 다음과 같은 규칙으로 생성됩니다.
 `http://{NODE_IP}:{NODE_PORT}/seldon/{namespace}/{seldon-deployment-name}/api/v1.0/{method-name}/`
 
 ### NODE_IP / NODE_PORT
@@ -107,7 +107,7 @@ NODE_PORT=30486
 ### namespace / seldon-deployment-name
 
 SeldonDeployment가 배포된 `namespace`와 `seldon-deployment-name`를 의미합니다.
-이는 스펙을 정의할 때 metadata에 정의되어 있는 값을 사용합니다.
+이는 스펙을 정의할 때 metadata에 정의된 값을 사용합니다.
 
 ```text
 metadata:
@@ -153,7 +153,7 @@ UI에서 `/seldon/seldon-deploy/sklearn/api/v1.0/predictions` 메뉴를 선택�
   <img src="/images/docs/api-deployment/iris-swagger3.png" title="iris-swagger3"/>
 </p>
 
-### 4. Request body에 data입력
+### 4. Request body에 data 입력
 
 <p>
   <img src="/images/docs/api-deployment/iris-swagger4.png" title="iris-swagger4"/>
@@ -205,7 +205,7 @@ UI에서 `/seldon/seldon-deploy/sklearn/api/v1.0/predictions` 메뉴를 선택�
 
 ## Using CLI
 
-또한, curl과 같은 http client CLI 툴을 활용해서도 API 요청을 수행할 수 있습니다.
+또한, curl과 같은 http client CLI 도구를 활용해서도 API 요청을 수행할 수 있습니다.
 
 예를 들어, 다음과 같이 `/predictions`를 요청하면
 

@@ -16,7 +16,7 @@ Python 환경을 사용하다 보면 여러 버전의 Python 환경을 사용하
 이처럼 Python 환경 혹은 Python Package 환경을 가상화하여 관리하는 것을 쉽게 도와주는 도구로는 pyenv, conda, virtualenv, venv 등이 존재합니다.
 
 이 중 *모두의 MLOps*에서는 [pyenv](https://github.com/pyenv/pyenv)와 [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)를 설치하는 방법을 다룹니다.  
-pyenv는 Python 버전을 관리하는 것을 도와주며, pyenv-virtualenv는 pyenv의 plugin으로써 Python 패키지 환경을 관리하는 것을 도와줍니다.
+pyenv는 Python 버전을 관리하는 것을 도와주며, pyenv-virtualenv는 pyenv의 plugin으로써 파이썬 패키지 환경을 관리하는 것을 도와줍니다.
 
 ## pyenv 설치
 

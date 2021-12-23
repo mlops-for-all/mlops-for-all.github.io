@@ -24,3 +24,5 @@ toc: true
 제안점은 [Ideas](https://github.com/mlops-for-all/mlops-for-all.github.io/discussions/categories/ideas)를 통해 제안해 주시면 됩니다.
 
 ### v2.0 Release
+
+v2.0 릴리즈 계획 및 목차는 추후 [Announcements](https://github.com/mlops-for-all/mlops-for-all.github.io/discussions/categories/announcements)에 공개될 예정입니다.
