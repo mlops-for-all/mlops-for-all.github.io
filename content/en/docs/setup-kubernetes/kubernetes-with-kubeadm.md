@@ -1,10 +1,10 @@
 ---
-title: "4.1. Install Kubernetes - Kubeadm"
+title: "4.3. Install Kubernetes - Kubeadm"
 description: ""
 date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
-weight: 221
+weight: 223
 contributors: ["Youngcheol Jang"]
 menu:
   docs:
@@ -42,6 +42,7 @@ $ sudo modprobe br_netfilter
 $ cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF
+```
 
 - kubeadm : kubelet을 서비스에 등록하고, 클러스터 컴포넌트들 사이의 통신을 위한 인증서 발급 등 설치 과정 자동화
 - kubelet : container 리소스를 실행, 종료를 해 주는 컨테이너 핸들러
