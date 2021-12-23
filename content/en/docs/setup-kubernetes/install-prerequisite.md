@@ -33,13 +33,13 @@ sudo apt-get install -y socat
    sudo apt-get update && sudo apt-get install ca-certificates curl gnupg lsb-release
    ```
 
-2. 도커의 공식 GPG key 를 추가합니다.
+2. 도커의 공식 GPG key를 추가합니다.
 
    ```text
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
    ```
 
-3. apt 패키지 매니저로 도커를 설치할 때, stable Repository 에서 받아오도록 설정합니다.
+3. apt 패키지 매니저로 도커를 설치할 때, stable Repository에서 받아오도록 설정합니다.
 
    ```text
    echo \
@@ -59,7 +59,7 @@ sudo apt-get install -y socat
    apt-cache madison docker-ce | grep 5:20.10.11~3-0~ubuntu-focal
    ```
 
-   정상적으로 추가가 된 경우 다음과 같이 출력 됩니다.
+   정상적으로 추가가 된 경우 다음과 같이 출력됩니다.
 
    ```text
    docker-ce | 5:20.10.11~3-0~ubuntu-focal | https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
@@ -148,7 +148,7 @@ sudo apt-get install -y socat
 ## Turn off Swap Memory
 
 kubelet 이 정상적으로 동작하게 하기 위해서는 **클러스터** 노드에서 swap이라고 불리는 가상메모리를 꺼 두어야 합니다. 다음 명령어를 통해 swap을 꺼 둡니다.  
-**(클러스터와 클라이언트를 같은 데스크탑에서 사용할 때 swap 메모리를 종료하면 속도의 저하가 있을 수 있습니다.)**  
+**(클러스터와 클라이언트를 같은 데스크톱에서 사용할 때 swap 메모리를 종료하면 속도의 저하가 있을 수 있습니다)**  
 
 ```text
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
@@ -157,7 +157,7 @@ sudo swapoff -a
 
 ## Install Kubectl
 
-kubectl 은 쿠버네티스 클러스터에 API 를 요청할 때 사용하는 클라이언트 툴 입니다. **클라이언트** 노드에 설치해두어야 합니다.
+kubectl 은 쿠버네티스 클러스터에 API를 요청할 때 사용하는 클라이언트 툴입니다. **클라이언트** 노드에 설치해두어야 합니다.
 
 1. 현재 폴더에 kubectl v1.21.7 버전을 다운받습니다.
 
@@ -195,7 +195,7 @@ kubectl 은 쿠버네티스 클러스터에 API 를 요청할 때 사용하는 �
    ```
 
 4. 여러 개의 쿠버네티스 클러스터를 사용하는 경우, 여러 개의 kubeconfig 파일을 관리해야 하는 경우가 있습니다.  
-여러 개의 kubeconfig 파일 혹은 여러 개의 kube-context 를 효율적으로 관리하는 방법은 다음과 같은 문서를 참고하시기 바랍니다.
+여러 개의 kubeconfig 파일 혹은 여러 개의 kube-context를 효율적으로 관리하는 방법은 다음과 같은 문서를 참고하시기 바랍니다.
 
    - [https://dev.to/aabiseverywhere/configuring-multiple-kubeconfig-on-your-machine-59eo](https://dev.to/aabiseverywhere/configuring-multiple-kubeconfig-on-your-machine-59eo)
    - [https://github.com/ahmetb/kubectx](https://github.com/ahmetb/kubectx)

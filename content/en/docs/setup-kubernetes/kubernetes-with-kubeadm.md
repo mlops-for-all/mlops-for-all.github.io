@@ -36,7 +36,7 @@ sudo sysctl --system
 
 ## 2. 쿠버네티스 클러스터 셋업
 
-```exit
+```text
 $ sudo modprobe br_netfilter
 
 $ cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -45,7 +45,7 @@ EOF
 
 - kubeadm : kubelet을 서비스에 등록하고, 클러스터 컴포넌트들 사이의 통신을 위한 인증서 발급 등 설치 과정 자동화
 - kubelet : container 리소스를 실행, 종료를 해 주는 컨테이너 핸들러
-- kubectl : 쿠버네티스 클러스터를 터미널에서 확인, 조작 하기 위한 CLI 툴
+- kubectl : 쿠버네티스 클러스터를 터미널에서 확인, 조작하기 위한 CLI 도구
 
 다음 명령어를 통해 kubeadm, kubelet, kubectl을 설치합니다.
 실수로 이 컴포넌트들의 버전이 변경하면, 예기치 않은 장애를 낳을 수 있으므로 컴포넌트들이 변경되지 않도록 설정합니다.
@@ -119,7 +119,7 @@ kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.13.0/Do
 ```
 
 쿠버네티스 노드의 종류에는 크게 `마스터 노드`와 `워커 노드`가 있습니다.
-안정성을 위하여 `마스터 노드`에는 쿠버네티스 클러스터를 제어하는 작업들만 실행되도록 하는 것이 일반적이지만,
+안정성을 위하여 `마스터 노드`에는 쿠버네티스 클러스터를 제어하는 작업만 실행되도록 하는 것이 일반적이지만,
 이 매뉴얼에서는 싱글 클러스터를 가정하고 있으므로 마스터 노드에 모든 종류의 작업이 실행될 수 있도록 설정합니다.
 
 ```text
