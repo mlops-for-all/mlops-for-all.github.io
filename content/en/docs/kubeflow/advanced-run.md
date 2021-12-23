@@ -36,7 +36,7 @@ Input/Output 탭은 컴포넌트에서 사용한 Config들과 Input, Output Arti
 
 Logs에서는 파이썬 코드 실행 중 나오는 모든 stdout을 확인할 수 있습니다.
 다만 pod은 일정 시간이 지난 후 지워지기 때문에 일정 시간이 지나면 이 탭에서는 확인할 수 없습니다.
-이 때는 Output artifacts의 main-logs에서 확인할 수 있습니다.
+이때는 Output artifacts의 main-logs에서 확인할 수 있습니다.
 
 ### Visualizations
 

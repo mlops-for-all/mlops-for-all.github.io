@@ -79,7 +79,7 @@ Upload Version을 클릭하면 다음과 같이 파이프라인을 업로드할 
   <img src="/images/docs/kubeflow/pipeline-gui-7.png" title="pipeline-gui"/>
 </p>
 
-업로드 된 경우 다음과 같이 파이프라인 버전을 확인할 수 있습니다.
+업로드된 경우 다음과 같이 파이프라인 버전을 확인할 수 있습니다.
 
 <p align="center">
   <img src="/images/docs/kubeflow/pipeline-gui-8.png" title="pipeline-gui"/>

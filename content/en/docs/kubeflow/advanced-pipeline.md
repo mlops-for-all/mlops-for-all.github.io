@@ -19,7 +19,7 @@ menu:
 생성된 파이프라인 내에서 컴포넌트는 두 개의 이름을 갖습니다.
 
 - task_name: 컴포넌트를 작성할 때 작성한 함수 이름
-- display_name: kubeflow UI상에서 보여지는 이름
+- display_name: kubeflow UI상에 보이는 이름
 
 예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.
 

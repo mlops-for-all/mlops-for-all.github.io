@@ -10,7 +10,7 @@ menu:
     parent: "kubeflow"
 ---
 
-실습을 위해 권장하는 파이썬 버전은 python>=3.7입니다. 파이썬 환경에 익숙하지 않은 분들은 다음 [Appendix 1. 파이썬 가상환경]({{< relref "docs/appendix/pyenv" >}})을 참고하여 **클라이언트 노드**에 설치해주신 뒤 패키지 설치를 진행해주시기 바랍니다.
+실습을 위해 권장하는 파이썬 버전은 python>=3.7입니다. 파이썬 환경에 익숙하지 않은 분들은 다음 [Appendix 1. 파이썬 가상환경]({{< relref "docs/appendix/pyenv" >}})을 참고하여 **클라이언트 노드**에 설치해주신 뒤 패키지 설치를 진행해주시기를 바랍니다.
 
 실습을 진행하기에서 필요한 패키지들과 버전은 다음과 같습니다.
 
@@ -24,7 +24,7 @@ menu:
   dill==0.3.4
   ```
 
-[앞에서 만든 파이썬 가상환경]({{< relref "docs/appendix/pyenv.md#python-가상환경-생성" >}})을 활성화 시킵니다.
+[앞에서 만든 파이썬 가상환경]({{< relref "docs/appendix/pyenv.md#python-가상환경-생성" >}})을 활성화합니다.
 
 ```text
 pyenv activate demo
