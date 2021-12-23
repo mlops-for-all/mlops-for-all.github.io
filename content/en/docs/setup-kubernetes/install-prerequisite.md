@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
 weight: 210
-contributors: ["Jaeyeon Kim"]
+contributors: ["Jaeyeon Kim", "Jongsun Shinn"]
 menu:
   docs:
     parent: "setup-kubernetes"
@@ -50,7 +50,7 @@ sudo apt-get install -y socat
 4. 현재 설치할 수 있는 도커 버전을 확인합니다.
 
    ```text
-   apt-cache madison docker-ce
+   sudo apt-get update && apt-cache madison docker-ce
    ```
 
    출력되는 버전 중 `5:20.10.11~3-0~ubuntu-focal` 버전이 있는지 확인합니다.
