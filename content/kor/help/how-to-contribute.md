@@ -4,18 +4,14 @@ date: 2021-12-21
 lastmod: 2021-12-21
 draft: false
 images: []
-menu:
-  docs:
-    parent: "help"
-weight: 9001
 toc: true
 ---
 
 ## How to Start
 
-1. *모두의 MLOps* GitHub Repository에 접속합니다.
+1. [*모두의 MLOps* GitHub Repository](https://github.com/mlops-for-all/mlops-for-all.github.io)에 접속합니다.
 
-2. 여러분의 개인 Repository로 Fork합니다.
+2. 여러분의 개인 Repository로 `Fork`합니다.
 
 3. Forked Repository를 여러분의 작업 환경으로 `git clone`합니다.
 

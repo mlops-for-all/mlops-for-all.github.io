@@ -1,7 +1,6 @@
 [[main]]
   name = "Docs"
   url = "/docs/prologue/welcome/"
-# url = "/docs/1.0/prologue/introduction/"
   weight = 10
 
 # [[main]]
@@ -18,6 +17,11 @@
   name = "Contact"
   url = "/contact/"
   weight = 30
+
+[[main]]
+  name = "Help"
+  url = "/help/"
+  weight = 100
 
 [[docs]]
   name = "Prologue"
@@ -72,12 +76,6 @@
   url = "/docs/appendix/"
   identifier = "appendix"
   weight = 60
-
-[[docs]]
-  name = "Help"
-  url = "/docs/help/"
-  identifier = "help"
-  weight = 100
 
 [[social]]
   name = "GitHub"
