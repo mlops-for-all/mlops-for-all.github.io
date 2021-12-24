@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-13
 draft: false
 weight: 202
-contributors: ["Jaeyeon Kim"]
+contributors: ["Jaeyeon Kim", "Kyunghwan Kim"]
 menu:
   docs:
     parent: "setup-kubernetes"
@@ -19,7 +19,7 @@ images: []
 프로덕션 레벨의 쿠버네티스 클러스터를 구축할 수 있게 공식적으로 지원하는 도구는 kubeadm 이지만, 사용자들이 조금 더 쉽게 구축할 수 있도록 도와주는 kubespray, kops 등의 도구도 존재하며, 학습 목적을 위해서 컴팩트한 쿠버네티스 클러스터를 정말 쉽게 구축할 수 있도록 도와주는 k3s, minikube, microk8s, kind 등의 도구도 존재합니다.
 
 각각의 도구는 장단점이 다르기에 사용자마다 선호하는 도구가 다른 점을 고려하여, 본 글에서는 kubeadm, k3s, minikube의 3가지 도구를 활용하여 쿠버네티스 클러스터를 구축하는 방법을 다룹니다.
-각 도구에 대한 자세한 비교는 다음 쿠버네티스 [공식 문서]((https://kubernetes.io/ko/docs/tasks/tools/))를 확인해주시기를 바랍니다.
+각 도구에 대한 자세한 비교는 다음 쿠버네티스 [공식 문서](https://kubernetes.io/ko/docs/tasks/tools/)를 확인해주시기를 바랍니다.
 
 본 *모두의 MLOps*에서는 구축하게 될 MLOps 구성 요소들을 원활히 사용하기 위해, 각각의 도구를 활용해 쿠버네티스 클러스터를 구축할 때, 추가로 설정해 주어야 하는 부분이 추가되어 있습니다.
 
