@@ -13,8 +13,8 @@ images: []
 
 ## About MLOps-for-all Community
 
-*모두의 MLOps* 커뮤니티에 궁금하신 분은 [다음 페이지](http://localhost:1313/help/community/)를 참고해주시기 바랍니다.
+*모두의 MLOps* 커뮤니티에 궁금하신 분은 [다음 페이지]({{< relref "docs/help/community.md" >}})를 참고해주시기 바랍니다.
 
 ## How to Contribute
 
-*모두의 MLOps*글에 기여하고 싶으신 분은 [다음 페이지](http://localhost:1313/help/how-to-contribute/)를 참고해주시기 바랍니다.
+*모두의 MLOps*글에 기여하고 싶으신 분은 [다음 페이지]({{< relref "docs/help/how-to-contribute.md" >}})를 참고해주시기 바랍니다.

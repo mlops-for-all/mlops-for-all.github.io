@@ -5,6 +5,9 @@ lastmod: 2021-12-21
 draft: false
 images: []
 toc: true
+menu:
+  docs:
+    parent: "help"
 ---
 
 ## How to Start

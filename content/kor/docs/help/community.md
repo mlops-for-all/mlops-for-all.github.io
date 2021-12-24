@@ -5,6 +5,9 @@ lastmod: 2021-12-21
 draft: false
 images: []
 toc: true
+menu:
+  docs:
+    parent: "help"
 ---
 
 ### *모두의 MLOps* 릴리즈 소식
