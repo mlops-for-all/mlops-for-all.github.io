@@ -1,0 +1,322 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/vendor/jost/jost-v4-latin-regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/vendor/jost/jost-v4-latin-700.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/KaTeX_Main-Regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=https://mlops-for-all.github.io/fonts/KaTeX_Math-Italic.woff2 type=font/woff2 crossorigin><script>(()=>{var b=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,a=localStorage.getItem("theme");b&&a===null&&(localStorage.setItem("theme","dark"),document.documentElement.setAttribute("data-dark-mode","")),b&&a==="dark"&&document.documentElement.setAttribute("data-dark-mode",""),a==="dark"&&document.documentElement.setAttribute("data-dark-mode","")})()</script><link rel=stylesheet href=https://mlops-for-all.github.io/main.b322a9a3364f1882721e852e80a8e044248b358e2ff6e31b579a6720391d26a1f333b3b69d78d5d52fa55aa6d7b7c13aa4f79124d35cd62ace77628e3dc1d71d.css integrity="sha512-syKpozZPGIJyHoUugKjgRCSLNY4v9uMbV5pnIDkdJqHzM7O2nXjV1S+lWqbXt8E6pPeRJNNc1irOd2KOPcHXHQ==" crossorigin=anonymous><noscript><style>img.lazyload{display:none}</style></noscript><meta name=robots content="index, follow"><meta name=googlebot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><meta name=bingbot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><title>9. Component - Environment - 모두의 MLOps</title><meta name=description content="Component Environment # 앞서 8. Component - InputPath/OutputPath에서 작성한 파이프라인을 실행하면 실패하게 됩니다. 왜 실패하는지 알아보고 정상적으로 실행될 수 있도록 수정합니다.
+Convert to Kubeflow Format # 앞에서 작성한 컴포넌트를 yaml파일로 변환하도록 하겠습니다.
+from kfp.components import InputPath, OutputPath, create_component_from_func @create_component_from_func def train_from_csv( train_data_path: InputPath(&amp;#34;csv&amp;#34;), train_target_path: InputPath(&amp;#34;csv&amp;#34;), model_path: OutputPath(&amp;#34;dill&amp;#34;), kernel: str, ): import dill import pandas as pd from sklearn.svm import SVC train_data = pd.read_csv(train_data_path) train_target = pd.read_csv(train_target_path) clf = SVC(kernel=kernel) clf.fit(train_data, train_target) with open(model_path, mode=&amp;#34;wb&amp;#34;) as file_writer: dill."><link rel=canonical href=https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:title" content="9. Component - Environment"><meta property="og:description" content="Component Environment # 앞서 8. Component - InputPath/OutputPath에서 작성한 파이프라인을 실행하면 실패하게 됩니다. 왜 실패하는지 알아보고 정상적으로 실행될 수 있도록 수정합니다.
+Convert to Kubeflow Format # 앞에서 작성한 컴포넌트를 yaml파일로 변환하도록 하겠습니다.
+from kfp.components import InputPath, OutputPath, create_component_from_func @create_component_from_func def train_from_csv( train_data_path: InputPath(&#34;csv&#34;), train_target_path: InputPath(&#34;csv&#34;), model_path: OutputPath(&#34;dill&#34;), kernel: str, ): import dill import pandas as pd from sklearn.svm import SVC train_data = pd.read_csv(train_data_path) train_target = pd.read_csv(train_target_path) clf = SVC(kernel=kernel) clf.fit(train_data, train_target) with open(model_path, mode=&#34;wb&#34;) as file_writer: dill."><meta property="og:url" content="https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/"><meta property="og:site_name" content="모두의 MLOps"><meta property="og:image" content="https://mlops-for-all.github.io/mlops-for-all.png"><meta property="og:image:alt" content="모두의 MLOps"><meta name=twitter:card content="summary_large_image"><meta name=twitter:site content><meta name=twitter:creator content><meta name=twitter:title content="9. Component - Environment"><meta name=twitter:description content><meta name=twitter:image content="https://mlops-for-all.github.io/mlops-for-all.png"><meta name=twitter:image:alt content="9. Component - Environment"><script type=application/ld+json>{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://mlops-for-all.github.io/#/schema/organization/1","name":"MLOps-for-ALL","url":"https://mlops-for-all.github.io/","sameAs":["https://github.com/mlops-for-all/mlops-for-all.github.io"],"logo":{"@type":"ImageObject","@id":"https://mlops-for-all.github.io/#/schema/image/1","url":"https://mlops-for-all.github.io/logo-mlops-for-all.png","width":512,"height":512,"caption":"MLOps-for-ALL"},"image":{"@id":"https://mlops-for-all.github.io/#/schema/image/1"}},{"@type":"WebSite","@id":"https://mlops-for-all.github.io/#/schema/website/1","url":"https://mlops-for-all.github.io/","name":"모두의 MLOps","description":"모두가 쉽게 시작할 수 있는 MLOps 자료를 제작합니다.","publisher":{"@id":"https://mlops-for-all.github.io/#/schema/organization/1"}},{"@type":"WebPage","@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/","url":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/","name":"9. Component - Environment","description":"","isPartOf":{"@id":"https://mlops-for-all.github.io/#/schema/website/1"},"about":{"@id":"https://mlops-for-all.github.io/#/schema/organization/1"},"datePublished":"0001-01-01T00:00:00CET","dateModified":"0001-01-01T00:00:00CET","breadcrumb":{"@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/#/schema/breadcrumb/1"},"primaryImageOfPage":{"@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/#/schema/image/2"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/"]}]},{"@type":"BreadcrumbList","@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/#/schema/breadcrumb/1","name":"Breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://mlops-for-all.github.io","url":"https://mlops-for-all.github.io","name":"Home"}},{"@type":"ListItem","position":3,"item":{"@type":"WebPage","@id":"https://mlops-for-all.github.io/en/","url":"https://mlops-for-all.github.io/en/","name":"En"}},{"@type":"ListItem","position":4,"item":{"@type":"WebPage","@id":"https://mlops-for-all.github.io/en/docs/","url":"https://mlops-for-all.github.io/en/docs/","name":"Docs"}},{"@type":"ListItem","position":5,"item":{"@type":"WebPage","@id":"https://mlops-for-all.github.io/en/docs/kubeflow/","url":"https://mlops-for-all.github.io/en/docs/kubeflow/","name":"Kubeflow"}},{"@type":"ListItem","position":6,"item":{"@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/"}}]},{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://mlops-for-all.github.io/#/schema/article/1","headline":"9. Component - Environment","description":"","isPartOf":{"@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/"},"mainEntityOfPage":{"@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/"},"datePublished":"0001-01-01T00:00:00CET","dateModified":"0001-01-01T00:00:00CET","author":{"@id":"https://mlops-for-all.github.io/#/schema/person/2"},"publisher":{"@id":"https://mlops-for-all.github.io/#/schema/organization/1"},"image":{"@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/#/schema/image/2"}}]},{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://mlops-for-all.github.io/#/schema/person/2","name":"MLOps for ALL","sameAs":["https://github.com/mlops-for-all"]}]},{"@context":"https://schema.org","@graph":[{"@type":"ImageObject","@id":"https://mlops-for-all.github.io/en/docs/kubeflow/advanced-environment/#/schema/image/2","url":"https://mlops-for-all.github.io/mlops-for-all.png","contentUrl":"https://mlops-for-all.github.io/mlops-for-all.png","caption":"9. Component - Environment"}]}]}</script><meta name=theme-color content="#fff"><link rel=apple-touch-icon sizes=180x180 href=https://mlops-for-all.github.io/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://mlops-for-all.github.io/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://mlops-for-all.github.io/favicon-16x16.png><link rel=manifest crossorigin=use-credentials href=https://mlops-for-all.github.io/site.webmanifest></head><body class="docs single"><div class=header-bar></div><header class="navbar navbar-expand-md navbar-light doks-navbar"><nav class="container-xxl flex-wrap flex-md-nowrap" aria-label="Main navigation"><a class="navbar-brand p-0 me-auto" href=/en/ aria-label="모두의 MLOps">모두의 MLOps</a>
+<button class="btn btn-menu d-block d-md-none order-5" type=button data-bs-toggle=offcanvas data-bs-target=#offcanvasDoks aria-controls=offcanvasDoks aria-label="Open main menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button><div class="offcanvas offcanvas-start border-0 py-md-1" tabindex=-1 id=offcanvasDoks data-bs-backdrop=true aria-labelledby=offcanvasDoksLabel><div class="header-bar d-md-none"></div><div class="offcanvas-header d-md-none"><h2 class="h5 offcanvas-title ps-2" id=offcanvasDoksLabel><a class=text-dark href=/en/>모두의 MLOps</a></h2><button type=button class="btn-close text-reset me-2" data-bs-dismiss=offcanvas aria-label="Close main menu"></button></div><div class="offcanvas-body px-4"><h3 class="h6 text-uppercase mb-3 d-md-none">Main</h3><ul class="nav flex-column flex-md-row ms-md-n3"><li class=nav-item><a class="nav-link ps-0 py-1 active" href=/en/docs/prologue/welcome/>Docs</a></li><li class=nav-item><a class="nav-link ps-0 py-1" href=/en/contributors/>Contributors</a></li><li class=nav-item><a class="nav-link ps-0 py-1" href=/en/contact/>Contact</a></li></ul><hr class="text-black-50 my-4 d-md-none"><h3 class="h6 text-uppercase mb-3 d-md-none">Socials</h3><ul class="nav flex-column flex-md-row ms-md-auto me-md-n5 pe-md-2"><li class=nav-item><a class="nav-link ps-0 py-1" href=https://github.com/mlops-for-all/mlops-for-all.github.io><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg><small class="ms-2 d-md-none">GitHub</small></a></li></ul></div></div><button id=mode class="btn btn-link order-md-1" type=button aria-label="Toggle user interface mode">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button><div class="dropdown order-md-2"><button class="btn btn-doks-light dropdown-toggle" id=doks-languages data-bs-toggle=dropdown aria-expanded=false data-bs-display=static>
+EN
+<span class=dropdown-caret><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"/></svg></span></button><ul class="dropdown-menu dropdown-menu-end shadow rounded border-0" aria-labelledby=doks-languages><li><a class="dropdown-item current" aria-current=true href=/en/docs/kubeflow/advanced-environment/>English</a></li><li><hr class=dropdown-divider></li><li><a class=dropdown-item rel=alternate href=/docs/kubeflow/advanced-environment/ hreflang=kor lang=kor>Korean</a></li></ul></div></nav></header><nav class="doks-subnavbar py-2 sticky-lg-top" aria-label="Secondary navigation"><div class="container-xxl d-flex align-items-md-center"><form class="doks-search position-relative flex-grow-1 me-auto"><input id=search class="form-control is-search" type=search placeholder="Search docs..." aria-label="Search docs..." autocomplete=off><div id=suggestions class="shadow bg-white rounded d-none"></div></form><button class="btn doks-sidebar-toggle d-lg-none ms-3 order-3 collapsed" type=button data-bs-toggle=collapse data-bs-target=#doks-docs-nav aria-controls=doks-docs-nav aria-expanded=false aria-label="Toggle documentation navigation"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="doks doks-expand" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>Expand</title><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="doks doks-collapse" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><title>Collapse</title><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg></button></div></nav><div class=container-xxl><aside class=doks-sidebar><nav id=doks-docs-nav class="collapse d-lg-none" aria-label="Tertiary navigation"><ul class="list-unstyled collapsible-sidebar"><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-prologue aria-expanded=false>
+Prologue</button><div class=collapse id=section-prologue><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/prologue/welcome/>Welcome to MLOps for ALL!</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-introduction aria-expanded=false>
+Introduction</button><div class=collapse id=section-introduction><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/introduction/intro/>1. What is MLOps?</a></li><li><a class="docs-link rounded" href=/en/docs/introduction/component/>2. Components of MLOps</a></li><li><a class="docs-link rounded" href=/en/docs/introduction/why_kubernetes/>3. Why Kubernetes?</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-setup-kubernetes aria-expanded=false>
+Setup Kubernetes</button><div class=collapse id=section-setup-kubernetes><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/intro/>1. Introduction</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes/>2. Setup Kubernetes</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/install-prerequisite/>3. Install Prerequisite</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes-with-k3s/>4.1. Install Kubernetes - K3s</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes-with-minikube/>4.2. Install Kubernetes - Minikube</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes-with-kubeadm/>4.3. Install Kubernetes - Kubeadm</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/install-kubernetes-module/>5. Install Kubernetes Modules</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/setup-nvidia-gpu/>6. (Optional) Setup GPU</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-setup-components aria-expanded=false>
+Setup Components</button><div class=collapse id=section-setup-components><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-kf/>1. Kubeflow</a></li><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-mlflow/>2. MLflow Tracking Server</a></li><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-seldon/>3. Seldon-Core</a></li><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-pg/>4. Prometheus & Grafana</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-kubeflow-ui-guide aria-expanded=false>
+Kubeflow UI Guide</button><div class=collapse id=section-kubeflow-ui-guide><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/intro/>1. Central Dashboard</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/notebooks/>2. Notebooks</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/tensorboards/>3. Tensorboards</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/volumes/>4. Volumes</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/experiments/>5. Experiments(AutoML)</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/experiments-and-others/>6. Kubeflow Pipeline 관련</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-kubeflow aria-expanded=true>
+Kubeflow</button><div class="collapse show" id=section-kubeflow><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/kubeflow/kubeflow-intro/>1. Kubeflow Introduction</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/kubeflow-concepts/>2. Kubeflow Concepts</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-requirements/>3. Install Requirements</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-component/>4. Component - Write</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-pipeline/>5. Pipeline - Write</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-pipeline-upload/>6. Pipeline - Upload</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-run/>7. Pipeline - Run</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-component/>8. Component - InputPath/OutputPath</a></li><li><a class="docs-link rounded active" href=/en/docs/kubeflow/advanced-environment/>9. Component - Environment</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-pipeline/>10. Pipeline - Setting</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-run/>11. Pipeline - Run Result</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-mlflow/>12. Component - MLFlow</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/how-to-debug/>13. Component - Debugging</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-api-deployment aria-expanded=false>
+API Deployment</button><div class=collapse id=section-api-deployment><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/api-deployment/what-is-api-deployment/>1. What is API Deployment?</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-iris/>2. Deploy SeldonDeployment</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-fields/>3. Seldon Fields</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-mlflow/>4. Model from MLflow</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-children/>5. Multi Models</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-further-readings aria-expanded=false>
+Further Readings</button><div class=collapse id=section-further-readings><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/further-readings/info/>다루지 못한 것들</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-appendix aria-expanded=false>
+Appendix</button><div class=collapse id=section-appendix><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/appendix/pyenv/>1. Python 가상환경 설치</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-help aria-expanded=false>
+Help</button><div class=collapse id=section-help><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/help/discussions/>Community</a></li><li><a class="docs-link rounded" href=/en/docs/help/how-to-contribute/>How to Contribute</a></li></ul></div></li></ul></nav></aside></div><div class="wrap container-xxl" role=document><div class=content><div class="row flex-xl-nowrap"><div class="col-lg-5 col-xl-4 docs-sidebar d-none d-lg-block"><nav class=docs-links aria-label="Main navigation"><ul class="list-unstyled collapsible-sidebar"><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-prologue aria-expanded=false>
+Prologue</button><div class=collapse id=section-prologue><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/prologue/welcome/>Welcome to MLOps for ALL!</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-introduction aria-expanded=false>
+Introduction</button><div class=collapse id=section-introduction><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/introduction/intro/>1. What is MLOps?</a></li><li><a class="docs-link rounded" href=/en/docs/introduction/component/>2. Components of MLOps</a></li><li><a class="docs-link rounded" href=/en/docs/introduction/why_kubernetes/>3. Why Kubernetes?</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-setup-kubernetes aria-expanded=false>
+Setup Kubernetes</button><div class=collapse id=section-setup-kubernetes><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/intro/>1. Introduction</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes/>2. Setup Kubernetes</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/install-prerequisite/>3. Install Prerequisite</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes-with-k3s/>4.1. Install Kubernetes - K3s</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes-with-minikube/>4.2. Install Kubernetes - Minikube</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/kubernetes-with-kubeadm/>4.3. Install Kubernetes - Kubeadm</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/install-kubernetes-module/>5. Install Kubernetes Modules</a></li><li><a class="docs-link rounded" href=/en/docs/setup-kubernetes/setup-nvidia-gpu/>6. (Optional) Setup GPU</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-setup-components aria-expanded=false>
+Setup Components</button><div class=collapse id=section-setup-components><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-kf/>1. Kubeflow</a></li><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-mlflow/>2. MLflow Tracking Server</a></li><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-seldon/>3. Seldon-Core</a></li><li><a class="docs-link rounded" href=/en/docs/setup-components/install-components-pg/>4. Prometheus & Grafana</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-kubeflow-ui-guide aria-expanded=false>
+Kubeflow UI Guide</button><div class=collapse id=section-kubeflow-ui-guide><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/intro/>1. Central Dashboard</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/notebooks/>2. Notebooks</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/tensorboards/>3. Tensorboards</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/volumes/>4. Volumes</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/experiments/>5. Experiments(AutoML)</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow-dashboard-guide/experiments-and-others/>6. Kubeflow Pipeline 관련</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-kubeflow aria-expanded=true>
+Kubeflow</button><div class="collapse show" id=section-kubeflow><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/kubeflow/kubeflow-intro/>1. Kubeflow Introduction</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/kubeflow-concepts/>2. Kubeflow Concepts</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-requirements/>3. Install Requirements</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-component/>4. Component - Write</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-pipeline/>5. Pipeline - Write</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-pipeline-upload/>6. Pipeline - Upload</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/basic-run/>7. Pipeline - Run</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-component/>8. Component - InputPath/OutputPath</a></li><li><a class="docs-link rounded active" href=/en/docs/kubeflow/advanced-environment/>9. Component - Environment</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-pipeline/>10. Pipeline - Setting</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-run/>11. Pipeline - Run Result</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/advanced-mlflow/>12. Component - MLFlow</a></li><li><a class="docs-link rounded" href=/en/docs/kubeflow/how-to-debug/>13. Component - Debugging</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-api-deployment aria-expanded=false>
+API Deployment</button><div class=collapse id=section-api-deployment><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/api-deployment/what-is-api-deployment/>1. What is API Deployment?</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-iris/>2. Deploy SeldonDeployment</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-fields/>3. Seldon Fields</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-mlflow/>4. Model from MLflow</a></li><li><a class="docs-link rounded" href=/en/docs/api-deployment/seldon-children/>5. Multi Models</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-further-readings aria-expanded=false>
+Further Readings</button><div class=collapse id=section-further-readings><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/further-readings/info/>다루지 못한 것들</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-appendix aria-expanded=false>
+Appendix</button><div class=collapse id=section-appendix><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/appendix/pyenv/>1. Python 가상환경 설치</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#section-help aria-expanded=false>
+Help</button><div class=collapse id=section-help><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="docs-link rounded" href=/en/docs/help/discussions/>Community</a></li><li><a class="docs-link rounded" href=/en/docs/help/how-to-contribute/>How to Contribute</a></li></ul></div></li></ul></nav></div><nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#component-environment>Component Environment</a><ul><li><a href=#convert-to-kubeflow-format>Convert to Kubeflow Format</a></li></ul></li><li><a href=#패키지-추가-방법>패키지 추가 방법</a><ul><li><a href=#1-base_image>1. base_image</a></li><li><a href=#2-packages_to_install>2. packages_to_install</a></li></ul></li></ul></nav></div></nav><main class="docs-content col-lg-11 col-xl-9 mx-xl-auto"><h1>9. Component - Environment</h1><p class=lead></p><nav class=d-xl-none aria-label="Quaternary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#component-environment>Component Environment</a><ul><li><a href=#convert-to-kubeflow-format>Convert to Kubeflow Format</a></li></ul></li><li><a href=#패키지-추가-방법>패키지 추가 방법</a><ul><li><a href=#1-base_image>1. base_image</a></li><li><a href=#2-packages_to_install>2. packages_to_install</a></li></ul></li></ul></nav></div></nav><h2 id=component-environment>Component Environment <a href=#component-environment class=anchor aria-hidden=true>#</a></h2><p>앞서 <a href=/en/docs/kubeflow/advanced-component/>8. Component - InputPath/OutputPath</a>에서 작성한 파이프라인을 실행하면 실패하게 됩니다. 왜 실패하는지 알아보고 정상적으로 실행될 수 있도록 수정합니다.</p><h3 id=convert-to-kubeflow-format>Convert to Kubeflow Format <a href=#convert-to-kubeflow-format class=anchor aria-hidden=true>#</a></h3><p><a href=/en/docs/kubeflow/advanced-component/#convert-to-kubeflow-format>앞에서 작성한 컴포넌트</a>를 yaml파일로 변환하도록 하겠습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>from</span> <span class=nn>kfp.components</span> <span class=kn>import</span> <span class=n>InputPath</span><span class=p>,</span> <span class=n>OutputPath</span><span class=p>,</span> <span class=n>create_component_from_func</span>
+
+
+<span class=nd>@create_component_from_func</span>
+<span class=k>def</span> <span class=nf>train_from_csv</span><span class=p>(</span>
+    <span class=n>train_data_path</span><span class=p>:</span> <span class=n>InputPath</span><span class=p>(</span><span class=s2>&#34;csv&#34;</span><span class=p>),</span>
+    <span class=n>train_target_path</span><span class=p>:</span> <span class=n>InputPath</span><span class=p>(</span><span class=s2>&#34;csv&#34;</span><span class=p>),</span>
+    <span class=n>model_path</span><span class=p>:</span> <span class=n>OutputPath</span><span class=p>(</span><span class=s2>&#34;dill&#34;</span><span class=p>),</span>
+    <span class=n>kernel</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span>
+<span class=p>):</span>
+    <span class=kn>import</span> <span class=nn>dill</span>
+    <span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+
+    <span class=kn>from</span> <span class=nn>sklearn.svm</span> <span class=kn>import</span> <span class=n>SVC</span>
+
+    <span class=n>train_data</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>train_data_path</span><span class=p>)</span>
+    <span class=n>train_target</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>train_target_path</span><span class=p>)</span>
+
+    <span class=n>clf</span> <span class=o>=</span> <span class=n>SVC</span><span class=p>(</span><span class=n>kernel</span><span class=o>=</span><span class=n>kernel</span><span class=p>)</span>
+    <span class=n>clf</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>train_data</span><span class=p>,</span> <span class=n>train_target</span><span class=p>)</span>
+
+    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>model_path</span><span class=p>,</span> <span class=n>mode</span><span class=o>=</span><span class=s2>&#34;wb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file_writer</span><span class=p>:</span>
+        <span class=n>dill</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>clf</span><span class=p>,</span> <span class=n>file_writer</span><span class=p>)</span>
+
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+    <span class=n>train_from_csv</span><span class=o>.</span><span class=n>component_spec</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=s2>&#34;train_from_csv.yaml&#34;</span><span class=p>)</span>
+</code></pre></div><p>위의 스크립트를 실행하면 다음과 같은 <code>train_from_csv.yaml</code> 파일을 얻을 수 있습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>name: Train from csv
+inputs:
+- {name: train_data, type: csv}
+- {name: train_target, type: csv}
+- {name: model, type: dill}
+- {name: kernel, type: String}
+implementation:
+  container:
+    image: python:3.7
+    command:
+    - sh
+    - -ec
+    - |
+      program_path=$(mktemp)
+      printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+      python3 -u &#34;$program_path&#34; &#34;$@&#34;
+    - |
+      def train_from_csv(
+          train_data_path,
+          train_target_path,
+          model_path,
+          kernel,
+      ):
+          import dill
+          import pandas as pd
+
+          from sklearn.svm import SVC
+
+          train_data = pd.read_csv(train_data_path)
+          train_target = pd.read_csv(train_target_path)
+
+          clf = SVC(kernel=kernel)
+          clf.fit(train_data, train_target)
+
+          with open(model_path, mode=&#34;wb&#34;) as file_writer:
+              dill.dump(clf, file_writer)
+
+      import argparse
+      _parser = argparse.ArgumentParser(prog=&#39;Train from csv&#39;, description=&#39;&#39;)
+      _parser.add_argument(&#34;--train-data&#34;, dest=&#34;train_data_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--train-target&#34;, dest=&#34;train_target_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--model&#34;, dest=&#34;model_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--kernel&#34;, dest=&#34;kernel&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parsed_args = vars(_parser.parse_args())
+
+      _outputs = train_from_csv(**_parsed_args)
+    args:
+    - --train-data
+    - {inputPath: train_data}
+    - --train-target
+    - {inputPath: train_target}
+    - --model
+    - {inputPath: model}
+    - --kernel
+    - {inputValue: kernel}
+</code></pre></div><p>앞서 <a href=/en/docs/kubeflow/basic-component/#convert-to-kubeflow-format>Basic Usage Component</a>에서 설명한 내용에 따르면 이 컴포넌트는 다음과 같이 실행됩니다.</p><ol><li><code>docker pull python:3.7</code></li><li>run <code>command</code></li></ol><p>하지만 위에서 생성된 컴포넌트를 실행하면 오류가 발생하게 됩니다.<br>그 이유는 컴포넌트 래퍼가 실행되는 방식에 있습니다.<br>Kubeflow는 쿠버네티스를 이용하기 때문에 컴포넌트 래퍼는 각각 독립된 컨테이너 위에서 컴포넌트 콘텐츠를 실행합니다.</p><p>자세히 보면 생성된 만든 <code>train_from_csv.yaml</code> 에서 정해진 이미지는 <code>image: python:3.7</code> 입니다.</p><p>이제 어떤 이유 때문에 실행이 안 되는지 눈치채신 분들도 있을 것입니다.</p><p><code>python:3.7</code> 이미지에는 우리가 사용하고자 하는 <code>dill</code>, <code>pandas</code>, <code>sklearn</code> 이 설치되어 있지 않습니다.<br>그러므로 실행할 때 해당 패키지가 존재하지 않는다는 에러와 함께 실행이 안 됩니다.</p><p>그럼 어떻게 패키지를 추가할 수 있을까요?</p><h2 id=패키지-추가-방법>패키지 추가 방법 <a href=#%ed%8c%a8%ed%82%a4%ec%a7%80-%ec%b6%94%ea%b0%80-%eb%b0%a9%eb%b2%95 class=anchor aria-hidden=true>#</a></h2><p>Kubeflow를 변환하는 과정에서 두 가지 방법을 통해 패키지를 추가할 수 있습니다.</p><ol><li><code>base_image</code> 사용</li><li><code>package_to_install</code> 사용</li></ol><p>컴포넌트를 컴파일할 때 사용했던 함수 <code>create_component_from_func</code> 가 어떤 argument들을 받을 수 있는지 확인해 보겠습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>def create_component_from_func(
+    func: Callable,
+    output_component_file: Optional[str] = None,
+    base_image: Optional[str] = None,
+    packages_to_install: List[str] = None,
+    annotations: Optional[Mapping[str, str]] = None,
+):
+</code></pre></div><ul><li><code>func</code>: 컴포넌트로 만들 컴포넌트 래퍼 함수</li><li><code>base_image</code>: 컴포넌트 래퍼가 실행할 이미지</li><li><code>packages_to_install</code>: 컴포넌트에서 사용해서 추가로 설치해야 하는 패키지</li></ul><h3 id=1-base_image>1. base_image <a href=#1-base_image class=anchor aria-hidden=true>#</a></h3><p>컴포넌트가 실행되는 순서를 좀 더 자세히 들여다보면 다음과 같습니다.</p><ol><li><code>docker pull base_image</code></li><li><code>pip install packages_to_install</code></li><li>run <code>command</code></li></ol><p>만약 컴포넌트가 사용하는 base_image에 패키지들이 전부 설치되어 있다면 추가적인 패키지 설치 없이 바로 사용할 수 있습니다.</p><p>예를 들어, 이번 페이지에서는 다음과 같은 Dockerfile을 작성하겠습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-docker data-lang=docker><span class=nv>BASE_IMAGE</span><span class=o>=</span>python:3.7<span class=err>
+</span><span class=err>
+</span><span class=err></span><span class=k>RUN</span> pip install dill pandas scikit-learn<span class=err>
+</span></code></pre></div><p>위의 Dockerfile을 이용해 이미지를 빌드해 보겠습니다. 실습에서 사용해볼 도커 허브는 ghcr입니다.<br>각자 환경에 맞추어서 도커 허브를 선택 후 업로드하면 됩니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>docker build . -f Dockerfile -t ghcr.io/mlops-for-all/base-image
+docker push ghcr.io/mlops-for-all/base-image
+</code></pre></div><p>이제 base_image를 입력해 보겠습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>from</span> <span class=nn>functools</span> <span class=kn>import</span> <span class=n>partial</span>
+<span class=kn>from</span> <span class=nn>kfp.components</span> <span class=kn>import</span> <span class=n>InputPath</span><span class=p>,</span> <span class=n>OutputPath</span><span class=p>,</span> <span class=n>create_component_from_func</span>
+
+<span class=nd>@partial</span><span class=p>(</span>
+    <span class=n>create_component_from_func</span><span class=p>,</span>
+    <span class=n>base_image</span><span class=o>=</span><span class=s2>&#34;ghcr.io/mlops-for-all/base-image:latest&#34;</span><span class=p>,</span>
+<span class=p>)</span>
+<span class=k>def</span> <span class=nf>train_from_csv</span><span class=p>(</span>
+    <span class=n>train_data_path</span><span class=p>:</span> <span class=n>InputPath</span><span class=p>(</span><span class=s2>&#34;csv&#34;</span><span class=p>),</span>
+    <span class=n>train_target_path</span><span class=p>:</span> <span class=n>InputPath</span><span class=p>(</span><span class=s2>&#34;csv&#34;</span><span class=p>),</span>
+    <span class=n>model_path</span><span class=p>:</span> <span class=n>OutputPath</span><span class=p>(</span><span class=s2>&#34;dill&#34;</span><span class=p>),</span>
+    <span class=n>kernel</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span>
+<span class=p>):</span>
+    <span class=kn>import</span> <span class=nn>dill</span>
+    <span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+
+    <span class=kn>from</span> <span class=nn>sklearn.svm</span> <span class=kn>import</span> <span class=n>SVC</span>
+
+    <span class=n>train_data</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>train_data_path</span><span class=p>)</span>
+    <span class=n>train_target</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>train_target_path</span><span class=p>)</span>
+
+    <span class=n>clf</span> <span class=o>=</span> <span class=n>SVC</span><span class=p>(</span><span class=n>kernel</span><span class=o>=</span><span class=n>kernel</span><span class=p>)</span>
+    <span class=n>clf</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>train_data</span><span class=p>,</span> <span class=n>train_target</span><span class=p>)</span>
+
+    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>model_path</span><span class=p>,</span> <span class=n>mode</span><span class=o>=</span><span class=s2>&#34;wb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file_writer</span><span class=p>:</span>
+        <span class=n>dill</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>clf</span><span class=p>,</span> <span class=n>file_writer</span><span class=p>)</span>
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+    <span class=n>train_from_csv</span><span class=o>.</span><span class=n>component_spec</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=s2>&#34;train_from_csv.yaml&#34;</span><span class=p>)</span>
+</code></pre></div><p>이제 생성된 컴포넌트를 컴파일하면 다음과 같이 나옵니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>name: Train from csv
+inputs:
+- {name: train_data, type: csv}
+- {name: train_target, type: csv}
+- {name: kernel, type: String}
+outputs:
+- {name: model, type: dill}
+implementation:
+  container:
+    image: ghcr.io/mlops-for-all/base-image:latest
+    command:
+    - sh
+    - -ec
+    - |
+      program_path=$(mktemp)
+      printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+      python3 -u &#34;$program_path&#34; &#34;$@&#34;
+    - |
+      def _make_parent_dirs_and_return_path(file_path: str):
+          import os
+          os.makedirs(os.path.dirname(file_path), exist_ok=True)
+          return file_path
+
+      def train_from_csv(
+          train_data_path,
+          train_target_path,
+          model_path,
+          kernel,
+      ):
+          import dill
+          import pandas as pd
+
+          from sklearn.svm import SVC
+
+          train_data = pd.read_csv(train_data_path)
+          train_target = pd.read_csv(train_target_path)
+
+          clf = SVC(kernel=kernel)
+          clf.fit(train_data, train_target)
+
+          with open(model_path, mode=&#34;wb&#34;) as file_writer:
+              dill.dump(clf, file_writer)
+
+      import argparse
+      _parser = argparse.ArgumentParser(prog=&#39;Train from csv&#39;, description=&#39;&#39;)
+      _parser.add_argument(&#34;--train-data&#34;, dest=&#34;train_data_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--train-target&#34;, dest=&#34;train_target_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--kernel&#34;, dest=&#34;kernel&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--model&#34;, dest=&#34;model_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+      _parsed_args = vars(_parser.parse_args())
+
+      _outputs = train_from_csv(**_parsed_args)
+    args:
+    - --train-data
+    - {inputPath: train_data}
+    - --train-target
+    - {inputPath: train_target}
+    - --kernel
+    - {inputValue: kernel}
+    - --model
+    - {outputPath: model}
+</code></pre></div><p>base_image가 우리가 설정한 값으로 바뀐 것을 확인할 수 있습니다.</p><h3 id=2-packages_to_install>2. packages_to_install <a href=#2-packages_to_install class=anchor aria-hidden=true>#</a></h3><p>하지만 패키지가 추가될 때마다 docker 이미지를 계속해서 새로 생성하는 작업은 많은 시간이 소요됩니다.
+이 때, <code>packages_to_install</code> argument 를 사용하면 패키지를 컨테이너에 쉽게 추가할 수 있습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=kn>from</span> <span class=nn>functools</span> <span class=kn>import</span> <span class=n>partial</span>
+<span class=kn>from</span> <span class=nn>kfp.components</span> <span class=kn>import</span> <span class=n>InputPath</span><span class=p>,</span> <span class=n>OutputPath</span><span class=p>,</span> <span class=n>create_component_from_func</span>
+
+<span class=nd>@partial</span><span class=p>(</span>
+    <span class=n>create_component_from_func</span><span class=p>,</span>
+    <span class=n>packages_to_install</span><span class=o>=</span><span class=p>[</span><span class=s2>&#34;dill==0.3.4&#34;</span><span class=p>,</span> <span class=s2>&#34;pandas==1.3.4&#34;</span><span class=p>,</span> <span class=s2>&#34;scikit-learn==1.0.1&#34;</span><span class=p>],</span>
+<span class=p>)</span>
+<span class=k>def</span> <span class=nf>train_from_csv</span><span class=p>(</span>
+    <span class=n>train_data_path</span><span class=p>:</span> <span class=n>InputPath</span><span class=p>(</span><span class=s2>&#34;csv&#34;</span><span class=p>),</span>
+    <span class=n>train_target_path</span><span class=p>:</span> <span class=n>InputPath</span><span class=p>(</span><span class=s2>&#34;csv&#34;</span><span class=p>),</span>
+    <span class=n>model_path</span><span class=p>:</span> <span class=n>OutputPath</span><span class=p>(</span><span class=s2>&#34;dill&#34;</span><span class=p>),</span>
+    <span class=n>kernel</span><span class=p>:</span> <span class=nb>str</span><span class=p>,</span>
+<span class=p>):</span>
+    <span class=kn>import</span> <span class=nn>dill</span>
+    <span class=kn>import</span> <span class=nn>pandas</span> <span class=k>as</span> <span class=nn>pd</span>
+
+    <span class=kn>from</span> <span class=nn>sklearn.svm</span> <span class=kn>import</span> <span class=n>SVC</span>
+
+    <span class=n>train_data</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>train_data_path</span><span class=p>)</span>
+    <span class=n>train_target</span> <span class=o>=</span> <span class=n>pd</span><span class=o>.</span><span class=n>read_csv</span><span class=p>(</span><span class=n>train_target_path</span><span class=p>)</span>
+
+    <span class=n>clf</span> <span class=o>=</span> <span class=n>SVC</span><span class=p>(</span><span class=n>kernel</span><span class=o>=</span><span class=n>kernel</span><span class=p>)</span>
+    <span class=n>clf</span><span class=o>.</span><span class=n>fit</span><span class=p>(</span><span class=n>train_data</span><span class=p>,</span> <span class=n>train_target</span><span class=p>)</span>
+
+    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>model_path</span><span class=p>,</span> <span class=n>mode</span><span class=o>=</span><span class=s2>&#34;wb&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>file_writer</span><span class=p>:</span>
+        <span class=n>dill</span><span class=o>.</span><span class=n>dump</span><span class=p>(</span><span class=n>clf</span><span class=p>,</span> <span class=n>file_writer</span><span class=p>)</span>
+
+<span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
+    <span class=n>train_from_csv</span><span class=o>.</span><span class=n>component_spec</span><span class=o>.</span><span class=n>save</span><span class=p>(</span><span class=s2>&#34;train_from_csv.yaml&#34;</span><span class=p>)</span>
+</code></pre></div><p>스크립트를 실행하면 다음과 같은 <code>train_from_csv.yaml</code> 파일이 생성됩니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>name: Train from csv
+inputs:
+- {name: train_data, type: csv}
+- {name: train_target, type: csv}
+- {name: kernel, type: String}
+outputs:
+- {name: model, type: dill}
+implementation:
+  container:
+    image: python:3.7
+    command:
+    - sh
+    - -c
+    - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+      &#39;dill==0.3.4&#39; &#39;pandas==1.3.4&#39; &#39;scikit-learn==1.0.1&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1
+      python3 -m pip install --quiet --no-warn-script-location &#39;dill==0.3.4&#39; &#39;pandas==1.3.4&#39;
+      &#39;scikit-learn==1.0.1&#39; --user) &amp;&amp; &#34;$0&#34; &#34;$@&#34;
+    - sh
+    - -ec
+    - |
+      program_path=$(mktemp)
+      printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+      python3 -u &#34;$program_path&#34; &#34;$@&#34;
+    - |
+      def _make_parent_dirs_and_return_path(file_path: str):
+          import os
+          os.makedirs(os.path.dirname(file_path), exist_ok=True)
+          return file_path
+
+      def train_from_csv(
+          train_data_path,
+          train_target_path,
+          model_path,
+          kernel,
+      ):
+          import dill
+          import pandas as pd
+
+          from sklearn.svm import SVC
+
+          train_data = pd.read_csv(train_data_path)
+          train_target = pd.read_csv(train_target_path)
+
+          clf = SVC(kernel=kernel)
+          clf.fit(train_data, train_target)
+
+          with open(model_path, mode=&#34;wb&#34;) as file_writer:
+              dill.dump(clf, file_writer)
+
+      import argparse
+      _parser = argparse.ArgumentParser(prog=&#39;Train from csv&#39;, description=&#39;&#39;)
+      _parser.add_argument(&#34;--train-data&#34;, dest=&#34;train_data_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--train-target&#34;, dest=&#34;train_target_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--kernel&#34;, dest=&#34;kernel&#34;, type=str, required=True, default=argparse.SUPPRESS)
+      _parser.add_argument(&#34;--model&#34;, dest=&#34;model_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+      _parsed_args = vars(_parser.parse_args())
+
+      _outputs = train_from_csv(**_parsed_args)
+    args:
+    - --train-data
+    - {inputPath: train_data}
+    - --train-target
+    - {inputPath: train_target}
+    - --kernel
+    - {inputValue: kernel}
+    - --model
+    - {outputPath: model}
+</code></pre></div><p>위에 작성한 컴포넌트가 실행되는 순서를 좀 더 자세히 들여다보면 다음과 같습니다.</p><ol><li><code>docker pull python:3.7</code></li><li><code>pip install dill==0.3.4 pandas==1.3.4 scikit-learn==1.0.1</code></li><li>run <code>command</code></li></ol><p>생성된 yaml 파일을 자세히 보면, 다음과 같은 줄이 자동으로 추가되어 필요한 패키지가 설치되기 때문에 오류 없이 정상적으로 실행됩니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>    command:
+    - sh
+    - -c
+    - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+      &#39;dill==0.3.4&#39; &#39;pandas==1.3.4&#39; &#39;scikit-learn==1.0.1&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1
+      python3 -m pip install --quiet --no-warn-script-location &#39;dill==0.3.4&#39; &#39;pandas==1.3.4&#39;
+      &#39;scikit-learn==1.0.1&#39; --user) &amp;&amp; &#34;$0&#34; &#34;$@&#34;
+</code></pre></div><p class=edit-page><a href=https://github.com/mlops-for-all/mlops-for-all.github.io/blob/main/content/en/en/docs/kubeflow/advanced-environment.md><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828.0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Edit this page on GitHub</a></p><div class="docs-navigation d-flex justify-content-between"><a href=/en/docs/kubeflow/advanced-component/><div class="card my-1"><div class="card-body py-2">&larr; 8. Component - InputPath/OutputPath</div></div></a><a class=ms-auto href=/en/docs/kubeflow/advanced-pipeline/><div class="card my-1"><div class="card-body py-2">10. Pipeline - Setting &rarr;</div></div></a></div></main></div></div></div><footer class="footer text-muted"><div class=container-xxl><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a></li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-end"><ul class=list-inline></ul></div></div></div></footer><script src=/js/bootstrap.min.592b9faf6c83a2bda564a377cf82f9a67546b198510a93fdb0728f9622ec22729d44be02fb2ea16c3fe5365ae1806259cd111932ca28e68b66462d6937635bab.js integrity="sha512-WSufr2yDor2lZKN3z4L5pnVGsZhRCpP9sHKPliLsInKdRL4C+y6hbD/lNlrhgGJZzREZMsoo5otmRi1pN2Nbqw==" crossorigin=anonymous defer></script>
+<script src=/js/highlight.min.e13cfba4c5524e30386cb9ea71f0f191f39d15b25b222f4b67549689f7c076158f42a2282446044f5cdacc76a6d003efbfa252a84aea0116703803b6339ae35f.js integrity="sha512-4Tz7pMVSTjA4bLnqcfDxkfOdFbJbIi9LZ1SWiffAdhWPQqIoJEYET1zazHam0APvv6JSqErqARZwOAO2M5rjXw==" crossorigin=anonymous defer></script>
+<script src=/js/vendor/katex/dist/katex.min.849bcb0a26d9f709f5e2355f5188d1c21e07bb04544918a1c2a6d290dc2ebcb9b787ba92911f609242c898b7ce8009c541be9153a357e673818164f829d917fe.js integrity="sha512-hJvLCibZ9wn14jVfUYjRwh4HuwRUSRihwqbSkNwuvLm3h7qSkR9gkkLImLfOgAnFQb6RU6NX5nOBgWT4KdkX/g==" crossorigin=anonymous defer></script>
+<script src=/js/vendor/katex/dist/contrib/auto-render.min.916823ec103cf367b71e28a6f01513cb9c3ac6708ccb5229402ec46b8e30a8b25003db694df35d80e9dd666a371f327c6152790617b6256390c164109a90bd4c.js integrity="sha512-kWgj7BA882e3Hiim8BUTy5w6xnCMy1IpQC7Ea44wqLJQA9tpTfNdgOndZmo3HzJ8YVJ5Bhe2JWOQwWQQmpC9TA==" crossorigin=anonymous defer></script>
+<script src=/main.min.647c6f9869eb8e24d3f5183f467970dbadd12adeec725e66830376db069558e917e21eb7dd363563443d2c91c5c6557ea3b2864d1f2a78c3f65e676fa19b961b.js integrity="sha512-ZHxvmGnrjiTT9Rg/Rnlw263RKt7scl5mgwN22waVWOkX4h633TY1Y0Q9LJHFxlV+o7KGTR8qeMP2XmdvoZuWGw==" crossorigin=anonymous defer></script>
+<script src=https://mlops-for-all.github.io/index.min.b08d57aba964b389488db3bcb34488546275f8a81e0316fcdd0b88a632e890a2ba9121f61249141fcb471cc7f98c2118c67d84fa00b1e043ffbcc013a1ddcfab.js integrity="sha512-sI1Xq6lks4lIjbO8s0SIVGJ1+KgeAxb83QuIpjLokKK6kSH2EkkUH8tHHMf5jCEYxn2E+gCx4EP/vMATod3Pqw==" crossorigin=anonymous defer></script></body></html>
