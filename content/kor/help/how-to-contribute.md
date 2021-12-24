@@ -55,10 +55,10 @@ contributors: ["John Doe", "Adam Smith"]
 
 ### 3. 프로젝트에 처음 기여할 때
 
-만약 프로젝트에 처음 기여 할 때 `content/kor/contributors`에 본인의 이름의 마크다운 파일을 작성합니다.
+만약 프로젝트에 처음 기여 할 때 `content/kor/contributors`에 본인의 이름으로 폴더를 생성한 후, `_index.md`라는 파일을 작성합니다.
 
-예를 들어, `minsoo kim`이 본인의 영어 이름이라면, 마크다운 파일은 `minsoo-kim.md`을 파일명으로 하여 다음의 내용을 작성합니다.
-파일명은 하이픈(-)으로 연결한 소문자로, title은 띄어쓰기를 포함한 CamelCase로 작성합니다.
+예를 들어, `minsoo kim`이 본인의 영어 이름이라면, 폴더명은 `minsoo-kim`으로 하여 해당 폴더 내부의 `_index.md`파일에 다음의 내용을 작성합니다.
+폴더명은 하이픈(-)으로 연결한 소문자로, title은 띄어쓰기를 포함한 CamelCase로 작성합니다.
 
 ```markdown
 ---

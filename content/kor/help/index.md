@@ -18,5 +18,3 @@ images: []
 ## How to Contribute
 
 *모두의 MLOps*글에 기여하고 싶으신 분은 [다음 페이지](http://localhost:1313/help/how-to-contribute/)를 참고해주시기 바랍니다.
-
-
