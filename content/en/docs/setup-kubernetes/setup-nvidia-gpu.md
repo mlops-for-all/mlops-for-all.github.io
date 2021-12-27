@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-13
 draft: false
 weight: 231
-contributors: ["Jaeyeon Kim"]
+contributors: ["Jaeyeon Kim", "Jongsun Shinn"]
 menu:
   docs:
     parent: "setup-kubernetes"
@@ -103,6 +103,18 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   |=============================================================================|
   +-----------------------------------------------------------------------------+
   ```
+
+만약 `could not select device driver "" with capabilities: [[gpu]]..` 와 같은 에러가 나는 경우, nvidia-container-toolkit을 같이 설치합니다.
+관련 issue는 [여기서](https://github.com/NVIDIA/nvidia-docker/issues/1034) 확인 가능합니다.
+
+```text
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+```
 
 ## 3. NVIDIA-Docker를 Default Container Runtime으로 설정
 

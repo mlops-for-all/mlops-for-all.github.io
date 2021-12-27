@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
 weight: 223
-contributors: ["Youngcheol Jang"]
+contributors: ["Youngcheol Jang", "Jongsun Shinn"]
 menu:
   docs:
     parent: "setup-kubernetes"
@@ -36,14 +36,6 @@ sudo sysctl --system
 
 ## 2. 쿠버네티스 클러스터 셋업
 
-```text
-$ sudo modprobe br_netfilter
-
-$ cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-br_netfilter
-EOF
-```
-
 - kubeadm : kubelet을 서비스에 등록하고, 클러스터 컴포넌트들 사이의 통신을 위한 인증서 발급 등 설치 과정 자동화
 - kubelet : container 리소스를 실행, 종료를 해 주는 컨테이너 핸들러
 - kubectl : 쿠버네티스 클러스터를 터미널에서 확인, 조작하기 위한 CLI 도구
@@ -54,9 +46,7 @@ EOF
 ```text
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
-
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
-
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubelet=1.21.7-00 kubeadm=1.21.7-00 kubectl=1.21.7-00
