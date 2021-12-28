@@ -8,13 +8,3 @@
   Feature-Policy: geolocation 'self'
   Cache-Control: public, max-age=31536000
   Access-Control-Allow-Origin: *
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-097K82469K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-097K82469K');
-</script>
