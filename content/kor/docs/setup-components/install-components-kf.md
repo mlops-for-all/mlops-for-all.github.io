@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
 weight: 252
-contributors: ["Jaeyeon Kim"]
+contributors: ["Jaeyeon Kim", "SeungTae Kim"]
 menu:
   docs:
     parent: "setup-components"
@@ -463,6 +463,18 @@ kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
 <p align="center">
   <img src="/images/docs/setup/pipeline-ui.png" title="pipeline-ui"/>
 </p>
+
+만약 위의 내용을 클라우드 상의 인스턴스에서 진행할 경우, 커맨드의 address 설정을 통해 접근하는 것이 가능합니다.
+
+```text
+kubectl port-forward --address <당신의 가상 인스턴스 사설 ip 주소> svc/ml-pipeline-ui -n kubeflow 8888:80
+```
+
+그리고 클라우드의 방화벽 설정으로 접속해 8888번 포트를 추가해 접근 권한을 허가해줍니다.
+
+웹 브라우저를 열어 `http://<당신의 가상 인스턴스 공인 ip 주소>:8888/#/pipelines/` 경로에 접속하면, 클라우드 상에서 동일한 결과 화면이 출력되는 것을 확인할 수 있습니다.
+
+하단에서 진행되는 다른 포트의 경로에 접속할 때도 위의 절차와 동일하게 커맨드를 실행하고, 방화벽에 포트 번호를 추가해주면 실행하는 것이 가능합니다.
 
 ### Katib
 
