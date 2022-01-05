@@ -14,6 +14,7 @@
 {{ $url := print $contentPath $filePath }}
 
 {{ if .Site.Params.options.multilingualMode }}
+{{ $contentPath := print .Site.Params.docsRepo $editPath .Site.Params.docsRepoBranch "/content/" }}
   {{ $url = print $contentPath .Lang "/" $filePath }}
 {{ end }}
 
