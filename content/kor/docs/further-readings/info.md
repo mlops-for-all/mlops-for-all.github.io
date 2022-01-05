@@ -32,3 +32,24 @@ toc: true
 <p>
   <img src="/images/docs/further-readings/open-stacks-2.png" title="open-stacks"/>
 </p>
+
+세부 내용은 다음과 같습니다.
+
+| Mgmt.                      | Component                   | Open Soruce                           |
+| -------------------------- | --------------------------- | ------------------------------------- |
+| Data Mgmt.                 | Collection                  | [Kafka](https://kafka.apache.org/)                                 |
+|                            | Validation                  | [Beam](https://beam.apache.org/)                                  |
+|                            | Feature Store               | [Flink](https://flink.apache.org/)                                 |
+| ML Model Dev. & Experiment | Modeling                    | [Jupyter](https://jupyter.org/)                               |
+|                            | Analysis & Experiment Mgmt. | [MLflow](https://mlflow.org/)                                |
+|                            | HPO Tuning & AutoML         | [Katib](https://github.com/kubeflow/katib)                                 |
+| Deploy Mgmt.               | Serving Framework           | [Seldon Core](https://docs.seldon.io/projects/seldon-core/en/latest/index.html)                           |
+|                            | A/B Test                    | [Iter8](https://iter8.tools/0.8/)                                 |
+|                            | Monitoring                  | [Grafana](https://grafana.com/oss/grafana/), [Prometheus](https://prometheus.io/)                   |
+| Process Mgmt.              | pipeline                    | [Kubeflow](https://www.kubeflow.org/)                              |
+|                            | CI/CD                       | [Github Action](https://docs.github.com/en/actions)                         |
+|                            | Continuous Training         | [Argo Events](https://argoproj.github.io/events/)                           |
+| Platform Mgmt.             | Configuration Mgmt.         | [Consul](https://www.consul.io/)                                |
+|                            | Code Version Mgmt.          | [Github](https://github.com/), [Minio](https://min.io/)                         |
+|                            | Logging                     | (EFK) [Elastic Search](https://www.elastic.co/kr/elasticsearch/), [Fluentd](https://www.fluentd.org/), [Kibana](https://www.elastic.co/kr/kibana/) |
+|                            | Resource Mgmt.              | [Kubernetes](https://kubernetes.io/)                            |
