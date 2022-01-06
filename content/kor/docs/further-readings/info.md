@@ -44,7 +44,7 @@ toc: true
 |                            | Analysis & Experiment Mgmt. | [MLflow](https://mlflow.org/)                                |
 |                            | HPO Tuning & AutoML         | [Katib](https://github.com/kubeflow/katib)                                 |
 | Deploy Mgmt.               | Serving Framework           | [Seldon Core](https://docs.seldon.io/projects/seldon-core/en/latest/index.html)                           |
-|                            | A/B Test                    | [Iter8](https://iter8.tools/0.8/)                                 |
+|                            | A/B Test                    | [Iter8](https://iter8.tools/)                                 |
 |                            | Monitoring                  | [Grafana](https://grafana.com/oss/grafana/), [Prometheus](https://prometheus.io/)                   |
 | Process Mgmt.              | pipeline                    | [Kubeflow](https://www.kubeflow.org/)                              |
 |                            | CI/CD                       | [Github Action](https://docs.github.com/en/actions)                         |
