@@ -95,7 +95,7 @@ speaker-fnf8l                 1/1     Running   1          1m
 
 ## Configuration
 
-MetalLB 의 자세한 로드 벨런싱 정책 설정은 관련 설정 정보를 담아 k8s configmap 의 형태로 배포하여 설정할 수 있습니다.
+MetalLB 의 로드 벨런싱 정책 설정은 관련 설정 정보를 담은 configmap 을 배포하여 설정할 수 있습니다.
 
 MetalLB 에서 구성할 수 있는 모드로는 다음과 같이 2가지가 있습니다.
 
