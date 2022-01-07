@@ -19,7 +19,7 @@ When using Kubernetes, cloud platforms such as AWS, GCP, and Azure provide their
 | requirments                                                    | version and content                                                 |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Kubernetes                                                   | Kubernetes 1.13.0 or later, that does not already have network load-balancing functionality                           |
-| [cluster network configuration ](https://metallb.universe.tf/installation/network-addons/) | Calico, Canal, Cilium, Flannel, Kube-ovn, Kube-router, Weave  Net |
+| [cluster network configuration](https://metallb.universe.tf/installation/network-addons/) | Calico, Canal, Cilium, Flannel, Kube-ovn, Kube-router, Weave  Net |
 | IPv4 addresses                                                    | for MetalLB to hand out                                          |
 | When using the BGP operating mode                                       | need one or more routers capable of speaking [BGP](https://en.wikipedia.org/wiki/Border_Gateway_Protocol)                       |
 | Traffic on port 7946 (TCP & UDP) must be allowed between nodes                              | required by [memberlist](https://github.com/hashicorp/memberlist).  
