@@ -11,8 +11,8 @@ toc: true
 
 ## What is MetalLB?
 
-When using Kubernetes, cloud platforms such as AWS, GCP, and Azure provide their own load balancer, but on-premise clusters require additional installations of modules that provide load balancing.  
-[MetalLB](https://metallb.universe.tf/) is an open-source project that provides load balancers that can be used in bare metal environments.
+When using Kubernetes, cloud platforms such as AWS, GCP, and Azure provide their load balancer. On-premise clusters, however, require additional installations of modules that provide load balancing.
+[MetalLB](https://metallb.universe.tf/) is an open-source project that provides load balancers in bare-metal environments.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ When using Kubernetes, cloud platforms such as AWS, GCP, and Azure provide their
 
 ### Preparation
 
-If you use kube-proxy in IPVS mode, you must enable strict ARP mode after Kubernetes v1.14.2. Kube-router basically activates strict ARP, so this function is not required when used as a service proxy. Before applying the strict ARP mode, check whether current mode is strict ARP mod or not.
+If you use kube-proxy in IPVS mode, you must enable strict ARP mode after Kubernetes v1.14.2. Kube-router basically activates strict ARP, so this function is not required when used as a service proxy. Before applying the strict ARP mode, check whether the current mode is a strict ARP mode or not.
 
 ```text
 # see what changes would be made, returns nonzero returncode if different
@@ -40,8 +40,7 @@ grep strictARP
 strictARP: false
 ```
 
-If the output is strickARP: false, change it to strickARP:true by executing the following command.
-(If the output is already strickARP:true, you don't have to execute the next command.)
+If the output is strickARP: false, change it to strickARP:true by executing the following command. (If the result is already strickARP:true, you don't have to run the below command.)
 
 ```text
 # actually apply the changes, returns nonzero returncode on errors only
@@ -89,18 +88,18 @@ The components in the manifest are:
 - metallb-system/speaker
   - distributed as daemonset and is responsible for configuring network communication by connecting external traffic and services.
 
-The service includes the RBAC permissions required for controllers and speakers and components to operate.
+The service includes the RBAC permissions required for controllers, speakers, and components to operate.
 
 ## Configuration
 
 MetalLB's load balancing policy setting can be set by deploying a configmap containing related setting information.
 
-MetalLB have two configuration:
+MetalLB has two configurations:
 
 1. [Layer 2](https://metallb.universe.tf/concepts/layer2/)
 2. [BGP](https://metallb.universe.tf/concepts/bgp/)
 
-We will explain how to setup MetalLB with Layer 2 mode.
+We will explain how to set up MetalLB with Layer 2 mode.
 
 ### Layer 2 Configuration
 
