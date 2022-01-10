@@ -215,7 +215,7 @@ istio-ingressgateway   LoadBalancer   10.103.72.5   192.168.35.100   15021:31054
 Open the Web Browser and access [http://192.168.35.100](http://192.168.35.100) to confirm that the following screen is output.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-istio-ingressgateway-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-istio-ingressgateway-setting.png" title="login-ui"/>
 </p>
 
 ### minio Dashboard
@@ -289,7 +289,7 @@ minio-service   LoadBalancer   10.109.209.87   192.168.35.101   9000:31371/TCP  
 Open the Web Browser and access [http://192.168.35.101:9000](http://192.168.35.101:9000) to confirm that the following screen is output.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-minio-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-minio-setting.png" title="login-ui"/>
 </p>
 
 ### mlflow Dashboard
@@ -361,7 +361,7 @@ mlflow-server-service   LoadBalancer   10.111.173.209   192.168.35.102   5000:32
 Open the Web Browser and access [http://192.168.35.102:5000](http://192.168.35.102:5000) to confirm that the following screen is output.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-mlflow-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-mlflow-setting.png" title="login-ui"/>
 </p>
 
 ### Grafana Dashboard
@@ -439,5 +439,5 @@ seldon-core-analytics-grafana   LoadBalancer   10.109.20.161   192.168.35.103   
 Open the Web Browser and access [http://192.168.35.103:80](http://192.168.35.103:80) to confirm that the following screen is output.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-grafana-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-grafana-setting.png" title="login-ui"/>
 </p>
