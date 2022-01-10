@@ -219,7 +219,7 @@ istio-ingressgateway   LoadBalancer   10.103.72.5   192.168.35.100   15021:31054
 Web Browser 를 열어 [http://192.168.35.100](http://192.168.35.100) 으로 접속하여, 다음과 같은 화면이 출력되는 것을 확인합니다.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-istio-ingressgateway-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-istio-ingressgateway-setting.png" title="login-ui"/>
 </p>
 
 ### minio Dashboard
@@ -294,7 +294,7 @@ minio-service   LoadBalancer   10.109.209.87   192.168.35.101   9000:31371/TCP  
 Web Browser 를 열어 [http://192.168.35.101:9000](http://192.168.35.101:9000) 으로 접속하여, 다음과 같은 화면이 출력되는 것을 확인합니다.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-minio-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-minio-setting.png" title="login-ui"/>
 </p>
 
 ### mlflow Dashboard
@@ -367,7 +367,7 @@ mlflow-server-service   LoadBalancer   10.111.173.209   192.168.35.102   5000:32
 Web Browser 를 열어 [http://192.168.35.102:5000](http://192.168.35.102:5000) 으로 접속하여, 다음과 같은 화면이 출력되는 것을 확인합니다.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-mlflow-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-mlflow-setting.png" title="login-ui"/>
 </p>
 
 ### Grafana Dashboard
@@ -446,5 +446,5 @@ seldon-core-analytics-grafana   LoadBalancer   10.109.20.161   192.168.35.103   
 Web Browser 를 열어 [http://192.168.35.103:80](http://192.168.35.103:80) 으로 접속하여, 다음과 같은 화면이 출력되는 것을 확인합니다.
 
 <p align="center">
-  <img src="static/images/docs/metallb/login-after-grafana-setting.png" title="login-ui"/>
+  <img src="/images/docs/metallb/login-after-grafana-setting.png" title="login-ui"/>
 </p>
