@@ -2,4 +2,6 @@
 이처럼 Python 환경 혹은 Python Package 환경을 가상화하여 관리하는 것을 쉽게 도와주는 도구로는 pyenv, conda, virtualenv, venv 등이 존재합니다.
 이 중 모두의 MLOps에서는 pyenv와 pyenv-virtualenv를 설치하는 방법을 다룹니다.
 pyenv는 Python 버전을 관리하는 것을 도와주며, pyenv-virtualenv는 pyenv의 plugin으로써 파이썬 패키지 환경을 관리하는 것을 도와줍니다.
-pyenv 설치 # Prerequisites # 운영 체제별로 Prerequisites가 다릅니다.</description></item></channel></rss>
+pyenv 설치 # Prerequisites # 운영 체제별로 Prerequisites가 다릅니다.</description></item><item><title>2. bare-metal 클러스터용 load balancer metallb 설치</title><link>https://mlops-for-all.github.io/docs/appendix/metallb/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/docs/appendix/metallb/</guid><description>MetalLB란? # Kubernetes 사용 시 AWS, GCP, Azure 와 같은 클라우드 플랫폼에서는 자체적으로 로드 벨런서(Load Balancer)를 제공해 주지만, 온프레미스 클러스터에서는 로드 벨런싱 기능을 제공하는 모듈을 추가적으로 설치해야 합니다.
+MetalLB는 베어메탈 환경에서 사용할 수 있는 로드 벨런서를 제공하는 오픈소스 프로젝트 입니다.
+요구사항 # 요구 사항 버전 및 내용 Kubernetes 로드 벨런싱 기능이 없는 &amp;gt;= v1.13.0 호환가능한 네트워크 CNI Calico, Canal, Cilium, Flannel, Kube-ovn, Kube-router, Weave Net IPv4 주소 MetalLB 배포에 사용 BGP 모드를 사용할 경우 BGP 기능을 지원하는 하나 이상의 라우터 노드 간 포트 TCP/UDP 7946 오픈 memberlist 요구 사항 MetalLB 설치 # Preparation # IPVS 모드에서 kube-proxy를 사용하는 경우 Kubernetes v1.</description></item></channel></rss>
