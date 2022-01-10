@@ -162,8 +162,8 @@ def create_component_from_func(
 
 예를 들어, 이번 페이지에서는 다음과 같은 Dockerfile을 작성하겠습니다.
 
-```docker
-BASE_IMAGE=python:3.7
+```dockerfile
+FROM python:3.7
 
 RUN pip install dill pandas scikit-learn
 ```
