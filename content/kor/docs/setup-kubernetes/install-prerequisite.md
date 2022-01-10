@@ -30,7 +30,7 @@ sudo apt-get install -y socat
 1. 도커 설치에 필요한 APT 패키지들을 설치합니다.
 
    ```text
-   sudo apt-get update && sudo apt-get install ca-certificates curl gnupg lsb-release
+   sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg lsb-release
    ```
 
 2. 도커의 공식 GPG key를 추가합니다.
@@ -68,7 +68,7 @@ sudo apt-get install -y socat
 5. `5:20.10.11~3-0~ubuntu-focal` 버전의 도커를 설치합니다.
 
    ```text
-   sudo apt-get install containerd.io docker-ce=5:20.10.11~3-0~ubuntu-focal docker-ce-cli=5:20.10.11~3-0~ubuntu-focal
+   sudo apt-get install -y containerd.io docker-ce=5:20.10.11~3-0~ubuntu-focal docker-ce-cli=5:20.10.11~3-0~ubuntu-focal
    ```
 
 6. 도커가 정상적으로 설치된 것을 확인합니다.
