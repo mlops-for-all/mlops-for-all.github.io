@@ -10,7 +10,11 @@ menu:
     parent: kubeflow-ui-guide
 ---
 
-[Kubeflow 설치]({{< relref "docs/setup-components/install-components-kf.md" >}})를 완료하면, 다음과 같은 대시보드에 접속할 수 있습니다.
+[Kubeflow 설치]({{< relref "docs/setup-components/install-components-kf.md" >}})를 완료하면, 다음 커맨드를 통해 대시보드에 접속할 수 있습니다.
+
+```text
+kubectl port-forward --address 0.0.0.0 svc/istio-ingressgateway -n istio-system 8080:80
+```
 
 <p align="center">
   <img src="/images/docs/setup/after-login.png" title="after-login"/>
