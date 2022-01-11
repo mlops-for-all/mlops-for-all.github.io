@@ -472,7 +472,7 @@ kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
 
 만약 다음과 같이 `localhost에서 연결을 거부했습니다` 라는 에러가 출력될 경우, 커맨드로 address 설정을 통해 접근하는 것이 가능합니다.
 
-보안상의 문제가 되지 않는다면, 아래와 같이 `0.0.0.0` 로 모든 주소의 bind를 열어주는 방향으로 ml-pipeline UI가 정상적으로 접속되는지 확인합니다.
+**보안상의 문제가 되지 않는다면,** 아래와 같이 `0.0.0.0` 로 모든 주소의 bind를 열어주는 방향으로 ml-pipeline UI가 정상적으로 접속되는지 확인합니다.
 
 ```text
 kubectl port-forward --address 0.0.0.0 svc/ml-pipeline-ui -n kubeflow 8888:80
