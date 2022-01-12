@@ -467,7 +467,7 @@ kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
 - localhost 연결 거부 이슈
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/40455392/148356348-d0673e92-e17b-4d7b-8d22-2d8b8a27f90c.png" title="localhost-reject"/>
+  <img src="/images/docs/setup-modules/localhost-reject.png" title="localhost-reject"/>
 </p>
 
 만약 다음과 같이 `localhost에서 연결을 거부했습니다` 라는 에러가 출력될 경우, 커맨드로 address 설정을 통해 접근하는 것이 가능합니다.
