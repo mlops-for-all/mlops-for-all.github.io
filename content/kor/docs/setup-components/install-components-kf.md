@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
 weight: 252
-contributors: ["Jaeyeon Kim"]
+contributors: ["Jaeyeon Kim", "SeungTae Kim"]
 menu:
   docs:
     parent: "setup-components"
@@ -463,6 +463,28 @@ kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
 <p align="center">
   <img src="/images/docs/setup/pipeline-ui.png" title="pipeline-ui"/>
 </p>
+
+- localhost 연결 거부 이슈
+
+<p align="center">
+  <img src="/images/docs/setup-modules/localhost-reject.png" title="localhost-reject"/>
+</p>
+
+만약 다음과 같이 `localhost에서 연결을 거부했습니다` 라는 에러가 출력될 경우, 커맨드로 address 설정을 통해 접근하는 것이 가능합니다.
+
+**보안상의 문제가 되지 않는다면,** 아래와 같이 `0.0.0.0` 로 모든 주소의 bind를 열어주는 방향으로 ml-pipeline UI가 정상적으로 접속되는지 확인합니다.
+
+```text
+kubectl port-forward --address 0.0.0.0 svc/ml-pipeline-ui -n kubeflow 8888:80
+```
+
+- 위의 옵션으로 실행했음에도 여전히 연결 거부 이슈가 발생할 경우
+
+방화벽 설정으로 접속해 모든 tcp 프로토콜의 포트에 대한 접속을 허가 또는 8888번 포트의 접속 허가를 추가해 접근 권한을 허가해줍니다.
+
+웹 브라우저를 열어 `http://<당신의 가상 인스턴스 공인 ip 주소>:8888/#/pipelines/` 경로에 접속하면, ml-pipeline UI 화면이 출력되는 것을 확인할 수 있습니다.
+
+하단에서 진행되는 다른 포트의 경로에 접속할 때도 위의 절차와 동일하게 커맨드를 실행하고, 방화벽에 포트 번호를 추가해주면 실행하는 것이 가능합니다.
 
 ### Katib
 
