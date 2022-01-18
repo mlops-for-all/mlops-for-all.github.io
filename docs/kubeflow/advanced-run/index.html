@@ -110,7 +110,104 @@ help</button><div class=collapse id=section-><ul class="btn-toggle-nav list-unst
 
 <span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
     <span class=n>kfp</span><span class=o>.</span><span class=n>compiler</span><span class=o>.</span><span class=n>Compiler</span><span class=p>()</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=n>plot_pipeline</span><span class=p>,</span> <span class=s2>&#34;plot_pipeline.yaml&#34;</span><span class=p>)</span>
-</code></pre></div><p>실행 후 Visualization을 클릭합니다.</p><p align=center><img src=/images/docs/kubeflow/advanced-run-5.png title=run-viz></p><h2 id=run-output>Run output <a href=#run-output class=anchor aria-hidden=true>#</a></h2><p align=center><img src=/images/docs/kubeflow/advanced-run-2.png title=run-output></p><p>Run output은 kubeflow에서 지정한 형태로 생긴 Artifacts를 모아서 보여주는 곳이며 평가 지표(Metric)를 보여줍니다.</p><p>평가 지표(Metric)을 보여주기 위해서는 <code>mlpipeline_metrics_path: OutputPath("Metrics")</code> argument에 보여주고 싶은 이름과 값을 json 형태로 저장하면 됩니다.
+</code></pre></div><p>이 스크립트를 실행해서 나온 <code>plot_pipeline.yaml</code>을 확인하면 다음과 같습니다.</p><p><details><summary>plot_pipeline.yaml</summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: plot-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.9, pipelines.kubeflow.org/pipeline_compilation_time: &#39;2
+022-01-17T13:31:32.963214&#39;,
+    pipelines.kubeflow.org/pipeline_spec: &#39;{&#34;name&#34;: &#34;plot_pipeline&#34;}&#39;}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.9}
+spec:
+  entrypoint: plot-pipeline
+  templates:
+  - name: plot-linear
+    container:
+      args: [--mlpipeline-ui-metadata, /tmp/outputs/mlpipeline_ui_metadata/data]
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        &#39;matplotlib&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet
+        --no-warn-script-location &#39;matplotlib&#39; --user) &amp;&amp; &#34;$0&#34; &#34;$@&#34;
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def _make_parent_dirs_and_return_path(file_path: str):
+            import os
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            return file_path
+        def plot_linear(mlpipeline_ui_metadata):
+            import base64
+            import json
+            from io import BytesIO
+            import matplotlib.pyplot as plt
+            plt.plot([1, 2, 3], [1, 2, 3])
+            tmpfile = BytesIO()
+            plt.savefig(tmpfile, format=&#34;png&#34;)
+            encoded = base64.b64encode(tmpfile.getvalue()).decode(&#34;utf-8&#34;)
+            html = f&#34;&lt;img src=&#39;data:image/png;base64,{encoded}&#39;&gt;&#34;
+            metadata = {
+                &#34;outputs&#34;: [
+                    {
+                        &#34;type&#34;: &#34;web-app&#34;,
+                        &#34;storage&#34;: &#34;inline&#34;,
+                        &#34;source&#34;: html,
+                    },
+                ],
+            }
+            with open(mlpipeline_ui_metadata, &#34;w&#34;) as html_writer:
+                json.dump(metadata, html_writer)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Plot linear&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--mlpipeline-ui-metadata&#34;, dest=&#34;mlpipeline_ui_metadata&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+        _parsed_args = vars(_parser.parse_args())
+        _outputs = plot_linear(**_parsed_args)
+      image: python:3.7
+    outputs:
+      artifacts:
+      - {name: mlpipeline-ui-metadata, path: /tmp/outputs/mlpipeline_ui_metadata/data}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.9
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: &#34;true&#34;
+      annotations: {pipelines.kubeflow.org/component_spec: &#39;{&#34;implementation&#34;: {&#34;container&#34;:
+          {&#34;args&#34;: [&#34;--mlpipeline-ui-metadata&#34;, {&#34;outputPath&#34;: &#34;mlpipeline_ui_metadata&#34;}],
+          &#34;command&#34;: [&#34;sh&#34;, &#34;-c&#34;, &#34;(PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip
+          install --quiet --no-warn-script-location &#39;&#39;matplotlib&#39;&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1
+          python3 -m pip install --quiet --no-warn-script-location &#39;&#39;matplotlib&#39;&#39;
+          --user) &amp;&amp; \&#34;$0\&#34; \&#34;$@\&#34;&#34;, &#34;sh&#34;, &#34;-ec&#34;, &#34;program_path=$(mktemp)\nprintf
+          \&#34;%s\&#34; \&#34;$0\&#34; &gt; \&#34;$program_path\&#34;\npython3 -u \&#34;$program_path\&#34; \&#34;$@\&#34;\n&#34;,
+          &#34;def _make_parent_dirs_and_return_path(file_path: str):\n    import os\n    os.makedirs(os.path.dirname(file_path),
+          exist_ok=True)\n    return file_path\n\ndef plot_linear(mlpipeline_ui_metadata):\n    import
+          base64\n    import json\n    from io import BytesIO\n\n    import matplotlib.pyplot
+          as plt\n\n    plt.plot([1, 2, 3], [1, 2, 3])\n\n    tmpfile = BytesIO()\n    plt.savefig(tmpfile,
+          format=\&#34;png\&#34;)\n    encoded = base64.b64encode(tmpfile.getvalue()).decode(\&#34;utf-8\&#34;)\n\n    html
+          = f\&#34;&lt;img src=&#39;&#39;data:image/png;base64,{encoded}&#39;&#39;&gt;\&#34;\n    metadata = {\n        \&#34;outputs\&#34;:
+          [\n            {\n                \&#34;type\&#34;: \&#34;web-app\&#34;,\n                \&#34;storage\&#34;:
+          \&#34;inline\&#34;,\n                \&#34;source\&#34;: html,\n            },\n        ],\n    }\n    with
+          open(mlpipeline_ui_metadata, \&#34;w\&#34;) as html_writer:\n        json.dump(metadata,
+          html_writer)\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=&#39;&#39;Plot
+          linear&#39;&#39;, description=&#39;&#39;&#39;&#39;)\n_parser.add_argument(\&#34;--mlpipeline-ui-metadata\&#34;,
+          dest=\&#34;mlpipeline_ui_metadata\&#34;, type=_make_parent_dirs_and_return_path,
+          required=True, default=argparse.SUPPRESS)\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
+          = plot_linear(**_parsed_args)\n&#34;], &#34;image&#34;: &#34;python:3.7&#34;}}, &#34;name&#34;: &#34;Plot
+          linear&#34;, &#34;outputs&#34;: [{&#34;name&#34;: &#34;mlpipeline_ui_metadata&#34;, &#34;type&#34;: &#34;UI_Metadata&#34;}]}&#39;,
+        pipelines.kubeflow.org/component_ref: &#39;{}&#39;}
+  - name: plot-pipeline
+    dag:
+      tasks:
+      - {name: plot-linear, template: plot-linear}
+  arguments:
+    parameters: []
+  serviceAccountName: pipeline-runner
+</code></pre></div></details></p><p>실행 후 Visualization을 클릭합니다.</p><p align=center><img src=/images/docs/kubeflow/advanced-run-5.png title=run-viz></p><h2 id=run-output>Run output <a href=#run-output class=anchor aria-hidden=true>#</a></h2><p align=center><img src=/images/docs/kubeflow/advanced-run-2.png title=run-output></p><p>Run output은 kubeflow에서 지정한 형태로 생긴 Artifacts를 모아서 보여주는 곳이며 평가 지표(Metric)를 보여줍니다.</p><p>평가 지표(Metric)을 보여주기 위해서는 <code>mlpipeline_metrics_path: OutputPath("Metrics")</code> argument에 보여주고 싶은 이름과 값을 json 형태로 저장하면 됩니다.
 예를 들어서 다음과 같이 작성할 수 있습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=nd>@create_component_from_func</span>
 <span class=k>def</span> <span class=nf>show_metric_of_sum</span><span class=p>(</span>
     <span class=n>number</span><span class=p>:</span> <span class=nb>int</span><span class=p>,</span>
@@ -178,4 +275,4 @@ help</button><div class=collapse id=section-><ul class="btn-toggle-nav list-unst
 <script src=/js/vendor/katex/dist/katex.min.bcada504b3ec326107c39e7297015498140149b826ef1a9ca9e43f49afecab252b5623be3bea1e0a8663236740fba5368d9e84b8630aedea1a1926dd3f199a3c.js integrity="sha512-vK2lBLPsMmEHw55ylwFUmBQBSbgm7xqcqeQ/Sa/sqyUrViO+O+oeCoZjI2dA+6U2jZ6EuGMK7eoaGSbdPxmaPA==" crossorigin=anonymous defer></script>
 <script src=/js/vendor/katex/dist/contrib/auto-render.min.bc779bab10cdc862f139e7cd6255a8f021bc483db2b7bc6d553238fb220e937dbe5cd511100d2ab764ee5d9f9092a2cdcc4e6ae109966efc18338f0b275d927d.js integrity="sha512-vHebqxDNyGLxOefNYlWo8CG8SD2yt7xtVTI4+yIOk32+XNUREA0qt2TuXZ+QkqLNzE5q4QmWbvwYM48LJ12SfQ==" crossorigin=anonymous defer></script>
 <script src=/main.min.647c6f9869eb8e24d3f5183f467970dbadd12adeec725e66830376db069558e917e21eb7dd363563443d2c91c5c6557ea3b2864d1f2a78c3f65e676fa19b961b.js integrity="sha512-ZHxvmGnrjiTT9Rg/Rnlw263RKt7scl5mgwN22waVWOkX4h633TY1Y0Q9LJHFxlV+o7KGTR8qeMP2XmdvoZuWGw==" crossorigin=anonymous defer></script>
-<script src=https://mlops-for-all.github.io/index.min.0cc1a6fa2e66ec65188c2c6e1083e3ddba270e3d79ba634a0abe3ce6071d3ea657b4bf1dce91b276d6018b6ef6864f6e01fef42bf7ac6a92bc8ab0314b7238e3.js integrity="sha512-DMGm+i5m7GUYjCxuEIPj3bonDj15umNKCr485gcdPqZXtL8dzpGydtYBi272hk9uAf70K/esapK8irAxS3I44w==" crossorigin=anonymous defer></script></body></html>
+<script src=https://mlops-for-all.github.io/index.min.3c5be28212fc76901078ef6c94b1da533cce68f4e9bc45ce73b6ca62b021f13baca94c50a031aaa0bdc33345718fdfebcd19d4364123471d1c391da203bcc63b.js integrity="sha512-PFvighL8dpAQeO9slLHaUzzOaPTpvEXOc7bKYrAh8TusqUxQoDGqoL3DM0Vxj9/rzRnUNkEjRx0cOR2iA7zGOw==" crossorigin=anonymous defer></script></body></html>
