@@ -36,14 +36,6 @@ sudo sysctl --system
 
 ## 2. 쿠버네티스 클러스터 셋업
 
-```text
-$ sudo modprobe br_netfilter
-
-$ cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-br_netfilter
-EOF
-```
-
 - kubeadm : kubelet을 서비스에 등록하고, 클러스터 컴포넌트들 사이의 통신을 위한 인증서 발급 등 설치 과정 자동화
 - kubelet : container 리소스를 실행, 종료를 해 주는 컨테이너 핸들러
 - kubectl : 쿠버네티스 클러스터를 터미널에서 확인, 조작하기 위한 CLI 도구
@@ -53,13 +45,13 @@ EOF
 
 ```text
 sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl
+sudo apt-get install -y apt-transport-https ca-certificates curl &&
 
-sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg &&
 
-echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list &&
 sudo apt-get update
-sudo apt-get install -y kubelet=1.21.7-00 kubeadm=1.21.7-00 kubectl=1.21.7-00
+sudo apt-get install -y kubelet=1.21.7-00 kubeadm=1.21.7-00 kubectl=1.21.7-00 &&
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
@@ -151,6 +143,11 @@ scp -p {CLUSTER_USER_ID}@{CLUSTER_IP}:~/.kube/config ~/.kube/config
 
 ```text
 kubectl get nodes
+```
+
+Ready 가 되면 다음과 비슷한 결과가 출력됩니다.
+
+```text
 NAME     STATUS   ROLES                  AGE     VERSION
 ubuntu   Ready    control-plane,master   2m55s   v1.21.7
 ```

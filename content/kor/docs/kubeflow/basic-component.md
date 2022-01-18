@@ -72,7 +72,7 @@ Kubeflow에서 반환 값으로 사용할 수 있는 타입은 json에서 표현
 from typing import NamedTuple
 
 
-def divde_and_return_number(
+def divide_and_return_number(
     number: int,
 ) -> NamedTuple("DivideOutputs", [("quotient", int), ("remainder", int)]):
     from collections import namedtuple
