@@ -55,7 +55,7 @@ smallLimit = "300"
 
 # Footer
 # footer = "Powered by <a href=\"https://www.netlify.com/\">Netlify</a>, <a href=\"https://gohugo.io/\">Hugo</a>, and <a href=\"https://getdoks.org/\">Doks</a>"
-footer = "Powered by <a href=\"https://gohugo.io/\">Hugo</a>, and <a href=\"https://getdoks.org/\">Doks</a>"
+footer = "Powered by <a href=\"https://gohugo.io/\">Hugo</a>, and <a href=\"https://getdoks.org/\">Doks</a>. Sponsored by <a href=\"https://www.makinarocks.ai/\">MakinaRocks</a>."
 
 # Feed
 copyRight = "Copyright (c) 2021-2022 MLOps for ALL"
