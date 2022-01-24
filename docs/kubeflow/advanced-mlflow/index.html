@@ -404,10 +404,384 @@ mlflow 대시보드에 접속하여 생성된 run을 클릭하면 다음과 같�
 
 <span class=k>if</span> <span class=vm>__name__</span> <span class=o>==</span> <span class=s2>&#34;__main__&#34;</span><span class=p>:</span>
     <span class=n>kfp</span><span class=o>.</span><span class=n>compiler</span><span class=o>.</span><span class=n>Compiler</span><span class=p>()</span><span class=o>.</span><span class=n>compile</span><span class=p>(</span><span class=n>mlflow_pipeline</span><span class=p>,</span> <span class=s2>&#34;mlflow_pipeline.yaml&#34;</span><span class=p>)</span>
-</code></pre></div><p>실행후 생성된 mlflow_pipeline.yaml 파일을 파이프라인 업로드한 후, 실행하여 run 의 결과를 확인합니다.</p><p align=center><img src=/images/docs/kubeflow/mlflow-svc-0.png title=kubeflow-run></p><p>mlflow service를 포트포워딩해서 MLflow ui에 접속합니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
+</code></pre></div><p><details><summary>mlflow_pipeline.yaml</summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: mlflow-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.10, pipelines.kubeflow.org/pipeline_compilation_time: &#39;2022-01-19T14:14:11.999807&#39;,
+    pipelines.kubeflow.org/pipeline_spec: &#39;{&#34;inputs&#34;: [{&#34;name&#34;: &#34;kernel&#34;, &#34;type&#34;:
+      &#34;String&#34;}, {&#34;name&#34;: &#34;model_name&#34;, &#34;type&#34;: &#34;String&#34;}], &#34;name&#34;: &#34;mlflow_pipeline&#34;}&#39;}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.10}
+spec:
+  entrypoint: mlflow-pipeline
+  templates:
+  - name: load-iris-data
+    container:
+      args: [--data, /tmp/outputs/data/data, --target, /tmp/outputs/target/data]
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        &#39;pandas&#39; &#39;scikit-learn&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip
+        install --quiet --no-warn-script-location &#39;pandas&#39; &#39;scikit-learn&#39; --user)
+        &amp;&amp; &#34;$0&#34; &#34;$@&#34;
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def _make_parent_dirs_and_return_path(file_path: str):
+            import os
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            return file_path
+
+        def load_iris_data(
+            data_path,
+            target_path,
+        ):
+            import pandas as pd
+            from sklearn.datasets import load_iris
+
+            iris = load_iris()
+
+            data = pd.DataFrame(iris[&#34;data&#34;], columns=iris[&#34;feature_names&#34;])
+            target = pd.DataFrame(iris[&#34;target&#34;], columns=[&#34;target&#34;])
+
+            data.to_csv(data_path, index=False)
+            target.to_csv(target_path, index=False)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Load iris data&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--data&#34;, dest=&#34;data_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--target&#34;, dest=&#34;target_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = load_iris_data(**_parsed_args)
+      image: python:3.7
+    outputs:
+      artifacts:
+      - {name: load-iris-data-data, path: /tmp/outputs/data/data}
+      - {name: load-iris-data-target, path: /tmp/outputs/target/data}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: &#34;true&#34;
+      annotations: {pipelines.kubeflow.org/component_spec: &#39;{&#34;implementation&#34;: {&#34;container&#34;:
+          {&#34;args&#34;: [&#34;--data&#34;, {&#34;outputPath&#34;: &#34;data&#34;}, &#34;--target&#34;, {&#34;outputPath&#34;: &#34;target&#34;}],
+          &#34;command&#34;: [&#34;sh&#34;, &#34;-c&#34;, &#34;(PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip
+          install --quiet --no-warn-script-location &#39;&#39;pandas&#39;&#39; &#39;&#39;scikit-learn&#39;&#39; ||
+          PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+          &#39;&#39;pandas&#39;&#39; &#39;&#39;scikit-learn&#39;&#39; --user) &amp;&amp; \&#34;$0\&#34; \&#34;$@\&#34;&#34;, &#34;sh&#34;, &#34;-ec&#34;, &#34;program_path=$(mktemp)\nprintf
+          \&#34;%s\&#34; \&#34;$0\&#34; &gt; \&#34;$program_path\&#34;\npython3 -u \&#34;$program_path\&#34; \&#34;$@\&#34;\n&#34;,
+          &#34;def _make_parent_dirs_and_return_path(file_path: str):\n    import os\n    os.makedirs(os.path.dirname(file_path),
+          exist_ok=True)\n    return file_path\n\ndef load_iris_data(\n    data_path,\n    target_path,\n):\n    import
+          pandas as pd\n    from sklearn.datasets import load_iris\n\n    iris = load_iris()\n\n    data
+          = pd.DataFrame(iris[\&#34;data\&#34;], columns=iris[\&#34;feature_names\&#34;])\n    target
+          = pd.DataFrame(iris[\&#34;target\&#34;], columns=[\&#34;target\&#34;])\n\n    data.to_csv(data_path,
+          index=False)\n    target.to_csv(target_path, index=False)\n\nimport argparse\n_parser
+          = argparse.ArgumentParser(prog=&#39;&#39;Load iris data&#39;&#39;, description=&#39;&#39;&#39;&#39;)\n_parser.add_argument(\&#34;--data\&#34;,
+          dest=\&#34;data_path\&#34;, type=_make_parent_dirs_and_return_path, required=True,
+          default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--target\&#34;, dest=\&#34;target_path\&#34;,
+          type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = load_iris_data(**_parsed_args)\n&#34;],
+          &#34;image&#34;: &#34;python:3.7&#34;}}, &#34;name&#34;: &#34;Load iris data&#34;, &#34;outputs&#34;: [{&#34;name&#34;:
+          &#34;data&#34;, &#34;type&#34;: &#34;csv&#34;}, {&#34;name&#34;: &#34;target&#34;, &#34;type&#34;: &#34;csv&#34;}]}&#39;, pipelines.kubeflow.org/component_ref: &#39;{}&#39;}
+  - name: mlflow-pipeline
+    inputs:
+      parameters:
+      - {name: kernel}
+      - {name: model_name}
+    dag:
+      tasks:
+      - {name: load-iris-data, template: load-iris-data}
+      - name: train-from-csv
+        template: train-from-csv
+        dependencies: [load-iris-data]
+        arguments:
+          parameters:
+          - {name: kernel, value: &#39;{{inputs.parameters.kernel}}&#39;}
+          artifacts:
+          - {name: load-iris-data-data, from: &#39;{{tasks.load-iris-data.outputs.artifacts.load-iris-data-data}}&#39;}
+          - {name: load-iris-data-target, from: &#39;{{tasks.load-iris-data.outputs.artifacts.load-iris-data-target}}&#39;}
+      - name: upload-sklearn-model-to-mlflow
+        template: upload-sklearn-model-to-mlflow
+        dependencies: [train-from-csv]
+        arguments:
+          parameters:
+          - {name: model_name, value: &#39;{{inputs.parameters.model_name}}&#39;}
+          artifacts:
+          - {name: train-from-csv-conda_env, from: &#39;{{tasks.train-from-csv.outputs.artifacts.train-from-csv-conda_env}}&#39;}
+          - {name: train-from-csv-input_example, from: &#39;{{tasks.train-from-csv.outputs.artifacts.train-from-csv-input_example}}&#39;}
+          - {name: train-from-csv-model, from: &#39;{{tasks.train-from-csv.outputs.artifacts.train-from-csv-model}}&#39;}
+          - {name: train-from-csv-signature, from: &#39;{{tasks.train-from-csv.outputs.artifacts.train-from-csv-signature}}&#39;}
+  - name: train-from-csv
+    container:
+      args: [--train-data, /tmp/inputs/train_data/data, --train-target, /tmp/inputs/train_target/data,
+        --kernel, &#39;{{inputs.parameters.kernel}}&#39;, --model, /tmp/outputs/model/data,
+        --input-example, /tmp/outputs/input_example/data, --signature, /tmp/outputs/signature/data,
+        --conda-env, /tmp/outputs/conda_env/data]
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        &#39;dill&#39; &#39;pandas&#39; &#39;scikit-learn&#39; &#39;mlflow&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1
+        python3 -m pip install --quiet --no-warn-script-location &#39;dill&#39; &#39;pandas&#39; &#39;scikit-learn&#39;
+        &#39;mlflow&#39; --user) &amp;&amp; &#34;$0&#34; &#34;$@&#34;
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def _make_parent_dirs_and_return_path(file_path: str):
+            import os
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            return file_path
+
+        def train_from_csv(
+            train_data_path,
+            train_target_path,
+            model_path,
+            input_example_path,
+            signature_path,
+            conda_env_path,
+            kernel,
+        ):
+            import dill
+            import pandas as pd
+            from sklearn.svm import SVC
+
+            from mlflow.models.signature import infer_signature
+            from mlflow.utils.environment import _mlflow_conda_env
+
+            train_data = pd.read_csv(train_data_path)
+            train_target = pd.read_csv(train_target_path)
+
+            clf = SVC(kernel=kernel)
+            clf.fit(train_data, train_target)
+
+            with open(model_path, mode=&#34;wb&#34;) as file_writer:
+                dill.dump(clf, file_writer)
+
+            input_example = train_data.sample(1)
+            with open(input_example_path, &#34;wb&#34;) as file_writer:
+                dill.dump(input_example, file_writer)
+
+            signature = infer_signature(train_data, clf.predict(train_data))
+            with open(signature_path, &#34;wb&#34;) as file_writer:
+                dill.dump(signature, file_writer)
+
+            conda_env = _mlflow_conda_env(
+                additional_pip_deps=[&#34;dill&#34;, &#34;pandas&#34;, &#34;scikit-learn&#34;]
+            )
+            with open(conda_env_path, &#34;wb&#34;) as file_writer:
+                dill.dump(conda_env, file_writer)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Train from csv&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--train-data&#34;, dest=&#34;train_data_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--train-target&#34;, dest=&#34;train_target_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--kernel&#34;, dest=&#34;kernel&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--model&#34;, dest=&#34;model_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--input-example&#34;, dest=&#34;input_example_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--signature&#34;, dest=&#34;signature_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--conda-env&#34;, dest=&#34;conda_env_path&#34;, type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = train_from_csv(**_parsed_args)
+      image: python:3.7
+    inputs:
+      parameters:
+      - {name: kernel}
+      artifacts:
+      - {name: load-iris-data-data, path: /tmp/inputs/train_data/data}
+      - {name: load-iris-data-target, path: /tmp/inputs/train_target/data}
+    outputs:
+      artifacts:
+      - {name: train-from-csv-conda_env, path: /tmp/outputs/conda_env/data}
+      - {name: train-from-csv-input_example, path: /tmp/outputs/input_example/data}
+      - {name: train-from-csv-model, path: /tmp/outputs/model/data}
+      - {name: train-from-csv-signature, path: /tmp/outputs/signature/data}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: &#34;true&#34;
+      annotations: {pipelines.kubeflow.org/component_spec: &#39;{&#34;implementation&#34;: {&#34;container&#34;:
+          {&#34;args&#34;: [&#34;--train-data&#34;, {&#34;inputPath&#34;: &#34;train_data&#34;}, &#34;--train-target&#34;,
+          {&#34;inputPath&#34;: &#34;train_target&#34;}, &#34;--kernel&#34;, {&#34;inputValue&#34;: &#34;kernel&#34;}, &#34;--model&#34;,
+          {&#34;outputPath&#34;: &#34;model&#34;}, &#34;--input-example&#34;, {&#34;outputPath&#34;: &#34;input_example&#34;},
+          &#34;--signature&#34;, {&#34;outputPath&#34;: &#34;signature&#34;}, &#34;--conda-env&#34;, {&#34;outputPath&#34;:
+          &#34;conda_env&#34;}], &#34;command&#34;: [&#34;sh&#34;, &#34;-c&#34;, &#34;(PIP_DISABLE_PIP_VERSION_CHECK=1
+          python3 -m pip install --quiet --no-warn-script-location &#39;&#39;dill&#39;&#39; &#39;&#39;pandas&#39;&#39;
+          &#39;&#39;scikit-learn&#39;&#39; &#39;&#39;mlflow&#39;&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m
+          pip install --quiet --no-warn-script-location &#39;&#39;dill&#39;&#39; &#39;&#39;pandas&#39;&#39; &#39;&#39;scikit-learn&#39;&#39;
+          &#39;&#39;mlflow&#39;&#39; --user) &amp;&amp; \&#34;$0\&#34; \&#34;$@\&#34;&#34;, &#34;sh&#34;, &#34;-ec&#34;, &#34;program_path=$(mktemp)\nprintf
+          \&#34;%s\&#34; \&#34;$0\&#34; &gt; \&#34;$program_path\&#34;\npython3 -u \&#34;$program_path\&#34; \&#34;$@\&#34;\n&#34;,
+          &#34;def _make_parent_dirs_and_return_path(file_path: str):\n    import os\n    os.makedirs(os.path.dirname(file_path),
+          exist_ok=True)\n    return file_path\n\ndef train_from_csv(\n    train_data_path,\n    train_target_path,\n    model_path,\n    input_example_path,\n    signature_path,\n    conda_env_path,\n    kernel,\n):\n    import
+          dill\n    import pandas as pd\n    from sklearn.svm import SVC\n\n    from
+          mlflow.models.signature import infer_signature\n    from mlflow.utils.environment
+          import _mlflow_conda_env\n\n    train_data = pd.read_csv(train_data_path)\n    train_target
+          = pd.read_csv(train_target_path)\n\n    clf = SVC(kernel=kernel)\n    clf.fit(train_data,
+          train_target)\n\n    with open(model_path, mode=\&#34;wb\&#34;) as file_writer:\n        dill.dump(clf,
+          file_writer)\n\n    input_example = train_data.sample(1)\n    with open(input_example_path,
+          \&#34;wb\&#34;) as file_writer:\n        dill.dump(input_example, file_writer)\n\n    signature
+          = infer_signature(train_data, clf.predict(train_data))\n    with open(signature_path,
+          \&#34;wb\&#34;) as file_writer:\n        dill.dump(signature, file_writer)\n\n    conda_env
+          = _mlflow_conda_env(\n        additional_pip_deps=[\&#34;dill\&#34;, \&#34;pandas\&#34;,
+          \&#34;scikit-learn\&#34;]\n    )\n    with open(conda_env_path, \&#34;wb\&#34;) as file_writer:\n        dill.dump(conda_env,
+          file_writer)\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=&#39;&#39;Train
+          from csv&#39;&#39;, description=&#39;&#39;&#39;&#39;)\n_parser.add_argument(\&#34;--train-data\&#34;, dest=\&#34;train_data_path\&#34;,
+          type=str, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--train-target\&#34;,
+          dest=\&#34;train_target_path\&#34;, type=str, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--kernel\&#34;,
+          dest=\&#34;kernel\&#34;, type=str, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--model\&#34;,
+          dest=\&#34;model_path\&#34;, type=_make_parent_dirs_and_return_path, required=True,
+          default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--input-example\&#34;, dest=\&#34;input_example_path\&#34;,
+          type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--signature\&#34;,
+          dest=\&#34;signature_path\&#34;, type=_make_parent_dirs_and_return_path, required=True,
+          default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--conda-env\&#34;, dest=\&#34;conda_env_path\&#34;,
+          type=_make_parent_dirs_and_return_path, required=True, default=argparse.SUPPRESS)\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = train_from_csv(**_parsed_args)\n&#34;],
+          &#34;image&#34;: &#34;python:3.7&#34;}}, &#34;inputs&#34;: [{&#34;name&#34;: &#34;train_data&#34;, &#34;type&#34;: &#34;csv&#34;},
+          {&#34;name&#34;: &#34;train_target&#34;, &#34;type&#34;: &#34;csv&#34;}, {&#34;name&#34;: &#34;kernel&#34;, &#34;type&#34;: &#34;String&#34;}],
+          &#34;name&#34;: &#34;Train from csv&#34;, &#34;outputs&#34;: [{&#34;name&#34;: &#34;model&#34;, &#34;type&#34;: &#34;dill&#34;},
+          {&#34;name&#34;: &#34;input_example&#34;, &#34;type&#34;: &#34;dill&#34;}, {&#34;name&#34;: &#34;signature&#34;, &#34;type&#34;:
+          &#34;dill&#34;}, {&#34;name&#34;: &#34;conda_env&#34;, &#34;type&#34;: &#34;dill&#34;}]}&#39;, pipelines.kubeflow.org/component_ref: &#39;{}&#39;,
+        pipelines.kubeflow.org/arguments.parameters: &#39;{&#34;kernel&#34;: &#34;{{inputs.parameters.kernel}}&#34;}&#39;}
+  - name: upload-sklearn-model-to-mlflow
+    container:
+      args: [--model-name, &#39;{{inputs.parameters.model_name}}&#39;, --model, /tmp/inputs/model/data,
+        --input-example, /tmp/inputs/input_example/data, --signature, /tmp/inputs/signature/data,
+        --conda-env, /tmp/inputs/conda_env/data]
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        &#39;dill&#39; &#39;pandas&#39; &#39;scikit-learn&#39; &#39;mlflow&#39; &#39;boto3&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1
+        python3 -m pip install --quiet --no-warn-script-location &#39;dill&#39; &#39;pandas&#39; &#39;scikit-learn&#39;
+        &#39;mlflow&#39; &#39;boto3&#39; --user) &amp;&amp; &#34;$0&#34; &#34;$@&#34;
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf &#34;%s&#34; &#34;$0&#34; &gt; &#34;$program_path&#34;
+        python3 -u &#34;$program_path&#34; &#34;$@&#34;
+      - |
+        def upload_sklearn_model_to_mlflow(
+            model_name,
+            model_path,
+            input_example_path,
+            signature_path,
+            conda_env_path,
+        ):
+            import os
+            import dill
+            from mlflow.sklearn import save_model
+
+            from mlflow.tracking.client import MlflowClient
+
+            os.environ[&#34;MLFLOW_S3_ENDPOINT_URL&#34;] = &#34;http://minio-service.kubeflow.svc:9000&#34;
+            os.environ[&#34;AWS_ACCESS_KEY_ID&#34;] = &#34;minio&#34;
+            os.environ[&#34;AWS_SECRET_ACCESS_KEY&#34;] = &#34;minio123&#34;
+
+            client = MlflowClient(&#34;http://mlflow-server-service.mlflow-system.svc:5000&#34;)
+
+            with open(model_path, mode=&#34;rb&#34;) as file_reader:
+                clf = dill.load(file_reader)
+
+            with open(input_example_path, &#34;rb&#34;) as file_reader:
+                input_example = dill.load(file_reader)
+
+            with open(signature_path, &#34;rb&#34;) as file_reader:
+                signature = dill.load(file_reader)
+
+            with open(conda_env_path, &#34;rb&#34;) as file_reader:
+                conda_env = dill.load(file_reader)
+
+            save_model(
+                sk_model=clf,
+                path=model_name,
+                serialization_format=&#34;cloudpickle&#34;,
+                conda_env=conda_env,
+                signature=signature,
+                input_example=input_example,
+            )
+            run = client.create_run(experiment_id=&#34;0&#34;)
+            client.log_artifact(run.info.run_id, model_name)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog=&#39;Upload sklearn model to mlflow&#39;, description=&#39;&#39;)
+        _parser.add_argument(&#34;--model-name&#34;, dest=&#34;model_name&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--model&#34;, dest=&#34;model_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--input-example&#34;, dest=&#34;input_example_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--signature&#34;, dest=&#34;signature_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parser.add_argument(&#34;--conda-env&#34;, dest=&#34;conda_env_path&#34;, type=str, required=True, default=argparse.SUPPRESS)
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = upload_sklearn_model_to_mlflow(**_parsed_args)
+      image: python:3.7
+    inputs:
+      parameters:
+      - {name: model_name}
+      artifacts:
+      - {name: train-from-csv-conda_env, path: /tmp/inputs/conda_env/data}
+      - {name: train-from-csv-input_example, path: /tmp/inputs/input_example/data}
+      - {name: train-from-csv-model, path: /tmp/inputs/model/data}
+      - {name: train-from-csv-signature, path: /tmp/inputs/signature/data}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.10
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: &#34;true&#34;
+      annotations: {pipelines.kubeflow.org/component_spec: &#39;{&#34;implementation&#34;: {&#34;container&#34;:
+          {&#34;args&#34;: [&#34;--model-name&#34;, {&#34;inputValue&#34;: &#34;model_name&#34;}, &#34;--model&#34;, {&#34;inputPath&#34;:
+          &#34;model&#34;}, &#34;--input-example&#34;, {&#34;inputPath&#34;: &#34;input_example&#34;}, &#34;--signature&#34;,
+          {&#34;inputPath&#34;: &#34;signature&#34;}, &#34;--conda-env&#34;, {&#34;inputPath&#34;: &#34;conda_env&#34;}],
+          &#34;command&#34;: [&#34;sh&#34;, &#34;-c&#34;, &#34;(PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip
+          install --quiet --no-warn-script-location &#39;&#39;dill&#39;&#39; &#39;&#39;pandas&#39;&#39; &#39;&#39;scikit-learn&#39;&#39;
+          &#39;&#39;mlflow&#39;&#39; &#39;&#39;boto3&#39;&#39; || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install
+          --quiet --no-warn-script-location &#39;&#39;dill&#39;&#39; &#39;&#39;pandas&#39;&#39; &#39;&#39;scikit-learn&#39;&#39; &#39;&#39;mlflow&#39;&#39;
+          &#39;&#39;boto3&#39;&#39; --user) &amp;&amp; \&#34;$0\&#34; \&#34;$@\&#34;&#34;, &#34;sh&#34;, &#34;-ec&#34;, &#34;program_path=$(mktemp)\nprintf
+          \&#34;%s\&#34; \&#34;$0\&#34; &gt; \&#34;$program_path\&#34;\npython3 -u \&#34;$program_path\&#34; \&#34;$@\&#34;\n&#34;,
+          &#34;def upload_sklearn_model_to_mlflow(\n    model_name,\n    model_path,\n    input_example_path,\n    signature_path,\n    conda_env_path,\n):\n    import
+          os\n    import dill\n    from mlflow.sklearn import save_model\n\n    from
+          mlflow.tracking.client import MlflowClient\n\n    os.environ[\&#34;MLFLOW_S3_ENDPOINT_URL\&#34;]
+          = \&#34;http://minio-service.kubeflow.svc:9000\&#34;\n    os.environ[\&#34;AWS_ACCESS_KEY_ID\&#34;]
+          = \&#34;minio\&#34;\n    os.environ[\&#34;AWS_SECRET_ACCESS_KEY\&#34;] = \&#34;minio123\&#34;\n\n    client
+          = MlflowClient(\&#34;http://mlflow-server-service.mlflow-system.svc:5000\&#34;)\n\n    with
+          open(model_path, mode=\&#34;rb\&#34;) as file_reader:\n        clf = dill.load(file_reader)\n\n    with
+          open(input_example_path, \&#34;rb\&#34;) as file_reader:\n        input_example
+          = dill.load(file_reader)\n\n    with open(signature_path, \&#34;rb\&#34;) as file_reader:\n        signature
+          = dill.load(file_reader)\n\n    with open(conda_env_path, \&#34;rb\&#34;) as file_reader:\n        conda_env
+          = dill.load(file_reader)\n\n    save_model(\n        sk_model=clf,\n        path=model_name,\n        serialization_format=\&#34;cloudpickle\&#34;,\n        conda_env=conda_env,\n        signature=signature,\n        input_example=input_example,\n    )\n    run
+          = client.create_run(experiment_id=\&#34;0\&#34;)\n    client.log_artifact(run.info.run_id,
+          model_name)\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=&#39;&#39;Upload
+          sklearn model to mlflow&#39;&#39;, description=&#39;&#39;&#39;&#39;)\n_parser.add_argument(\&#34;--model-name\&#34;,
+          dest=\&#34;model_name\&#34;, type=str, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--model\&#34;,
+          dest=\&#34;model_path\&#34;, type=str, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--input-example\&#34;,
+          dest=\&#34;input_example_path\&#34;, type=str, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--signature\&#34;,
+          dest=\&#34;signature_path\&#34;, type=str, required=True, default=argparse.SUPPRESS)\n_parser.add_argument(\&#34;--conda-env\&#34;,
+          dest=\&#34;conda_env_path\&#34;, type=str, required=True, default=argparse.SUPPRESS)\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = upload_sklearn_model_to_mlflow(**_parsed_args)\n&#34;],
+          &#34;image&#34;: &#34;python:3.7&#34;}}, &#34;inputs&#34;: [{&#34;name&#34;: &#34;model_name&#34;, &#34;type&#34;: &#34;String&#34;},
+          {&#34;name&#34;: &#34;model&#34;, &#34;type&#34;: &#34;dill&#34;}, {&#34;name&#34;: &#34;input_example&#34;, &#34;type&#34;: &#34;dill&#34;},
+          {&#34;name&#34;: &#34;signature&#34;, &#34;type&#34;: &#34;dill&#34;}, {&#34;name&#34;: &#34;conda_env&#34;, &#34;type&#34;: &#34;dill&#34;}],
+          &#34;name&#34;: &#34;Upload sklearn model to mlflow&#34;}&#39;, pipelines.kubeflow.org/component_ref: &#39;{}&#39;,
+        pipelines.kubeflow.org/arguments.parameters: &#39;{&#34;model_name&#34;: &#34;{{inputs.parameters.model_name}}&#34;}&#39;}
+  arguments:
+    parameters:
+    - {name: kernel}
+    - {name: model_name}
+  serviceAccountName: pipeline-runner
+</code></pre></div></details></p><p>실행후 생성된 mlflow_pipeline.yaml 파일을 파이프라인 업로드한 후, 실행하여 run 의 결과를 확인합니다.</p><p align=center><img src=/images/docs/kubeflow/mlflow-svc-0.png title=kubeflow-run></p><p>mlflow service를 포트포워딩해서 MLflow ui에 접속합니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
 </code></pre></div><p>웹 브라우저를 열어 localhost:5000으로 접속하면, 다음과 같이 run이 생성된 것을 확인할 수 있습니다.</p><p align=center><img src=/images/docs/kubeflow/mlflow-svc-1.png title=mlflow-run></p><p>run 을 클릭해서 확인하면 학습한 모델 파일이 있는 것을 확인할 수 있습니다.</p><p align=center><img src=/images/docs/kubeflow/mlflow-svc-2.png title=mlflow-run></p><p class=edit-page><a href=https://github.com/mlops-for-all/mlops-for-all.github.io/blob/main/content/kor/docs/kubeflow/advanced-mlflow.md><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828.0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Edit this page on GitHub</a></p><div class="docs-navigation d-flex justify-content-between"><a href=/docs/kubeflow/advanced-run/><div class="card my-1"><div class="card-body py-2">&larr; 11. Pipeline - Run Result</div></div></a><a class=ms-auto href=/docs/kubeflow/how-to-debug/><div class="card my-1"><div class="card-body py-2">13. Component - Debugging &rarr;</div></div></a></div></main></div></div></div><footer class="footer text-muted"><div class=container-xxl><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a>. Sponsored by <a href=https://www.makinarocks.ai/>MakinaRocks</a>.</li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-end"><ul class=list-inline></ul></div></div></div></footer><script src=/js/bootstrap.min.592b9faf6c83a2bda564a377cf82f9a67546b198510a93fdb0728f9622ec22729d44be02fb2ea16c3fe5365ae1806259cd111932ca28e68b66462d6937635bab.js integrity="sha512-WSufr2yDor2lZKN3z4L5pnVGsZhRCpP9sHKPliLsInKdRL4C+y6hbD/lNlrhgGJZzREZMsoo5otmRi1pN2Nbqw==" crossorigin=anonymous defer></script>
 <script src=/js/highlight.min.88df7ec5d9693ad9d3c4f131a6974c6b0d00561526e939ea196b4f198ecdcfbac25d69d58367fde8df923823110dba6d1a7eabe44b7ea52559e92d0751b17869.js integrity="sha512-iN9+xdlpOtnTxPExppdMaw0AVhUm6TnqGWtPGY7Nz7rCXWnVg2f96N+SOCMRDbptGn6r5Et+pSVZ6S0HUbF4aQ==" crossorigin=anonymous defer></script>
 <script src=/js/vendor/katex/dist/katex.min.bcada504b3ec326107c39e7297015498140149b826ef1a9ca9e43f49afecab252b5623be3bea1e0a8663236740fba5368d9e84b8630aedea1a1926dd3f199a3c.js integrity="sha512-vK2lBLPsMmEHw55ylwFUmBQBSbgm7xqcqeQ/Sa/sqyUrViO+O+oeCoZjI2dA+6U2jZ6EuGMK7eoaGSbdPxmaPA==" crossorigin=anonymous defer></script>
 <script src=/js/vendor/katex/dist/contrib/auto-render.min.bc779bab10cdc862f139e7cd6255a8f021bc483db2b7bc6d553238fb220e937dbe5cd511100d2ab764ee5d9f9092a2cdcc4e6ae109966efc18338f0b275d927d.js integrity="sha512-vHebqxDNyGLxOefNYlWo8CG8SD2yt7xtVTI4+yIOk32+XNUREA0qt2TuXZ+QkqLNzE5q4QmWbvwYM48LJ12SfQ==" crossorigin=anonymous defer></script>
 <script src=/main.min.647c6f9869eb8e24d3f5183f467970dbadd12adeec725e66830376db069558e917e21eb7dd363563443d2c91c5c6557ea3b2864d1f2a78c3f65e676fa19b961b.js integrity="sha512-ZHxvmGnrjiTT9Rg/Rnlw263RKt7scl5mgwN22waVWOkX4h633TY1Y0Q9LJHFxlV+o7KGTR8qeMP2XmdvoZuWGw==" crossorigin=anonymous defer></script>
-<script src=https://mlops-for-all.github.io/index.min.3c5be28212fc76901078ef6c94b1da533cce68f4e9bc45ce73b6ca62b021f13baca94c50a031aaa0bdc33345718fdfebcd19d4364123471d1c391da203bcc63b.js integrity="sha512-PFvighL8dpAQeO9slLHaUzzOaPTpvEXOc7bKYrAh8TusqUxQoDGqoL3DM0Vxj9/rzRnUNkEjRx0cOR2iA7zGOw==" crossorigin=anonymous defer></script></body></html>
+<script src=https://mlops-for-all.github.io/index.min.eaf0d1e31f54746ed944f8f22fb668f6bec553356670bd718a1f5cb9631d038698bf35b3babf54fe9c0f9ae48269018e023a0677286e07e94bf85700062b0cf8.js integrity="sha512-6vDR4x9UdG7ZRPjyL7Zo9r7FUzVmcL1xih9cuWMdA4aYvzWzur9U/pwPmuSCaQGOAjoGdyhuB+lL+FcABisM+A==" crossorigin=anonymous defer></script></body></html>
