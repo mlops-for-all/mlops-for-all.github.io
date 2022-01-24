@@ -155,6 +155,9 @@ spec:
       - name: model_uri
         type: STRING
         value: &#34;/mnt/models&#34;
+      - name: xtype
+        type: STRING
+        value: &#34;dataframe&#34;
       children: []
 EOF
 </code></pre></div><p>seldon pod을 생성합니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>kubectl apply -f seldon-mlflow.yaml
@@ -162,9 +165,30 @@ EOF
 </code></pre></div><p>정상적으로 수행되면 다음과 같이 출력됩니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>seldondeployment.machinelearning.seldon.io/seldon-example created
 </code></pre></div><p>이제 pod이 정상적으로 뜰 때까지 기다립니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>kubectl get po -n kubeflow-user-example-com | grep seldon
 </code></pre></div><p>다음과 비슷하게 출력되면 정상적으로 API를 생성했습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>seldon-example-model-0-model-5c949bd894-c5f28      3/3     Running     0          69s
+</code></pre></div><p>CLI를 이용해 생성된 API에는 다음 request를 통해 실행을 확인할 수 있습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
+-H &#39;Content-Type: application/json&#39; \
+-d &#39;{
+    &#34;data&#34;: {
+        &#34;ndarray&#34;: [
+            [
+                143.0,
+                0.0,
+                30.0,
+                30.0
+            ]
+        ],
+        &#34;names&#34;: [
+            &#34;sepal length (cm)&#34;,
+            &#34;sepal width (cm)&#34;,
+            &#34;petal length (cm)&#34;,
+            &#34;petal width (cm)&#34;
+        ]
+    }
+}&#39;
+</code></pre></div><p>정상적으로 실행될 경우 다음과 같은 결과를 받을 수 있습니다.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text>{&#34;data&#34;:{&#34;names&#34;:[],&#34;ndarray&#34;:[&#34;Virginica&#34;]},&#34;meta&#34;:{&#34;requestPath&#34;:{&#34;model&#34;:&#34;ghcr.io/mlops-for-all/mlflowserver:e141f57&#34;}}}
 </code></pre></div><p class=edit-page><a href=https://github.com/mlops-for-all/mlops-for-all.github.io/blob/main/content/kor/docs/api-deployment/seldon-mlflow.md><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828.0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Edit this page on GitHub</a></p><div class="docs-navigation d-flex justify-content-between"><a href=/docs/api-deployment/seldon-fields/><div class="card my-1"><div class="card-body py-2">&larr; 4. Seldon Fields</div></div></a><a class=ms-auto href=/docs/api-deployment/seldon-children/><div class="card my-1"><div class="card-body py-2">6. Multi Models &rarr;</div></div></a></div></main></div></div></div><footer class="footer text-muted"><div class=container-xxl><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a>. Sponsored by <a href=https://www.makinarocks.ai/>MakinaRocks</a>.</li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-end"><ul class=list-inline></ul></div></div></div></footer><script src=/js/bootstrap.min.592b9faf6c83a2bda564a377cf82f9a67546b198510a93fdb0728f9622ec22729d44be02fb2ea16c3fe5365ae1806259cd111932ca28e68b66462d6937635bab.js integrity="sha512-WSufr2yDor2lZKN3z4L5pnVGsZhRCpP9sHKPliLsInKdRL4C+y6hbD/lNlrhgGJZzREZMsoo5otmRi1pN2Nbqw==" crossorigin=anonymous defer></script>
 <script src=/js/highlight.min.88df7ec5d9693ad9d3c4f131a6974c6b0d00561526e939ea196b4f198ecdcfbac25d69d58367fde8df923823110dba6d1a7eabe44b7ea52559e92d0751b17869.js integrity="sha512-iN9+xdlpOtnTxPExppdMaw0AVhUm6TnqGWtPGY7Nz7rCXWnVg2f96N+SOCMRDbptGn6r5Et+pSVZ6S0HUbF4aQ==" crossorigin=anonymous defer></script>
 <script src=/js/vendor/katex/dist/katex.min.bcada504b3ec326107c39e7297015498140149b826ef1a9ca9e43f49afecab252b5623be3bea1e0a8663236740fba5368d9e84b8630aedea1a1926dd3f199a3c.js integrity="sha512-vK2lBLPsMmEHw55ylwFUmBQBSbgm7xqcqeQ/Sa/sqyUrViO+O+oeCoZjI2dA+6U2jZ6EuGMK7eoaGSbdPxmaPA==" crossorigin=anonymous defer></script>
 <script src=/js/vendor/katex/dist/contrib/auto-render.min.bc779bab10cdc862f139e7cd6255a8f021bc483db2b7bc6d553238fb220e937dbe5cd511100d2ab764ee5d9f9092a2cdcc4e6ae109966efc18338f0b275d927d.js integrity="sha512-vHebqxDNyGLxOefNYlWo8CG8SD2yt7xtVTI4+yIOk32+XNUREA0qt2TuXZ+QkqLNzE5q4QmWbvwYM48LJ12SfQ==" crossorigin=anonymous defer></script>
 <script src=/main.min.647c6f9869eb8e24d3f5183f467970dbadd12adeec725e66830376db069558e917e21eb7dd363563443d2c91c5c6557ea3b2864d1f2a78c3f65e676fa19b961b.js integrity="sha512-ZHxvmGnrjiTT9Rg/Rnlw263RKt7scl5mgwN22waVWOkX4h633TY1Y0Q9LJHFxlV+o7KGTR8qeMP2XmdvoZuWGw==" crossorigin=anonymous defer></script>
-<script src=https://mlops-for-all.github.io/index.min.eaf0d1e31f54746ed944f8f22fb668f6bec553356670bd718a1f5cb9631d038698bf35b3babf54fe9c0f9ae48269018e023a0677286e07e94bf85700062b0cf8.js integrity="sha512-6vDR4x9UdG7ZRPjyL7Zo9r7FUzVmcL1xih9cuWMdA4aYvzWzur9U/pwPmuSCaQGOAjoGdyhuB+lL+FcABisM+A==" crossorigin=anonymous defer></script></body></html>
+<script src=https://mlops-for-all.github.io/index.min.ed218ed31ff838d5b850118e6b230db4b965d7a3aa8b01575cf3df3a17557874a8e4d3f9fe689a314ba488d2d6042c50828466f7b6df3c453cca21793d0da8c1.js integrity="sha512-7SGO0x/4ONW4UBGOayMNtLll16OqiwFXXPPfOhdVeHSo5NP5/miaMUukiNLWBCxQgoRm97bfPEU8yiF5PQ2owQ==" crossorigin=anonymous defer></script></body></html>
