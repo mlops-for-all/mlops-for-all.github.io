@@ -4,7 +4,7 @@ description: ""
 lead: ""
 draft: false
 weight: 325
-contributors: ["Jongseob Jeon"]
+contributors: ["Jongseob Jeon", "SeungTae Kim"]
 menu:
   docs:
     parent: "kubeflow"

@@ -4,7 +4,7 @@ description: ""
 lead: ""
 draft: false
 weight: 271
-contributors: ["Jaeyeon Kim"]
+contributors: ["Jaeyeon Kim", "SeungTae Kim"]
 menu:
   docs:
     parent: kubeflow-ui-guide

@@ -6,7 +6,7 @@ date: 2021-12-22
 lastmod: 2021-12-22
 draft: false
 weight: 411
-contributors: ["Youngcheol Jang"]
+contributors: ["Youngcheol Jang", "SeungTae Kim"]
 menu:
   docs:
     parent: "api-deployment"
