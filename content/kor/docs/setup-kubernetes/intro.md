@@ -19,15 +19,11 @@ MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구�
 
 이런 이유들로 MLOps를 선뜻 시작해보지 못하시는 분들을 위해, *모두의 MLOps*에서는 우분투가 설치되는 데스크톱 하나만 준비되어 있다면 MLOps 시스템을 밑바닥부터 구축하고 사용해 볼 수 있는 방법을 다룰 예정입니다.
 
-하지만 [MLOps의 구성요소]({{< relref "docs/introduction/component.md" >}})에서 설명하는 요소들을 모두 사용해볼 수는 없기에, *모두의 MLOps*에서는 대표적인 오픈소스만을 설치한 뒤, 서로 연동하여 사용하는 부분을 주로 다룰 예정입니다.
-
-*모두의 MLOps*에서 설치하는 오픈소스가 표준을 의미하는 것은 아니며, 여러분의 상황에 맞게 적절한 툴을 취사선택하는 것을 권장합니다.
-
 <p>
   <details>
-    <summary> 가상머신에 우분투 운영체제 구성하기 (M1 Mac) </summary>
+    <summary> 우분투 데스크탑 환경을 준비할 수 없는 경우, 가상머신을 활용하여 환경을 구성하기 </summary>
 
-  현재 운영체제 가상화를 지원하는 `Virtual Box`, `VMware` 등의 소프트웨어는 **애플의 최신 맥인 M1 시리즈를 지원하고 있지 않습니다.** ([M1 Apple Silicone Mac에 최적화된 macOS 앱 지원 확인하기](https://isapplesiliconready.com/kr))
+  2022년 2월 운영체제 가상화를 지원하는 `Virtual Box`, `VMware` 등의 소프트웨어는 **애플의 최신 맥인 M1 시리즈를 지원하고 있지 않습니다.** ([M1 Apple Silicone Mac에 최적화된 macOS 앱 지원 확인하기](https://isapplesiliconready.com/kr))
 
   따라서, 클라우드 환경을 이용해 실습하는 것이 아니라면, [UTM , Virtual machines for Mac](https://mac.getutm.app/)을 설치하여 가상 머신을 이용해주세요.
 
@@ -38,6 +34,12 @@ MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구�
   기존 Intel Mac을 사용해 `모두의 MLops` 실습을 진행 중인 개발자분들은 `Virtual Box`, `VMware` 등을 이용하는 것이 가능합니다.
   </details>
 </p>
+
+하지만 [MLOps의 구성요소]({{< relref "docs/introduction/component.md" >}})에서 설명하는 요소들을 모두 사용해볼 수는 없기에, *모두의 MLOps*에서는 대표적인 오픈소스만을 설치한 뒤, 서로 연동하여 사용하는 부분을 주로 다룰 예정입니다.
+
+*모두의 MLOps*에서 설치하는 오픈소스가 표준을 의미하는 것은 아니며, 여러분의 상황에 맞게 적절한 툴을 취사선택하는 것을 권장합니다.
+
+
 
 ## 구성 요소
 
