@@ -23,7 +23,9 @@ MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구�
   <details>
     <summary> 우분투 데스크탑 환경을 준비할 수 없는 경우, 가상머신을 활용하여 환경을 구성하기 </summary>
 
-  2022년 2월 운영체제 가상화를 지원하는 `Virtual Box`, `VMware` 등의 소프트웨어는 **애플의 최신 맥인 M1 시리즈를 지원하고 있지 않습니다.** ([M1 Apple Silicone Mac에 최적화된 macOS 앱 지원 확인하기](https://isapplesiliconready.com/kr))
+  Windows 혹은 Intel Mac을 사용해 `모두의 MLops` 실습을 진행 중인 분들은 `Virtual Box`, `VMware` 등의 가상머신 소프트웨어를 이용하여 우분투 데스크탑 환경을 준비할 수 있습니다. 이 때, 권장 사양을 맞춰 가상 머신을 생성해주시기 바랍니다.
+
+  또한, M1 Mac을 사용하시는 분들은 작성일(2022년 2월) 기준으로는 Virtual Box, VMware 는 이용할 수 없습니다. ([M1 Apple Silicone Mac에 최적화된 macOS 앱 지원 확인하기](https://isapplesiliconready.com/kr))
 
   따라서, 클라우드 환경을 이용해 실습하는 것이 아니라면, [UTM , Virtual machines for Mac](https://mac.getutm.app/)을 설치하여 가상 머신을 이용해주세요.
 
@@ -31,7 +33,6 @@ MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구�
 
   해당 가상머신 소프트웨어는 `Ubuntu 20.04.3 LTS` 실습 운영체제를 지원하고 있어, M1 Mac에서 실습을 수행하는 것을 가능하게 합니다.
 
-  기존 Intel Mac을 사용해 `모두의 MLops` 실습을 진행 중인 개발자분들은 `Virtual Box`, `VMware` 등을 이용하는 것이 가능합니다.
   </details>
 </p>
 
