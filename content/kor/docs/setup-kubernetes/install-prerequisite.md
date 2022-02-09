@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
 weight: 210
-contributors: ["Jaeyeon Kim", "Jongsun Shinn"]
+contributors: ["Jaeyeon Kim", "Jongsun Shinn", "Sangwoo Shim"]
 menu:
   docs:
     parent: "setup-kubernetes"
