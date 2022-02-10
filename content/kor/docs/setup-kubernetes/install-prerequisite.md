@@ -5,7 +5,7 @@ date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
 weight: 210
-contributors: ["Jaeyeon Kim", "Jongsun Shinn"]
+contributors: ["Jaeyeon Kim", "Jongsun Shinn", "Sangwoo Shim"]
 menu:
   docs:
     parent: "setup-kubernetes"
@@ -174,24 +174,13 @@ kubectl 은 쿠버네티스 클러스터에 API를 요청할 때 사용하는 �
 3. 정상적으로 설치되었는지 확인합니다.
 
    ```text
-   kubectl --help
+   kubectl version --client
    ```
 
    다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
    ```text
-   kubectl controls the Kubernetes cluster manager.
-
-   Find more information at:
-   https://kubernetes.io/docs/reference/kubectl/overview/
-
-   Basic Commands (Beginner):
-   create        Create a resource from a file or from stdin
-   expose        Take a replication controller, service, deployment or pod and
-   expose it as a new Kubernetes service
-   run           Run a particular image on the cluster
-   set           Set specific features on objects
-   ...
+   Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.7", GitCommit:"1f86634ff08f37e54e8bfcd86bc90b61c98f84d4", GitTreeState:"clean", BuildDate:"2021-11-17T14:41:19Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
    ```
 
 4. 여러 개의 쿠버네티스 클러스터를 사용하는 경우, 여러 개의 kubeconfig 파일을 관리해야 하는 경우가 있습니다.  

@@ -46,9 +46,7 @@ sudo sysctl --system
 ```text
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl &&
-
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg &&
-
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list &&
 sudo apt-get update
 sudo apt-get install -y kubelet=1.21.7-00 kubeadm=1.21.7-00 kubectl=1.21.7-00 &&
@@ -58,33 +56,18 @@ sudo apt-mark hold kubelet kubeadm kubectl
 kubeadm, kubelet, kubectl 이 잘 설치되었는지 확인합니다.
 
 ```text
-mlops@ubuntu:~$ kubeadm
+mlops@ubuntu:~$ kubeadm version
+kubeadm version: &version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.7", GitCommit:"1f86634ff08f37e54e8bfcd86bc90b61c98f84d4", GitTreeState:"clean", BuildDate:"2021-11-17T14:40:08Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
+```
 
+```text
+mlops@ubuntu:~$ kubelet --version
+Kubernetes v1.21.7
+```
 
-    ┌──────────────────────────────────────────────────────────┐
-    │ KUBEADM                                                  │
-    │ Easily bootstrap a secure Kubernetes cluster             │
-    │                                                          │
-    │ Please give us feedback at:                              │
-    │ https://github.com/kubernetes/kubeadm/issues             │
-    └──────────────────────────────────────────────────────────┘
-...
-mlops@ubuntu:~$ kubelet -h
-The kubelet is the primary "node agent" that runs on each
-node. It can register the node with the apiserver using one of: the hostname; a flag to
-override the hostname; or specific logic for a cloud provider.
-...
-mlops@ubuntu:~$ kubectl
-kubectl controls the Kubernetes cluster manager.
-
- Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
-
-Basic Commands (Beginner):
-  create        Create a resource from a file or from stdin.
-  expose        Take a replication controller, service, deployment or pod and expose it as a new Kubernetes Service
-  run           Run a particular image on the cluster
-  set           Set specific features on objects
-...
+```text
+mlops@ubuntu:~$ kubectl version --client
+Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.7", GitCommit:"1f86634ff08f37e54e8bfcd86bc90b61c98f84d4", GitTreeState:"clean", BuildDate:"2021-11-17T14:41:19Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
 이제 kubeadm을 사용하여 쿠버네티스를 설치합니다.
