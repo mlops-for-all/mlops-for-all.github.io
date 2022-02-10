@@ -6,7 +6,7 @@ date: 2021-12-13
 lastmod: 2021-12-20
 draft: false
 weight: 330
-contributors: ["Jongseob Jeon"]
+contributors: ["Jongseob Jeon", "SeungTae Kim"]
 menu:
   docs:
     parent: "kubeflow"

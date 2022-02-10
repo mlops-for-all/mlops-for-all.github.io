@@ -6,7 +6,7 @@ date: 2021-12-13
 lastmod: 2021-12-13
 draft: false
 weight: 201
-contributors: ["Jaeyeon Kim", "Jongsun Shinn", "Youngdon Tae"]
+contributors: ["Jaeyeon Kim", "Jongsun Shinn", "Youngdon Tae", "SeungTae Kim"]
 menu:
   docs:
     parent: "setup-kubernetes"
@@ -18,6 +18,23 @@ images: []
 MLOps를 공부하는 데 있어서 가장 큰 장벽은 MLOps 시스템을 구성해보고 사용해보기가 어렵다는 점입니다. AWS, GCP 등의 퍼블릭 클라우드 혹은 Weight & Bias, neptune.ai 등의 상용 툴을 사용해보기에는 과금에 대한 부담이 존재하고, 처음부터 모든 환경을 혼자서 구성하기에는 어디서부터 시작해야 할지 막막하게 느껴질 수밖에 없습니다.
 
 이런 이유들로 MLOps를 선뜻 시작해보지 못하시는 분들을 위해, *모두의 MLOps*에서는 우분투가 설치되는 데스크톱 하나만 준비되어 있다면 MLOps 시스템을 밑바닥부터 구축하고 사용해 볼 수 있는 방법을 다룰 예정입니다.
+
+<p>
+  <details>
+    <summary> 우분투 데스크탑 환경을 준비할 수 없는 경우, 가상머신을 활용하여 환경을 구성하기 </summary>
+
+  Windows 혹은 Intel Mac을 사용해 `모두의 MLops` 실습을 진행 중인 분들은 `Virtual Box`, `VMware` 등의 가상머신 소프트웨어를 이용하여 우분투 데스크탑 환경을 준비할 수 있습니다. 이 때, 권장 사양을 맞춰 가상 머신을 생성해주시기 바랍니다.
+
+  또한, M1 Mac을 사용하시는 분들은 작성일(2022년 2월) 기준으로는 Virtual Box, VMware 는 이용할 수 없습니다. ([M1 Apple Silicone Mac에 최적화된 macOS 앱 지원 확인하기](https://isapplesiliconready.com/kr))
+
+  따라서, 클라우드 환경을 이용해 실습하는 것이 아니라면, [UTM , Virtual machines for Mac](https://mac.getutm.app/)을 설치하여 가상 머신을 이용해주세요.
+
+  (앱스토어에서 구매하여 다운로드 받는 소프트웨어는 일종의 Donation 개념의 비용 지불입니다. 무료 버전과 자동 업데이트 정도의 차이가 있어, 무료버전을 사용해도 무방합니다.)
+
+  해당 가상머신 소프트웨어는 `Ubuntu 20.04.3 LTS` 실습 운영체제를 지원하고 있어, M1 Mac에서 실습을 수행하는 것을 가능하게 합니다.
+
+  </details>
+</p>
 
 하지만 [MLOps의 구성요소]({{< relref "docs/introduction/component.md" >}})에서 설명하는 요소들을 모두 사용해볼 수는 없기에, *모두의 MLOps*에서는 대표적인 오픈소스만을 설치한 뒤, 서로 연동하여 사용하는 부분을 주로 다룰 예정입니다.
 
