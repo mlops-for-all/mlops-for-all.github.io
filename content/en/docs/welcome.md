@@ -7,9 +7,6 @@ lastmod: 2021-12-13
 draft: false
 images: []
 weight: 1
-menu:
-  docs:
-    parent: "prologue"
 ---
 
 ## 모두의 MLOps

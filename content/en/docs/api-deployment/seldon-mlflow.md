@@ -1,5 +1,5 @@
 ---
-title : "4. Model from MLflow"
+title : "5. Model from MLflow"
 description: ""
 lead: ""
 draft: false
@@ -221,6 +221,9 @@ spec:
       - name: model_uri
         type: STRING
         value: "/mnt/models"
+      - name: xtype
+        type: STRING
+        value: "dataframe"
       children: []
 EOF
 ```
@@ -248,4 +251,35 @@ kubectl get po -n kubeflow-user-example-com | grep seldon
 
 ```text
 seldon-example-model-0-model-5c949bd894-c5f28      3/3     Running     0          69s
+```
+
+CLI를 이용해 생성된 API에는 다음 request를 통해 실행을 확인할 수 있습니다.
+
+```text
+curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
+-H 'Content-Type: application/json' \
+-d '{
+    "data": {
+        "ndarray": [
+            [
+                143.0,
+                0.0,
+                30.0,
+                30.0
+            ]
+        ],
+        "names": [
+            "sepal length (cm)",
+            "sepal width (cm)",
+            "petal length (cm)",
+            "petal width (cm)"
+        ]
+    }
+}'
+```
+
+정상적으로 실행될 경우 다음과 같은 결과를 받을 수 있습니다.
+
+```text
+{"data":{"names":[],"ndarray":["Virginica"]},"meta":{"requestPath":{"model":"ghcr.io/mlops-for-all/mlflowserver:e141f57"}}}
 ```
