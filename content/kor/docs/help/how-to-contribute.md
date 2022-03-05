@@ -12,29 +12,55 @@ menu:
 
 ## How to Start
 
+### Git Repo 준비
+
 1. [*모두의 MLOps* GitHub Repository](https://github.com/mlops-for-all/mlops-for-all.github.io)에 접속합니다.
 
 2. 여러분의 개인 Repository로 `Fork`합니다.
 
 3. Forked Repository를 여러분의 작업 환경으로 `git clone`합니다.
 
-4. 필요한 node module을 설치합니다.
+### 환경 설정
 
-```text
-npm install
-```
+1. 모두의 MLOps는 Hugo 와 Node를 이용하고 있습니다.  
+  다음 명령어를 통해 필요한 패키지가 설치되어 있는지 확인합니다.
 
-5. 글 수정 및 추가를 후 ci 를 실행합니다.
+- node & npm
 
-```text
-npm ci
-```
+    ```text
+    npm --version
+    ```
 
-6. 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
+- hugo
 
-```text
-npm run start
-```
+    ```text
+    hugo version
+    ```
+
+1. 필요한 node module을 설치합니다.
+
+    ```text
+    npm install
+    ```
+
+2. 프로젝트에서는 각 글의 일관성을 위해서 여러 markdown lint를 적용하고 있습니다.  
+  다음 명령어를 실행해 test를 진행한 후 커밋합니다.내용 수정 및 추가 후 lint가 맞는지 확인합니다.
+
+    ```text
+    npm test
+    ```
+
+4. lint 확인 완료 후 ci 를 실행합니다.
+
+    ```text
+    npm ci
+    ```
+
+4. 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
+
+    ```text
+    npm run start
+    ```
 
 ## How to Contribute
 
@@ -65,18 +91,9 @@ contributors: ["John Doe", "Adam Smith"]
 
 ```markdown
 ---
-title: "Minsoo Kim"
+title: "John Doe"
 draft: false
 ---
-```
-
-## Before Commit
-
-프로젝트에서는 각 글의 일관성을 위해서 여러 markdown lint를 적용하고 있습니다.
-다음 명령어를 실행해 test를 진행한 후 커밋합니다.
-
-```text
-npm test
 ```
 
 ## After Pull Request
