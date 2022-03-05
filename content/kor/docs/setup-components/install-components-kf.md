@@ -30,33 +30,12 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
 
 또한, 본 문서에서는 **모두의 MLOps** 에서 다루지 않는 구성요소인 Knative, KFServing, MPI Operator 의 설치는 리소스의 효율적 사용을 위해 따로 설치하지 않습니다.
 
-### cert-manager
+### Cert-manager
 
 1. cert-manager 를 설치합니다.
 
   ```text
   kustomize build common/cert-manager/cert-manager/base | kubectl apply -f -
-  ```
-
-  cert-manager namespace 의 3 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
-
-  ```text
-  kubectl get pod -n cert-manager
-  ```
-
-  모두 Running 이 되면 다음과 비슷한 결과가 출력됩니다.
-
-  ```text
-  NAME                                       READY   STATUS    RESTARTS   AGE
-  cert-manager-7dd5854bb4-7nmpd              1/1     Running   0          2m10s
-  cert-manager-cainjector-64c949654c-2scxr   1/1     Running   0          2m10s
-  cert-manager-webhook-6b57b9b886-7q6g2      1/1     Running   0          2m10s
-  ```
-
-2. kubeflow-issuer 를 설치합니다.
-
-  ```text
-  kustomize build common/cert-manager/kubeflow-issuer/base | kubectl apply -f -
   ```
 
   정상적으로 설치되면 다음과 같이 출력됩니다.
@@ -105,6 +84,33 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
   deployment.apps/cert-manager-webhook created
   mutatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
   validatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
+  ```
+
+  cert-manager namespace 의 3 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
+
+  ```text
+  kubectl get pod -n cert-manager
+  ```
+
+  모두 Running 이 되면 다음과 비슷한 결과가 출력됩니다.
+
+  ```text
+  NAME                                       READY   STATUS    RESTARTS   AGE
+  cert-manager-7dd5854bb4-7nmpd              1/1     Running   0          2m10s
+  cert-manager-cainjector-64c949654c-2scxr   1/1     Running   0          2m10s
+  cert-manager-webhook-6b57b9b886-7q6g2      1/1     Running   0          2m10s
+  ```
+
+2. kubeflow-issuer 를 설치합니다.
+
+  ```text
+  kustomize build common/cert-manager/kubeflow-issuer/base | kubectl apply -f -
+  ```
+
+  정상적으로 설치되면 다음과 같이 출력됩니다.
+
+  ```text
+  clusterissuer.cert-manager.io/kubeflow-self-signing-issuer created
   ```
 
 - cert-manager-webhook 이슈
