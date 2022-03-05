@@ -1,11 +1,11 @@
 ---
-title : "3. Why Kubernetes?"
+title : "4. Why Kubernetes?"
 description: "Reason for using k8s in MLOps"
 lead: ""
 date: 2021-12-03
 lastmod: 2021-12-10
 draft: false
-weight: 103
+weight: 104
 contributors: ["Jaeyeon Kim"]
 menu:
   docs:

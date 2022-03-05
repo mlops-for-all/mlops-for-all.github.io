@@ -1,11 +1,11 @@
 ---
-title : "2. Components of MLOps"
+title : "3. Components of MLOps"
 description: "Describe MLOps Components"
 lead: ""
 date: 2021-12-03
 lastmod: 2021-12-10
 draft: false
-weight: 102
+weight: 103
 contributors: ["Youngcheol Jang"]
 menu:
   docs:
