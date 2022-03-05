@@ -71,8 +71,10 @@ alertText = "Introducing the Doks child theme, several DX + UX updates, and more
 repoHost = "GitHub"
 #repoHost = "Gitea"
 docsRepo = "https://github.com/mlops-for-all/mlops-for-all.github.io"
+docsRepoSubPath = ""
 docsRepoBranch = "main"
 editPage = true
+lastMod = false
 
 [options]
   lazySizes = true
@@ -84,6 +86,11 @@ editPage = true
   breadCrumb = false
   highLight = true
   kaTex = true
-  collapsibleSidebar = true
   multilingualMode = true
   docsVersioning = false
+  fullWidth = false
+
+[menu]
+  [menu.section]
+    auto = false
+    collapsibleSidebar = true
