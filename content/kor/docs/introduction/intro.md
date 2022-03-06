@@ -73,9 +73,9 @@ Continuous Integration(CI) 와 Continuous Delivery (CD)는 개발팀과 운영�
 
 ### 1) ML+Ops
 
-MLOps는 Machine Learning 과 Operations의 합성어로 DevOps에서 Dev가 ML로 바뀌었습니다. 이제 앞에서 살펴본 DevOps를 통해 한 가지를 생각해볼 수 있습니다.
+MLOps는 Machine Learning 과 Operations의 합성어로 DevOps에서 Dev가 ML로 바뀌었습니다. 이제 앞에서 살펴본 DevOps를 통해 MLOps가 무엇인지 짐작해 볼 수 있습니다.
 “MLOps는 머신러닝팀과 운영팀의 문제를 해결하기 위한 방법입니다.”
-그럼 왜 머신러닝팀과 운영팀에는 문제가 발생했을까요? 두 팀 간의 문제를 알아보기 위해서 추천시스템을 예시로 알아보겠습니다.
+이 말은 머신러닝팀과 운영팀 사이에 문제가 발생했다는 의미입니다. 그럼 왜 머신러닝팀과 운영팀에는 문제가 발생했을까요? 두 팀 간의 문제를 알아보기 위해서 추천시스템을 예시로 알아보겠습니다.
 
 #### Rule Based
 
@@ -93,7 +93,7 @@ MLOps는 Machine Learning 과 Operations의 합성어로 DevOps에서 Dev가 ML�
   <img src="/images/docs/introduction/graph.png" title="graph" width=70%/>
 </p>
 
-위에서 설명한 것을 x축을 모델의 복잡도를 y축을 모델의 성능으로 둔다면 다음과 같이 복잡도가 올라갈 때 모델의 성능이 올라가는 상승 관계를 갖습니다. 머신러닝에서 딥러닝으로 넘어갈 머신러닝 팀이 새로 생기게 됩니다.
+위에서 설명한 것을 x축을 모델의 복잡도, y축을 모델의 성능으로 두고 그래프로 표현한다면 다음과 같이 복잡도가 올라갈 때 모델의 성능이 올라가는 상승 관계를 갖습니다. 머신러닝에서 딥러닝으로 넘어갈 머신러닝 팀이 새로 생기게 됩니다.
 
 만약 관리해야할 모델이 적다면 서로 협업을 통해서 충분히 해결할 수 있지만 개발해야 할 모델이 많아진다면 DevOps의 경우와 같이 사일로 현상이 나타나게 됩니다.
 
