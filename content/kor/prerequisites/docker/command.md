@@ -26,6 +26,7 @@ This message shows that your installation appears to be working correctly.
 ```
 
 **(For ubuntu)** sudo 없이 사용하고 싶다면 아래 사이트를 참고합니다.
+
 - [https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
 
 ## 2. Docker Pull
@@ -76,11 +77,12 @@ Digest: sha256:42cd9143b6060261187a72716906187294b8b66653b50d70bc7a90ccade5c984
 Status: Downloaded newer image for ubuntu:18.04
 docker.io/library/ubuntu:18.04
 ```
+
 위의 명령어를 수행하면 [docker.io/library](http://docker.io/library/) 라는 이름의 registry 에서 ubuntu:18.04 라는 image 를 여러분의 노트북에 다운로드 받게됩니다.
 
 - 참고사항
-    - 추후 [docker.io](http://docker.io) 나 public 한 docker hub 와 같은 registry 대신에, 특정 **private** 한 registry 에서 docker image 를 가져와야 하는 경우에는, `docker login` 을 통해서 특정 registry 를 바라보도록 한 뒤, docker pull 을 수행하는 형태로 사용합니다.
-    - 폐쇄망에서 docker image 를 `.tar` 파일과 같은 형태로 저장하고 공유할 수 있도록 `docker save`, `docker load` 와 같은 명령어도 존재합니다.
+  - 추후 [docker.io](http://docker.io) 나 public 한 docker hub 와 같은 registry 대신에, 특정 **private** 한 registry 에서 docker image 를 가져와야 하는 경우에는, `docker login` 을 통해서 특정 registry 를 바라보도록 한 뒤, docker pull 을 수행하는 형태로 사용합니다.
+  - 폐쇄망에서 docker image 를 `.tar` 파일과 같은 형태로 저장하고 공유할 수 있도록 `docker save`, `docker load` 와 같은 명령어도 존재합니다.
 
 ## 3. Docker images
 
@@ -155,7 +157,6 @@ Options:
   -s, --size            Display total file sizes
 ```
 
-
 아래 명령어를 이용해 직접 실행해 보겠습니다.
 
 ```bash
@@ -198,11 +199,11 @@ docker run -it --name demo1 ubuntu:18.04 /bin/bash
 ```
 
 - `-it` : `-i` 옵션 + `-t` 옵션
-    - container 를 실행시킴과 동시에 interactive 한 terminal 로 접속시켜주는 옵션
+  - container 를 실행시킴과 동시에 interactive 한 terminal 로 접속시켜주는 옵션
 - `--name` : name
-    - 컨테이너 id 대신, 구분하기 쉽도록 지정해주는 이름
+  - 컨테이너 id 대신, 구분하기 쉽도록 지정해주는 이름
 - `/bin/bash`
-    - 컨테이너를 실행시킴과 동시에 실행할 커맨드로, `/bin/bash` 는 bash 쉘을 여는 것을 의미합니다.
+  - 컨테이너를 실행시킴과 동시에 실행할 커맨드로, `/bin/bash` 는 bash 쉘을 여는 것을 의미합니다.
 
 실행 후 `exit` 명령어를 통해 컨테이너를 종료합니다.
 
@@ -258,7 +259,7 @@ fc88a83e90f0   ubuntu:18.04   "sleep 3600"   4 seconds ago   Up 3 seconds       
 ```bash
 docker exec -it demo2 /bin/bash
 ```
-    
+
 이 전의 `docker run`과 동일하게 container 내부에 접속할 수 있습니다.
 
 `exit`을 통해 종료합니다.
@@ -421,7 +422,6 @@ docker rmi busybox
 ```
 
 다시 `docker images`를 칠 경우 다음과 같이 나옵니다.
-
 
 ```bash
 REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
