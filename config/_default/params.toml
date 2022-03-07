@@ -94,7 +94,4 @@ lastMod = false
   [menu.section]
     auto = false
     collapsibleSidebar = true
-<<<<<<< HEAD
     mainSections = ["docs", "prerequisites"]
-=======
->>>>>>> 236d4ec (update theme version)
