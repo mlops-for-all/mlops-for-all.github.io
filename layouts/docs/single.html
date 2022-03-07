@@ -1,7 +1,7 @@
 {{ define "main" }}
 	<div class="row flex-xl-nowrap">
 		<div class="col-lg-5 col-xl-4 docs-sidebar d-none d-lg-block">
-			<nav class="docs-links" aria-label="Main navigation">
+			<nav {{ if eq .Site.Params.menu.section.collapsibleSidebar false }}id="sidebar-default" {{ end }}class="docs-links" aria-label="Main navigation">
 				{{ partial "sidebar/docs-menu.html" . }}
 			</nav>
 		</div>
@@ -11,7 +11,7 @@
 		</nav>
 		{{ end -}}
 		{{ if .Params.toc -}}
-		<main class="docs-content col-lg-11 col-xl-9">
+		<main class="docs-content col-lg-11 col-xl{{ if eq .Site.Params.options.fullWidth false }}-9{{ end }}">
 		{{ else -}}
 		<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto">
 		{{ end -}}
@@ -32,9 +32,14 @@
 			</nav>
 			{{ end -}}
 			{{ .Content }}
-			{{ if .Site.Params.editPage -}}
-				{{ partial "main/edit-page.html" . }}
-			{{ end -}}
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				{{ if .Site.Params.lastMod -}}
+					{{ partial "main/last-modified.html" . }}
+				{{ end -}}
+				{{ if .Site.Params.editPage -}}
+					{{ partial "main/edit-page.html" . }}
+				{{ end -}}
+			</div>
 			{{ partial "main/docs-navigation.html" . }}
 			<!--
 			{{ if not .Site.Params.options.collapsibleSidebar -}}
