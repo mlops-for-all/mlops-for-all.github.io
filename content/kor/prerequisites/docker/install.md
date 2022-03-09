@@ -1,6 +1,6 @@
 ---
-title : "Docker - Requirements"
-description: "Requirements to start docker session."
+title : "Install Docker"
+description: "Install docker to start."
 lead: ""
 draft: false
 weight: 101
