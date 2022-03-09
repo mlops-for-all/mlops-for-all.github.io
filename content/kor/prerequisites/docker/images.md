@@ -11,11 +11,6 @@ menu:
     parent: "docker"
 ---
 
-
- 
-
-
-
 ## 1. Dockerfile 만들기
 
 도커 이미지를 만드는 가장 쉬운 방법은 도커에서 제공하는 템플릿인 Dockerfile을 사용하는 것입니다.  
