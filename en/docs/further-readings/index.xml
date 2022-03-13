@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Further Readings on</title><link>https://mlops-for-all.github.io/en/docs/further-readings/</link><description>Recent content in Further Readings on</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 21 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mlops-for-all.github.io/en/docs/further-readings/index.xml" rel="self" type="application/rss+xml"/><item><title>다루지 못한 것들</title><link>https://mlops-for-all.github.io/en/docs/further-readings/info/</link><pubDate>Tue, 21 Dec 2021 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/en/docs/further-readings/info/</guid><description>MLOps Component # MLOps Concepts에서 다루었던 컴포넌트를 도식화하면 다음과 같습니다.
 이 중 모두의 MLOps 에서 다룬 기술 스택들은 다음과 같습니다.
 보시는 것처럼 아직 우리가 다루지 못한 많은 MLOps 컴포넌트들이 있습니다.
-시간 관계상 이번에 모두 다루지는 못했지만, 만약 필요하다면 다음과 같은 오픈소스들을 먼저 참고해보면 좋을 것 같습니다.</description></item></channel></rss>
+시간 관계상 이번에 모두 다루지는 못했지만, 만약 필요하다면 다음과 같은 오픈소스들을 먼저 참고해보면 좋을 것 같습니다.
+세부 내용은 다음과 같습니다.
+Mgmt. Component Open Soruce Data Mgmt. Collection Kafka Validation Beam Feature Store Flink ML Model Dev.</description></item></channel></rss>
