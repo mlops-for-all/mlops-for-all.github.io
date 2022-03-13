@@ -6,7 +6,7 @@ date: 2021-12-22
 lastmod: 2021-12-22
 draft: false
 weight: 411
-contributors: ["Youngcheol Jang"]
+contributors: ["Youngcheol Jang", "SeungTae Kim"]
 menu:
   docs:
     parent: "api-deployment"
@@ -97,7 +97,7 @@ echo "NODE_IP"=$NODE_IP
 echo "NODE_PORT"=$NODE_PORT
 ```
 
-다음과 비슷하게 출력되어야 합니다.
+다음과 비슷하게 출력되어야 하며, 클라우드 등을 통해 설정할 경우, internal ip 주소가 설정되는 것을 확인할 수 있습니다.
 
 ```text
 NODE_IP=192.168.0.19

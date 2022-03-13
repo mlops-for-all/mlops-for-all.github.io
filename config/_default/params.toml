@@ -94,3 +94,4 @@ lastMod = false
   [menu.section]
     auto = false
     collapsibleSidebar = true
+    mainSections = ["docs", "prerequisites"]

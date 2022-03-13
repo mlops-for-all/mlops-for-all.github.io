@@ -4,28 +4,33 @@ date: 2021-12-21
 lastmod: 2021-12-21
 draft: false
 images: []
+toc: true
 menu:
   docs:
     parent: "help"
-weight: 9001
-toc: true
 ---
 
 ## How to Start
 
-1. 필요한 node module을 설치합니다.
+1. [*모두의 MLOps* GitHub Repository](https://github.com/mlops-for-all/mlops-for-all.github.io)에 접속합니다.
+
+2. 여러분의 개인 Repository로 `Fork`합니다.
+
+3. Forked Repository를 여러분의 작업 환경으로 `git clone`합니다.
+
+4. 필요한 node module을 설치합니다.
 
 ```text
 npm install
 ```
 
-2. 글 수정 및 추가를 후 ci 를 실행합니다.
+5. 글 수정 및 추가를 후 ci 를 실행합니다.
 
 ```text
 npm ci
 ```
 
-3. 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
+6. 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
 
 ```text
 npm run start
@@ -53,10 +58,10 @@ contributors: ["John Doe", "Adam Smith"]
 
 ### 3. 프로젝트에 처음 기여할 때
 
-만약 프로젝트에 처음 기여 할 때 `content/en/contributors`에 본인의 이름의 마크다운 파일을 작성합니다.
+만약 프로젝트에 처음 기여 할 때 `content/kor/contributors`에 본인의 이름으로 폴더를 생성한 후, `_index.md`라는 파일을 작성합니다.
 
-예를 들어, `minsoo kim`이 본인의 영어 이름이라면, 마크다운 파일은 `minsoo-kim.md`을 파일명으로 하여 다음의 내용을 작성합니다.
-파일명은 하이픈(-)으로 연결한 소문자로, title은 띄어쓰기를 포함한 CamelCase로 작성합니다.
+예를 들어, `minsoo kim`이 본인의 영어 이름이라면, 폴더명은 `minsoo-kim`으로 하여 해당 폴더 내부의 `_index.md`파일에 다음의 내용을 작성합니다.
+폴더명은 하이픈(-)으로 연결한 소문자로, title은 띄어쓰기를 포함한 CamelCase로 작성합니다.
 
 ```markdown
 ---
@@ -73,3 +78,7 @@ draft: false
 ```text
 npm test
 ```
+
+## After Pull Request
+
+Pull Request를 생성하면 프로젝트에서는 자동으로 *모두의 MLOps* 운영진에게 리뷰 요청이 전해집니다. 최대 일주일 이내로 확인 후 Comment를 드릴 예정입니다.

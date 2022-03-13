@@ -1,7 +1,14 @@
+# Main Section
+
 [[main]]
   name = "Docs"
-  url = "/docs/prologue/welcome/"
+  url = "/docs/welcome/"
   weight = 10
+
+[[main]]
+  name = "Prerequisites"
+  url = "/prerequisites/intro"
+  weight = 15
 
 # [[main]]
 #   name = "Blog"
@@ -23,11 +30,7 @@
   url = "/help/"
   weight = 100
 
-[[docs]]
-  name = "Prologue"
-  url = "/docs/prologue/"
-  identifier = "prologue"
-  weight = 1
+# Docs side menu
 
 [[docs]]
   name = "Introduction"
@@ -76,6 +79,22 @@
   url = "/docs/appendix/"
   identifier = "appendix"
   weight = 60
+
+# Prerequisites side menu
+
+[[prerequisites]]
+  name = "Docker"
+  url = "/prerequisites/docker/"
+  identifier = "docker"
+  weight = 10
+
+[[prerequisites]]
+  name = "kubernetes"
+  url = "/prerequisites/kubernetes/"
+  identifier = "kubernetes"
+  weight = 20
+
+# Social Badges
 
 [[social]]
   name = "GitHub"
