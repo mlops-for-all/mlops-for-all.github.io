@@ -31,7 +31,7 @@ This message shows that your installation appears to be working correctly.
 
 ## 2. Docker Pull
 
-docker image registry(도커 이미지를 저장하고 공유할 수 있는 저장소)로부터 Docker image 를 가져오는 커맨드입니다.
+docker image registry(도커 이미지를 저장하고 공유할 수 있는 저장소)로부터 Docker image 를 로컬에 다운로드 받는 커맨드입니다.
 
 아래 커맨드를 통해 docker pull에서 사용 가능한 argument들을 확인할 수 있습니다.
 
@@ -81,8 +81,8 @@ docker.io/library/ubuntu:18.04
 위의 명령어를 수행하면 [docker.io/library](http://docker.io/library/) 라는 이름의 registry 에서 ubuntu:18.04 라는 image 를 여러분의 노트북에 다운로드 받게됩니다.
 
 - 참고사항
-  - 추후 [docker.io](http://docker.io) 나 public 한 docker hub 와 같은 registry 대신에, 특정 **private** 한 registry 에서 docker image 를 가져와야 하는 경우에는, `docker login` 을 통해서 특정 registry 를 바라보도록 한 뒤, docker pull 을 수행하는 형태로 사용합니다.
-  - 폐쇄망에서 docker image 를 `.tar` 파일과 같은 형태로 저장하고 공유할 수 있도록 `docker save`, `docker load` 와 같은 명령어도 존재합니다.
+  - 추후 [docker.io](http://docker.io) 나 public 한 docker hub 와 같은 registry 대신에, 특정 **private** 한 registry 에서 docker image 를 가져와야 하는 경우에는, [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) 을 통해서 특정 registry 를 바라보도록 한 뒤, docker pull 을 수행하는 형태로 사용합니다. 혹은 insecure registry 를 설정하는 [방안](https://stackoverflow.com/questions/42211380/add-insecure-registry-to-docker)도 활용할 수 있습니다.
+  - 폐쇄망에서 docker image 를 `.tar` 파일과 같은 형태로 저장하고 공유할 수 있도록 [`docker save`](https://docs.docker.com/engine/reference/commandline/save/), [`docker load`](https://docs.docker.com/engine/reference/commandline/load/) 와 같은 명령어도 존재합니다.
 
 ## 3. Docker images
 
@@ -121,7 +121,7 @@ REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
 ubuntu       18.04     29e70752d7b2   2 days ago   56.7MB
 ```
 
-줄 수 있는 Argument중 `-q`를 사용하면 `IMAGE ID` 만 출력됩니다.
+줄 수 있는 argument중 `-q`를 사용하면 `IMAGE ID` 만 출력됩니다.
 
 ```bash
 docker images -q
@@ -163,7 +163,7 @@ Options:
 docker ps
 ```
 
-따로 실행되는 컨테이너가 없다면 다음과 같이 나옵니다.
+현재 실행 중인 컨테이너가 없다면 다음과 같이 나옵니다.
 
 ```text
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
@@ -221,7 +221,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
 실행되고 있는 컨테이너가 나온다고 했지만 어째서인지 방금 실행한 컨테이너가 보이지 않습니다.
-그 이유는 `docker ps`는 기본값으로 현재 동작 중인 컨테이너를 보여주기 때문입니다.
+그 이유는 `docker ps`는 기본값으로 현재 실행 중인 컨테이너를 보여주기 때문입니다.
 
 만약 종료된 컨테이너들도 보고 싶다면 `-a` 옵션을 주어야 합니다.
 
@@ -340,9 +340,9 @@ CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS        
 730391669c39   busybox   "sh -c 'while true; …"   2 minutes ago   Up 2 minutes             demo3
 ```
 
-위의 결과와 비교했을 때 demo2 컨테이터가 없어진 것을 확인할 수 있습니다.
+위의 결과와 비교했을 때 demo2 컨테이너가 현재 실행 중인 컨테이너 목록에서 사라진 것을 확인할 수 있습니다.
 
-나머지 컨테이터도 종료합니다.
+나머지 컨테이너도 정지합니다.
 
 ```bash
 docker stop demo3

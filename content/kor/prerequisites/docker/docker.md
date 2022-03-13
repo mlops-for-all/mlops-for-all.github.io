@@ -18,10 +18,10 @@ menu:
   - 어플리케이션을 어디에서나 동일하게 실행하는 기술
 - 컨테이너 이미지
   - 어플리케이션을 실행시키기 위해 필요한 모든 파일들의 집합
-  - → 파이썬의 클래스
+  - → 붕어빵 틀
 - 컨테이너란?
   - 컨테이너 이미지를 기반으로 실행된 한 개의 프로세스
-  - → 파이썬의 인스턴스
+  - → 붕어빵 틀로 찍어낸 붕어빵
 
 ## 도커
 
@@ -35,13 +35,13 @@ menu:
   <img src="/images/prerequisites/docker/docker-layer.png" title="docker-layer" width=70%/>
 </p>
 
-사용자는 이러한 추상화된 layer를 이용해 **Docker CLI** 만으로 컨테이너를 제어할 수 있습니다.
+이를 통해 사용자는 사용자 친화적인 API 인 **Docker CLI** 만으로 쉽게 컨테이너를 제어할 수 있습니다.
 
 ## Layer 해석
 
 위에서 나온 layer들의 역할은 다음과 같습니다.
 
-1. runC: linux kernel 의 기능을 직접 사용해서, container 라는 하나의 프로세스가 사용할 네임스페이스와 cpu, memory, filesystem 등을 격리시켜주는 기능을 수행한다.
+1. runC: linux kernel 의 기능을 직접 사용해서, container 라는 하나의 프로세스가 사용할 네임스페이스와 cpu, memory, filesystem 등을 격리시켜주는 기능을 수행합니다.
 2. containerd: runC(OCI layer) 에게 명령을 내리기 위한 추상화 단계이며, 표준화된 인터페이스(OCI)를 사용합니다.
 3. dockerd: containerd 에게 명령을 내리는 역할만 합니다.
 4. docker cli: 사용자는 docker cli 로 dockerd (Docker daemon)에게 명령을 내리기만 하면 됩니다.
