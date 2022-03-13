@@ -15,7 +15,11 @@ menu:
 
 도커 실습을 위해 도커를 설치해야 합니다.  
 도커 설치는 어떤 OS를 사용하는지에 따라 달라집니다.  
-각 환경에 맞는 도커 설치는 [공식 홈페이지](https://www.docker.com/get-started)를 참고해주세요.
+각 환경에 맞는 도커 설치는 공식 홈페이지를 참고해주세요.
+
+- [ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+- [mac](https://docs.docker.com/desktop/mac/install/)
+- [windows](https://docs.docker.com/desktop/windows/install/)
 
 ## 설치 확인
 
@@ -24,7 +28,8 @@ menu:
 | OS      | Docker Engine  | Terminal           |
 | ------- | -------------- | ------------------ |
 | MacOS   | Docker Desktop | zsh                |
-| Windows | Docker Desktop | Powershell or WSL2 |
+| Windows | Docker Desktop | Powershell         |
+| Windows | Docker Desktop | WSL2               |
 | Ubuntu  | Docker Engine  | bash               |
 
 ## 들어가기 앞서서..

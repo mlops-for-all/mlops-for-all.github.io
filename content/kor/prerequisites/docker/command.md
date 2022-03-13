@@ -169,6 +169,13 @@ docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
+만약 실행되는 컨테이너가 있다면 다음과 비슷하게 나옵니다.
+
+```text
+CONTAINER ID   IMAGE     COMMAND        CREATED          STATUS          PORTS     NAMES
+c1e8f5e89d8d   ubuntu    "sleep 3600"   13 seconds ago   Up 12 seconds             trusting_newton
+```
+
 ## 5. Docker run
 
 도커 컨테이너를 실행시키는 커맨드입니다.
