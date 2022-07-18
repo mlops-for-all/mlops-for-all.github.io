@@ -7,7 +7,6 @@
     <div class="col-lg-9 col-xl-8 text-center">
       <p class="lead">{{ .Params.lead | safeHTML }}</p>
       <a class="btn btn-primary btn-lg px-4 mb-2" href="/docs/{{ if .Site.Params.options.docsVersioning }}{{ .Site.Params.docsVersion }}/{{ end }}welcome/" role="button">Get Started</a>
-      <!-- <p class="meta">Open-source MIT Licensed. <a href="https://github.com/h-enk/doks">GitHub v{{ $data := getJSON "/package.json" }}{{ $data.version }}</a></p> -->
       <p class="meta">Open-source MIT Licensed. </p>
       <p class="meta">이 프로젝트는 <a href="https://www.makinarocks.ai/">MakinaRocks</a>의 지원을 받아 제작되었습니다. </p>
     </div>
@@ -16,7 +15,7 @@
 {{ end }}
 
 {{ define "sidebar-prefooter" }}
-  {{ if eq $.Site.Language.LanguageName "Not Use" }}
+  {{ if eq $.Site.Language.LanguageName "English" }}
   <section class="section section-sm">
     <div class="container">
       <div class="row justify-content-center text-center">
@@ -26,7 +25,7 @@
         </div>
         <div class="col-lg-5">
           <h2 class="h4">Fast by default ⚡️</h2>
-          <p>Get 100 scores on <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=92eaa982d7dbf92f94fe8ecc03987c9a">Google Lighthouse</a> by default. Doks removes unused css, prefetches links, and lazy loads images.</p>
+          <p>Get 100 scores on <a href="https://googlechrome.github.io/lighthouse/viewer/?gist=59aafe464a68f8bc30b8e9a636d5b053">Google Lighthouse</a> by default. Doks removes unused css, prefetches links, and lazy loads images.</p>
         </div>
         <div class="col-lg-5">
           <h2 class="h4">SEO-ready</h2>
