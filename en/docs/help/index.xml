@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Help on</title><link>https://mlops-for-all.github.io/en/docs/help/</link><description>Recent content in Help on</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 21 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mlops-for-all.github.io/en/docs/help/index.xml" rel="self" type="application/rss+xml"/><item><title>Community</title><link>https://mlops-for-all.github.io/en/docs/help/community/</link><pubDate>Tue, 21 Dec 2021 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/en/docs/help/community/</guid><description>모두의 MLOps 릴리즈 소식 # 새로운 포스트나 수정사항은 Announcements에서 확인할 수 있습니다.
-Question # 프로젝트 내용과 관련된 궁금점은 Q&amp;amp;A를 통해 질문할 수 있습니다.
-Suggestion # 제안점은 Ideas를 통해 제안해 주시면 됩니다.
-v2.0 Release # v2.0 릴리즈 계획 및 목차는 추후 Announcements에 공개될 예정입니다.</description></item><item><title>How to Contribute</title><link>https://mlops-for-all.github.io/en/docs/help/how-to-contribute/</link><pubDate>Tue, 21 Dec 2021 00:00:00 +0000</pubDate><guid>https://mlops-for-all.github.io/en/docs/help/how-to-contribute/</guid><description>How to Start # 모두의 MLOps GitHub Repository에 접속합니다.
-여러분의 개인 Repository로 Fork합니다.
-Forked Repository를 여러분의 작업 환경으로 git clone합니다.
-필요한 node module을 설치합니다.
-npm install 글 수정 및 추가를 후 ci 를 실행합니다. npm ci 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다. npm run start How to Contribute # 1. 새로운 포스트를 작성할 때 # 새로운 포스트는 각 챕터와 포스트의 위치에 맞는 weight를 설정합니다.</description></item></channel></rss>
