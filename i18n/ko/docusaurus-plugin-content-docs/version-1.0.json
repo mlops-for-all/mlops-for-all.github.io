@@ -1,0 +1,46 @@
+{
+  "version.label": {
+    "message": "1.0",
+    "description": "The label for version 1.0"
+  },
+  "sidebar.tutorialSidebar.category.Introduction": {
+    "message": "Introduction",
+    "description": "The label for category Introduction in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Setup Kubernetes": {
+    "message": "Setup Kubernetes",
+    "description": "The label for category Setup Kubernetes in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.4. Install Kubernetes": {
+    "message": "4. Install Kubernetes",
+    "description": "The label for category 4. Install Kubernetes in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Setup Components": {
+    "message": "Setup Components",
+    "description": "The label for category Setup Components in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Kubeflow UI Guide": {
+    "message": "Kubeflow UI Guide",
+    "description": "The label for category Kubeflow UI Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Kubeflow": {
+    "message": "Kubeflow",
+    "description": "The label for category Kubeflow in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.API Deployment": {
+    "message": "API Deployment",
+    "description": "The label for category API Deployment in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Appendix": {
+    "message": "Appendix",
+    "description": "The label for category Appendix in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Further Readings": {
+    "message": "Further Readings",
+    "description": "The label for category Further Readings in sidebar tutorialSidebar"
+  },
+  "sidebar.preSidebar.category.Docker": {
+    "message": "Docker",
+    "description": "The label for category Docker in sidebar preSidebar"
+  }
+}

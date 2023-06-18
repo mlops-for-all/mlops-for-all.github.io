@@ -11,7 +11,7 @@ contributors: ["Jaeyeon Kim"]
 
 쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성 요소들을 **클러스터에** 설치합니다.
 
-[Install Prerequisite](../setup-kubernetes/install-prerequisite.md)을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
+[Install Prerequisite](../../setup-kubernetes/install-prerequisite.md)을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
 
 ### Minikube binary
 
@@ -176,7 +176,7 @@ root@ubuntu:/home/mlops# minikube addons list
 
 ## 4. 쿠버네티스 기본 모듈 설치
 
-[Setup Kubernetes Modules](../setup-kubernetes/install-kubernetes-module.md)을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
+[Setup Kubernetes Modules](../../setup-kubernetes/install-kubernetes-module.md)을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
 
 - helm
 - kustomize
