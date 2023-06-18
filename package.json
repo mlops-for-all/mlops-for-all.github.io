@@ -1,70 +1,49 @@
 {
-  "name": "@hyas/doks",
-  "description": "Doks theme",
-  "version": "0.4.3",
-  "engines": {
-		"node": ">=16.15.0"
-	},
-  "browserslist": [
-    "defaults"
-  ],
-  "repository": "https://github.com/h-enk/doks",
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
+  "name": "v-2",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "init": "shx rm -rf .git && git init -b main",
-    "create": "exec-bin node_modules/.bin/hugo/hugo new",
-    "prestart": "npm run clean",
-    "start": "exec-bin node_modules/.bin/hugo/hugo server --bind=0.0.0.0 --disableFastRender",
-    "prebuild": "npm run clean",
-    "build": "exec-bin node_modules/.bin/hugo/hugo --gc --minify",
-    "build:preview": "npm run build -D -F",
-    "clean": "shx rm -rf public resources",
-    "clean:install": "shx rm -rf package-lock.json node_modules ",
-    "lint": "npm run -s lint:scripts && npm run -s lint:styles && npm run -s lint:markdown",
-    "lint:scripts": "eslint assets/js config functions",
-    "lint:styles": "stylelint \"assets/scss/**/*.{css,sass,scss,sss,less}\"",
-    "lint:markdown": "markdownlint-cli2 \"*.md\" \"content/**/*.md\"",
-    "lint:markdown-fix": "markdownlint-cli2-fix \"*.md\" \"content/**/*.md\"",
-    "server": "exec-bin node_modules/.bin/hugo/hugo server",
-    "test": "npm run -s lint",
-    "env": "env",
-    "precheck": "npm version",
-    "check": "exec-bin node_modules/.bin/hugo/hugo version",
-    "copy:katex-fonts": "shx cp ./node_modules/katex/dist/fonts/* ./static/fonts/",
-    "postinstall": "hugo-installer --version otherDependencies.hugo --extended --destination node_modules/.bin/hugo",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@docusaurus/core": "2.4.1",
+    "@docusaurus/plugin-content-docs": "^2.4.1",
+    "@docusaurus/plugin-google-gtag": "^2.4.1",
+    "@docusaurus/plugin-sitemap": "^2.4.1",
+    "@docusaurus/preset-classic": "2.4.1",
+    "@mdx-js/react": "^1.6.22",
+    "clsx": "^1.2.1",
+    "prism-react-renderer": "^1.3.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17",
-    "@babel/core": "^7.17",
-    "@babel/preset-env": "^7.17",
-    "@fullhuman/postcss-purgecss": "^4.1",
-    "auto-changelog": "^2.4",
-    "autoprefixer": "^10.4",
-    "bootstrap": "^5.1",
-    "clipboard": "^2.0",
-    "eslint": "^8.15",
-    "exec-bin": "^1.0.0",
-    "flexsearch": "^0.7.21",
-    "highlight.js": "^11.5",
-    "hugo-installer": "^3.1",
-    "instant.page": "^5.1",
-    "katex": "^0.15",
-    "lazysizes": "^5.3",
-    "markdownlint-cli2": "^0.4.0",
-    "netlify-plugin-submit-sitemap": "^0.3.0",
-    "node-fetch": "^3.2",
-    "postcss": "^8.4",
-    "postcss-cli": "^9.1",
-    "purgecss-whitelister": "^2.4",
-    "shx": "^0.3.4",
-    "stylelint": "^14.8",
-    "stylelint-config-standard-scss": "^3.0"
+    "@docusaurus/module-type-aliases": "2.4.1",
+    "@tsconfig/docusaurus": "^1.0.5",
+    "typescript": "^4.7.4"
   },
-  "otherDependencies": {
-    "hugo": "0.99.0"
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=16.14"
   }
 }
