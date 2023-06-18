@@ -40,7 +40,7 @@ const config = {
         id: "community",
         path: "community",
         routeBasePath: "community",
-        editUrl: "https://github.com/mlops-for-mle/tutorial/tree/main/",
+        editUrl: "https://github.com/mlops-for-all/mlops-for-all.github.io/tree/main/",
         editCurrentVersion: true,
         sidebarPath: require.resolve("./sidebarsCommunity.js"),
         showLastUpdateAuthor: true,
@@ -124,7 +124,7 @@ const config = {
             position: "right",
           },
           {
-            href: "https://github.com/mlops-for-mle/tutorial/tree/main/",
+            href: "https://github.com/mlops-for-all/mlops-for-all.github.io/tree/main/",
             label: "GitHub",
             position: "right",
           },
