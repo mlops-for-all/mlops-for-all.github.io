@@ -110,6 +110,7 @@ scp -p {CLUSTER_USER_ID}@{CLUSTER_IP}:~/.kube/config ~/.kube/config
 
 [Setup Kubernetes Modules](../setup-kubernetes/install-kubernetes-module.md)을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
 
+
 - helm
 - kustomize
 - CSI plugin
