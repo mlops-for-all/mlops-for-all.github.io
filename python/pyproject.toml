@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "mlops-for-all"
+version = "0.1.0"
+description = "Scripts for translation"
+authors = ["Aiden-Jeon <aiden.jongseob@gmail.com>"]
+readme = "README.md"
+packages = [{include = "mlops_for_all"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+openai = "^0.27.8"
+python-dotenv = "^1.0.0"
+langchain = {extras = ["llms"], version = "^0.0.228"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
