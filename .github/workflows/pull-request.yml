@@ -8,9 +8,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: anencore94/labeler@v1.1.0
-
-  pre-commit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: pre-commit/action@v2.0.0
