@@ -19,10 +19,10 @@ def request_prompt(source_sentence):
     translated_sentence = "\n"
     if source_sentence:
         translation_prompt = HumanMessage(
-            content=f"Translate this sentence from Korean to English. {source_sentence}"
+            content=f"Translate those sentences from Korean to English. {source_sentence}"
         )
         translated_sentence = OPENAI_MODEL.predict_messages([translation_prompt]).content
-    return translated_sentence
+    return translated_sentence + "\n"
 
 
 def translate(source_path, dest_path):
@@ -51,7 +51,6 @@ def translate(source_path, dest_path):
                     source_sentence = "".join(lines)
                     translated_sentence = request_prompt(source_sentence)
                     translate_lines += [translated_sentence]
-                    translate_lines += ["\n"]
                     # 모으는 부분을 초기화 하고 코드 블록임을 선언한다.
                     lines = []
                     is_codeblock = True
@@ -70,7 +69,6 @@ def translate(source_path, dest_path):
                 source_sentence = "".join(lines)
                 translated_sentence = request_prompt(source_sentence)
                 translate_lines += [translated_sentence]
-                translate_lines += ["\n"]
                 lines = []
 
     source_sentence = "".join(lines)
@@ -79,7 +77,6 @@ def translate(source_path, dest_path):
     #
     translated_sentence = request_prompt(source_sentence)
     translate_lines += [translated_sentence]
-    translate_lines += ["\n"]
 
     docs = "".join(translate_lines)
     with open(dest_path, "w") as f:

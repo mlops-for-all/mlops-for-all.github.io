@@ -5,14 +5,13 @@ sidebar_position: 9
 contributors: ["Jongseob Jeon"]
 ---
 
-
 ## Component Environment
 
-앞서  [8. Component - InputPath/OutputPath](../kubeflow/advanced-component.md)에서 작성한 파이프라인을 실행하면 실패하게 됩니다. 왜 실패하는지 알아보고 정상적으로 실행될 수 있도록 수정합니다.
+When we run the pipeline written in [8. Component - InputPath/OutputPath](../kubeflow/advanced-component.md), it fails. Let's find out why it fails and modify it so that it can run properly. 
 
 ### Convert to Kubeflow Format
 
-[앞에서 작성한 컴포넌트](../kubeflow/advanced-component.md#convert-to-kubeflow-format)를 yaml파일로 변환하도록 하겠습니다.
+Let's convert the component written [earlier](../kubeflow/advanced-component.md#convert-to-kubeflow-format) into a yaml file.
 
 ```python
 from kfp.components import InputPath, OutputPath, create_component_from_func
@@ -44,7 +43,7 @@ if __name__ == "__main__":
     train_from_csv.component_spec.save("train_from_csv.yaml")
 ```
 
-위의 스크립트를 실행하면 다음과 같은 `train_from_csv.yaml` 파일을 얻을 수 있습니다.
+If you run the script above, you will get a `train_from_csv.yaml` file like the one below.
 
 ```text
 name: Train from csv
@@ -104,32 +103,32 @@ implementation:
     - {inputValue: kernel}
 ```
 
-앞서 [Basic Usage Component](../kubeflow/basic-component.md#convert-to-kubeflow-format)에서 설명한 내용에 따르면 이 컴포넌트는 다음과 같이 실행됩니다.
+According to the content explained in the [Basic Usage Component](../kubeflow/basic-component.md#convert-to-kubeflow-format) previously mentioned, this component will be executed as follows:
 
 1. `docker pull python:3.7`
 2. run `command`
 
-하지만 위에서 생성된 컴포넌트를 실행하면 오류가 발생하게 됩니다.  
-그 이유는 컴포넌트 래퍼가 실행되는 방식에 있습니다.  
-Kubeflow는 쿠버네티스를 이용하기 때문에 컴포넌트 래퍼는 각각 독립된 컨테이너 위에서 컴포넌트 콘텐츠를 실행합니다.
+However, when running the component created above, an error will occur.  
+The reason is in the way the component wrapper is executed.  
+Kubeflow uses Kubernetes, so the component wrapper runs the component content on its own separate container.
 
-자세히 보면 생성된 만든 `train_from_csv.yaml` 에서 정해진 이미지는  `image: python:3.7` 입니다.
+In detail, the image specified in the generated `train_from_csv.yaml` is `image: python:3.7`.
 
-이제 어떤 이유 때문에 실행이 안 되는지 눈치채신 분들도 있을 것입니다.
+There may be some people who notice why it is not running for some reason.
 
-`python:3.7` 이미지에는 우리가 사용하고자 하는 `dill`, `pandas`, `sklearn` 이 설치되어 있지 않습니다.  
-그러므로 실행할 때 해당 패키지가 존재하지 않는다는 에러와 함께 실행이 안 됩니다.
+The `python:3.7` image does not have the packages we want to use, such as `dill`, `pandas`, and `sklearn`, installed.  
+Therefore, when executing, it fails with an error indicating that the packages are not found.
 
-그럼 어떻게 패키지를 추가할 수 있을까요?
+So, how can we add the packages?
 
-## 패키지 추가 방법
+## Adding packages
 
-Kubeflow를 변환하는 과정에서 두 가지 방법을 통해 패키지를 추가할 수 있습니다.
+During the process of converting Kubeflow, there are two ways to add packages:
 
-1. `base_image` 사용
-2. `package_to_install` 사용
+1. Using `base_image`
+2. Using `package_to_install`
 
-컴포넌트를 컴파일할 때 사용했던 함수 `create_component_from_func` 가 어떤 argument들을 받을 수 있는지 확인해 보겠습니다.
+Let's check what arguments the function `create_component_from_func` used to compile the components can receive.
 
 ```text
 def create_component_from_func(
@@ -141,21 +140,21 @@ def create_component_from_func(
 ):
 ```
 
-- `func`: 컴포넌트로 만들 컴포넌트 래퍼 함수
-- `base_image`: 컴포넌트 래퍼가 실행할 이미지
-- `packages_to_install`: 컴포넌트에서 사용해서 추가로 설치해야 하는 패키지
+- `func`: Function that creates the component wrapper to be made into a component.
+- `base_image`: Image that the component wrapper will run on.
+- `packages_to_install`: Additional packages that need to be installed for the component to use.
 
 ### 1. base_image
 
-컴포넌트가 실행되는 순서를 좀 더 자세히 들여다보면 다음과 같습니다.
+Take a closer look at the sequence in which the component is executed and it will be as follows:
 
 1. `docker pull base_image`
 2. `pip install packages_to_install`
 3. run `command`
 
-만약 컴포넌트가 사용하는 base_image에 패키지들이 전부 설치되어 있다면 추가적인 패키지 설치 없이 바로 사용할 수 있습니다.
+If the base_image used by the component already has all the packages installed, you can use it without installing additional packages.
 
-예를 들어, 이번 페이지에서는 다음과 같은 Dockerfile을 작성하겠습니다.
+For example, on this page we are going to write a Dockerfile like this:
 
 ```dockerfile
 FROM python:3.7
@@ -163,15 +162,15 @@ FROM python:3.7
 RUN pip install dill pandas scikit-learn
 ```
 
-위의 Dockerfile을 이용해 이미지를 빌드해 보겠습니다. 실습에서 사용해볼 도커 허브는 ghcr입니다.  
-각자 환경에 맞추어서 도커 허브를 선택 후 업로드하면 됩니다.
+Let's build the image using the Dockerfile above. The Docker hub we will use for the practice is ghcr.  
+You can choose a Docker hub according to your environment and upload it.
 
 ```text
 docker build . -f Dockerfile -t ghcr.io/mlops-for-all/base-image
 docker push ghcr.io/mlops-for-all/base-image
 ```
 
-이제 base_image를 입력해 보겠습니다.
+Now let's try inputting the base image.
 
 ```python
 from functools import partial
@@ -205,7 +204,7 @@ if __name__ == "__main__":
     train_from_csv.component_spec.save("train_from_csv.yaml")
 ```
 
-이제 생성된 컴포넌트를 컴파일하면 다음과 같이 나옵니다.
+If you compile the generated component, it will appear as follows.
 
 ```text
 name: Train from csv
@@ -271,13 +270,12 @@ implementation:
     - {outputPath: model}
 ```
 
-base_image가 우리가 설정한 값으로 바뀐 것을 확인할 수 있습니다.
+We can confirm that the base_image has been changed to the value we have set.
 
 ### 2. packages_to_install
 
-하지만 패키지가 추가될 때마다 docker 이미지를 계속해서 새로 생성하는 작업은 많은 시간이 소요됩니다.
-이 때, `packages_to_install` argument 를 사용하면 패키지를 컨테이너에 쉽게 추가할 수 있습니다.
-
+However, when packages are added, it takes a lot of time to create a new Docker image.
+In this case, we can use the `packages_to_install` argument to easily add packages to the container.
 ```python
 from functools import partial
 from kfp.components import InputPath, OutputPath, create_component_from_func
@@ -310,7 +308,7 @@ if __name__ == "__main__":
     train_from_csv.component_spec.save("train_from_csv.yaml")
 ```
 
-스크립트를 실행하면 다음과 같은 `train_from_csv.yaml` 파일이 생성됩니다.
+If you execute the script, the `train_from_csv.yaml` file will be generated.
 
 ```text
 name: Train from csv
@@ -382,13 +380,13 @@ implementation:
     - {outputPath: model}
 ```
 
-위에 작성한 컴포넌트가 실행되는 순서를 좀 더 자세히 들여다보면 다음과 같습니다.
+If we take a closer look at the order in which the components written above are executed, it looks like this:
 
 1. `docker pull python:3.7`
 2. `pip install dill==0.3.4 pandas==1.3.4 scikit-learn==1.0.1`
 3. run `command`
 
-생성된 yaml 파일을 자세히 보면, 다음과 같은 줄이 자동으로 추가되어 필요한 패키지가 설치되기 때문에 오류 없이 정상적으로 실행됩니다.
+When the generated yaml file is closely examined, the following lines are automatically added, so that the necessary packages are installed and the program runs smoothly without errors.
 
 ```text
     command:

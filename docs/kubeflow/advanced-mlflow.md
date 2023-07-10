@@ -280,7 +280,7 @@ def train_from_csv(
 
 그리고 MLFlow에 업로드하는 컴포넌트를 작성합니다.
 이 때 업로드되는 MLflow의 endpoint를 우리가 설치한 [mlflow service](../setup-components/install-components-mlflow.md) 로 이어지게 설정해주어야 합니다.  
-이 때 S3 Endpoint의 주소는 MLflow Server 설치 당시 설치한 minio의 [쿠버네티스 서비스 DNS 네임을 활용](https://kubernetes.io/ko/docs/concepts/services-networking/dns-pod-service/)합니다. 해당  service 는 kubeflow namespace에서 minio-service라는 이름으로 생성되었으므로, `http://minio-service.kubeflow.svc:9000` 로 설정합니다..  
+이 때 S3 Endpoint의 주소는 MLflow Server 설치 당시 설치한 minio의 [쿠버네티스 서비스 DNS 네임을 활용](https://kubernetes.io/ko/docs/concepts/services-networking/dns-pod-service/)합니다. 해당 service 는 kubeflow namespace에서 minio-service라는 이름으로 생성되었으므로, `http://minio-service.kubeflow.svc:9000` 로 설정합니다.  
 이와 비슷하게 tracking_uri의 주소는 mlflow server의 쿠버네티스 서비스 DNS 네임을 활용하여, `http://mlflow-server-service.mlflow-system.svc:5000` 로 설정합니다.
 
 ```python
