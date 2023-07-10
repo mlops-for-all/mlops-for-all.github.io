@@ -17,20 +17,20 @@ contributors: ["Jaeyeon Kim"]
 
 Minikube를 사용하기 위해, v1.24.0 버전의 Minikube 바이너리를 설치합니다.
 
-```text
+```bash
 wget https://github.com/kubernetes/minikube/releases/download/v1.24.0/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 
 정상적으로 설치되었는지 확인합니다.
 
-```text
+```bash
 minikube version
 ```
 
 다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
-```text
+```bash
 mlops@ubuntu:~$ minikube version
 minikube version: v1.24.0
 commit: 76b94fb3c4e8ac5062daf70d60cf03ddcc0a741b
@@ -43,13 +43,13 @@ GPU 의 원활한 사용과 클러스터-클라이언트 간 통신을 간편하
 
 root user로 전환합니다.
 
-```text
+```bash
 sudo su
 ```
 
 `minikube start`를 수행하여 쿠버네티스 클러스터 구축을 진행합니다. Kubeflow의 원활한 사용을 위해, 쿠버네티스 버전은 v1.21.7로 지정하여 구축하며 `--extra-config`를 추가합니다.
 
-```text
+```bash
 minikube start --driver=none \
   --kubernetes-version=v1.21.7 \
   --extra-config=apiserver.service-account-signing-key-file=/var/lib/minikube/certs/sa.key \
@@ -60,20 +60,20 @@ minikube start --driver=none \
 
 Minikube를 설치하면 Default로 설치되는 addon이 존재합니다. 이 중 저희가 사용하지 않을 addon을 비활성화합니다.
 
-```text
+```bash
 minikube addons disable storage-provisioner
 minikube addons disable default-storageclass
 ```
 
 모든 addon이 비활성화된 것을 확인합니다.
 
-```text
+```bash
 minikube addons list
 ```
 
 다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
-```text
+```bash
 root@ubuntu:/home/mlops# minikube addons list
 |-----------------------------|----------|--------------|-----------------------|
 |         ADDON NAME          | PROFILE  |    STATUS    |      MAINTAINER       |
@@ -119,14 +119,14 @@ root@ubuntu:/home/mlops# minikube addons list
 
 1. **클러스터**에서 config를 확인합니다.
 
-  ```text
+  ```bash
   # 클러스터 노드
   minikube kubectl -- config view --flatten
   ```
 
 2. 다음과 같은 정보가 출력됩니다.
 
-  ```text
+  ```bash
   apiVersion: v1
   clusters:
   - cluster:
@@ -163,14 +163,14 @@ root@ubuntu:/home/mlops# minikube addons list
 
 3. **클라이언트** 노드에서 `.kube` 폴더를 생성합니다.
 
-  ```text
+  ```bash
   # 클라이언트 노드
   mkdir -p /home/$USER/.kube
   ```
 
 4. 해당 파일에 2. 에서 출력된 정보를 붙여넣은 뒤 저장합니다.
   
-  ```text
+  ```bash
   vi /home/$USER/.kube/config
   ```
 
@@ -187,13 +187,13 @@ root@ubuntu:/home/mlops# minikube addons list
 
 최종적으로 node가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
 
-```text
+```bash
 kubectl get nodes -o wide
 ```
 
 다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
-```text
+```bash
 NAME     STATUS   ROLES                  AGE     VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
 ubuntu   Ready    control-plane,master   2d23h   v1.21.7   192.168.0.75   <none>        Ubuntu 20.04.3 LTS   5.4.0-91-generic   docker://20.10.11
 ```

@@ -166,7 +166,7 @@ if __name__ == "__main__":
 <details>
   <summary>example_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:

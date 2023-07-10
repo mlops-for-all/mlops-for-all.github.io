@@ -7,13 +7,13 @@ lastmod: 2021-12-13
 contributors: ["Jaeyeon Kim"]
 ---
 
-쿠버네티스 및 Kubeflow 등에서 GP 를 사용하기 위해서는 다음 작업이 필요합니다.
+For using GPU in Kubernetes and Kubeflow, the following tasks are required.
 
 ## 1. Install NVIDIA Driver
 
-`nvidia-smi` 수행 시 다음과 같은 화면이 출력된다면 이 단계는 생략해 주시기 바랍니다.
+If the following screen is output when executing `nvidia-smi`, please omit this step.
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ nvidia-smi 
   +-----------------------------------------------------------------------------+
   | NVIDIA-SMI 470.86       Driver Version: 470.86       CUDA Version: 11.4     |
@@ -42,22 +42,22 @@ contributors: ["Jaeyeon Kim"]
   +-----------------------------------------------------------------------------+
   ```
 
-`nvidia-smi`의 출력 결과가 위와 같지 않다면 장착된 GPU에 맞는 nvidia driver를 설치해 주시기 바랍니다.
+If the output of nvidia-smi is not as above, please install the nvidia driver that fits your installed GPU.
 
-만약 nvidia driver의 설치에 익숙하지 않다면 아래 명령어를 통해 설치하시기 바랍니다.
+If you are not familiar with the installation of nvidia drivers, please install it through the following command.
 
-  ```text
+  ```bash
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo apt update && sudo apt install -y ubuntu-drivers-common
   sudo ubuntu-drivers autoinstall
   sudo reboot
   ```
 
-## 2. NVIDIA-Docker 설치
+## 2. Install NVIDIA-Docker.
 
-NVIDIA-Docker를 설치합니다.
+Let's install NVIDIA-Docker.
 
-```text
+```bash
 curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \
   sudo apt-key add -
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
@@ -67,15 +67,15 @@ sudo apt-get install -y nvidia-docker2 &&
 sudo systemctl restart docker
 ```
 
-정상적으로 설치되었는지 확인하기 위해, GPU를 사용하는 도커 컨테이너를 실행해봅니다.
+To check if it is installed correctly, we will run the docker container using the GPU.
 
-```text
+```bash
 sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
 ```
 
-다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
+If the following message appears, it means that the installation was successful: 
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   +-----------------------------------------------------------------------------+
   | NVIDIA-SMI 470.86       Driver Version: 470.86       CUDA Version: 11.4     |
@@ -101,14 +101,13 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   +-----------------------------------------------------------------------------+
   ```
 
-## 3. NVIDIA-Docker를 Default Container Runtime으로 설정
+## 3. Setting NVIDIA-Docker as the Default Container Runtime
 
-쿠버네티스는 기본적으로 Docker-CE를 Default Container Runtime으로 사용합니다.
-따라서, Docker Container 내에서 NVIDIA GPU를 사용하기 위해서는 NVIDIA-Docker 를 Container Runtime 으로 사용하여 pod를 생성할 수 있도록 Default Runtime을 수정해 주어야 합니다.
+By default, Kubernetes uses Docker-CE as the default container runtime. To use NVIDIA GPU within Docker containers, you need to configure NVIDIA-Docker as the container runtime and modify the default runtime for creating pods.
 
-1. `/etc/docker/daemon.json` 파일을 열어 다음과 같이 수정합니다.
+1. Open the `/etc/docker/daemon.json` file and make the following modifications:
 
-  ```text
+  ```bash
   sudo vi /etc/docker/daemon.json
 
   {
@@ -122,22 +121,22 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   }
   ```
 
-2. 파일이 변경된 것을 확인한 후, Docker를 재시작합니다.
+2. After confirming the file changes, restart Docker.
 
-  ```text
+  ```bash
   sudo systemctl daemon-reload
   sudo service docker restart
   ```
 
-3. 변경 사항이 반영되었는지 확인합니다.
+3. Verify that the changes have been applied.
 
-  ```text
+  ```bash
   sudo docker info | grep nvidia
   ```
 
-  다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
+  If you see the following message, it means that the installation was successful.
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ docker info | grep nvidia
   Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux nvidia runc
   Default Runtime: nvidia
@@ -145,37 +144,37 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
 
 ## 4. Nvidia-Device-Plugin
 
-1. nvidia-device-plugin daemonset을 생성합니다.
+1. Create the nvidia-device-plugin daemonset.
 
-  ```text
+  ```bash
   kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.10.0/nvidia-device-plugin.yml
   ```
 
-2. nvidia-device-plugin pod이 RUNNING 상태로 생성되었는지 확인합니다.
+2. Verify that the nvidia-device-plugin pod is in the RUNNING state.
 
-  ```text
+  ```bash
   kubectl get pod -n kube-system | grep nvidia
   ```
 
-  다음과 같은 결과가 출력되어야 합니다.
+You should see the following output:
 
-  ```text
-  kube-system       nvidia-device-plugin-daemonset-nlqh2         1/1     Running   0      1h
+  ```bash
+  kube-system   nvidia-device-plugin-daemonset-nlqh2   1/1     Running   0    1h
   ```
 
-3. node 정보에 gpu가 사용가능하도록 설정되었는지 확인합니다.
+3. Verify that the nodes have been configured to have GPUs available.
 
-  ```text
+  ```bash
   kubectl get nodes "-o=custom-columns=NAME:.metadata.name,GPU:.status.allocatable.nvidia\.com/gpu"
   ```
 
-  다음과 같은 메시지가 보이면 정상적으로 설정된 것을 의미합니다.  
-  (*모두의 MLOps* 에서 실습을 진행한 클러스터는 2개의 GPU가 있어서 2가 출력됩니다.
-  본인의 클러스터의 GPU 개수와 맞는 숫자가 출력된다면 됩니다.)
+  If you see the following message, it means that the configuration was successful.  
+  (*In the *MLOps for ALL* tutorial cluster, there are two GPUs, so the output is 2.
+  If the output shows the correct number of GPUs for your cluster, it is fine.)
 
-  ```text
+  ```bash
   NAME       GPU
   ubuntu     2
   ```
 
-설정되지 않은 경우, GPU의 value가 `<None>` 으로 표시됩니다.
+  If it is not configured, the GPU value will be displayed as `<None>`.

@@ -26,20 +26,20 @@ IPVS 모드에서 kube-proxy를 사용하는 경우 Kubernetes v1.14.2 이후부
 Kube-router는 기본적으로 엄격한 ARP를 활성화하므로 서비스 프록시로 사용할 경우에는 이 기능이 필요하지 않습니다.  
 엄격한 ARP 모드를 적용하기에 앞서, 현재 모드를 확인합니다.
 
-```text
+```bash
 # see what changes would be made, returns nonzero returncode if different
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
 grep strictARP
 ```
 
-```text
+```bash
 strictARP: false
 ```
 
 strictARP: false 가 출력되는 경우 다음을 실행하여 strictARP: true로 변경합니다.
 (strictARP: true가 이미 출력된다면 다음 커맨드를 수행하지 않으셔도 됩니다.)
 
-```text
+```bash
 # actually apply the changes, returns nonzero returncode on errors only
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
 sed -e "s/strictARP: false/strictARP: true/" | \
@@ -48,7 +48,7 @@ kubectl apply -f - -n kube-system
 
 정상적으로 수행되면 다음과 같이 출력됩니다.
 
-```text
+```bash
 Warning: resource configmaps/kube-proxy is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
 configmap/kube-proxy configured
 ```
@@ -57,7 +57,7 @@ configmap/kube-proxy configured
 
 #### 1. MetalLB 를 설치합니다.
 
-```text
+```bash
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.11.0/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.11.0/manifests/metallb.yaml
 ```
@@ -66,13 +66,13 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.11.0/manif
 
 metallb-system namespace 의 2 개의 pod 이 모두 Running 이 될 때까지 기다립니다.
 
-```text
+```bash
 kubectl get pod -n metallb-system
 ```
 
 모두 Running 이 되면 다음과 비슷한 결과가 출력됩니다.
 
-```text
+```bash
 NAME                          READY   STATUS    RESTARTS   AGE
 controller-7dcc8764f4-8n92q   1/1     Running   1          1m
 speaker-fnf8l                 1/1     Running   1          1m
@@ -109,7 +109,7 @@ Layer 2 모드를 사용할 경우 워커 노드의 네트워크 인터페이스
 
 #### metallb_config.yaml
 
-```text
+```bash
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -142,13 +142,13 @@ configmap/config created
 
 먼저 kubeflow의 Dashboard 를 제공하는 istio-system 네임스페이스의 istio-ingressgateway 서비스의 타입을 `LoadBalancer`로 변경하여 MetalLB로부터 로드 벨런싱 기능을 제공받기 전에, 현재 상태를 확인합니다.
 
-```text
+```bash
 kubectl get svc/istio-ingressgateway -n istio-system
 ```
 
 해당 서비스의 타입은 ClusterIP이며, External-IP 값은 `none` 인 것을 확인할 수 있습니다.
 
-```text
+```bash
 NAME                   TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                                        AGE
 istio-ingressgateway   ClusterIP   10.103.72.5   <none>        15021/TCP,80/TCP,443/TCP,31400/TCP,15443/TCP   4h21m
 ```
@@ -156,11 +156,11 @@ istio-ingressgateway   ClusterIP   10.103.72.5   <none>        15021/TCP,80/TCP,
 type 을 LoadBalancer 로 변경하고 원하는 IP 주소를 입력하고 싶은 경우 loadBalancerIP 항목을 추가합니다.  
 추가 하지 않을 경우에는 위에서 설정한 IP 주소풀에서 순차적으로 IP 주소가 배정됩니다.
 
-```text
+```bash
 kubectl edit svc/istio-ingressgateway -n istio-system
 ```
 
-```text
+```bash
 spec:
   clusterIP: 10.103.72.5
   clusterIPs:
@@ -201,11 +201,11 @@ status:
 
 다시 확인을 해보면 External-IP 값이 `192.168.35.100` 인 것을 확인합니다.
 
-```text
+```bash
 kubectl get svc/istio-ingressgateway -n istio-system
 ```
 
-```text
+```bash
 NAME                   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)                                                                      AGE
 istio-ingressgateway   LoadBalancer   10.103.72.5   192.168.35.100   15021:31054/TCP,80:30853/TCP,443:30443/TCP,31400:30012/TCP,15443:31650/TCP   5h1m
 ```
@@ -218,13 +218,13 @@ Web Browser 를 열어 [http://192.168.35.100](http://192.168.35.100) 으로 접
 
 먼저 minio 의 Dashboard 를 제공하는 kubeflow 네임스페이스의 minio-service 서비스의 타입을 LoadBalancer로 변경하여 MetalLB로부터 로드 벨런싱 기능을 제공받기 전에, 현재 상태를 확인합니다.
 
-```text
+```bash
 kubectl get svc/minio-service -n kubeflow
 ```
 
 해당 서비스의 타입은 ClusterIP이며, External-IP 값은 `none` 인 것을 확인할 수 있습니다.
 
-```text
+```bash
 NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 minio-service   ClusterIP   10.109.209.87   <none>        9000/TCP   5h14m
 ```
@@ -232,11 +232,11 @@ minio-service   ClusterIP   10.109.209.87   <none>        9000/TCP   5h14m
 type 을 LoadBalancer 로 변경하고 원하는 IP 주소를 입력하고 싶은 경우 loadBalancerIP 항목을 추가합니다.  
 추가 하지 않을 경우에는 위에서 설정한 IP 주소풀에서 순차적으로 IP 주소가 배정됩니다.
 
-```text
+```bash
 kubectl edit svc/minio-service -n kubeflow
 ```
 
-```text
+```bash
 apiVersion: v1
 kind: Service
 metadata:
@@ -274,11 +274,11 @@ status:
 
 다시 확인을 해보면 External-IP 값이 `192.168.35.101` 인 것을 확인할 수 있습니다.
 
-```text
+```bash
 kubectl get svc/minio-service -n kubeflow
 ```
 
-```text
+```bash
 NAME            TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
 minio-service   LoadBalancer   10.109.209.87   192.168.35.101   9000:31371/TCP   5h21m
 ```
@@ -291,13 +291,13 @@ Web Browser 를 열어 [http://192.168.35.101:9000](http://192.168.35.101:9000) 
 
 먼저 mlflow 의 Dashboard 를 제공하는 mlflow-system 네임스페이스의 mlflow-server-service 서비스의 타입을 LoadBalancer로 변경하여 MetalLB로부터 로드 벨런싱 기능을 제공받기 전에, 현재 상태를 확인합니다.
 
-```text
+```bash
 kubectl get svc/mlflow-server-service -n mlflow-system
 ```
 
 해당 서비스의 타입은 ClusterIP이며, External-IP 값은 `none` 인 것을 확인할 수 있습니다.
 
-```text
+```bash
 NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 mlflow-server-service   ClusterIP   10.111.173.209   <none>        5000/TCP   4m50s
 ```
@@ -305,11 +305,11 @@ mlflow-server-service   ClusterIP   10.111.173.209   <none>        5000/TCP   4m
 type 을 LoadBalancer 로 변경하고 원하는 IP 주소를 입력하고 싶은 경우 loadBalancerIP 항목을 추가합니다.  
 추가 하지 않을 경우에는 위에서 설정한 IP 주소풀에서 순차적으로 IP 주소가 배정됩니다.
 
-```text
+```bash
 kubectl edit svc/mlflow-server-service -n mlflow-system
 ```
 
-```text
+```bash
 apiVersion: v1
 kind: Service
 metadata:
@@ -345,11 +345,11 @@ status:
 
 다시 확인을 해보면 External-IP 값이 `192.168.35.102` 인 것을 확인할 수 있습니다.
 
-```text
+```bash
 kubectl get svc/mlflow-server-service -n mlflow-system
 ```
 
-```text
+```bash
 NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)          AGE
 mlflow-server-service   LoadBalancer   10.111.173.209   192.168.35.102   5000:32287/TCP   6m11s
 ```
@@ -362,13 +362,13 @@ Web Browser 를 열어 [http://192.168.35.102:5000](http://192.168.35.102:5000) 
 
 먼저 Grafana 의 Dashboard 를 제공하는 seldon-system 네임스페이스의 seldon-core-analytics-grafana 서비스의 타입을 LoadBalancer로 변경하여 MetalLB로부터 로드 벨런싱 기능을 제공받기 전에, 현재 상태를 확인합니다.
 
-```text
+```bash
 kubectl get svc/seldon-core-analytics-grafana -n seldon-system
 ```
 
 해당 서비스의 타입은 ClusterIP이며, External-IP 값은 `none` 인 것을 확인할 수 있습니다.
 
-```text
+```bash
 NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 seldon-core-analytics-grafana   ClusterIP   10.109.20.161   <none>        80/TCP    94s
 ```
@@ -376,11 +376,11 @@ seldon-core-analytics-grafana   ClusterIP   10.109.20.161   <none>        80/TCP
 type 을 LoadBalancer 로 변경하고 원하는 IP 주소를 입력하고 싶은 경우 loadBalancerIP 항목을 추가합니다.  
 추가 하지 않을 경우에는 위에서 설정한 IP 주소풀에서 순차적으로 IP 주소가 배정됩니다.
 
-```text
+```bash
 kubectl edit svc/seldon-core-analytics-grafana -n seldon-system
 ```
 
-```text
+```bash
 apiVersion: v1
 kind: Service
 metadata:
@@ -422,11 +422,11 @@ status:
 
 다시 확인을 해보면 External-IP 값이 `192.168.35.103` 인 것을 확인할 수 있습니다.
 
-```text
+```bash
 kubectl get svc/seldon-core-analytics-grafana -n seldon-system
 ```
 
-```text
+```bash
 NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
 seldon-core-analytics-grafana   LoadBalancer   10.109.20.161   192.168.35.103   80:31191/TCP   5m14s
 ```

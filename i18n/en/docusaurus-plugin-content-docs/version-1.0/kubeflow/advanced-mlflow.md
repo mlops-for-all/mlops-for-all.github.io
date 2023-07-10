@@ -9,24 +9,22 @@ contributors: ["Jongseob Jeon", "SeungTae Kim"]
 
 ## MLFlow Component
 
-[Advanced Usage Component](../kubeflow/advanced-component.md) 에서 학습한 모델이 API Deployment까지 이어지기 위해서는 MLFlow에 모델을 저장해야 합니다.
-
-이번 페이지에서는 MLFlow에 모델을 저장할 수 있는 컴포넌트를 작성하는 과정을 설명합니다.
+In this page, we will explain the process of writing a component to store the model in MLFlow so that the model trained in [Advanced Usage Component](../kubeflow/advanced-component.md) can be linked to API deployment.
 
 ## MLFlow in Local
 
-MLFlow에서 모델을 저장하고 서빙에서 사용하기 위해서는 다음의 항목들이 필요합니다.
+In order to store the model in MLFlow and use it in serving, the following items are needed.
 
 - model
 - signature
 - input_example
 - conda_env
 
-파이썬 코드를 통해서 MLFLow에 모델을 저장하는 과정에 대해서 알아보겠습니다.
+We will look into the process of saving a model to MLFlow through Python code.
 
-### 1. 모델 학습
+### 1. Train model
 
-아래 과정은 iris 데이터를 이용해 SVC 모델을 학습하는 과정입니다.
+The following steps involve training an SVC model using the iris dataset.
 
 ```python
 import pandas as pd
@@ -45,7 +43,7 @@ clf.fit(data, target)
 
 ### 2. MLFLow Infos
 
-mlflow에 필요한 정보들을 만드는 과정입니다.
+This process creates the necessary information for MLFlow.
 
 ```python
 from mlflow.models.signature import infer_signature
@@ -56,7 +54,7 @@ signature = infer_signature(data, clf.predict(data))
 conda_env = _mlflow_conda_env(additional_pip_deps=["dill", "pandas", "scikit-learn"])
 ```
 
-각 변수의 내용을 확인하면 다음과 같습니다.
+Each variable's content is as follows.
 
 - `input_example`
 
@@ -85,8 +83,7 @@ conda_env = _mlflow_conda_env(additional_pip_deps=["dill", "pandas", "scikit-lea
 
 ### 3. Save MLFLow Infos
 
-다음으로 학습한 정보들과 모델을 저장합니다.
-학습한 모델이 sklearn 패키지를 이용하기 때문에 `mlflow.sklearn` 을 이용하면 쉽게 모델을 저장할 수 있습니다.
+Next, we save the learned information and the model. Since the trained model uses the sklearn package, we can easily save the model using `mlflow.sklearn`.
 
 ```python
 from mlflow.sklearn import save_model
@@ -101,23 +98,23 @@ save_model(
 )
 ```
 
-로컬에서 작업하면 다음과 같은 svc 폴더가 생기며 아래와 같은 파일들이 생성됩니다.
+If you work locally, a svc folder will be created and the following files will be generated.
 
-```text
+```bash
 ls svc
 ```
 
-위의 명령어를 실행하면 다음의 출력값을 확인할 수 있습니다.
+If you execute the command above, you can check the following output value.
 
-```text
+```bash
 MLmodel            conda.yaml         input_example.json model.pkl          requirements.txt
 ```
 
-각 파일을 확인하면 다음과 같습니다.
+Each file will be as follows if checked.
 
 - MLmodel
 
-    ```text
+    ```bash
     flavors:
       python_function:
         env: conda.yaml
@@ -142,7 +139,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - conda.yaml
 
-    ```text
+    ```bash
     channels:
     - conda-forge
     dependencies:
@@ -158,7 +155,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - input_example.json
 
-    ```text
+    ```bash
     {
         "columns": 
         [
@@ -176,7 +173,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - requirements.txt
 
-    ```text
+    ```bash
     mlflow
     dill
     pandas
@@ -187,7 +184,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 ## MLFlow on Server
 
-이제 저장된 모델을 mlflow 서버에 올리는 작업을 해보겠습니다.
+Now, let's proceed with the task of uploading the saved model to the MLflow server.
 
 ```python
 import mlflow
@@ -196,38 +193,38 @@ with mlflow.start_run():
     mlflow.log_artifact("svc/")
 ```
 
-저장하고 `mlruns` 가 생성된 경로에서 `mlflow ui` 명령어를 이용해 mlflow 서버와 대시보드를 띄웁니다.
-mlflow 대시보드에 접속하여 생성된 run을 클릭하면 다음과 같이 보입니다.
+Save and open the `mlruns` directory generated path with `mlflow ui` command to launch mlflow server and dashboard.
+Access the mlflow dashboard, click the generated run to view it as below.
 
 ![mlflow-0.png](./img/mlflow-0.png)
-(해당 화면은 mlflow 버전에 따라 다를 수 있습니다.)
+(This screen may vary depending on the version of mlflow.)
 
 ## MLFlow Component
 
-이제 Kubeflow에서 재사용할 수 있는 컴포넌트를 작성해 보겠습니다.
+Now, let's write a reusable component in Kubeflow.
 
-재사용할 수 있는 컴포넌트를 작성하는 방법은 크게 3가지가 있습니다.
+The ways of writing components that can be reused are broadly divided into three categories.
 
-1. 모델을 학습하는 컴포넌트에서 필요한 환경을 저장 후 MLFlow 컴포넌트는 업로드만 담당
+1. After saving the necessary environment in the component responsible for model training, the MLflow component is only responsible for the upload.
 
     ![mlflow-1.png](./img/mlflow-1.png)
 
-2. 학습된 모델과 데이터를 MLFlow 컴포넌트에 전달 후 컴포넌트에서 저장과 업로드 담당
+2. Pass the trained model and data to the MLflow component, which is responsible for saving and uploading.
 
     ![mlflow-2.png](./img/mlflow-2.png)
 
-3. 모델을 학습하는 컴포넌트에서 저장과 업로드를 담당
+3. The component responsible for model training handles both saving and uploading.
 
     ![mlflow-3.png](./img/mlflow-3.png)
 
-저희는 이 중 1번의 접근 방법을 통해 모델을 관리하려고 합니다.
-이유는 MLFlow 모델을 업로드하는 코드는 바뀌지 않기 때문에 매번 3번처럼 컴포넌트 작성마다 작성할 필요는 없기 때문입니다.
+We are trying to manage the model through the first approach.
+The reason is that we don't need to write the code to upload the MLFlow model every time like three times for each component written.
 
-컴포넌트를 재활용하는 방법은 1번과 2번의 방법으로 가능합니다.
-다만 2번의 경우 모델이 학습된 이미지와 패키지들을 전달해야 하므로 결국 컴포넌트에 대한 추가 정보를 전달해야 합니다.
+Reusing components is possible by the methods 1 and 2.
+However, in the case of 2, it is necessary to deliver the trained image and packages to the component, so ultimately additional information about the component must be delivered.
 
-1번의 방법으로 진행하기 위해서는 학습하는 컴포넌트 또한 변경되어야 합니다.
-모델을 저장하는데 필요한 환경들을 저장해주는 코드가 추가되어야 합니다.
+In order to proceed with the method 1, the learning component must also be changed.
+Code that stores the environment needed to save the model must be added.
 
 ```python
 from functools import partial
@@ -278,10 +275,10 @@ def train_from_csv(
 
 ```
 
-그리고 MLFlow에 업로드하는 컴포넌트를 작성합니다.
-이 때 업로드되는 MLflow의 endpoint를 우리가 설치한 [mlflow service](../setup-components/install-components-mlflow.md) 로 이어지게 설정해주어야 합니다.  
-이 때 S3 Endpoint의 주소는 MLflow Server 설치 당시 설치한 minio의 [쿠버네티스 서비스 DNS 네임을 활용](https://kubernetes.io/ko/docs/concepts/services-networking/dns-pod-service/)합니다. 해당  service 는 kubeflow namespace에서 minio-service라는 이름으로 생성되었으므로, `http://minio-service.kubeflow.svc:9000` 로 설정합니다..  
-이와 비슷하게 tracking_uri의 주소는 mlflow server의 쿠버네티스 서비스 DNS 네임을 활용하여, `http://mlflow-server-service.mlflow-system.svc:5000` 로 설정합니다.
+Write a component to upload to MLFlow.
+At this time, configure the uploaded MLFlow endpoint to be connected to the [mlflow service](../setup-components/install-components-mlflow.md) that we installed.  
+In this case, use the Kubernetes Service DNS Name of the Minio installed at the time of MLFlow Server installation. As this service is created in the Kubeflow namespace with the name minio-service, set it to `http://minio-service.kubeflow.svc:9000`.  
+Similarly, for the tracking_uri address, use the Kubernetes Service DNS Name of the MLFlow server and set it to `http://mlflow-server-service.mlflow-system.svc:5000`.
 
 ```python
 from functools import partial
@@ -336,12 +333,12 @@ def upload_sklearn_model_to_mlflow(
 
 ## MLFlow Pipeline
 
-이제 작성한 컴포넌트들을 연결해서 파이프라인으로 만들어 보겠습니다.
+Now let's connect the components we have written and create a pipeline. 
 
 ### Data Component
 
-모델을 학습할 때 쓸 데이터는 sklearn의 iris 입니다.
-데이터를 생성하는 컴포넌트를 작성합니다.
+The data we will use to train the model is sklearn's iris.
+We will write a component to generate the data.
 
 ```python
 from functools import partial
@@ -372,7 +369,7 @@ def load_iris_data(
 
 ### Pipeline
 
-파이프라인 코드는 다음과 같이 작성할 수 있습니다.
+The pipeline code can be written as follows.
 
 ```python
 from kfp.dsl import pipeline
@@ -397,7 +394,7 @@ def mlflow_pipeline(kernel: str, model_name: str):
 
 ### Run
 
-위에서 작성된 컴포넌트와 파이프라인을 하나의 파이썬 파일에 정리하면 다음과 같습니다.
+If you organize the components and pipelines written above into a single Python file, it would look like this.
 
 ```python
 from functools import partial
@@ -543,7 +540,7 @@ if __name__ == "__main__":
   <details>
     <summary>mlflow_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -923,20 +920,20 @@ spec:
   </details>
 </p>
 
-실행후 생성된 mlflow_pipeline.yaml 파일을 파이프라인 업로드한 후, 실행하여 run 의 결과를 확인합니다.
+After generating the mlflow_pipeline.yaml file after execution, upload the pipeline and execute it to check the results of the run.
 
 ![mlflow-svc-0](./img/mlflow-svc-0.png)
 
-mlflow service를 포트포워딩해서 MLflow ui에 접속합니다.
+Port-forward the mlflow service to access the MLflow UI.
 
-```text
+```bash
 kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
 ```
 
-웹 브라우저를 열어 localhost:5000으로 접속하면, 다음과 같이 run이 생성된 것을 확인할 수 있습니다.
+Open the web browser and connect to localhost:5000. You will then be able to see that the run has been created as follows.
 
 ![mlflow-svc-1](./img/mlflow-svc-1.png)
 
-run 을 클릭해서 확인하면 학습한 모델 파일이 있는 것을 확인할 수 있습니다.
+Click on run to verify that the trained model file is present.
 
 ![mlflow-svc-2](./img/mlflow-svc-2.png)

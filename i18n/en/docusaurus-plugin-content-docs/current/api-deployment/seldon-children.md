@@ -5,17 +5,9 @@ sidebar_position: 6
 contributors: ["Jongseob Jeon"]
 ---
 
-## Multi Models
+Previously, the methods explained were all targeted at a single model. On this page, we will look at how to connect multiple models. 
 
-앞서 설명했던 방법들은 모두 단일 모델을 대상으로 했습니다.  
-이번 페이지에서는 여러 개의 모델을 연결하는 방법에 대해서 알아봅니다.
-
-## Pipeline
-
-우선 모델을 2개를 생성하는 파이프라인을 작성하겠습니다.
-
-모델은 앞서 사용한 SVC 모델에 StandardScaler를 추가하고 저장하도록 하겠습니다.
-
+First, we will create a pipeline that creates two models. We will add a StandardScaler to the SVC model we used before and store it.
 ```python
 from functools import partial
 
@@ -212,17 +204,15 @@ if __name__ == "__main__":
 
 ```
 
-파이프라인을 업로드하면 다음과 같이 나옵니다.
-
+If you upload the pipeline, it will look like this.
 ![children-kubeflow.png](./img/children-kubeflow.png)
 
-MLflow 대시보드를 확인하면 다음과 같이 두 개의 모델이 생성됩니다.
+When you check the MLflow dashboard, two models will be generated, as shown below. 
 
 ![children-mlflow.png](./img/children-mlflow.png)
 
-각각의 run_id를 확인 후 다음과 같이 SeldonDeployment 스펙을 정의합니다.
-
-```text
+After checking the run_id of each one, define the SeldonDeployment spec as follows.
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -303,13 +293,8 @@ spec:
           type: STRING
           value: "/mnt/models"
 ```
-
-모델이 두 개가 되었으므로 각 모델의 initContainer와 container를 정의해주어야 합니다.
-이 필드는 입력값을 array로 받으며 순서는 관계없습니다.
-
-모델이 실행하는 순서는 graph에서 정의됩니다.
-
-```text
+Two models have been created so each model's initContainer and container must be defined. This field takes input as an array and the order does not matter. The order in which the models are executed is defined in the graph.
+```bash
 graph:
   name: scaler
   type: MODEL
@@ -329,12 +314,11 @@ graph:
       value: "/mnt/models"
 ```
 
-graph의 동작 방식은 처음 받은 값을 정해진 predict_method로 변환한 뒤 children으로 정의된 모델에 전달하는 방식입니다.
-이 경우 scaler -> svc 로 데이터가 전달됩니다.
+The operation of the graph is to convert the initial value received into a predefined predict_method and then pass it to the model defined as children. In this case, the data is passed from scaler -> svc.
 
-이제 위의 스펙을 yaml파일로 생성해 보겠습니다.
+Now let's create the above specifications in a yaml file.
 
-```text
+```bash
 cat <<EOF > multi-model.yaml
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
@@ -418,26 +402,22 @@ spec:
 EOF
 ```
 
-다음 명령어를 통해 API를 생성합니다.
-
-```text
+Create an API through the following command.
+```bash
 kubectl apply -f multi-model.yaml
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If properly performed, it will be outputted as follows.
+```bash
 seldondeployment.machinelearning.seldon.io/multi-model-example created
 ```
 
-정상적으로 생성됐는지 확인합니다.
-
-```text
+Check to see if it has been generated normally.
+```bash
 kubectl get po -n kubeflow-user-example-com | grep multi-model-example
 ```
 
-정상적으로 생성되면 다음과 비슷한 pod이 생성됩니다.
-
-```text
+If it is created normally, a similar pod will be created.
+```bash
 multi-model-example-model-0-scaler-svc-9955fb795-n9ffw   4/4     Running     0          2m30s
 ```

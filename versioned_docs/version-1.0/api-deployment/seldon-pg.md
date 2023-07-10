@@ -15,7 +15,7 @@ contributors: ["Jongseob Jeon"]
 
 [앞서 생성한 대시보드](../setup-components/install-components-pg.md)를 포트 포워딩합니다.
 
-```text
+```bash
 kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 ```
 
@@ -23,7 +23,7 @@ kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 
 [앞서 생성한 Seldon Deployment](../api-deployment/seldon-iris.md#using-cli)에 요청을 **반복해서** 보냅니다.
 
-```text
+```bash
 curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
 -H 'Content-Type: application/json' \
 -d '{ "data": { "ndarray": [[1,2,3,4]] } }'

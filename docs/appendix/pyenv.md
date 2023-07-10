@@ -22,7 +22,7 @@ pyenv는 Python 버전을 관리하는 것을 도와주며, pyenv-virtualenv는 
 
 1. pyenv, pyenv-virtualenv 설치
 
-```text
+```bash
 brew update
 brew install pyenv
 brew install pyenv-virtualenv
@@ -32,7 +32,7 @@ brew install pyenv-virtualenv
 
 macOS의 경우 카탈리나 버전 이후 기본 shell이 zsh로 변경되었기 때문에 zsh을 사용하는 경우를 가정하였습니다.
 
-```text
+```bash
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 source ~/.zshrc
@@ -40,11 +40,11 @@ source ~/.zshrc
 
 pyenv 명령이 정상적으로 수행되는지 확인합니다.
 
-```text
+```bash
 pyenv --help
 ```
 
-```text
+```bash
 $ pyenv --help
 Usage: pyenv <command> [<args>]
 
@@ -87,13 +87,13 @@ For full documentation, see: https://github.com/pyenv/pyenv#readme
 
 1. pyenv, pyenv-virtualenv 설치
 
-```text
+```bash
 curl https://pyenv.run | bash
 ```
 
 다음과 같은 내용이 출력되면 정상적으로 설치된 것을 의미합니다.
 
-```text
+```bash
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:--   0     0    0     0    0     0      0      0 --:--:-- --:--:-- 100   270  100   270    0     0    239      0  0:00:01  0:00:01 --:--:--   239
@@ -126,13 +126,13 @@ eval "$(pyenv virtualenv-init -)"
 기본 shell로 bash shell을 사용하는 경우를 가정하였습니다.
 bash에서 pyenv와 pyenv-virtualenv 를 사용할 수 있도록 설정합니다.
 
-```text
+```bash
 sudo vi ~/.bashrc
 ```
 
 다음 문자열을 입력한 후 저장합니다.
 
-```text
+```bash
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -140,19 +140,19 @@ eval "$(pyenv virtualenv-init -)"
 
 shell을 restart 합니다.
 
-```text
+```bash
 exec $SHELL
 ```
 
 pyenv 명령이 정상적으로 수행되는지 확인합니다.
 
-```text
+```bash
 pyenv --help
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 설정된 것을 의미합니다.
 
-```text
+```bash
 $ pyenv
 pyenv 2.2.2
 Usage: pyenv <command> [<args>]
@@ -200,13 +200,13 @@ For full documentation, see: https://github.com/pyenv/pyenv#readme
 `pyenv install <Python-Version>` 명령을 통해 원하는 파이썬 버전을 설치할 수 있습니다.
 이번 페이지에서는 예시로 kubeflow에서 기본으로 사용하는 파이썬 3.7.12 버전을 설치하겠습니다.
 
-```text
+```bash
 pyenv install 3.7.12
 ```
 
 정상적으로 설치되면 다음과 같은 메시지가 출력됩니다.
 
-```text
+```bash
 $ pyenv install 3.7.12
 Downloading Python-3.7.12.tar.xz...
 -> https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tar.xz
@@ -228,11 +228,11 @@ Installed Python-3.7.12 to /home/mlops/.pyenv/versions/3.7.12
 
 예시로 Python 3.7.12 버전의 `demo`라는 이름의 Python 가상환경을 생성하겠습니다.
 
-```text
+```bash
 pyenv virtualenv 3.7.12 demo
 ```
 
-```text
+```bash
 $ pyenv virtualenv 3.7.12 demo
 Looking in links: /tmp/tmpffqys0gv
 Requirement already satisfied: setuptools in /home/mlops/.pyenv/versions/3.7.12/envs/demo/lib/python3.7/site-packages (47.1.0)
@@ -245,7 +245,7 @@ Requirement already satisfied: pip in /home/mlops/.pyenv/versions/3.7.12/envs/de
 
 예시로는 `demo`라는 이름의 Python 가상환경을 사용하겠습니다.
 
-```text
+```bash
 pyenv activate demo
 ```
 
@@ -253,13 +253,13 @@ pyenv activate demo
 
   Before
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ pyenv activate demo
   ```
 
   After
 
-  ```text
+  ```bash
   pyenv-virtualenv: prompt changing will be removed from future release. configure `export PYENV_VIRTUALENV_DISABLE_PROMPT=1' to simulate the behavior.
   (demo) mlops@ubuntu:~$ 
   ```
@@ -268,18 +268,18 @@ pyenv activate demo
 
 `source deactivate` 명령을 통해 현재 사용 중인 가상환경을 비활성화할 수 있습니다.
 
-```text
+```bash
 source deactivate
 ```
 
   Before
 
-  ```text
+  ```bash
   (demo) mlops@ubuntu:~$ source deactivate
   ```
 
   After
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ 
   ```

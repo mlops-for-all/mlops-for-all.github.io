@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
 위의 스크립트를 실행하면 다음과 같은 `train_from_csv.yaml` 파일을 얻을 수 있습니다.
 
-```text
+```bash
 name: Train from csv
 inputs:
 - {name: train_data, type: csv}
@@ -131,7 +131,7 @@ Kubeflow를 변환하는 과정에서 두 가지 방법을 통해 패키지를 �
 
 컴포넌트를 컴파일할 때 사용했던 함수 `create_component_from_func` 가 어떤 argument들을 받을 수 있는지 확인해 보겠습니다.
 
-```text
+```bash
 def create_component_from_func(
     func: Callable,
     output_component_file: Optional[str] = None,
@@ -166,7 +166,7 @@ RUN pip install dill pandas scikit-learn
 위의 Dockerfile을 이용해 이미지를 빌드해 보겠습니다. 실습에서 사용해볼 도커 허브는 ghcr입니다.  
 각자 환경에 맞추어서 도커 허브를 선택 후 업로드하면 됩니다.
 
-```text
+```bash
 docker build . -f Dockerfile -t ghcr.io/mlops-for-all/base-image
 docker push ghcr.io/mlops-for-all/base-image
 ```
@@ -207,7 +207,7 @@ if __name__ == "__main__":
 
 이제 생성된 컴포넌트를 컴파일하면 다음과 같이 나옵니다.
 
-```text
+```bash
 name: Train from csv
 inputs:
 - {name: train_data, type: csv}
@@ -312,7 +312,7 @@ if __name__ == "__main__":
 
 스크립트를 실행하면 다음과 같은 `train_from_csv.yaml` 파일이 생성됩니다.
 
-```text
+```bash
 name: Train from csv
 inputs:
 - {name: train_data, type: csv}
@@ -390,7 +390,7 @@ implementation:
 
 생성된 yaml 파일을 자세히 보면, 다음과 같은 줄이 자동으로 추가되어 필요한 패키지가 설치되기 때문에 오류 없이 정상적으로 실행됩니다.
 
-```text
+```bash
     command:
     - sh
     - -c

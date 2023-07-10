@@ -7,23 +7,23 @@ contributors: ["Jongseob Jeon"]
 
 ## Pipeline Setting
 
-이번 페이지에서는 파이프라인에서 설정할 수 있는 값들에 대해 알아보겠습니다.
+In this page, we will look at values that can be set in the pipeline.
 
 ## Display Name
 
-생성된 파이프라인 내에서 컴포넌트는 두 개의 이름을 갖습니다.
+Created within the pipeline, components have two names:
 
-- task_name: 컴포넌트를 작성할 때 작성한 함수 이름
-- display_name: kubeflow UI상에 보이는 이름
+- task_name: the function name when writing the component
+- display_name: the name that appears in the kubeflow UI
 
-예를 들어서 다음과 같은 경우 두 컴포넌트 모두 Print and return number로 설정되어 있어서 어떤 컴포넌트가 1번인지 2번인지 확인하기 어렵습니다.
+For example, in the case where both components are set to Print and return number, it is difficult to tell which component is 1 or 2.
 
 ![run-7](./img/run-7.png)
 
 ### set_display_name
 
-이를 위한 것이 바로 display_name 입니다.  
-설정하는 방법은 파이프라인에서 컴포넌트에 다음과 같이 `set_display_name` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html#kfp.dsl.ContainerOp.set_display_name)를 이용하면 됩니다.
+The solution for this is the display_name.  
+We can set the display_name in the pipeline by using the set_display_name [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html#kfp.dsl.ContainerOp.set_display_name) of the component.
 
 ```python
 import kfp
@@ -55,13 +55,13 @@ if __name__ == "__main__":
     kfp.compiler.Compiler().compile(example_pipeline, "example_pipeline.yaml")
 ```
 
-이 스크립트를 실행해서 나온 `example_pipeline.yaml`을 확인하면 다음과 같습니다.
+If you run this script and check the resulting `example_pipeline.yaml`, it would be like this.
 
 <p>
   <details>
     <summary>example_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -318,23 +318,24 @@ spec:
   </details>
 </p>
 
-이 전의 파일과 비교하면 `pipelines.kubeflow.org/task_display_name` key가 새로 생성되었습니다.
+If compared with the previous file, the **`pipelines.kubeflow.org/task_display_name`** key has been newly created.
 
 ### UI in Kubeflow
 
-위에서 만든 파일을 이용해 이전에 생성한 [파이프라인](../kubeflow/basic-pipeline-upload.md#upload-pipeline-version)의 버전을 올리겠습니다.
+
+We will upload the version of the previously created [pipeline](../kubeflow/basic-pipeline-upload.md#upload-pipeline-version) using the files we created earlier.
 
 ![adv-pipeline-0.png](./img/adv-pipeline-0.png)
 
-그러면 위와 같이 설정한 이름이 노출되는 것을 확인할 수 있습니다.
+As you can see, the configured name is displayed as shown above.
 
 ## Resources
 
 ### GPU
 
-특별한 설정이 없다면 파이프라인은 컴포넌트를 쿠버네티스 파드(pod)로 실행할 때, 기본 리소스 스펙으로 실행하게 됩니다.  
-만약 GPU를 사용해 모델을 학습해야 할 때 쿠버네티스상에서 GPU를 할당받지 못해 제대로 학습이 이루어지지 않습니다.  
-이를 위해 `set_gpu_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.UserContainer.set_gpu_limit)을 이용해 설정할 수 있습니다.
+By default, when the pipeline runs components as Kubernetes pods, it uses the default resource specifications.  
+If you need to train a model using a GPU and the Kubernetes environment doesn't allocate a GPU, the training may not be performed correctly.  
+To address this, you can use the `set_gpu_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.UserContainer.set_gpu_limit) to set the GPU limit.
 
 ```python
 import kfp
@@ -366,10 +367,10 @@ if __name__ == "__main__":
     kfp.compiler.Compiler().compile(example_pipeline, "example_pipeline.yaml")
 ```
 
-위의 스크립트를 실행하면 생성된 파일에서 `sum-and-print-numbers`를 자세히 보면 resources에 `{nvidia.com/gpu: 1}` 도 추가된 것을 볼 수 있습니다.
-이를 통해 GPU를 할당받을 수 있습니다.
+If you execute the above script, you can see that the resources has been added with `{nvidia.com/gpu: 1}` in the generated file when you look closely at `sum-and-print-numbers`.
+Through this, you can allocate a GPU.
 
-```text
+```bash
   - name: sum-and-print-numbers
     container:
       args: [--number-1, '{{inputs.parameters.print-and-return-number-Output}}', --number-2,
@@ -399,8 +400,8 @@ if __name__ == "__main__":
 
 ### CPU
 
-cpu의 개수를 정하기 위해서 이용하는 함수는 `.set_cpu_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.Sidecar.set_cpu_limit)을 이용해 설정할 수 있습니다.  
-gpu와는 다른 점은 int가 아닌 string으로 입력해야 한다는 점입니다.
+The function to set the number of CPUs can be set using the `.set_cpu_limit()` attribute [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.Sidecar.set_cpu_limit).  
+The difference from GPUs is that the input must be a string, not an int.
 
 ```python
 import kfp
@@ -432,16 +433,16 @@ if __name__ == "__main__":
     kfp.compiler.Compiler().compile(example_pipeline, "example_pipeline.yaml")
 ```
 
-바뀐 부분만 확인하면 다음과 같습니다.
+The changed part only can be confirmed as follows.
 
-```text
+```bash
       resources:
         limits: {nvidia.com/gpu: 1, cpu: '16'}
 ```
 
 ### Memory
 
-메모리는 `.set_memory_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.Sidecar.set_memory_limit)을 이용해 설정할 수 있습니다.
+Memory can be set using the `.set_memory_limit()` [attribute](https://kubeflow-pipelines.readthedocs.io/en/latest/source/kfp.dsl.html?highlight=set_gpu_limit#kfp.dsl.Sidecar.set_memory_limit).
 
 ```python
 import kfp
@@ -474,9 +475,9 @@ if __name__ == "__main__":
 
 ```
 
-바뀐 부분만 확인하면 다음과 같습니다.
+The changed parts are as follows if checked.
 
-```text
+```bash
       resources:
         limits: {nvidia.com/gpu: 1, memory: 1G}
 ```

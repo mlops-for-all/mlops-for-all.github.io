@@ -7,7 +7,7 @@ contributors: ["Jaeyeon Kim", "SeungTae Kim"]
 
 [Kubeflow 설치](../setup-components/install-components-kf.md)를 완료하면, 다음 커맨드를 통해 대시보드에 접속할 수 있습니다.
 
-```text
+```bash
 kubectl port-forward --address 0.0.0.0 svc/istio-ingressgateway -n istio-system 8080:80
 ```
 

@@ -7,14 +7,13 @@ contributors: ["Jongseob Jeon"]
 
 ## Model from MLflow
 
-이번 페이지에서는 [MLflow Component](../kubeflow/advanced-mlflow.md)에서 저장된 모델을 이용해 API를 생성하는 방법에 대해서 알아보겠습니다.
+On this page, we will learn how to create an API using a model saved in the [MLflow Component](../kubeflow/advanced-mlflow.md).
 
 ## Secret
 
-initContainer가 minio에 접근해서 모델을 다운로드받으려면 credentials가 필요합니다.
-minio에 접근하기 위한 credentials는 다음과 같습니다.
+The initContainer needs credentials to access minio and download the model. The credentials for access to minio are as follows.
 
-```text
+```bash
 apiVersion: v1
 type: Opaque
 kind: Secret
@@ -28,37 +27,37 @@ data:
   USE_SSL: ZmFsc2U=
 ```
 
-`AWS_ACCESS_KEY_ID` 의 입력값은 `minio`입니다. 다만 secret의 입력값은 인코딩된 값이여야 되기 때문에 실제로 입력되는 값은 다음을 수행후 나오는 값이어야 합니다.
+The input value for `AWS_ACCESS_KEY_ID` is `minio`. However, since the input value for the secret must be an encoded value, the value that is actually entered must be the value that comes out after performing the following. 
 
-data에 입력되어야 하는 값들은 다음과 같습니다.
+The values that need to be entered in data are as follows.
 
 - AWS_ACCESS_KEY_ID: minio
 - AWS_SECRET_ACCESS_KEY: minio123
 - AWS_ENDPOINT_URL: http://minio-service.kubeflow.svc:9000
 - USE_SSL: false
 
-인코딩은 다음 명령어를 통해서 할 수 있습니다.
+The encoding can be done using the following command.
 
-```text
+```bash
 echo -n minio | base64
 ```
 
-그러면 다음과 같은 값이 출력됩니다.
+Then the following values will be output.
 
-```text
+```bash
 bWluaW8=
 ```
 
-인코딩을 전체 값에 대해서 진행하면 다음과 같이 됩니다.
+If you do the encoding for the entire value, it will look like this:
 
-- AWS_ACCESS_KEY_ID: bWluaW8=
-- AWS_SECRET_ACCESS_KEY: bWluaW8xMjM=
-- AWS_ENDPOINT_URL: aHR0cDovL21pbmlvLXNlcnZpY2Uua3ViZWZsb3cuc3ZjOjkwMDA=
-- USE_SSL: ZmFsc2U=
+- AWS_ACCESS_KEY_ID: minio=
+- AWS_SECRET_ACCESS_KEY: minio123=
+- AWS_ENDPOINT_URL: http://minio-service.kubeflow.svc:9000=
+- USE_SSL: false=
 
-다음 명령어를 통해 secret을 생성할 수 있는 yaml파일을 생성합니다.
+You can generate a yaml file through the following command to create the secret.
 
-```text
+```bash
 cat <<EOF > seldon-init-container-secret.yaml
 apiVersion: v1
 kind: Secret
@@ -74,23 +73,23 @@ data:
 EOF
 ```
 
-다음 명령어를 통해 secret을 생성합니다.
+Create the secret through the following command.
 
-```text
+```bash
 kubectl apply -f seldon-init-container-secret.yaml
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
+If performed normally, it will be output as follows.
 
-```text
+```bash
 secret/seldon-init-container-secret created
 ```
 
 ## Seldon Core yaml
 
-이제 Seldon Core를 생성하는 yaml파일을 작성합니다.
+Now let's write the yaml file to create Seldon Core.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -142,30 +141,30 @@ spec:
       children: []
 ```
 
-이 전에 작성한 [Seldon Fields](../api-deployment/seldon-fields.md)와 달라진 점은 크게 두 부분입니다.
-initContainer에 `envFrom` 필드가 추가되었으며 args의 주소가 `s3://mlflow/mlflow/artifacts/0/74ba8e33994144f599e50b3be176cdb0/artifacts/svc` 로 바뀌었습니다.
+There are two major changes compared to the previously created [Seldon Fields](../api-deployment/seldon-fields.md):
+
+1. The `envFrom` field is added to the initContainer.
+2. The address in the args has been changed to `s3://mlflow/mlflow/artifacts/0/74ba8e33994144f599e50b3be176cdb0/artifacts/svc`.
 
 ### args
 
-앞서 args의 첫번째 array는 우리가 다운로드받을 모델의 경로라고 했습니다.  
-그럼 mlflow에 저장된 모델의 경로는 어떻게 알 수 있을까요?
+Previously, we mentioned that the first element of the args array is the path to the model we want to download. So, how can we determine the path of the model stored in MLflow?
 
-다시 mlflow에 들어가서 run을 클릭하고 모델을 누르면 다음과 같이 확인할 수 있습니다.
+To find the path, go back to MLflow and click on the run, then click on the model, as shown below:
 
 ![seldon-mlflow-0.png](./img/seldon-mlflow-0.png)
 
-이렇게 확인된 경로를 입력하면 됩니다.
+You can use the path obtained from there.
 
 ### envFrom
 
-minio에 접근해서 모델을 다운로드 받는 데 필요한 환경변수를 입력해주는 과정입니다.
-앞서 만든 `seldon-init-container-secret`를 이용합니다.
+This process involves providing the environment variables required to access MinIO and download the model. We will use the `seldon-init-container-secret` created earlier.
 
-## API 생성
+## API Creation
 
-우선 위에서 정의한 스펙을 yaml 파일로 생성하겠습니다.
+First, let's generate the YAML file based on the specification defined above.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -221,34 +220,34 @@ spec:
 EOF
 ```
 
-seldon pod을 생성합니다.
+Create a seldon pod.
 
-```text
+```bash
 kubectl apply -f seldon-mlflow.yaml
 
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
+If it is performed normally, it will be outputted as follows.
 
-```text
+```bash
 seldondeployment.machinelearning.seldon.io/seldon-example created
 ```
 
-이제 pod이 정상적으로 뜰 때까지 기다립니다.
+Now we wait until the pod is up and running properly.
 
-```text
+```bash
 kubectl get po -n kubeflow-user-example-com | grep seldon
 ```
 
-다음과 비슷하게 출력되면 정상적으로 API를 생성했습니다.
+If it is outputted similarly to the following, the API has been created normally.
 
-```text
+```bash
 seldon-example-model-0-model-5c949bd894-c5f28      3/3     Running     0          69s
 ```
 
-CLI를 이용해 생성된 API에는 다음 request를 통해 실행을 확인할 수 있습니다.
+You can confirm the execution through the following request on the API created through the CLI.
 
-```text
+```bash
 curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
 -H 'Content-Type: application/json' \
 -d '{
@@ -271,8 +270,8 @@ curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/pr
 }'
 ```
 
-정상적으로 실행될 경우 다음과 같은 결과를 받을 수 있습니다.
+If executed normally, you can get the following results.
 
-```text
+```bash
 {"data":{"names":[],"ndarray":["Virginica"]},"meta":{"requestPath":{"model":"ghcr.io/mlops-for-all/mlflowserver:e141f57"}}}
 ```

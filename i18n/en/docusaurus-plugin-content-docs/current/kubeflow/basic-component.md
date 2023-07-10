@@ -8,34 +8,34 @@ contributors: ["Jongseob Jeon"]
 
 ## Component
 
-컴포넌트(Component)를 작성하기 위해서는 다음과 같은 내용을 작성해야 합니다.
+In order to write a component, the following must be written: 
 
-1. 컴포넌트 콘텐츠(Component Contents) 작성
-2. 컴포넌트 래퍼(Component Wrapper) 작성
+1. Writing Component Contents 
+2. Writing Component Wrapper 
 
-이제 각 과정에 대해서 알아보도록 하겠습니다.
+Now, let's look at each process.
 
 ## Component Contents
 
-컴포넌트 콘텐츠는 우리가 흔히 작성하는 파이썬 코드와 다르지 않습니다.  
-예를 들어서 숫자를 입력으로 받고 입력받은 숫자를 출력한 뒤 반환하는 컴포넌트를 작성해 보겠습니다.  
-파이썬 코드로 작성하면 다음과 같이 작성할 수 있습니다.
+Component Contents are no different from the Python code we commonly write.  
+For example, let's try writing a component that takes a number as input, prints it, and then returns it. 
+ We can write it in Python code like this.
 
 ```python
 print(number)
 ```
 
-그런데 이 코드를 실행하면 에러가 나고 동작하지 않는데 그 이유는 출력해야 할 `number`가 정의되어 있지 않기 때문입니다.
+However, when this code is run, an error occurs and it does not work because the `number` that should be printed is not defined. 
 
-[Kubeflow Concepts](../kubeflow/kubeflow-concepts.md)에서 `number` 와 같이 컴포넌트 콘텐츠에서 필요한 값들은 **Config**로 정의한다고 했습니다. 컴포넌트 콘텐츠를 실행시키기 위해 필요한 Config들은 컴포넌트 래퍼에서 전달이 되어야 합니다.
+As we saw in [Kubeflow Concepts](../kubeflow/kubeflow-concepts.md), values like `number` that are required in component content are defined in **Config**. In order to execute component content, the necessary Configs must be passed from the component wrapper.
 
 ## Component Wrapper
 
 ### Define a standalone Python function
 
-이제 필요한 Config를 전달할 수 있도록 컴포넌트 래퍼를 만들어야 합니다.
+Now we need to create a component wrapper to be able to pass the required Configs.
 
-별도의 Config 없이 컴포넌트 래퍼로 감쌀 경우 다음과 같이 됩니다.
+Without a separate Config, it will be like this when wrapped with a component wrapper.
 
 ```python
 def print_and_return_number():
@@ -43,9 +43,9 @@ def print_and_return_number():
     return number
 ```
 
-이제 콘텐츠에서 필요한 Config를 래퍼의 argument로 추가합니다. 다만, argument 만을 적는 것이 아니라 argument의 타입 힌트도 작성해야 합니다. Kubeflow에서는 파이프라인을 Kubeflow 포맷으로 변환할 때, 컴포넌트 간의 연결에서 정해진 입력과 출력의 타입이 일치하는지 체크합니다. 만약 컴포넌트가 필요로 하는 입력과 다른 컴포넌트로부터 전달받은 출력의 포맷이 일치하지 않을 경우 파이프라인 생성을 할 수 없습니다.
+Now we add the required Config for the content as an argument to the wrapper. However, it is not just writing the argument but also writing the type hint of the argument. When Kubeflow converts the pipeline into the Kubeflow format, it checks if the specified input and output types are matched in the connection between the components. If the format of the input required by the component does not match the output received from another component, the pipeline cannot be created.
 
-이제 다음과 같이 argument와 그 타입, 그리고 반환하는 타입을 적어서 컴포넌트 래퍼를 완성합니다.
+Now we complete the component wrapper by writing down the argument, its type and the type to be returned as follows.
 
 ```python
 def print_and_return_number(number: int) -> int:
@@ -53,15 +53,15 @@ def print_and_return_number(number: int) -> int:
     return number
 ```
 
-Kubeflow에서 반환 값으로 사용할 수 있는 타입은 json에서 표현할 수 있는 타입들만 사용할 수 있습니다. 대표적으로 사용되며 권장하는 타입들은 다음과 같습니다.
+In Kubeflow, you can only use types that can be expressed in json as return values. The most commonly used and recommended types are as follows:
 
 - int
 - float
 - str
 
-만약 단일 값이 아닌 여러 값을 반환하려면 `collections.namedtuple` 을 이용해야 합니다.  
-자세한 내용은 [Kubeflow 공식 문서](https://www.kubeflow.org/docs/components/pipelines/sdk/python-function-components/#passing-parameters-by-value)를 참고 하시길 바랍니다.  
-예를 들어서 입력받은 숫자를 2로 나눈 몫과 나머지를 반환하는 컴포넌트는 다음과 같이 작성해야 합니다.
+If you want to return multiple values instead of a single value, you must use `collections.namedtuple`.  
+For more details, please refer to the Kubeflow official documentation [Kubeflow Official Documentation](https://www.kubeflow.org/docs/components/pipelines/sdk/python-function-components/#passing-parameters-by-value).  
+For example, if you want to write a component that returns the quotient and remainder of a number when divided by 2, it should be written as follows.
 
 ```python
 from typing import NamedTuple
@@ -88,8 +88,7 @@ def divide_and_return_number(
 
 ### Convert to Kubeflow Format
 
-이제 작성한 컴포넌트를 kubeflow에서 사용할 수 있는 포맷으로 변환해야 합니다. 변환은 `kfp.components.create_component_from_func` 를 통해서 할 수 있습니다.  
-이렇게 변환된 형태는 파이썬에서 함수로 import 하여서 파이프라인에서 사용할 수 있습니다.
+Now you have to convert the written component into a format that can be used in Kubeflow. The conversion can be done through `kfp.components.create_component_from_func`. This converted form can be imported as a function in Python and used in the pipeline.
 
 ```python
 from kfp.components import create_component_from_func
@@ -102,10 +101,10 @@ def print_and_return_number(number: int) -> int:
 
 ### Share component with yaml file
 
-만약 파이썬 코드로 공유를 할 수 없는 경우 YAML 파일로 컴포넌트를 공유해서 사용할 수 있습니다.
-이를 위해서는 우선 컴포넌트를 YAML 파일로 변환한 뒤 `kfp.components.load_component_from_file` 을 통해 파이프라인에서 사용할 수 있습니다.
+If it is not possible to share with Python code, you can share components with a YAML file and use them.
+To do this, first convert the component to a YAML file and then use it in the pipeline with `kfp.components.load_component_from_file`.
 
-우선 작성한 컴포넌트를 YAML 파일로 변환하는 과정에 대해서 설명합니다.
+First, let's explain the process of converting the written component to a YAML file.
 
 ```python
 from kfp.components import create_component_from_func
@@ -119,9 +118,9 @@ if __name__ == "__main__":
     print_and_return_number.component_spec.save("print_and_return_number.yaml")
 ```
 
-작성한 파이썬 코드를 실행하면 `print_and_return_number.yaml` 파일이 생성됩니다. 파일을 확인하면 다음과 같습니다.
+If you run the Python code you wrote, a file called `print_and_return_number.yaml` will be created. When you check the file, it will be as follows.
 
-```text
+```bash
 name: Print and return number
 inputs:
 - {name: number, type: Integer}
@@ -180,7 +179,7 @@ implementation:
     - {outputPath: Output}
 ```
 
-이제 생성된 파일을 공유해서 파이프라인에서 다음과 같이 사용할 수 있습니다.
+Now the generated file can be shared and used in the pipeline as follows.
 
 ```python
 from kfp.components import load_component_from_file
@@ -190,16 +189,15 @@ print_and_return_number = load_component_from_file("print_and_return_number.yaml
 
 ## How Kubeflow executes component
 
-Kubeflow에서 컴포넌트가 실행되는 순서는 다음과 같습니다.
+In Kubeflow, the execution order of components is as follows:
 
-1. `docker pull <image>`: 정의된 컴포넌트의 실행 환경 정보가 담긴 이미지를 pull
-2. run `command`: pull 한 이미지에서 컴포넌트 콘텐츠를 실행합니다.  
+1. `docker pull <image>`: Pull the image containing the execution environment information of the defined component.
+2. Run `command`: Execute the component's content within the pulled image.
 
-`print_and_return_number.yaml` 를 예시로 들자면 `@create_component_from_func` 의 default image 는 python:3.7 이므로 해당 이미지를 기준으로 컴포넌트 콘텐츠를 실행하게 됩니다.  
+Taking `print_and_return_number.yaml` as an example, the default image in `@create_component_from_func` is `python:3.7`, so the component's content will be executed based on that image.
 
 1. `docker pull python:3.7`
 2. `print(number)`
 
 ## References:
-
 - [Getting Started With Python function based components](https://www.kubeflow.org/docs/components/pipelines/sdk/python-function-components/#getting-started-with-python-function-based-components)

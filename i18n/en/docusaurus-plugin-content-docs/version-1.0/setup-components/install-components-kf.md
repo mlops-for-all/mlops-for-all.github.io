@@ -7,35 +7,35 @@ lastmod: 2021-12-20
 contributors: ["Jaeyeon Kim", "SeungTae Kim"]
 ---
 
-## 설치 파일 준비
+## Prepare the installation file
 
-Kubeflow **v1.4.0** 버전을 설치하기 위해서, 설치에 필요한 manifests 파일들을 준비합니다.
+Prepare the installation files for installing Kubeflow **v1.4.0**
 
-[kubeflow/manifests Repository](https://github.com/kubeflow/manifests) 를 **v1.4.0** 태그로 깃 클론한 뒤, 해당 폴더로 이동합니다.
+Clone the [kubeflow/manifests Repository](https://github.com/kubeflow/manifests) with the **v1.4.0** tag, and move to the corresponding folder.
 
-```text
+```bash
 git clone -b v1.4.0 https://github.com/kubeflow/manifests.git
 cd manifests
 ```
 
-## 각 구성 요소별 설치
+## Install each components
 
-kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적혀져 있지만, 설치하며 발생할 수 있는 이슈 혹은 정상적으로 설치되었는지 확인하는 방법이 적혀져 있지 않아 처음 설치하는 경우 어려움을 겪는 경우가 많습니다.  
-따라서, 각 구성 요소별로 정상적으로 설치되었는지 확인하는 방법을 함께 작성합니다.  
+The kubeflow/manifests repository provides installation commands for each component, but it often lacks information on potential issues that may arise during installation or how to verify if the installation was successful. This can make it challenging for first-time users.  
+Therefore, in this document, we will provide instructions on how to verify the successful installation of each component.
 
-또한, 본 문서에서는 **모두의 MLOps** 에서 다루지 않는 구성요소인 Knative, KFServing, MPI Operator 의 설치는 리소스의 효율적 사용을 위해 따로 설치하지 않습니다.
+Please note that this document will not cover the installation of components that are not covered in *MLOps for ALL*, such as Knative, KFServing, and MPI Operator, as we prioritize efficient resource usage.
 
 ### Cert-manager
 
-1. cert-manager 를 설치합니다.
+1. Install cert-manager.
 
-  ```text
+  ```bash
   kustomize build common/cert-manager/cert-manager/base | kubectl apply -f -
   ```
 
-  정상적으로 설치되면 다음과 같이 출력됩니다.
+  If the installation is successful, you should see output similar to the following:
 
-  ```text
+  ```bash
   namespace/cert-manager created
   customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io created
   customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io created
@@ -81,39 +81,37 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
   validatingwebhookconfiguration.admissionregistration.k8s.io/cert-manager-webhook created
   ```
 
-  cert-manager namespace 의 3 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
+  Wait for all 3 pods in the cert-manager namespace to become Running:
 
-  ```text
+  ```bash
   kubectl get pod -n cert-manager
   ```
 
-  모두 Running 이 되면 다음과 비슷한 결과가 출력됩니다.
+  Once all the pods are Running, you should see output similar to the following:
 
-  ```text
+  ```bash
   NAME                                       READY   STATUS    RESTARTS   AGE
   cert-manager-7dd5854bb4-7nmpd              1/1     Running   0          2m10s
   cert-manager-cainjector-64c949654c-2scxr   1/1     Running   0          2m10s
   cert-manager-webhook-6b57b9b886-7q6g2      1/1     Running   0          2m10s
   ```
 
-2. kubeflow-issuer 를 설치합니다.
+2. To install `kubeflow-issuer`, run the following command:
 
-  ```text
+  ```bash
   kustomize build common/cert-manager/kubeflow-issuer/base | kubectl apply -f -
   ```
 
-  정상적으로 설치되면 다음과 같이 출력됩니다.
+  If the installation is successful, you should see the following output:
 
-  ```text
+  ```bash
   clusterissuer.cert-manager.io/kubeflow-self-signing-issuer created
   ```
 
-- cert-manager-webhook 이슈
+  Note: If the `cert-manager-webhook` deployment is not in the Running state, you may encounter an error similar to the one below, and the `kubeflow-issuer` may not be installed. In this case, please ensure that all 3 pods of cert-manager are Running before retrying the command.  
+  If you encounter the below error, make sure that the `cert-manager` deployment and all its pods are running properly before proceeding.
 
-  cert-manager-webhook deployment 가 Running 이 아닌 경우, 다음과 비슷한 에러가 발생하며 kubeflow-issuer가 설치되지 않을 수 있음에 주의하시기 바랍니다.  
-  해당 에러가 발생한 경우, cert-manager 의 3개의 pod 가 모두 Running 이 되는 것을 확인한 이후 다시 명령어를 수행하시기 바랍니다.
-
-  ```text
+  ```bash
   Error from server: error when retrieving current configuration of:
   Resource: "cert-manager.io/v1alpha2, Resource=clusterissuers", GroupVersionKind: "cert-manager.io/v1alpha2, Kind=ClusterIssuer"
   Name: "kubeflow-self-signing-issuer", Namespace: ""
@@ -122,15 +120,15 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
 
 ### Istio
 
-1. istio 관련 Custom Resource Definition(CRD) 를 설치합니다.
+1. Install Custom Resource Definition(CRD) for istio.
 
-  ```text
+  ```bash
   kustomize build common/istio-1-9/istio-crds/base | kubectl apply -f -
   ```
 
-  정상적으로 수행되면 다음과 같이 출력됩니다.
+  if run properly,  you should see the following output:
 
-  ```text
+  ```bash
   customresourcedefinition.apiextensions.k8s.io/authorizationpolicies.security.istio.io created
   customresourcedefinition.apiextensions.k8s.io/destinationrules.networking.istio.io created
   customresourcedefinition.apiextensions.k8s.io/envoyfilters.networking.istio.io created
@@ -145,27 +143,27 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
   customresourcedefinition.apiextensions.k8s.io/workloadgroups.networking.istio.io created
   ```
 
-2. istio namespace 를 설치합니다.
+1. Install istio namespace
 
-  ```text
+  ```bash
   kustomize build common/istio-1-9/istio-namespace/base | kubectl apply -f -
   ```
 
-  정상적으로 수행되면 다음과 같이 출력됩니다.
+  if run properly,  you should see the following output:
 
-  ```text
+  ```bash
   namespace/istio-system created
   ```
 
-3. istio 를 설치합니다.
+3. Install istio.
 
-  ```text
+  ```bash
   kustomize build common/istio-1-9/istio-install/base | kubectl apply -f -
   ```
 
-  정상적으로 수행되면 다음과 같이 출력됩니다.
+  if run properly,  you should see the following output:
 
-  ```text
+  ```bash
   serviceaccount/istio-ingressgateway-service-account created
   serviceaccount/istio-reader-service-account created
   serviceaccount/istiod-service-account created
@@ -199,15 +197,15 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
   validatingwebhookconfiguration.admissionregistration.k8s.io/istiod-istio-system created
   ```
 
-  istio-system namespace 의 2 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
+  Wait for all 2 pods in the cert-manager namespace to become Running:
 
-  ```text
+  ```bash
   kubectl get po -n istio-system
   ```
 
-  모두 Running 이 되면 다음과 비슷한 결과가 출력됩니다.
+  Once all the pods are Running, you should see output similar to the following:
 
-  ```text
+  ```bash
   NAME                                   READY   STATUS    RESTARTS   AGE
   istio-ingressgateway-79b665c95-xm22l   1/1     Running   0          16s
   istiod-86457659bb-5h58w                1/1     Running   0          16s
@@ -215,15 +213,15 @@ kubeflow/manifests Repository 에 각 구성 요소별 설치 커맨드가 적�
 
 ### Dex
 
-dex 를 설치합니다.
+Now, let's install dex.
 
-```text
+```bash
 kustomize build common/dex/overlays/istio | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
+If performed normally, it will be printed as follows:
 
-```text
+```bash
 namespace/auth created
 customresourcedefinition.apiextensions.k8s.io/authcodes.dex.coreos.com created
 serviceaccount/dex created
@@ -236,30 +234,24 @@ deployment.apps/dex created
 virtualservice.networking.istio.io/dex created
 ```
 
-auth namespace 의 1 개의 pod 가 모두 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until all one pod in the auth namespace is running.
+```bash
 kubectl get po -n auth
 ```
 
-모두 Running 이 되면 다음과 비슷한 결과가 출력됩니다.
-
-```text
+When everyone is running, similar results will be printed.
+```bash
 NAME                   READY   STATUS    RESTARTS   AGE
 dex-5ddf47d88d-458cs   1/1     Running   1          12s
 ```
 
-### OIDC AuthService
-
-OIDC AuthService 를 설치합니다.
-
-```text
+Install OIDC AuthService.
+```bash
 kustomize build common/oidc-authservice/base | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be printed as follows.
+```bash
 configmap/oidc-authservice-parameters created
 secret/oidc-authservice-client created
 service/authservice created
@@ -268,59 +260,47 @@ statefulset.apps/authservice created
 envoyfilter.networking.istio.io/authn-filter created
 ```
 
-istio-system namespace 에 authservice-0 pod 가 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until the authservice-0 pod in the istio-system namespace is Running.
+```bash
 kubectl get po -n istio-system -w
 ```
 
-모두 Running 이 되면 다음과 비슷한 결과가 출력됩니다.
-
-```text
+If everybody runs, a similar result will be printed.
+```bash
 NAME                                   READY   STATUS    RESTARTS   AGE
 authservice-0                          1/1     Running   0          14s
 istio-ingressgateway-79b665c95-xm22l   1/1     Running   0          2m37s
 istiod-86457659bb-5h58w                1/1     Running   0          2m37s
 ```
 
-### Kubeflow Namespace
-
-kubeflow namespace 를 생성합니다.
-
-```text
+Create a Kubeflow Namespace.
+```bash
 kustomize build common/kubeflow-namespace/base | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be outputted as follows.
+```bash
 namespace/kubeflow created
 ```
 
-kubeflow namespace 를 조회합니다.
-
-```text
+Retrieve the Kubeflow namespace.
+```bash
 kubectl get ns kubeflow
 ```
 
-정상적으로 생성되면 다음과 비슷한 결과가 출력됩니다.
-
-```text
+If generated normally, similar results will be output.
+```bash
 NAME       STATUS   AGE
 kubeflow   Active   8s
 ```
 
-### Kubeflow Roles
-
-kubeflow-roles 를 설치합니다.
-
-```text
+Install kubeflow-roles.
+```bash
 kustomize build common/kubeflow-roles/base | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If properly performed, it will output as follows.
+```bash
 clusterrole.rbac.authorization.k8s.io/kubeflow-admin created
 clusterrole.rbac.authorization.k8s.io/kubeflow-edit created
 clusterrole.rbac.authorization.k8s.io/kubeflow-kubernetes-admin created
@@ -329,15 +309,13 @@ clusterrole.rbac.authorization.k8s.io/kubeflow-kubernetes-view created
 clusterrole.rbac.authorization.k8s.io/kubeflow-view created
 ```
 
-방금 생성한 kubeflow roles 를 조회합니다.
-
-```text
+Retrieve the kubeflow roles just created.
+```bash
 kubectl get clusterrole | grep kubeflow
 ```
 
-다음과 같이 총 6개의 clusterrole 이 출력됩니다.
-
-```text
+The following 6 clusterroles will be output.
+```bash
 kubeflow-admin                                                         2021-12-03T08:51:36Z
 kubeflow-edit                                                          2021-12-03T08:51:36Z
 kubeflow-kubernetes-admin                                              2021-12-03T08:51:36Z
@@ -346,61 +324,47 @@ kubeflow-kubernetes-view                                               2021-12-0
 kubeflow-view                                                          2021-12-03T08:51:36Z
 ```
 
-### Kubeflow Istio Resources
-
-kubeflow-istio-resources 를 설치합니다.
-
-```text
+Install Kubeflow Istio Resources.
+```bash
 kustomize build common/istio-1-9/kubeflow-istio-resources/base | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be output as follows.
+```bash
 clusterrole.rbac.authorization.k8s.io/kubeflow-istio-admin created
 clusterrole.rbac.authorization.k8s.io/kubeflow-istio-edit created
 clusterrole.rbac.authorization.k8s.io/kubeflow-istio-view created
 gateway.networking.istio.io/kubeflow-gateway created
 ```
 
-방금 생성한 kubeflow roles 를 조회합니다.
-
-```text
+Retrieve the Kubeflow roles just created.
+```bash
 kubectl get clusterrole | grep kubeflow-istio
 ```
-
-다음과 같이 총 3개의 clusterrole 이 출력됩니다.
-
-```text
+The following three clusterroles are output.
+```bash
 kubeflow-istio-admin                                                   2021-12-03T08:53:17Z
 kubeflow-istio-edit                                                    2021-12-03T08:53:17Z
 kubeflow-istio-view                                                    2021-12-03T08:53:17Z
 ```
 
-Kubeflow namespace 에 gateway 가 정상적으로 설치되었는지 확인합니다.
-
-```text
+Check if the gateway is properly installed in the Kubeflow namespace.
+```bash
 kubectl get gateway -n kubeflow
 ```
 
-정상적으로 생성되면 다음과 비슷한 결과가 출력됩니다.
-
-```text
+If generated normally, a result similar to the following will be output.
+```bash
 NAME               AGE
 kubeflow-gateway   31s
 ```
 
-### Kubeflow Pipelines
-
-kubeflow pipelines 를 설치합니다.
-
-```text
+Installing Kubeflow Pipelines.
+```bash
 kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubectl apply -f -
 ```
-
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be output as follows.
+```bash
 customresourcedefinition.apiextensions.k8s.io/clusterworkflowtemplates.argoproj.io created
 customresourcedefinition.apiextensions.k8s.io/cronworkflows.argoproj.io created
 customresourcedefinition.apiextensions.k8s.io/workfloweventbindings.argoproj.io created
@@ -410,28 +374,23 @@ authorizationpolicy.security.istio.io/mysql created
 authorizationpolicy.security.istio.io/service-cache-server created
 ```
 
-위 명령어는 여러 resources 를 한 번에 설치하고 있지만, 설치 순서의 의존성이 있는 리소스가 존재합니다.  
-따라서 때에 따라 다음과 비슷한 에러가 발생할 수 있습니다.
-
-```text
+This command is installing multiple resources at once, but there are resources with dependencies on the installation order. Therefore, depending on the time, a similar error may occur.
+```bash
 "error: unable to recognize "STDIN": no matches for kind "CompositeController" in version "metacontroller.k8s.io/v1alpha1""  
 ```
 
-위와 비슷한 에러가 발생한다면, 10 초 정도 기다린 뒤 다시 위의 명령을 수행합니다.
-
-```text
+If a similar error occurs, wait about 10 seconds and then try the command above again.
+```bash
 kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubectl apply -f -
 ```
 
-정상적으로 설치되었는지 확인합니다.
-
-```text
+Check to see if it has been installed correctly.
+```bash
 kubectl get po -n kubeflow
 ```
 
-다음과 같이 총 16개의 pod 가 모두 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until all 16 pods are running as follows.
+```bash
 NAME                                                     READY   STATUS    RESTARTS   AGE
 cache-deployer-deployment-79fdf9c5c9-bjnbg               2/2     Running   1          5m3s
 cache-server-5bdf4f4457-48gbp                            2/2     Running   0          5m3s
@@ -451,49 +410,30 @@ mysql-f7b9b7dd4-xfnw4                                    2/2     Running   0    
 workflow-controller-5cbbb49bd8-5zrwx                     2/2     Running   1          5m2s
 ```
 
-추가로 ml-pipeline UI가 정상적으로 접속되는지 확인합니다.
-
-```text
+Additionally, please check if the ml-pipeline UI is connected properly.
+```bash
 kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
 ```
 
-웹 브라우저를 열어 [http://localhost:8888/#/pipelines/](http://localhost:8888/#/pipelines/) 경로에 접속합니다.
+Open the web browser and connect to the path [http://localhost:8888/#/pipelines/](http://localhost:8888/#/pipelines/). Confirm that the following screen is displayed.
 
-다음과 같은 화면이 출력되는 것을 확인합니다.
-
-![pipeline-ui](./img/pipeline-ui.png)
-
-- localhost 연결 거부 이슈
-
-![localhost-reject](./img/localhost-reject.png)
-
-만약 다음과 같이 `localhost에서 연결을 거부했습니다` 라는 에러가 출력될 경우, 커맨드로 address 설정을 통해 접근하는 것이 가능합니다.
-
-**보안상의 문제가 되지 않는다면,** 아래와 같이 `0.0.0.0` 로 모든 주소의 bind를 열어주는 방향으로 ml-pipeline UI가 정상적으로 접속되는지 확인합니다.
-
-```text
+If you get the error "Connection refused on localhost", you can access it through the command line by setting the address, as long as there are no security issues. To check if the ml-pipeline UI connects normally, open the bind of all addresses with 0.0.0.0.
+```bash
 kubectl port-forward --address 0.0.0.0 svc/ml-pipeline-ui -n kubeflow 8888:80
 ```
+Despite running with the above options, if connection refusal issues still occur, add access permission by allowing all TCP protocol ports in the firewall settings or by adding access permission to port 8888.
 
-- 위의 옵션으로 실행했음에도 여전히 연결 거부 이슈가 발생할 경우
+When you open the web browser and access the path `http://<your virtual instance public IP>:8888/#/pipelines/`, you can see the ml-pipeline UI screen.
 
-방화벽 설정으로 접속해 모든 tcp 프로토콜의 포트에 대한 접속을 허가 또는 8888번 포트의 접속 허가를 추가해 접근 권한을 허가해줍니다.
+When accessing the other ports path that is being processed in the bottom, run the command in the same way as above and add the port number to the firewall to run it.
 
-웹 브라우저를 열어 `http://<당신의 가상 인스턴스 공인 ip 주소>:8888/#/pipelines/` 경로에 접속하면, ml-pipeline UI 화면이 출력되는 것을 확인할 수 있습니다.
-
-하단에서 진행되는 다른 포트의 경로에 접속할 때도 위의 절차와 동일하게 커맨드를 실행하고, 방화벽에 포트 번호를 추가해주면 실행하는 것이 가능합니다.
-
-### Katib
-
-Katib 를 설치합니다.
-
-```text
+English: We will install Katib.
+```bash
 kustomize build apps/katib/upstream/installs/katib-with-kubeflow | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be output as follows.
+```bash
 customresourcedefinition.apiextensions.k8s.io/experiments.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/suggestions.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/trials.kubeflow.org created
@@ -525,44 +465,32 @@ mutatingwebhookconfiguration.admissionregistration.k8s.io/katib.kubeflow.org cre
 validatingwebhookconfiguration.admissionregistration.k8s.io/katib.kubeflow.org created
 ```
 
-정상적으로 설치되었는지 확인합니다.
-
-```text
+Confirm if it has been installed properly.
+```bash
 kubectl get po -n kubeflow | grep katib
 ```
-
-다음과 같이 총 4 개의 pod 가 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until four pods are Running, like this.
+```bash
 katib-controller-68c47fbf8b-b985z                        1/1     Running   0          82s
 katib-db-manager-6c948b6b76-2d9gr                        1/1     Running   0          82s
 katib-mysql-7894994f88-scs62                             1/1     Running   0          82s
 katib-ui-64bb96d5bf-d89kp                                1/1     Running   0          82s
 ```
 
-추가로 katib UI가 정상적으로 접속되는지 확인합니다.
-
-```text
+Additionally, we will confirm that the Katib UI is connected normally.
+```bash
 kubectl port-forward svc/katib-ui -n kubeflow 8081:80
 ```
 
-웹 브라우저를 열어 [http://localhost:8081/katib/](http://localhost:8081/katib/) 경로에 접속합니다.
+Open the web browser and access the path [http://localhost:8081/katib/](http://localhost:8081/katib/) to confirm the following screen is displayed.
 
-다음과 같은 화면이 출력되는 것을 확인합니다.
 
-![katib-ui](./img/katib-ui.png)
-
-### Central Dashboard
-
-Dashboard 를 설치합니다.
-
-```text
+```bash
 kustomize build apps/centraldashboard/upstream/overlays/istio | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be output as follows.
+```bash
 serviceaccount/centraldashboard created
 role.rbac.authorization.k8s.io/centraldashboard created
 clusterrole.rbac.authorization.k8s.io/centraldashboard created
@@ -575,39 +503,27 @@ deployment.apps/centraldashboard created
 virtualservice.networking.istio.io/centraldashboard created
 ```
 
-정상적으로 설치되었는지 확인합니다.
-
-```text
+Check to see if it has been installed normally.
+```bash
 kubectl get po -n kubeflow | grep centraldashboard
 ```
 
-kubeflow namespace 에 centraldashboard 관련 1 개의 pod 가 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until one pod related to centraldashboard in the kubeflow namespace becomes Running.
+```bash
 centraldashboard-8fc7d8cc-xl7ts                          1/1     Running   0          52s
 ```
 
-추가로 Central Dashboard UI가 정상적으로 접속되는지 확인합니다.
-
-```text
+Additionally, we will check if the Central Dashboard UI is connected properly.
+```bash
 kubectl port-forward svc/centraldashboard -n kubeflow 8082:80
 ```
-
-웹 브라우저를 열어 [http://localhost:8082/](http://localhost:8082/) 경로에 접속합니다.
-
-다음과 같은 화면이 출력되는 것을 확인합니다.
-
-![central-dashboard](./img/central-dashboard.png)
-
-### Admission Webhook
-
-```text
+Open the web browser to connect to the path [http://localhost:8082/](http://localhost:8082/) and check that the following screen is displayed.
+```bash
 kustomize build apps/admission-webhook/upstream/overlays/cert-manager | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be output as follows.
+```bash
 customresourcedefinition.apiextensions.k8s.io/poddefaults.kubeflow.org created
 serviceaccount/admission-webhook-service-account created
 clusterrole.rbac.authorization.k8s.io/admission-webhook-cluster-role created
@@ -622,103 +538,45 @@ issuer.cert-manager.io/admission-webhook-selfsigned-issuer created
 mutatingwebhookconfiguration.admissionregistration.k8s.io/admission-webhook-mutating-webhook-configuration created
 ```
 
-정상적으로 설치되었는지 확인합니다.
-
-```text
+Check if it is installed normally.
+```bash
 kubectl get po -n kubeflow | grep admission-webhook
 ```
 
-1 개의 pod 가 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until one pod is running.
+```bash
 admission-webhook-deployment-667bd68d94-2hhrx            1/1     Running   0          11s
 ```
 
-### Notebooks & Jupyter Web App
+Install the Notebook controller.
 
-1. Notebook controller 를 설치합니다.
-
-  ```text
-  kustomize build apps/jupyter/notebook-controller/upstream/overlays/kubeflow | kubectl apply -f -
+If done successfully, it will output as follows.
+  deployment.apps/notebook-controller created
   ```
 
-  정상적으로 수행되면 다음과 같이 출력됩니다.
+A CustomResourceDefinition.apiextensions.k8s.io/notebooks.kubeflow.org, ServiceAccount/notebook-controller-service-account, Role.rbac.authorization.k8s.io/notebook-controller-leader-election-role, ClusterRole.rbac.authorization.k8s.io/notebook-controller-kubeflow-notebooks-admin, ClusterRole.rbac.authorization.k8s.io/notebook-controller-kubeflow-notebooks-edit, ClusterRole.rbac.authorization.k8s.io/notebook-controller-kubeflow-notebooks-view, ClusterRole.rbac.authorization.k8s.io/notebook-controller-role, RoleBinding.rbac.authorization.k8s.io/notebook-controller-leader-election-rolebinding, ClusterRoleBinding.rbac.authorization.k8s.io/notebook-controller-role-binding, ConfigMap/notebook-controller-config-m
 
-  ```text
-  customresourcedefinition.apiextensions.k8s.io/notebooks.kubeflow.org created
-  serviceaccount/notebook-controller-service-account created
-  role.rbac.authorization.k8s.io/notebook-controller-leader-election-role created
-  clusterrole.rbac.authorization.k8s.io/notebook-controller-kubeflow-notebooks-admin created
-  clusterrole.rbac.authorization.k8s.io/notebook-controller-kubeflow-notebooks-edit created
-  clusterrole.rbac.authorization.k8s.io/notebook-controller-kubeflow-notebooks-view created
-  clusterrole.rbac.authorization.k8s.io/notebook-controller-role created
-  rolebinding.rbac.authorization.k8s.io/notebook-controller-leader-election-rolebinding created
-  clusterrolebinding.rbac.authorization.k8s.io/notebook-controller-role-binding created
-  configmap/notebook-controller-config-m44cmb547t created
-  service/notebook-controller-service created
-  deployment.apps/notebook-controller-deployment created
+Translation: Check if the installation was successful. Wait until one pod is running with the following command: kubectl get po -n kubeflow | grep notebook-controller.
+Translation: Install Jupyter Web App.
+  If performed correctly, the following will be output.
   ```
-
-  정상적으로 설치되었는지 확인합니다.
-
-  ```text
-  kubectl get po -n kubeflow | grep notebook-controller
-  ```
-
-  1 개의 pod 가 Running 이 될 때까지 기다립니다.
-
-  ```text
-  notebook-controller-deployment-75b4f7b578-w4d4l          1/1     Running   0          105s
-  ```
-
-2. Jupyter Web App 을 설치합니다.
-
-  ```text
-  kustomize build apps/jupyter/jupyter-web-app/upstream/overlays/istio | kubectl apply -f -
-  ```
-
-  정상적으로 수행되면 다음과 같이 출력됩니다.
-
-  ```text
-  serviceaccount/jupyter-web-app-service-account created
-  role.rbac.authorization.k8s.io/jupyter-web-app-jupyter-notebook-role created
-  clusterrole.rbac.authorization.k8s.io/jupyter-web-app-cluster-role created
-  clusterrole.rbac.authorization.k8s.io/jupyter-web-app-kubeflow-notebook-ui-admin created
-  clusterrole.rbac.authorization.k8s.io/jupyter-web-app-kubeflow-notebook-ui-edit created
-  clusterrole.rbac.authorization.k8s.io/jupyter-web-app-kubeflow-notebook-ui-view created
-  rolebinding.rbac.authorization.k8s.io/jupyter-web-app-jupyter-notebook-role-binding created
-  clusterrolebinding.rbac.authorization.k8s.io/jupyter-web-app-cluster-role-binding created
+  Confirm that the installation was successful:
   configmap/jupyter-web-app-config-76844k4cd7 created
   configmap/jupyter-web-app-logos created
   configmap/jupyter-web-app-parameters-chmg88cm48 created
   service/jupyter-web-app-service created
   deployment.apps/jupyter-web-app-deployment created
   virtualservice.networking.istio.io/jupyter-web-app-jupyter-web-app created
-  ```
 
-  정상적으로 설치되었는지 확인합니다.
+Wait until one pod is Running.
 
-  ```text
-  kubectl get po -n kubeflow | grep jupyter-web-app
-  ```
-
-  1개의 pod 가 Running 이 될 때까지 기다립니다.
-
-  ```text
-  jupyter-web-app-deployment-6f744fbc54-p27ts              1/1     Running   0          2m
-  ```
-
-### Profiles + KFAM
-
-Profile Controller를 설치합니다.
-
-```text
+English: We will install the Profile Controller.
+```bash
 kustomize build apps/profiles/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be outputted as follows.
+```bash
 customresourcedefinition.apiextensions.k8s.io/profiles.kubeflow.org created
 serviceaccount/profiles-controller-service-account created
 role.rbac.authorization.k8s.io/profiles-leader-election-role created
@@ -731,29 +589,23 @@ deployment.apps/profiles-deployment created
 virtualservice.networking.istio.io/profiles-kfam created
 ```
 
-정상적으로 설치되었는지 확인합니다.
-
-```text
+Check to see if it is installed normally.
+```bash
 kubectl get po -n kubeflow | grep profiles-deployment
 ```
 
-1 개의 pod 가 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until one pod is running.
+```bash
 profiles-deployment-89f7d88b-qsnrd                       2/2     Running   0          42s
 ```
 
-### Volumes Web App
-
-Volumes Web App 을 설치합니다.
-
-```text
+Install the Volumes Web App.
+```bash
 kustomize build apps/volumes-web-app/upstream/overlays/istio | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
-
-```text
+If performed normally, it will be output as follows.
+```bash
 serviceaccount/volumes-web-app-service-account created
 clusterrole.rbac.authorization.k8s.io/volumes-web-app-cluster-role created
 clusterrole.rbac.authorization.k8s.io/volumes-web-app-kubeflow-volume-ui-admin created
@@ -766,98 +618,35 @@ deployment.apps/volumes-web-app-deployment created
 virtualservice.networking.istio.io/volumes-web-app-volumes-web-app created
 ```
 
-정상적으로 설치되었는지 확인합니다.
-
-```text
+Check if it is installed normally.
+```bash
 kubectl get po -n kubeflow | grep volumes-web-app
 ```
 
-1개의 pod가 Running 이 될 때까지 기다립니다.
-
-```text
+Wait until one pod is running.
+```bash
 volumes-web-app-deployment-8589d664cc-62svl              1/1     Running   0          27s
 ```
+  ```bash
+  Install Tensorboard Web App.
 
-### Tensorboard & Tensorboard Web App
-
-1. Tensorboard Web App 를 설치합니다.
-
-  ```text
-  kustomize build apps/tensorboard/tensorboards-web-app/upstream/overlays/istio | kubectl apply -f -
-  ```
-
-  정상적으로 수행되면 다음과 같이 출력됩니다.
-
-  ```text
-  serviceaccount/tensorboards-web-app-service-account created
-  clusterrole.rbac.authorization.k8s.io/tensorboards-web-app-cluster-role created
-  clusterrole.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-admin created
-  clusterrole.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-edit created
-  clusterrole.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-view created
-  clusterrolebinding.rbac.authorization.k8s.io/tensorboards-web-app-cluster-role-binding created
-  configmap/tensorboards-web-app-parameters-g28fbd6cch created
-  service/tensorboards-web-app-service created
-  deployment.apps/tensorboards-web-app-deployment created
-  virtualservice.networking.istio.io/tensorboards-web-app-tensorboards-web-app created
-  ```
-
-  정상적으로 설치되었는지 확인합니다.
-
-  ```text
-  kubectl get po -n kubeflow | grep tensorboards-web-app
-  ```
-
-  1 개의 pod 가 Running 이 될 때까지 기다립니다.
-
-  ```text
-  tensorboards-web-app-deployment-6ff79b7f44-qbzmw            1/1     Running             0          22s
-  ```
-
-2. Tensorboard Controller 를 설치합니다.
-
-  ```text
-  kustomize build apps/tensorboard/tensorboard-controller/upstream/overlays/kubeflow | kubectl apply -f -
-  ```
-
-  정상적으로 수행되면 다음과 같이 출력됩니다.
-
-  ```text
-  customresourcedefinition.apiextensions.k8s.io/tensorboards.tensorboard.kubeflow.org created
-  serviceaccount/tensorboard-controller created
-  role.rbac.authorization.k8s.io/tensorboard-controller-leader-election-role created
-  clusterrole.rbac.authorization.k8s.io/tensorboard-controller-manager-role created
-  clusterrole.rbac.authorization.k8s.io/tensorboard-controller-proxy-role created
-  rolebinding.rbac.authorization.k8s.io/tensorboard-controller-leader-election-rolebinding created
-  clusterrolebinding.rbac.authorization.k8s.io/tensorboard-controller-manager-rolebinding created
-  clusterrolebinding.rbac.authorization.k8s.io/tensorboard-controller-proxy-rolebinding created
-  configmap/tensorboard-controller-config-bf88mm96c8 created
-  service/tensorboard-controller-controller-manager-metrics-service created
+Service account/tensorboards-web-app-service-account created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-cluster-role created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-admin created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-edit created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-view created, Cluster role binding.rbac.authorization.k8s.io/tensorboards-web-app-cluster-role-binding created, Config map/tensorboards-web-app-parameters-g28fbd6cch created, Service/tensorboards-web-app-service created, Deployment.apps/tensorboards-web-app-deployment created, and Virtual service.networking.istio.io/t
+Check if it is installed correctly.
+  ```bash
+  Deployment "tensorboard-web-app-deployment-6ff79b7f44-qbzmw" created
   deployment.apps/tensorboard-controller-controller-manager created
-  ```
+```
 
-  정상적으로 설치되었는지 확인합니다.
-
-  ```text
-  kubectl get po -n kubeflow | grep tensorboard-controller
-  ```
-
-  1 개의 pod 가 Running 이 될 때까지 기다립니다.
-
-  ```text
-  tensorboard-controller-controller-manager-954b7c544-vjpzj   3/3     Running   1          73s
-  ```
-
-### Training Operator
-
-Training Operator 를 설치합니다.
-
-```text
+A custom resource definition for 'tensorboards.tensorboard.kubeflow.org' was created, along with a service account, roles, role bindings, a config map, and a deployment for the controller manager metrics service.
+  Check if the deployment.apps/tensorboard-controller-controller-manager was installed correctly. Wait for 1 pod to be Running.
+Translation: Installing Training Operator.
+```bash
 kustomize build apps/training-operator/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
+If performed normally, it will be output as follows.
 
-```text
+```bash
 customresourcedefinition.apiextensions.k8s.io/mxjobs.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/pytorchjobs.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/tfjobs.kubeflow.org created
@@ -872,59 +661,57 @@ service/training-operator created
 deployment.apps/training-operator created
 ```
 
-정상적으로 설치되었는지 확인합니다.
+Check to see if it has been installed normally.
 
-```text
+```bash
 kubectl get po -n kubeflow | grep training-operator
 ```
 
-1 개의 pod 가 Running 이 될 때까지 기다립니다.
+Wait until one pod is up and running.
 
-```text
+```bash
 training-operator-7d98f9dd88-6887f                          1/1     Running   0          28s
 ```
 
 ### User Namespace
 
-Kubeflow 사용을 위해, 사용할 User의 Kubeflow Profile 을 생성합니다.
+For using Kubeflow, create a Kubeflow Profile for the User to be used.
 
-```text
+```bash
 kustomize build common/user-namespace/base | kubectl apply -f -
 ```
 
-정상적으로 수행되면 다음과 같이 출력됩니다.
+If performed normally, it will be outputted as follows.
 
-```text
+```bash
 configmap/default-install-config-9h2h2b6hbk created
 profile.kubeflow.org/kubeflow-user-example-com created
 ```
 
-kubeflow-user-example-com profile 이 생성된 것을 확인합니다.
+Confirm that the kubeflow-user-example-com profile has been created.
 
-```text
+```bash
 kubectl get profile
 ```
 
-```text
+```bash
 kubeflow-user-example-com   37s
 ```
 
-## 정상 설치 확인
+## Check installation
 
-Kubeflow central dashboard에 web browser로 접속하기 위해 포트 포워딩합니다.
+Confirm successful installation by port forwarding to access Kubeflow central dashboard with web browser.
 
-```text
+```bash
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 ```
 
-Web Browser 를 열어 [http://localhost:8080](http://localhost:8080) 으로 접속하여, 다음과 같은 화면이 출력되는 것을 확인합니다.
-
+Open a web browser and connect to [http://localhost:8080](http://localhost:8080) to confirm that the following screen is displayed. 
 ![login-ui](./img/login-after-install.png)
 
-다음 접속 정보를 입력하여 접속합니다.
+Enter the following connection information to connect.
 
 - Email Address: `user@example.com`
 - Password: `12341234`
 
 ![central-dashboard](./img/after-login.png)
-

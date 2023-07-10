@@ -11,7 +11,7 @@ contributors: ["Jongseob Jeon"]
 
 - requirements.txt
 
-  ```text
+  ```bash
   kfp==1.8.9
   scikit-learn==1.0.1
   mlflow==1.21.0
@@ -21,13 +21,13 @@ contributors: ["Jongseob Jeon"]
 
 [앞에서 만든 파이썬 가상환경](../appendix/pyenv.md#python-가상환경-생성)을 활성화합니다.
 
-```text
+```bash
 pyenv activate demo
 ```
 
 패키지 설치를 진행합니다.
 
-```text
+```bash
 pip3 install -U pip
 pip3 install kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 pandas==1.3.4 dill==0.3.4
 ```

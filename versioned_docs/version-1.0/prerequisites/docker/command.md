@@ -13,7 +13,7 @@ docker run hello-world
 
 정상적으로 설치된 경우 다음과 같은 메시지를 확인할 수 있습니다.
 
-```text
+```bash
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ....
@@ -35,7 +35,7 @@ docker pull --help
 
 정상적으로 수행되면 아래와 같이 출력됩니다.
 
-```text
+```bash
 Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
 
 Pull an image or a repository from a registry
@@ -64,7 +64,7 @@ docker pull ubuntu:18.04
 
 만약, 정상적으로 수행된다면 다음과 비슷하게 출력됩니다.
 
-```text
+```bash
 18.04: Pulling from library/ubuntu
 20d796c36622: Pull complete 
 Digest: sha256:42cd9143b6060261187a72716906187294b8b66653b50d70bc7a90ccade5c984
@@ -88,7 +88,7 @@ docker images --help
 
 docker images에서 사용할 수 있는 argument는 다음과 같습니다.
 
-```text
+```bash
 Usage:  docker images [OPTIONS] [REPOSITORY[:TAG]]
 
 List images
@@ -110,7 +110,7 @@ docker images
 
 만약 도커를 최초 설치 후 이 실습을 진행한다면 다음과 비슷하게 출력됩니다.
 
-```text
+```bash
 REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
 ubuntu       18.04     29e70752d7b2   2 days ago   56.7MB
 ```
@@ -121,7 +121,7 @@ ubuntu       18.04     29e70752d7b2   2 days ago   56.7MB
 docker images -q
 ```
 
-```text
+```bash
 29e70752d7b2
 ```
 
@@ -135,7 +135,7 @@ docker ps --help
 
 docker ps에서 사용할 수 있는 argument는 다음과 같습니다.
 
-```text
+```bash
 Usage:  docker ps [OPTIONS]
 
 List containers
@@ -159,13 +159,13 @@ docker ps
 
 현재 실행 중인 컨테이너가 없다면 다음과 같이 나옵니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
 만약 실행되는 컨테이너가 있다면 다음과 비슷하게 나옵니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND        CREATED          STATUS          PORTS     NAMES
 c1e8f5e89d8d   ubuntu    "sleep 3600"   13 seconds ago   Up 12 seconds             trusting_newton
 ```
@@ -180,7 +180,7 @@ docker run --help
 
 docker run을 실행하는 명령어는 다음과 같습니다.
 
-```text
+```bash
 Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
 Run a command in a new container
@@ -210,7 +210,7 @@ docker run -it --name demo1 ubuntu:18.04 /bin/bash
 
 이 제 앞서 배웠던 `docker ps` 명령어를 치면 다음과 같이 나옵니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
@@ -225,7 +225,7 @@ docker ps -a
 
 그러면 다음과 같이 종료된 컨테이너 목록도 나옵니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS                     PORTS     NAMES
 4c1aa74a382a   ubuntu:18.04   "/bin/bash"   2 minutes ago   Exited (0) 2 minutes ago             demo1
 ```
@@ -250,7 +250,7 @@ docker run -d --name demo2 ubuntu:18.04 sleep 3600
 
 다음과 같이 실행 중임을 확인할 수 있습니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND        CREATED         STATUS         PORTS     NAMES
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"   4 seconds ago   Up 3 seconds             demo2
 ```
@@ -289,7 +289,7 @@ docker logs demo3
 
 정상적으로 수행되면 아래와 비슷하게 나옵니다.
 
-```text
+```bash
 Sun Mar  6 11:06:49 UTC 2022
 Sun Mar  6 11:06:50 UTC 2022
 Sun Mar  6 11:06:51 UTC 2022
@@ -315,7 +315,7 @@ docker stop --help
 
 `docker ps`를 통해 현재 실행 중인 컨테이너를 확인하면 다음과 같습니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
 730391669c39   busybox        "sh -c 'while true; …"   About a minute ago   Up About a minute             demo3
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"             4 minutes ago        Up 4 minutes                  demo2
@@ -329,7 +329,7 @@ docker stop demo2
 
 실행 후 `docker ps`를 다시 입력합니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
 730391669c39   busybox   "sh -c 'while true; …"   2 minutes ago   Up 2 minutes             demo3
 ```
@@ -360,13 +360,13 @@ docker rm --help
 
 우선 현재 컨테이너들을 확인합니다.
 
-```text
+```bash
 docker ps -a
 ```
 
 다음과 같이 3개의 컨테이너가 있습니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                            PORTS     NAMES
 730391669c39   busybox        "sh -c 'while true; …"   4 minutes ago    Exited (137) About a minute ago             demo3
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"             7 minutes ago    Exited (137) 2 minutes ago                  demo2
@@ -381,7 +381,7 @@ docker rm demo3
 
 `docker ps -a` 명령어를 치면 다음과 같이 2개로 줄었습니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND        CREATED          STATUS                       PORTS     NAMES
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"   13 minutes ago   Exited (137) 8 minutes ago             demo2
 4c1aa74a382a   ubuntu:18.04   "/bin/bash"    16 minutes ago   Exited (0) 16 minutes ago              demo1
@@ -389,7 +389,7 @@ fc88a83e90f0   ubuntu:18.04   "sleep 3600"   13 minutes ago   Exited (137) 8 min
 
 나머지 컨테이너들도 삭제합니다.
 
-```text
+```bash
 docker rm demo2
 docker rm demo1
 ```
