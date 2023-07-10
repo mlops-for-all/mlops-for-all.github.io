@@ -238,7 +238,7 @@ docker run -it ubuntu sleep 10
 
 10 초동안 멈춰 있어야 하고, 해당 컨테이너에서 다른 명령을 수행할 수 없습니다. 10초 뒤에는 docker ps 에서 container 가 종료되는 것을 확인할 수 있습니다.
 
-#### Second Pratice
+#### Second Practice
 
 ```bash
 docker run -it ubuntu sleep 10
@@ -250,7 +250,7 @@ docker run -it ubuntu sleep 10
 이렇게 docker container 내부에서 빠져나온 상황을 detached 라고 부릅니다.
 도커에서는 run 을 실행함과 동시에 detached mode 로 실행시킬 수 있는 옵션을 제공합니다.
 
-#### Third Pratice
+#### Third Practice
 
 ```bash
 docker run -d ubuntu sleep 10

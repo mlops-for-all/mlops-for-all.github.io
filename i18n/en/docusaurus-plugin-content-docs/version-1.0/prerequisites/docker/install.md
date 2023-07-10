@@ -7,17 +7,17 @@ contributors: ["Jongseob Jeon", "Jaeyeon Kim"]
 
 ## Docker
 
-도커 실습을 위해 도커를 설치해야 합니다.  
-도커 설치는 어떤 OS를 사용하는지에 따라 달라집니다.  
-각 환경에 맞는 도커 설치는 공식 홈페이지를 참고해주세요.
+To practice Docker, you need to install Docker.  
+The Docker installation varies depending on which OS you are using.  
+Please refer to the official website for the Docker installation that fits your environment: 
 
 - [ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 - [mac](https://docs.docker.com/desktop/mac/install/)
 - [windows](https://docs.docker.com/desktop/windows/install/)
 
-## 설치 확인
+## Check Installation
 
-`docker run hello-world` 가 정상적으로 수행되는 OS, 터미널 환경이 필요합니다.
+Check installation requires an OS, terminal environment where `docker run hello-world` runs correctly.
 
 | OS      | Docker Engine  | Terminal           |
 | ------- | -------------- | ------------------ |
@@ -26,6 +26,6 @@ contributors: ["Jongseob Jeon", "Jaeyeon Kim"]
 | Windows | Docker Desktop | WSL2               |
 | Ubuntu  | Docker Engine  | bash               |
 
-## 들어가기 앞서서..
+## Before diving in..
 
-MLOps를 사용하기 위해 필요한 도커 사용법을 설명하니 많은 비유와 예시가 MLOps 쪽으로 치중되어 있을 수 있습니다.
+It is possible that many metaphors and examples will be focused towards MLOps as they explain the necessary Docker usage to use MLOps.

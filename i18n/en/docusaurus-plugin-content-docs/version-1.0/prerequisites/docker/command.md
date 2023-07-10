@@ -5,13 +5,13 @@ sidebar_position: 4
 contributors: ["Jongseob Jeon", "Jaeyeon Kim"]
 ---
 
-## 1. 정상 설치 확인
+## 1. Normal installation confirmation
 
 ```bash
 docker run hello-world
 ```
 
-정상적으로 설치된 경우 다음과 같은 메시지를 확인할 수 있습니다.
+If installed correctly, you should be able to see the following message.
 
 ```text
 Hello from Docker!
@@ -19,21 +19,22 @@ This message shows that your installation appears to be working correctly.
 ....
 ```
 
-**(For ubuntu)** sudo 없이 사용하고 싶다면 아래 사이트를 참고합니다.
+
+**(For ubuntu)** If you want to use without sudo, please refer to the following site.
 
 - [https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)
 
 ## 2. Docker Pull
 
-docker image registry(도커 이미지를 저장하고 공유할 수 있는 저장소)로부터 Docker image 를 로컬에 다운로드 받는 커맨드입니다.
+Docker pull is a command to download Docker images from a Docker image registry (a repository where Docker images are stored and shared).
 
-아래 커맨드를 통해 docker pull에서 사용 가능한 argument들을 확인할 수 있습니다.
+You can check the arguments available in docker pull using the command below.
 
 ```bash
 docker pull --help
 ```
 
-정상적으로 수행되면 아래와 같이 출력됩니다.
+If performed normally, it prints out as follows.
 
 ```text
 Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
@@ -47,22 +48,21 @@ Options:
   -q, --quiet                   Suppress verbose output
 ```
 
-여기서 알 수 있는 것은 바로 docker pull은 두 개 타입의 argument를 받는다는 것을 알 수 있습니다.
+It can be seen here that docker pull takes two types of arguments. 
 
 1. `[OPTIONS]`
 2. `NAME[:TAG|@DIGEST]`
 
-help에서 나온 `-a`, -`q` 옵션을 사용하기 위해서는 NAME 앞에서 사용해야 합니다.
-
-직접 `ubuntu:18.04` 이미지를 pull 해보겠습니다.
+In order to use the `-a` and `-q` options from help, they must be used before the NAME. 
+Let's try and pull the `ubuntu:18.04` image directly.
 
 ```bash
 docker pull ubuntu:18.04
 ```
 
-위 명령어를 해석하면 `ubuntu` 라는 이름을 가진 이미지 중 `18.04` 태그가 달려있는 이미지를 가져오라는 뜻입니다.
+If interpreted correctly, the command means to pull an image with the tag `18.04` from an image named `ubuntu`.
 
-만약, 정상적으로 수행된다면 다음과 비슷하게 출력됩니다.
+If performed successfully, it will produce an output similar to the following.
 
 ```text
 18.04: Pulling from library/ubuntu
@@ -72,21 +72,22 @@ Status: Downloaded newer image for ubuntu:18.04
 docker.io/library/ubuntu:18.04
 ```
 
-위의 명령어를 수행하면 [docker.io/library](http://docker.io/library/) 라는 이름의 registry 에서 ubuntu:18.04 라는 image 를 여러분의 노트북에 다운로드 받게됩니다.
+If you perform the above command, you will download the image called 'ubuntu:18.04' from a registry named [docker.io/library](http://docker.io/library/) to your laptop.
 
-- 참고사항
-  - 추후 [docker.io](http://docker.io) 나 public 한 docker hub 와 같은 registry 대신에, 특정 **private** 한 registry 에서 docker image 를 가져와야 하는 경우에는, [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) 을 통해서 특정 registry 를 바라보도록 한 뒤, docker pull 을 수행하는 형태로 사용합니다. 혹은 insecure registry 를 설정하는 [방안](https://stackoverflow.com/questions/42211380/add-insecure-registry-to-docker)도 활용할 수 있습니다.
-  - 폐쇄망에서 docker image 를 `.tar` 파일과 같은 형태로 저장하고 공유할 수 있도록 [`docker save`](https://docs.docker.com/engine/reference/commandline/save/), [`docker load`](https://docs.docker.com/engine/reference/commandline/load/) 와 같은 명령어도 존재합니다.
+- Note that 
+  - in the future, if you need to get a docker image from a certain **private** registry instead of docker.io or public docker hub, you can use [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to point to the certain registry, then use `docker pull`. Alternatively, you can set up an [insecure registry]((https://stackoverflow.com/questions/42211380/add-insecure-registry-to-docker)). 
+  - Also note that [`docker save`](https://docs.docker.com/engine/reference/commandline/save/) and [`docker load`](https://docs.docker.com/engine/reference/commandline/load/) commands are available to store and share docker images in the form of `.tar` file in an intranet.
+
 
 ## 3. Docker images
 
-로컬에 존재하는 docker image 리스트를 출력하는 커맨드입니다.
+This is the command to list the Docker images that exist locally.
 
 ```bash
 docker images --help
 ```
 
-docker images에서 사용할 수 있는 argument는 다음과 같습니다.
+The arguments available for use in docker images are as follows.
 
 ```text
 Usage:  docker images [OPTIONS] [REPOSITORY[:TAG]]
@@ -102,20 +103,20 @@ Options:
   -q, --quiet           Only show image IDs
 ```
 
-아래 명령어를 이용해 직접 실행해 보겠습니다.
+Let's try executing the command below directly.
 
 ```bash
 docker images
 ```
 
-만약 도커를 최초 설치 후 이 실습을 진행한다면 다음과 비슷하게 출력됩니다.
+If you install Docker and proceed with this practice, it will output something similar to this.
 
 ```text
 REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
 ubuntu       18.04     29e70752d7b2   2 days ago   56.7MB
 ```
 
-줄 수 있는 argument중 `-q`를 사용하면 `IMAGE ID` 만 출력됩니다.
+If you use the `-q` argument among the possible arguments, only the `IMAGE ID` will be printed.
 
 ```bash
 docker images -q
@@ -127,13 +128,13 @@ docker images -q
 
 ## 4. Docker ps
 
-현재 실행 중인 도커 컨테이너 리스트를 출력하는 커맨드입니다.
+Command to output the list of currently running Docker containers.
 
 ```bash
 docker ps --help
 ```
 
-docker ps에서 사용할 수 있는 argument는 다음과 같습니다.
+Use the following arguments can be used with 'docker ps':
 
 ```text
 Usage:  docker ps [OPTIONS]
@@ -151,19 +152,19 @@ Options:
   -s, --size            Display total file sizes
 ```
 
-아래 명령어를 이용해 직접 실행해 보겠습니다.
+Let's try running the command below directly.
 
 ```bash
 docker ps
 ```
 
-현재 실행 중인 컨테이너가 없다면 다음과 같이 나옵니다.
+If there are no currently running containers, it will be as follows.
 
 ```text
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-만약 실행되는 컨테이너가 있다면 다음과 비슷하게 나옵니다.
+If there is a container running, it will look similar to this.
 
 ```text
 CONTAINER ID   IMAGE     COMMAND        CREATED          STATUS          PORTS     NAMES
@@ -172,13 +173,13 @@ c1e8f5e89d8d   ubuntu    "sleep 3600"   13 seconds ago   Up 12 seconds          
 
 ## 5. Docker run
 
-도커 컨테이너를 실행시키는 커맨드입니다.
+Command to run a Docker container.
 
 ```bash
 docker run --help
 ```
 
-docker run을 실행하는 명령어는 다음과 같습니다.
+The command to run docker run is as follows.
 
 ```text
 Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
@@ -186,44 +187,37 @@ Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 Run a command in a new container
 ```
 
-여기서 우리가 확인해야 하는 것은 바로 docker run은 세 개 타입의 argument를 받는다는 것을 알 수 있습니다.
+What we need to confirm here is that the docker run command takes three types of arguments. 
 
 1. `[OPTIONS]`
 2. `[COMMAND]`
 3. `[ARG...]`
 
-직접 도커 컨테이너를 실행해 보겠습니다.
+Let's try running a docker container ourselves.
 
 ```bash
 ## Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 docker run -it --name demo1 ubuntu:18.04 /bin/bash
 ```
 
-- `-it` : `-i` 옵션 + `-t` 옵션
-  - container 를 실행시킴과 동시에 interactive 한 terminal 로 접속시켜주는 옵션
-- `--name` : name
-  - 컨테이너 id 대신, 구분하기 쉽도록 지정해주는 이름
-- `/bin/bash`
-  - 컨테이너를 실행시킴과 동시에 실행할 커맨드로, `/bin/bash` 는 bash 쉘을 여는 것을 의미합니다.
+- `-it`: Combination of `-i` and `-t` options
+  - Runs the container and connects it to an interactive terminal
+- `--name`: Assigns a name to the container for easier identification instead of using the container ID
+- `/bin/bash`: Specifies the command to be executed in the container upon startup, where `/bin/bash` opens a bash shell.
 
-실행 후 `exit` 명령어를 통해 컨테이너를 종료합니다.
+After running the command, you can exit the container by using the `exit` command.
 
-이 제 앞서 배웠던 `docker ps` 명령어를 치면 다음과 같이 나옵니다.
-
+When you enter the previously learned `docker ps` command, the following output will be displayed.
 ```text
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-실행되고 있는 컨테이너가 나온다고 했지만 어째서인지 방금 실행한 컨테이너가 보이지 않습니다.
-그 이유는 `docker ps`는 기본값으로 현재 실행 중인 컨테이너를 보여주기 때문입니다.
-
-만약 종료된 컨테이너들도 보고 싶다면 `-a` 옵션을 주어야 합니다.
-
+It was said that the container being executed was coming out, but for some reason the container that was just executed does not appear. The reason is that `docker ps` shows the currently running containers by default. If you want to see the stopped containers too, you must give the `-a` option.
 ```bash
 docker ps -a
 ```
 
-그러면 다음과 같이 종료된 컨테이너 목록도 나옵니다.
+Then the list of terminated containers will also be displayed.
 
 ```text
 CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS                     PORTS     NAMES
@@ -232,62 +226,58 @@ CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS              
 
 ## 6. Docker exec
 
-Docker 컨테이너 내부에서 명령을 내리거나, 내부로 접속하는 커맨드입니다.
+Docker exec is a command that is used to issue commands or access the inside of a Docker container.
 
 ```bash
 docker exec --help
 ```
-
-예를 들어서 다음과 같은 명령어를 실행해 보겠습니다.
+For example, let's try running the following command.
 
 ```bash
 docker run -d --name demo2 ubuntu:18.04 sleep 3600
 ```
 
-여기서 `-d` 옵션은 도커 컨테이너를 백그라운드에서 실행시켜서, 컨테이너에서 접속 종료를 하더라도, 계속 실행 중이 되도록 하는 커맨드입니다.
+Here, the `-d` option is a command that allows the Docker container to run in the background so that even if the connection ends to the container, it continues to run.
 
-`docker ps`를 통해 현재 실행중인지 확인합니다.
+Use `docker ps` to check if it is currently running.
 
-다음과 같이 실행 중임을 확인할 수 있습니다.
+It can be confirmed that it is running as follows.
 
 ```text
 CONTAINER ID   IMAGE          COMMAND        CREATED         STATUS         PORTS     NAMES
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"   4 seconds ago   Up 3 seconds             demo2
 ```
 
-이제 `docker exec` 명령어를 통해서 실행중인 도커 컨테이너에 접속해 보겠습니다.
+Now let's connect to the running docker container through the `docker exec` command.
 
 ```bash
 docker exec -it demo2 /bin/bash
 ```
 
-이 전의 `docker run`과 동일하게 container 내부에 접속할 수 있습니다.
-
-`exit`을 통해 종료합니다.
-
+This is the same as the previous `docker run` command, allowing you to access the inside of the container.
+ 
+You can exit using `exit`.
 ## 7. Docker logs
-
-도커 컨테이너의 log를 확인하는 커맨드 입니다.
 
 ```bash
 docker logs --help
 ```
 
-다음과 같은 컨테이너를 실행시키도록 하겠습니다.
+I will have the following container be executed.
 
 ```bash
 docker run --name demo3 -d busybox sh -c "while true; do $(echo date); sleep 1; done"
 ```
 
-위 명령어를 통해서 test 라는 이름의 busybox 컨테이너를 백그라운드에서 도커 컨테이너로 실행하여, 1초에 한 번씩 현재 시간을 출력하도록 했습니다.
+By using the above command, we have set up a busybox container named "test" as a Docker container in the background and printed the current time once every second.
 
-이제 아래 명령어를 통해 log를 확인해 보겠습니다.
+Now let's check the log with the command below.
 
 ```bash
 docker logs demo3
 ```
 
-정상적으로 수행되면 아래와 비슷하게 나옵니다.
+If performed normally, it will be similar to below.
 
 ```text
 Sun Mar  6 11:06:49 UTC 2022
@@ -297,9 +287,8 @@ Sun Mar  6 11:06:52 UTC 2022
 Sun Mar  6 11:06:53 UTC 2022
 Sun Mar  6 11:06:54 UTC 2022
 ```
-
-그런데 이렇게 사용할 경우 여태까지 찍힌 log 밖에 확인할 수 없습니다.  
-이 때 `-f` 옵션을 이용해 계속 watch 하며 출력할 수 있습니다.
+However, if used this way, you can only check the logs taken so far.  
+In this case, you can use the `-f` option to keep watching and outputting.
 
 ```bash
 docker logs demo3 -f    
@@ -307,64 +296,59 @@ docker logs demo3 -f
 
 ## 8. Docker stop
 
-실행 중인 도커 컨테이너를 중단시키는 커맨드입니다.
+Command to stop a running Docker container.
 
 ```bash
 docker stop --help
 ```
 
-`docker ps`를 통해 현재 실행 중인 컨테이너를 확인하면 다음과 같습니다.
+Through `docker ps`, you can check the containers currently running, as follows.
 
 ```text
 CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
 730391669c39   busybox        "sh -c 'while true; …"   About a minute ago   Up About a minute             demo3
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"             4 minutes ago        Up 4 minutes                  demo2
 ```
-
-이제 `docker stop` 을 통해 도커를 정지해 보겠습니다.
+Now let's try to stop Docker with `docker stop`.
 
 ```bash
 docker stop demo2
 ```
 
-실행 후 `docker ps`를 다시 입력합니다.
+After executing, type `docker ps` again.
 
 ```text
 CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
 730391669c39   busybox   "sh -c 'while true; …"   2 minutes ago   Up 2 minutes             demo3
 ```
 
-위의 결과와 비교했을 때 demo2 컨테이너가 현재 실행 중인 컨테이너 목록에서 사라진 것을 확인할 수 있습니다.
-
-나머지 컨테이너도 정지합니다.
+Comparing with the above result, you can see that the demo2 container has disappeared from the list of currently running containers.
+The rest of the containers will also be stopped.
 
 ```bash
 docker stop demo3
 ```
 
-## 9. Docker rm
-
-도커 컨테이너를 삭제하는 커맨드입니다.
+Docker rm: Command to delete a Docker container.
 
 ```bash
 docker rm --help
 ```
 
-도커 컨테이너는 기본적으로 종료가 된 상태로 있습니다. 그래서 `docker ps -a`를 통해서 종료된 컨테이너도 볼 수 있습니다.
-그런데 종료된 컨테이너는 왜 지워야 할까요?  
-종료되어 있는 도커에는 이전에 사용한 데이터가 아직 컨테이너 내부에 남아있습니다.
-그래서 restart 등을 통해서 컨테이너를 재시작할 수 있습니다.
-그런데 이 과정에서 disk를 사용하게 됩니다.
-
-그래서 완전히 사용하지 않는 컨테이너를 지우기 위해서는 `docker rm` 명령어를 사용해야 합니다.
-
-우선 현재 컨테이너들을 확인합니다.
+Docker containers are in a stopped state by default. That's why you can see stopped containers using `docker ps -a`.
+But why do we have to delete the stopped containers?  
+Even when stopped, the data used in the Docker remains in the container.
+So you can restart the container through restarting. But this process will use disk.
+So
+ in order to delete the containers that are not used at all, we should use the `docker rm` command.
+ 
+ First, let's check the current containers.
 
 ```text
 docker ps -a
 ```
 
-다음과 같이 3개의 컨테이너가 있습니다.
+There are three containers as follows.
 
 ```text
 CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                            PORTS     NAMES
@@ -373,13 +357,13 @@ fc88a83e90f0   ubuntu:18.04   "sleep 3600"             7 minutes ago    Exited (
 4c1aa74a382a   ubuntu:18.04   "/bin/bash"              10 minutes ago   Exited (0) 10 minutes ago                   demo1
 ```
 
-아래 명령어를 통해 `demo3` 컨테이너를 삭제해 보겠습니다.
+Let's try to delete the 'demo3' container through the following command.
 
 ```bash
 docker rm demo3
 ```
 
-`docker ps -a` 명령어를 치면 다음과 같이 2개로 줄었습니다.
+The command `docker ps -a` reduced it to two lines as follows.
 
 ```text
 CONTAINER ID   IMAGE          COMMAND        CREATED          STATUS                       PORTS     NAMES
@@ -387,7 +371,7 @@ fc88a83e90f0   ubuntu:18.04   "sleep 3600"   13 minutes ago   Exited (137) 8 min
 4c1aa74a382a   ubuntu:18.04   "/bin/bash"    16 minutes ago   Exited (0) 16 minutes ago              demo1
 ```
 
-나머지 컨테이너들도 삭제합니다.
+Delete the remaining containers as well.
 
 ```text
 docker rm demo2
@@ -396,19 +380,19 @@ docker rm demo1
 
 ## 10. Docker rmi
 
-도커 이미지를 삭제하는 커맨드입니다.
+Command to delete a Docker image.
 
 ```bash
 docker rmi --help
 ```
 
-아래 명령어를 통해 현재 어떤 이미지들이 로컬에 있는지 확인합니다.
+Use the following commands to check which images are currently on the local.
 
 ```bash
 docker images
 ```
 
-다음과 같이 출력됩니다.
+The following is output.
 
 ```bash
 REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
@@ -416,13 +400,13 @@ busybox      latest    a8440bba1bc0   32 hours ago   1.41MB
 ubuntu       18.04     29e70752d7b2   2 days ago     56.7MB
 ```
 
-`busybox` 이미지를 삭제해 보겠습니다.
+I will try to delete the `busybox` image.
 
 ```bash
 docker rmi busybox
 ```
 
-다시 `docker images`를 칠 경우 다음과 같이 나옵니다.
+If you type `docker images` again, the following will appear.
 
 ```bash
 REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
