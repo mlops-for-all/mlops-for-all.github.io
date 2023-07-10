@@ -65,6 +65,13 @@ def translate(source_path, dest_path):
                 translate_lines += [line]
                 continue
             lines += [line]
+            if len(lines) > 10:
+                # 많이 모이면 먼저 번역한다.
+                source_sentence = "".join(lines)
+                translated_sentence = request_prompt(source_sentence)
+                translate_lines += [translated_sentence]
+                translate_lines += ["\n"]
+                lines = []
 
     source_sentence = "".join(lines)
     #
