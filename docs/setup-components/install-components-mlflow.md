@@ -22,25 +22,25 @@ MLflow Tracking Server가 Backend Store로 사용할 용도의 PostgreSQL DB를 
 
 먼저 `mlflow-system`이라는 namespace 를 생성합니다.
 
-```text
+```bash
 kubectl create ns mlflow-system
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 생성된 것을 의미합니다.
 
-```text
+```bash
 namespace/mlflow-system created
 ```
 
 postgresql DB를 `mlflow-system` namespace 에 생성합니다.
 
-```text
+```bash
 kubectl -n mlflow-system apply -f https://raw.githubusercontent.com/mlops-for-all/helm-charts/b94b5fe4133f769c04b25068b98ccfa7a505aa60/mlflow/manifests/postgres.yaml 
 ```
 
 정상적으로 수행되면 다음과 같이 출력됩니다.
 
-```text
+```bash
 service/postgresql-mlflow-service created
 deployment.apps/postgresql-mlflow created
 persistentvolumeclaim/postgresql-mlflow-pvc created
@@ -48,13 +48,13 @@ persistentvolumeclaim/postgresql-mlflow-pvc created
 
 mlflow-system namespace 에 1개의 postgresql 관련 pod 가 Running 이 될 때까지 기다립니다.
 
-```text
+```bash
 kubectl get pod -n mlflow-system | grep postgresql
 ```
 
 다음과 비슷하게 출력되면 정상적으로 실행된 것입니다.
 
-```text
+```bash
 postgresql-mlflow-7b9bc8c79f-srkh7   1/1     Running   0          38s
 ```
 
@@ -64,7 +64,7 @@ MLflow Tracking Server가 Artifacts Store로 사용할 용도의 Minio는 이전
 단, kubeflow 용도와 mlflow 용도를 분리하기 위해, mlflow 전용 버킷(bucket)을 생성하겠습니다.  
 minio 에 접속하여 버킷을 생성하기 위해, 우선 minio-service 를 포트포워딩합니다.
 
-```text
+```bash
 kubectl port-forward svc/minio-service -n kubeflow 9000:9000
 ```
 
@@ -96,25 +96,25 @@ kubectl port-forward svc/minio-service -n kubeflow 9000:9000
 
 ### Helm Repository 추가
 
-```text
+```bash
 helm repo add mlops-for-all https://mlops-for-all.github.io/helm-charts
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 추가된 것을 의미합니다.
 
-```text
+```bash
 "mlops-for-all" has been added to your repositories
 ```
 
 ### Helm Repository 업데이트
 
-```text
+```bash
 helm repo update
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 업데이트된 것을 의미합니다.
 
-```text
+```bash
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "mlops-for-all" chart repository
 Update Complete. ⎈Happy Helming!⎈
@@ -124,7 +124,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 mlflow-server Helm Chart 0.2.0 버전을 설치합니다.
 
-```text
+```bash
 helm install mlflow-server mlops-for-all/mlflow-server \
   --namespace mlflow-system \
   --version 0.2.0
@@ -135,7 +135,7 @@ helm install mlflow-server mlops-for-all/mlflow-server \
 
 다음과 같은 메시지가 출력되어야 합니다.
 
-```text
+```bash
 NAME: mlflow-server
 LAST DEPLOYED: Sat Dec 18 22:02:13 2021
 NAMESPACE: mlflow-system
@@ -146,14 +146,14 @@ TEST SUITE: None
 
 정상적으로 설치되었는지 확인합니다.
 
-```text
+```bash
 kubectl get pod -n mlflow-system | grep mlflow-server
 ```
 
 mlflow-system namespace 에 1 개의 mlflow-server 관련 pod 가 Running 이 될 때까지 기다립니다.  
 다음과 비슷하게 출력되면 정상적으로 실행된 것입니다.
 
-```text
+```bash
 mlflow-server-ffd66d858-6hm62        1/1     Running   0          74s
 ```
 
@@ -163,7 +163,7 @@ mlflow-server-ffd66d858-6hm62        1/1     Running   0          74s
 
 우선 클라이언트 노드에서 접속하기 위해, 포트포워딩을 수행합니다.
 
-```text
+```bash
 kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
 ```
 

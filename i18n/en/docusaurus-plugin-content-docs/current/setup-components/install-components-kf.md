@@ -13,7 +13,7 @@ Prepare the installation files for installing Kubeflow **v1.4.0**
 
 Clone the [kubeflow/manifests Repository](https://github.com/kubeflow/manifests) with the **v1.4.0** tag, and move to the corresponding folder.
 
-```text
+```bash
 git clone -b v1.4.0 https://github.com/kubeflow/manifests.git
 cd manifests
 ```
@@ -29,13 +29,13 @@ Please note that this document will not cover the installation of components tha
 
 1. Install cert-manager.
 
-  ```text
+  ```bash
   kustomize build common/cert-manager/cert-manager/base | kubectl apply -f -
   ```
 
   If the installation is successful, you should see output similar to the following:
 
-  ```text
+  ```bash
   namespace/cert-manager created
   customresourcedefinition.apiextensions.k8s.io/certificaterequests.cert-manager.io created
   customresourcedefinition.apiextensions.k8s.io/certificates.cert-manager.io created
@@ -83,13 +83,13 @@ Please note that this document will not cover the installation of components tha
 
   Wait for all 3 pods in the cert-manager namespace to become Running:
 
-  ```text
+  ```bash
   kubectl get pod -n cert-manager
   ```
 
   Once all the pods are Running, you should see output similar to the following:
 
-  ```text
+  ```bash
   NAME                                       READY   STATUS    RESTARTS   AGE
   cert-manager-7dd5854bb4-7nmpd              1/1     Running   0          2m10s
   cert-manager-cainjector-64c949654c-2scxr   1/1     Running   0          2m10s
@@ -98,20 +98,20 @@ Please note that this document will not cover the installation of components tha
 
 2. To install `kubeflow-issuer`, run the following command:
 
-  ```text
+  ```bash
   kustomize build common/cert-manager/kubeflow-issuer/base | kubectl apply -f -
   ```
 
   If the installation is successful, you should see the following output:
 
-  ```text
+  ```bash
   clusterissuer.cert-manager.io/kubeflow-self-signing-issuer created
   ```
 
   Note: If the `cert-manager-webhook` deployment is not in the Running state, you may encounter an error similar to the one below, and the `kubeflow-issuer` may not be installed. In this case, please ensure that all 3 pods of cert-manager are Running before retrying the command.  
   If you encounter the below error, make sure that the `cert-manager` deployment and all its pods are running properly before proceeding.
 
-  ```text
+  ```bash
   Error from server: error when retrieving current configuration of:
   Resource: "cert-manager.io/v1alpha2, Resource=clusterissuers", GroupVersionKind: "cert-manager.io/v1alpha2, Kind=ClusterIssuer"
   Name: "kubeflow-self-signing-issuer", Namespace: ""
@@ -122,13 +122,13 @@ Please note that this document will not cover the installation of components tha
 
 1. Install Custom Resource Definition(CRD) for istio.
 
-  ```text
+  ```bash
   kustomize build common/istio-1-9/istio-crds/base | kubectl apply -f -
   ```
 
   if run properly,  you should see the following output:
 
-  ```text
+  ```bash
   customresourcedefinition.apiextensions.k8s.io/authorizationpolicies.security.istio.io created
   customresourcedefinition.apiextensions.k8s.io/destinationrules.networking.istio.io created
   customresourcedefinition.apiextensions.k8s.io/envoyfilters.networking.istio.io created
@@ -145,25 +145,25 @@ Please note that this document will not cover the installation of components tha
 
 1. Install istio namespace
 
-  ```text
+  ```bash
   kustomize build common/istio-1-9/istio-namespace/base | kubectl apply -f -
   ```
 
   if run properly,  you should see the following output:
 
-  ```text
+  ```bash
   namespace/istio-system created
   ```
 
 3. Install istio.
 
-  ```text
+  ```bash
   kustomize build common/istio-1-9/istio-install/base | kubectl apply -f -
   ```
 
   if run properly,  you should see the following output:
 
-  ```text
+  ```bash
   serviceaccount/istio-ingressgateway-service-account created
   serviceaccount/istio-reader-service-account created
   serviceaccount/istiod-service-account created
@@ -199,13 +199,13 @@ Please note that this document will not cover the installation of components tha
 
   Wait for all 2 pods in the cert-manager namespace to become Running:
 
-  ```text
+  ```bash
   kubectl get po -n istio-system
   ```
 
   Once all the pods are Running, you should see output similar to the following:
 
-  ```text
+  ```bash
   NAME                                   READY   STATUS    RESTARTS   AGE
   istio-ingressgateway-79b665c95-xm22l   1/1     Running   0          16s
   istiod-86457659bb-5h58w                1/1     Running   0          16s
@@ -215,13 +215,13 @@ Please note that this document will not cover the installation of components tha
 
 Now, let's install dex.
 
-```text
+```bash
 kustomize build common/dex/overlays/istio | kubectl apply -f -
 ```
 
 If performed normally, it will be printed as follows:
 
-```text
+```bash
 namespace/auth created
 customresourcedefinition.apiextensions.k8s.io/authcodes.dex.coreos.com created
 serviceaccount/dex created
@@ -235,23 +235,23 @@ virtualservice.networking.istio.io/dex created
 ```
 
 Wait until all one pod in the auth namespace is running.
-```text
+```bash
 kubectl get po -n auth
 ```
 
 When everyone is running, similar results will be printed.
-```text
+```bash
 NAME                   READY   STATUS    RESTARTS   AGE
 dex-5ddf47d88d-458cs   1/1     Running   1          12s
 ```
 
 Install OIDC AuthService.
-```text
+```bash
 kustomize build common/oidc-authservice/base | kubectl apply -f -
 ```
 
 If performed normally, it will be printed as follows.
-```text
+```bash
 configmap/oidc-authservice-parameters created
 secret/oidc-authservice-client created
 service/authservice created
@@ -261,12 +261,12 @@ envoyfilter.networking.istio.io/authn-filter created
 ```
 
 Wait until the authservice-0 pod in the istio-system namespace is Running.
-```text
+```bash
 kubectl get po -n istio-system -w
 ```
 
 If everybody runs, a similar result will be printed.
-```text
+```bash
 NAME                                   READY   STATUS    RESTARTS   AGE
 authservice-0                          1/1     Running   0          14s
 istio-ingressgateway-79b665c95-xm22l   1/1     Running   0          2m37s
@@ -274,33 +274,33 @@ istiod-86457659bb-5h58w                1/1     Running   0          2m37s
 ```
 
 Create a Kubeflow Namespace.
-```text
+```bash
 kustomize build common/kubeflow-namespace/base | kubectl apply -f -
 ```
 
 If performed normally, it will be outputted as follows.
-```text
+```bash
 namespace/kubeflow created
 ```
 
 Retrieve the Kubeflow namespace.
-```text
+```bash
 kubectl get ns kubeflow
 ```
 
 If generated normally, similar results will be output.
-```text
+```bash
 NAME       STATUS   AGE
 kubeflow   Active   8s
 ```
 
 Install kubeflow-roles.
-```text
+```bash
 kustomize build common/kubeflow-roles/base | kubectl apply -f -
 ```
 
 If properly performed, it will output as follows.
-```text
+```bash
 clusterrole.rbac.authorization.k8s.io/kubeflow-admin created
 clusterrole.rbac.authorization.k8s.io/kubeflow-edit created
 clusterrole.rbac.authorization.k8s.io/kubeflow-kubernetes-admin created
@@ -310,12 +310,12 @@ clusterrole.rbac.authorization.k8s.io/kubeflow-view created
 ```
 
 Retrieve the kubeflow roles just created.
-```text
+```bash
 kubectl get clusterrole | grep kubeflow
 ```
 
 The following 6 clusterroles will be output.
-```text
+```bash
 kubeflow-admin                                                         2021-12-03T08:51:36Z
 kubeflow-edit                                                          2021-12-03T08:51:36Z
 kubeflow-kubernetes-admin                                              2021-12-03T08:51:36Z
@@ -325,12 +325,12 @@ kubeflow-view                                                          2021-12-0
 ```
 
 Install Kubeflow Istio Resources.
-```text
+```bash
 kustomize build common/istio-1-9/kubeflow-istio-resources/base | kubectl apply -f -
 ```
 
 If performed normally, it will be output as follows.
-```text
+```bash
 clusterrole.rbac.authorization.k8s.io/kubeflow-istio-admin created
 clusterrole.rbac.authorization.k8s.io/kubeflow-istio-edit created
 clusterrole.rbac.authorization.k8s.io/kubeflow-istio-view created
@@ -338,33 +338,33 @@ gateway.networking.istio.io/kubeflow-gateway created
 ```
 
 Retrieve the Kubeflow roles just created.
-```text
+```bash
 kubectl get clusterrole | grep kubeflow-istio
 ```
 The following three clusterroles are output.
-```text
+```bash
 kubeflow-istio-admin                                                   2021-12-03T08:53:17Z
 kubeflow-istio-edit                                                    2021-12-03T08:53:17Z
 kubeflow-istio-view                                                    2021-12-03T08:53:17Z
 ```
 
 Check if the gateway is properly installed in the Kubeflow namespace.
-```text
+```bash
 kubectl get gateway -n kubeflow
 ```
 
 If generated normally, a result similar to the following will be output.
-```text
+```bash
 NAME               AGE
 kubeflow-gateway   31s
 ```
 
 Installing Kubeflow Pipelines.
-```text
+```bash
 kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubectl apply -f -
 ```
 If performed normally, it will be output as follows.
-```text
+```bash
 customresourcedefinition.apiextensions.k8s.io/clusterworkflowtemplates.argoproj.io created
 customresourcedefinition.apiextensions.k8s.io/cronworkflows.argoproj.io created
 customresourcedefinition.apiextensions.k8s.io/workfloweventbindings.argoproj.io created
@@ -375,22 +375,22 @@ authorizationpolicy.security.istio.io/service-cache-server created
 ```
 
 This command is installing multiple resources at once, but there are resources with dependencies on the installation order. Therefore, depending on the time, a similar error may occur.
-```text
+```bash
 "error: unable to recognize "STDIN": no matches for kind "CompositeController" in version "metacontroller.k8s.io/v1alpha1""  
 ```
 
 If a similar error occurs, wait about 10 seconds and then try the command above again.
-```text
+```bash
 kustomize build apps/pipeline/upstream/env/platform-agnostic-multi-user | kubectl apply -f -
 ```
 
 Check to see if it has been installed correctly.
-```text
+```bash
 kubectl get po -n kubeflow
 ```
 
 Wait until all 16 pods are running as follows.
-```text
+```bash
 NAME                                                     READY   STATUS    RESTARTS   AGE
 cache-deployer-deployment-79fdf9c5c9-bjnbg               2/2     Running   1          5m3s
 cache-server-5bdf4f4457-48gbp                            2/2     Running   0          5m3s
@@ -411,14 +411,14 @@ workflow-controller-5cbbb49bd8-5zrwx                     2/2     Running   1    
 ```
 
 Additionally, please check if the ml-pipeline UI is connected properly.
-```text
+```bash
 kubectl port-forward svc/ml-pipeline-ui -n kubeflow 8888:80
 ```
 
 Open the web browser and connect to the path [http://localhost:8888/#/pipelines/](http://localhost:8888/#/pipelines/). Confirm that the following screen is displayed.
 
 If you get the error "Connection refused on localhost", you can access it through the command line by setting the address, as long as there are no security issues. To check if the ml-pipeline UI connects normally, open the bind of all addresses with 0.0.0.0.
-```text
+```bash
 kubectl port-forward --address 0.0.0.0 svc/ml-pipeline-ui -n kubeflow 8888:80
 ```
 Despite running with the above options, if connection refusal issues still occur, add access permission by allowing all TCP protocol ports in the firewall settings or by adding access permission to port 8888.
@@ -428,12 +428,12 @@ When you open the web browser and access the path `http://<your virtual instance
 When accessing the other ports path that is being processed in the bottom, run the command in the same way as above and add the port number to the firewall to run it.
 
 English: We will install Katib.
-```text
+```bash
 kustomize build apps/katib/upstream/installs/katib-with-kubeflow | kubectl apply -f -
 ```
 
 If performed normally, it will be output as follows.
-```text
+```bash
 customresourcedefinition.apiextensions.k8s.io/experiments.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/suggestions.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/trials.kubeflow.org created
@@ -466,11 +466,11 @@ validatingwebhookconfiguration.admissionregistration.k8s.io/katib.kubeflow.org c
 ```
 
 Confirm if it has been installed properly.
-```text
+```bash
 kubectl get po -n kubeflow | grep katib
 ```
 Wait until four pods are Running, like this.
-```text
+```bash
 katib-controller-68c47fbf8b-b985z                        1/1     Running   0          82s
 katib-db-manager-6c948b6b76-2d9gr                        1/1     Running   0          82s
 katib-mysql-7894994f88-scs62                             1/1     Running   0          82s
@@ -478,19 +478,19 @@ katib-ui-64bb96d5bf-d89kp                                1/1     Running   0    
 ```
 
 Additionally, we will confirm that the Katib UI is connected normally.
-```text
+```bash
 kubectl port-forward svc/katib-ui -n kubeflow 8081:80
 ```
 
 Open the web browser and access the path [http://localhost:8081/katib/](http://localhost:8081/katib/) to confirm the following screen is displayed.
 
 
-```text
+```bash
 kustomize build apps/centraldashboard/upstream/overlays/istio | kubectl apply -f -
 ```
 
 If performed normally, it will be output as follows.
-```text
+```bash
 serviceaccount/centraldashboard created
 role.rbac.authorization.k8s.io/centraldashboard created
 clusterrole.rbac.authorization.k8s.io/centraldashboard created
@@ -504,26 +504,26 @@ virtualservice.networking.istio.io/centraldashboard created
 ```
 
 Check to see if it has been installed normally.
-```text
+```bash
 kubectl get po -n kubeflow | grep centraldashboard
 ```
 
 Wait until one pod related to centraldashboard in the kubeflow namespace becomes Running.
-```text
+```bash
 centraldashboard-8fc7d8cc-xl7ts                          1/1     Running   0          52s
 ```
 
 Additionally, we will check if the Central Dashboard UI is connected properly.
-```text
+```bash
 kubectl port-forward svc/centraldashboard -n kubeflow 8082:80
 ```
 Open the web browser to connect to the path [http://localhost:8082/](http://localhost:8082/) and check that the following screen is displayed.
-```text
+```bash
 kustomize build apps/admission-webhook/upstream/overlays/cert-manager | kubectl apply -f -
 ```
 
 If performed normally, it will be output as follows.
-```text
+```bash
 customresourcedefinition.apiextensions.k8s.io/poddefaults.kubeflow.org created
 serviceaccount/admission-webhook-service-account created
 clusterrole.rbac.authorization.k8s.io/admission-webhook-cluster-role created
@@ -539,12 +539,12 @@ mutatingwebhookconfiguration.admissionregistration.k8s.io/admission-webhook-muta
 ```
 
 Check if it is installed normally.
-```text
+```bash
 kubectl get po -n kubeflow | grep admission-webhook
 ```
 
 Wait until one pod is running.
-```text
+```bash
 admission-webhook-deployment-667bd68d94-2hhrx            1/1     Running   0          11s
 ```
 
@@ -571,12 +571,12 @@ Translation: Install Jupyter Web App.
 Wait until one pod is Running.
 
 English: We will install the Profile Controller.
-```text
+```bash
 kustomize build apps/profiles/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
 If performed normally, it will be outputted as follows.
-```text
+```bash
 customresourcedefinition.apiextensions.k8s.io/profiles.kubeflow.org created
 serviceaccount/profiles-controller-service-account created
 role.rbac.authorization.k8s.io/profiles-leader-election-role created
@@ -590,22 +590,22 @@ virtualservice.networking.istio.io/profiles-kfam created
 ```
 
 Check to see if it is installed normally.
-```text
+```bash
 kubectl get po -n kubeflow | grep profiles-deployment
 ```
 
 Wait until one pod is running.
-```text
+```bash
 profiles-deployment-89f7d88b-qsnrd                       2/2     Running   0          42s
 ```
 
 Install the Volumes Web App.
-```text
+```bash
 kustomize build apps/volumes-web-app/upstream/overlays/istio | kubectl apply -f -
 ```
 
 If performed normally, it will be output as follows.
-```text
+```bash
 serviceaccount/volumes-web-app-service-account created
 clusterrole.rbac.authorization.k8s.io/volumes-web-app-cluster-role created
 clusterrole.rbac.authorization.k8s.io/volumes-web-app-kubeflow-volume-ui-admin created
@@ -619,20 +619,20 @@ virtualservice.networking.istio.io/volumes-web-app-volumes-web-app created
 ```
 
 Check if it is installed normally.
-```text
+```bash
 kubectl get po -n kubeflow | grep volumes-web-app
 ```
 
 Wait until one pod is running.
-```text
+```bash
 volumes-web-app-deployment-8589d664cc-62svl              1/1     Running   0          27s
 ```
-  ```text
+  ```bash
   Install Tensorboard Web App.
 
 Service account/tensorboards-web-app-service-account created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-cluster-role created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-admin created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-edit created, Cluster role.rbac.authorization.k8s.io/tensorboards-web-app-kubeflow-tensorboard-ui-view created, Cluster role binding.rbac.authorization.k8s.io/tensorboards-web-app-cluster-role-binding created, Config map/tensorboards-web-app-parameters-g28fbd6cch created, Service/tensorboards-web-app-service created, Deployment.apps/tensorboards-web-app-deployment created, and Virtual service.networking.istio.io/t
 Check if it is installed correctly.
-  ```text
+  ```bash
   Deployment "tensorboard-web-app-deployment-6ff79b7f44-qbzmw" created
   deployment.apps/tensorboard-controller-controller-manager created
 ```
@@ -640,13 +640,13 @@ Check if it is installed correctly.
 A custom resource definition for 'tensorboards.tensorboard.kubeflow.org' was created, along with a service account, roles, role bindings, a config map, and a deployment for the controller manager metrics service.
   Check if the deployment.apps/tensorboard-controller-controller-manager was installed correctly. Wait for 1 pod to be Running.
 Translation: Installing Training Operator.
-```text
+```bash
 kustomize build apps/training-operator/upstream/overlays/kubeflow | kubectl apply -f -
 ```
 
 If performed normally, it will be output as follows.
 
-```text
+```bash
 customresourcedefinition.apiextensions.k8s.io/mxjobs.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/pytorchjobs.kubeflow.org created
 customresourcedefinition.apiextensions.k8s.io/tfjobs.kubeflow.org created
@@ -663,13 +663,13 @@ deployment.apps/training-operator created
 
 Check to see if it has been installed normally.
 
-```text
+```bash
 kubectl get po -n kubeflow | grep training-operator
 ```
 
 Wait until one pod is up and running.
 
-```text
+```bash
 training-operator-7d98f9dd88-6887f                          1/1     Running   0          28s
 ```
 
@@ -677,24 +677,24 @@ training-operator-7d98f9dd88-6887f                          1/1     Running   0 
 
 For using Kubeflow, create a Kubeflow Profile for the User to be used.
 
-```text
+```bash
 kustomize build common/user-namespace/base | kubectl apply -f -
 ```
 
 If performed normally, it will be outputted as follows.
 
-```text
+```bash
 configmap/default-install-config-9h2h2b6hbk created
 profile.kubeflow.org/kubeflow-user-example-com created
 ```
 
 Confirm that the kubeflow-user-example-com profile has been created.
 
-```text
+```bash
 kubectl get profile
 ```
 
-```text
+```bash
 kubeflow-user-example-com   37s
 ```
 
@@ -702,7 +702,7 @@ kubeflow-user-example-com   37s
 
 Confirm successful installation by port forwarding to access Kubeflow central dashboard with web browser.
 
-```text
+```bash
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 ```
 

@@ -15,7 +15,7 @@ Now, let's perform repeated API requests with the SeldonDeployment we created on
 
 [Forward the dashboard created earlier](../setup-components/install-components-pg.md).
 
-```text
+```bash
 kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 ```
 
@@ -23,7 +23,7 @@ kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 
 Request **repeated** to the [previously created Seldon Deployment](../api-deployment/seldon-iris.md#using-cli).
 
-```text
+```bash
 curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
 -H 'Content-Type: application/json' \
 -d '{ "data": { "ndarray": [[1,2,3,4]] } }'

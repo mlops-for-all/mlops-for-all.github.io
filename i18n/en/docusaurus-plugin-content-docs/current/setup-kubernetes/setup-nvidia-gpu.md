@@ -13,7 +13,7 @@ For using GPU in Kubernetes and Kubeflow, the following tasks are required.
 
 If the following screen is output when executing `nvidia-smi`, please omit this step.
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ nvidia-smi 
   +-----------------------------------------------------------------------------+
   | NVIDIA-SMI 470.86       Driver Version: 470.86       CUDA Version: 11.4     |
@@ -46,7 +46,7 @@ If the output of nvidia-smi is not as above, please install the nvidia driver th
 
 If you are not familiar with the installation of nvidia drivers, please install it through the following command.
 
-  ```text
+  ```bash
   sudo add-apt-repository ppa:graphics-drivers/ppa
   sudo apt update && sudo apt install -y ubuntu-drivers-common
   sudo ubuntu-drivers autoinstall
@@ -57,7 +57,7 @@ If you are not familiar with the installation of nvidia drivers, please install 
 
 Let's install NVIDIA-Docker.
 
-```text
+```bash
 curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \
   sudo apt-key add -
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
@@ -69,13 +69,13 @@ sudo systemctl restart docker
 
 To check if it is installed correctly, we will run the docker container using the GPU.
 
-```text
+```bash
 sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
 ```
 
 If the following message appears, it means that the installation was successful: 
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
   +-----------------------------------------------------------------------------+
   | NVIDIA-SMI 470.86       Driver Version: 470.86       CUDA Version: 11.4     |
@@ -107,7 +107,7 @@ By default, Kubernetes uses Docker-CE as the default container runtime. To use N
 
 1. Open the `/etc/docker/daemon.json` file and make the following modifications:
 
-  ```text
+  ```bash
   sudo vi /etc/docker/daemon.json
 
   {
@@ -123,20 +123,20 @@ By default, Kubernetes uses Docker-CE as the default container runtime. To use N
 
 2. After confirming the file changes, restart Docker.
 
-  ```text
+  ```bash
   sudo systemctl daemon-reload
   sudo service docker restart
   ```
 
 3. Verify that the changes have been applied.
 
-  ```text
+  ```bash
   sudo docker info | grep nvidia
   ```
 
   If you see the following message, it means that the installation was successful.
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ docker info | grep nvidia
   Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux nvidia runc
   Default Runtime: nvidia
@@ -146,25 +146,25 @@ By default, Kubernetes uses Docker-CE as the default container runtime. To use N
 
 1. Create the nvidia-device-plugin daemonset.
 
-  ```text
+  ```bash
   kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.10.0/nvidia-device-plugin.yml
   ```
 
 2. Verify that the nvidia-device-plugin pod is in the RUNNING state.
 
-  ```text
+  ```bash
   kubectl get pod -n kube-system | grep nvidia
   ```
 
 You should see the following output:
 
-  ```text
+  ```bash
   kube-system   nvidia-device-plugin-daemonset-nlqh2   1/1     Running   0    1h
   ```
 
 3. Verify that the nodes have been configured to have GPUs available.
 
-  ```text
+  ```bash
   kubectl get nodes "-o=custom-columns=NAME:.metadata.name,GPU:.status.allocatable.nvidia\.com/gpu"
   ```
 
@@ -172,7 +172,7 @@ You should see the following output:
   (*In the *MLOps for ALL* tutorial cluster, there are two GPUs, so the output is 2.
   If the output shows the correct number of GPUs for your cluster, it is fine.)
 
-  ```text
+  ```bash
   NAME       GPU
   ubuntu     2
   ```

@@ -23,25 +23,25 @@ We also install a dashboard to efficiently monitor the metrics of the SeldonDepl
 
 ### Add Helm Repository
 
-```text
+```bash
 helm repo add seldonio https://storage.googleapis.com/seldon-charts
 ```
 
 If the following message is output, it means that it has been added successfully.
 
-```text
+```bash
 "seldonio" has been added to your repositories
 ```
 
 ### Update Helm Repository
 
-```text
+```bash
 helm repo update
 ```
 
 If the following message is displayed, it means that the update was successful.
 
-```text
+```bash
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "seldonio" chart repository
 ...Successfully got an update from the "datawire" chart repository
@@ -52,7 +52,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 Install version 1.12.0 of the seldon-core-analytics Helm Chart.
 
-```text
+```bash
 helm install seldon-core-analytics seldonio/seldon-core-analytics \
   --namespace seldon-system \
   --version 1.12.0
@@ -60,7 +60,7 @@ helm install seldon-core-analytics seldonio/seldon-core-analytics \
 
 The following message should be output.
 
-```text
+```bash
 Skip...
 NAME: seldon-core-analytics
 LAST DEPLOYED: Tue Dec 14 18:29:38 2021
@@ -71,13 +71,13 @@ REVISION: 1
 
 Check to see if it was installed normally.
 
-```text
+```bash
 kubectl get pod -n seldon-system | grep seldon-core-analytics
 ```
 
 
 Wait until 6 seldon-core-analytics related pods are Running in the seldon-system namespace.
-```text
+```bash
 seldon-core-analytics-grafana-657c956c88-ng8wn                  2/2     Running   0          114s
 seldon-core-analytics-kube-state-metrics-94bb6cb9-svs82         1/1     Running   0          114s
 seldon-core-analytics-prometheus-alertmanager-64cf7b8f5-nxbl8   2/2     Running   0          114s
@@ -90,7 +90,7 @@ seldon-core-analytics-prometheus-seldon-685c664894-7cr45        2/2     Running 
 
 Let's now check if we can connect to Grafana normally. First, we will port forward to connect to the client node.
 
-```text
+```bash
 kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 ```
 

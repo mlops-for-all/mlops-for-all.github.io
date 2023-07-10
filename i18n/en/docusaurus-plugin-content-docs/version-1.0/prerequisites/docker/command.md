@@ -13,7 +13,7 @@ docker run hello-world
 
 If installed correctly, you should be able to see the following message.
 
-```text
+```bash
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ....
@@ -36,7 +36,7 @@ docker pull --help
 
 If performed normally, it prints out as follows.
 
-```text
+```bash
 Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
 
 Pull an image or a repository from a registry
@@ -64,7 +64,7 @@ If interpreted correctly, the command means to pull an image with the tag `18.04
 
 If performed successfully, it will produce an output similar to the following.
 
-```text
+```bash
 18.04: Pulling from library/ubuntu
 20d796c36622: Pull complete 
 Digest: sha256:42cd9143b6060261187a72716906187294b8b66653b50d70bc7a90ccade5c984
@@ -75,7 +75,7 @@ docker.io/library/ubuntu:18.04
 If you perform the above command, you will download the image called 'ubuntu:18.04' from a registry named [docker.io/library](http://docker.io/library/) to your laptop.
 
 - Note that 
-  - in the future, if you need to get a docker image from a certain **private** registry instead of docker.io or public docker hub, you can use [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to point to the certain registry, then use `docker pull`. Alternatively, you can set up an [insecure registry]((https://stackoverflow.com/questions/42211380/add-insecure-registry-to-docker)). 
+  - in the future, if you need to get a docker image from a certain **private** registry instead of docker.io or public docker hub, you can use [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to point to the certain registry, then use `docker pull`. Alternatively, you can set up an [insecure registry](https://stackoverflow.com/questions/42211380/add-insecure-registry-to-docker). 
   - Also note that [`docker save`](https://docs.docker.com/engine/reference/commandline/save/) and [`docker load`](https://docs.docker.com/engine/reference/commandline/load/) commands are available to store and share docker images in the form of `.tar` file in an intranet.
 
 
@@ -89,7 +89,7 @@ docker images --help
 
 The arguments available for use in docker images are as follows.
 
-```text
+```bash
 Usage:  docker images [OPTIONS] [REPOSITORY[:TAG]]
 
 List images
@@ -111,7 +111,7 @@ docker images
 
 If you install Docker and proceed with this practice, it will output something similar to this.
 
-```text
+```bash
 REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
 ubuntu       18.04     29e70752d7b2   2 days ago   56.7MB
 ```
@@ -122,7 +122,7 @@ If you use the `-q` argument among the possible arguments, only the `IMAGE ID` w
 docker images -q
 ```
 
-```text
+```bash
 29e70752d7b2
 ```
 
@@ -136,7 +136,7 @@ docker ps --help
 
 Use the following arguments can be used with 'docker ps':
 
-```text
+```bash
 Usage:  docker ps [OPTIONS]
 
 List containers
@@ -160,13 +160,13 @@ docker ps
 
 If there are no currently running containers, it will be as follows.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
 If there is a container running, it will look similar to this.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND        CREATED          STATUS          PORTS     NAMES
 c1e8f5e89d8d   ubuntu    "sleep 3600"   13 seconds ago   Up 12 seconds             trusting_newton
 ```
@@ -181,7 +181,7 @@ docker run --help
 
 The command to run docker run is as follows.
 
-```text
+```bash
 Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
 Run a command in a new container
@@ -208,7 +208,7 @@ docker run -it --name demo1 ubuntu:18.04 /bin/bash
 After running the command, you can exit the container by using the `exit` command.
 
 When you enter the previously learned `docker ps` command, the following output will be displayed.
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
@@ -219,7 +219,7 @@ docker ps -a
 
 Then the list of terminated containers will also be displayed.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS                     PORTS     NAMES
 4c1aa74a382a   ubuntu:18.04   "/bin/bash"   2 minutes ago   Exited (0) 2 minutes ago             demo1
 ```
@@ -243,7 +243,7 @@ Use `docker ps` to check if it is currently running.
 
 It can be confirmed that it is running as follows.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND        CREATED         STATUS         PORTS     NAMES
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"   4 seconds ago   Up 3 seconds             demo2
 ```
@@ -279,7 +279,7 @@ docker logs demo3
 
 If performed normally, it will be similar to below.
 
-```text
+```bash
 Sun Mar  6 11:06:49 UTC 2022
 Sun Mar  6 11:06:50 UTC 2022
 Sun Mar  6 11:06:51 UTC 2022
@@ -304,7 +304,7 @@ docker stop --help
 
 Through `docker ps`, you can check the containers currently running, as follows.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
 730391669c39   busybox        "sh -c 'while true; …"   About a minute ago   Up About a minute             demo3
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"             4 minutes ago        Up 4 minutes                  demo2
@@ -317,7 +317,7 @@ docker stop demo2
 
 After executing, type `docker ps` again.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
 730391669c39   busybox   "sh -c 'while true; …"   2 minutes ago   Up 2 minutes             demo3
 ```
@@ -344,13 +344,13 @@ So
  
  First, let's check the current containers.
 
-```text
+```bash
 docker ps -a
 ```
 
 There are three containers as follows.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS                            PORTS     NAMES
 730391669c39   busybox        "sh -c 'while true; …"   4 minutes ago    Exited (137) About a minute ago             demo3
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"             7 minutes ago    Exited (137) 2 minutes ago                  demo2
@@ -365,7 +365,7 @@ docker rm demo3
 
 The command `docker ps -a` reduced it to two lines as follows.
 
-```text
+```bash
 CONTAINER ID   IMAGE          COMMAND        CREATED          STATUS                       PORTS     NAMES
 fc88a83e90f0   ubuntu:18.04   "sleep 3600"   13 minutes ago   Exited (137) 8 minutes ago             demo2
 4c1aa74a382a   ubuntu:18.04   "/bin/bash"    16 minutes ago   Exited (0) 16 minutes ago              demo1
@@ -373,7 +373,7 @@ fc88a83e90f0   ubuntu:18.04   "sleep 3600"   13 minutes ago   Exited (137) 8 min
 
 Delete the remaining containers as well.
 
-```text
+```bash
 docker rm demo2
 docker rm demo1
 ```

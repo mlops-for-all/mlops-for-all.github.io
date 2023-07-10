@@ -13,7 +13,7 @@ Summary of how Seldon Core creates an API server:
 4. The API can be requested at the generated API server address to receive the inference values from the model.
 
 The yaml file defining the custom resource, SeldonDeployment, which is most commonly used when using Seldon Core is as follows:
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -73,13 +73,13 @@ Now let's take a look at the fields that need to be defined in `componentSpecs` 
 
 ### volumes
 
-```text
+```bash
 volumes:
 - name: model-provision-location
   emptyDir: {}
 ```
 `Volumes` refer to the space used to store the models downloaded from the initContainer, which is received as an array with the components `name` and `emptyDir`. These values are used only once when downloading and moving the models, so they do not need to be modified significantly.
-```text
+```bash
 - name: model-initializer
   image: gcr.io/kfserving/storage-initializer:v0.4.0
   args:
@@ -109,11 +109,11 @@ For more detailed information, please refer to the following resources:
 - [kfserving](https://docs.seldon.io/projects/seldon-core/en/latest/servers/kfserving-storage-initializer.html)
 - [rclone](https://github.com/SeldonIO/seldon-core/tree/master/components/rclone-storage-initializer)
 
-In 모두의 MLOps, we use kfserving for downloading and storing models.
+In MLOps for ALL, we use kfserving for downloading and storing models.
 
 #### args
 
-```text
+```bash
 args:
   - "gs://seldon-models/v1.12.0-dev/sklearn/iris"
   - "/mnt/models"
@@ -123,7 +123,7 @@ When the gcr.io/kfserving/storage-initializer:v0.4.0 Docker image is run (`run`)
 
 ### volumeMounts
 
-```text
+```bash
 volumeMounts:
   - mountPath: /mnt/models
     name: model-provision-location
@@ -133,7 +133,7 @@ volumeMounts:
 
 ### container
 
-```text
+```bash
 containers:
 - name: model
   image: seldonio/sklearnserver:1.8.0-dev
@@ -168,7 +168,7 @@ You can choose the appropriate image based on the type of model you are using.
 
 #### volumeMounts
 
-```text
+```bash
 volumeMounts:
 - mountPath: /mnt/models
   name: model-provision-location
@@ -179,7 +179,7 @@ This is a field that tells the path where the data downloaded from initContainer
 
 #### securityContext
 
-```text
+```bash
 securityContext:
   privileged: true
   runAsUser: 0
@@ -190,7 +190,7 @@ When installing necessary packages, pod may not be able to perform the package i
 
 ## graph
 
-```text
+```bash
 graph:
   name: model
   type: MODEL

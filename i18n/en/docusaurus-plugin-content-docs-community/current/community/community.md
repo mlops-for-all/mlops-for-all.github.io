@@ -3,7 +3,7 @@ title: "Community"
 sidebar_position: 1
 ---
 
-### *모두의 MLOps* 릴리즈 소식
+### *MLOps for ALL* 릴리즈 소식
 
 새로운 포스트나 수정사항은 [Announcements](https://github.com/mlops-for-all/mlops-for-all.github.io/discussions/categories/announcements)에서 확인할 수 있습니다.
 

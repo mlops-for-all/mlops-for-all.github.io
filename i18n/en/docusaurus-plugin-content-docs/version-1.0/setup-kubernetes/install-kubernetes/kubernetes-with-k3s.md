@@ -22,19 +22,19 @@ Please refer to [Install Prerequisite](../../setup-kubernetes/install-prerequisi
 k3s uses containerd as the backend by default.
 However, we need to use docker as the backend to use GPU, so we will install the backend with the `--docker` option.
 
-```text
+```bash
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.7+k3s1 sh -s - server --disable traefik --disable servicelb --disable local-storage --docker
 ```
 
 After installing k3s, check the k3s config.
 
-```text
+```bash
 sudo cat /etc/rancher/k3s/k3s.yaml
 ```
 
 If installed correctly, the following items will be output. (Security related keys are hidden with <...>.)
 
-```text
+```bash
 apiVersion: v1
 clusters:
 - cluster:
@@ -63,14 +63,14 @@ users:
 
 Set up the Kubernetes cluster by copying the k3s config to be used as the cluster’s kubeconfig.
 
-```text
+```bash
 mkdir .kube
 sudo cp /etc/rancher/k3s/k3s.yaml .kube/config
 ```
 
 Grant user access permission to the copied config file.
 
-```text
+```bash
 sudo chown $USER:$USER .kube/config
 ```
 
@@ -83,7 +83,7 @@ The config file copied at first has the server ip set to `https://127.0.0.1:6443
 Modify this value to match the ip of the cluster. 
 (We modified it to `https://192.168.0.19:6443` to match the ip of the cluster used in this page.)
 
-```text
+```bash
 apiVersion: v1
 clusters:
 - cluster:
@@ -121,13 +121,13 @@ Please refer to [Setup Kubernetes Modules](../../setup-kubernetes/install-kubern
 
 Finally, check if the nodes are Ready and verify the OS, Docker, and Kubernetes versions.
 
-```text
+```bash
 kubectl get nodes -o wide
 ```
 
 If you see the following message, it means that the installation was successful.
 
-```text
+```bash
 NAME    STATUS   ROLES                  AGE   VERSION        INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
 ubuntu   Ready    control-plane,master   11m   v1.21.7+k3s1   192.168.0.19   <none>        Ubuntu 20.04.3 LTS   5.4.0-91-generic   docker://20.10.11
 ```

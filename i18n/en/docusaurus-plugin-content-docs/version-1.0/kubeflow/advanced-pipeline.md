@@ -61,7 +61,7 @@ If you run this script and check the resulting `example_pipeline.yaml`, it would
   <details>
     <summary>example_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -370,7 +370,7 @@ if __name__ == "__main__":
 If you execute the above script, you can see that the resources has been added with `{nvidia.com/gpu: 1}` in the generated file when you look closely at `sum-and-print-numbers`.
 Through this, you can allocate a GPU.
 
-```text
+```bash
   - name: sum-and-print-numbers
     container:
       args: [--number-1, '{{inputs.parameters.print-and-return-number-Output}}', --number-2,
@@ -435,7 +435,7 @@ if __name__ == "__main__":
 
 The changed part only can be confirmed as follows.
 
-```text
+```bash
       resources:
         limits: {nvidia.com/gpu: 1, cpu: '16'}
 ```
@@ -477,7 +477,7 @@ if __name__ == "__main__":
 
 The changed parts are as follows if checked.
 
-```text
+```bash
       resources:
         limits: {nvidia.com/gpu: 1, memory: 1G}
 ```

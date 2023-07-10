@@ -120,7 +120,7 @@ if __name__ == "__main__":
 
 If you run the Python code you wrote, a file called `print_and_return_number.yaml` will be created. When you check the file, it will be as follows.
 
-```text
+```bash
 name: Print and return number
 inputs:
 - {name: number, type: Integer}

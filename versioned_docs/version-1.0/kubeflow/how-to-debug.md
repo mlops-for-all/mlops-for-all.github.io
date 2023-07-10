@@ -145,19 +145,19 @@ if __name__ == "__main__":
 두 개의 파일을 같은 경로에 다운로드합니다.  
 그리고 해당 경로로 이동해서 파일을 확인합니다.
 
-```text
+```bash
 ls
 ```
 
 다음과 같이 두 개의 파일이 있습니다.
 
-```text
+```bash
 drop-na-from-csv-output.tgz load-iris-data-target.tgz
 ```
 
 압축을 풀어보겠습니다.
 
-```text
+```bash
 tar -xzvf load-iris-data-target.tgz ; mv data target.csv
 tar -xzvf drop-na-from-csv-output.tgz ; mv data data.csv
 ```

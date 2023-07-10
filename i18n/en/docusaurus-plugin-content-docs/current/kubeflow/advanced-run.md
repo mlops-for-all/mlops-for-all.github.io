@@ -127,7 +127,7 @@ If you run this script and check the resulting `plot_pipeline.yaml`, you will se
   <details>
     <summary>plot_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:

@@ -9,7 +9,7 @@ When working with Python, there may be cases where you want to use multiple vers
 
 To easily manage Python environments or Python package environments in a virtualized manner, there are tools available such as pyenv, conda, virtualenv, and venv.
 
-Among these, *모두의 MLOps* covers the installation of [pyenv](https://github.com/pyenv/pyenv) and [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv).  
+Among these, *MLOps for ALL* covers the installation of [pyenv](https://github.com/pyenv/pyenv) and [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv).  
 pyenv helps manage Python versions, while pyenv-virtualenv is a plugin for pyenv that helps manage Python package environments.
 
 ## Installing pyenv
@@ -22,7 +22,7 @@ Prerequisites vary depending on the operating system. Please refer to the [follo
 
 1. Install pyenv, pyenv-virtualenv
 
-```text
+```bash
 brew update
 brew install pyenv
 brew install pyenv-virtualenv
@@ -32,7 +32,7 @@ brew install pyenv-virtualenv
 
 For macOS, assuming the use of zsh since the default shell has changed to zsh in Catalina version and later, setting up pyenv.
 
-```text
+```bash
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 source ~/.zshrc
@@ -40,11 +40,11 @@ source ~/.zshrc
 
 Check if the pyenv command is executed properly.
 
-```text
+```bash
 pyenv --help
 ```
 
-```text
+```bash
 $ pyenv --help
 Usage: pyenv <command> [<args>]
 
@@ -87,13 +87,13 @@ For full documentation, see: https://github.com/pyenv/pyenv#readme
 
 1. Install pyenv and pyenv-virtualenv
 
-```text
+```bash
 curl https://pyenv.run | bash
 ```
 
 If the following content is output, it means that the installation is successful.
 
-```text
+```bash
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:--   0     0    0     0    0     0      0      0 --:--:-- --:--:-- 100   270  100   270    0     0    239      0  0:00:01  0:00:01 --:--:--   239
@@ -125,13 +125,13 @@ eval "$(pyenv virtualenv-init -)"
 
 Assuming the use of bash shell as the default shell, configure pyenv and pyenv-virtualenv to be used in bash.
 
-```text
+```bash
 sudo vi ~/.bashrc
 ```
 
 Enter the following string and save it.
 
-```text
+```bash
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
@@ -139,19 +139,19 @@ eval "$(pyenv virtualenv-init -)"
 
 Restart the shell.
 
-```text
+```bash
 exec $SHELL
 ```
 
 Check if the pyenv command is executed properly.
 
-```text
+```bash
 pyenv --help
 ```
 
 If the following message is displayed, it means that the settings have been configured correctly.
 
-```text
+```bash
 $ pyenv
 pyenv 2.2.2
 Usage: pyenv <command> [<args>]
@@ -199,13 +199,13 @@ For full documentation, see: https://github.com/pyenv/pyenv#readme
 Using the `pyenv install <Python-Version>` command, you can install the desired Python version.  
 In this page, we will install the Python 3.7.12 version that is used by Kubeflow by default as an example.
 
-```text
+```bash
 pyenv install 3.7.12
 ```
 
 If installed normally, the following message will be printed.
 
-```text
+```bash
 $ pyenv install 3.7.12
 Downloading Python-3.7.12.tar.xz...
 -> https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tar.xz
@@ -226,11 +226,11 @@ Installed Python-3.7.12 to /home/mlops/.pyenv/versions/3.7.12
 Create a Python virtual environment with the `pyenv virtualenv <Installed-Python-Version> <Virtual-Environment-Name>` command to create a Python virtual environment with the desired Python version.
 
 For example, let's create a Python virtual environment called `demo` with Python 3.7.12 version.
-```text
+```bash
 pyenv virtualenv 3.7.12 demo
 ```
 
-```text
+```bash
 $ pyenv virtualenv 3.7.12 demo
 Looking in links: /tmp/tmpffqys0gv
 Requirement already satisfied: setuptools in /home/mlops/.pyenv/versions/3.7.12/envs/demo/lib/python3.7/site-packages (47.1.0)
@@ -243,7 +243,7 @@ Use the `pyenv activate <environment name>` command to use the virtual environme
 
 For example, we will use a Python virtual environment called `demo`.
 
-```text
+```bash
 pyenv activate demo
 ```
 
@@ -252,13 +252,13 @@ You can see that the information of the current virtual environment is printed a
 
   Before
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ pyenv activate demo
   ```
 
   After
 
-  ```text
+  ```bash
   pyenv-virtualenv: prompt changing will be removed from future release. configure `export PYENV_VIRTUALENV_DISABLE_PROMPT=1' to simulate the behavior.
   (demo) mlops@ubuntu:~$ 
   ```
@@ -267,18 +267,18 @@ You can see that the information of the current virtual environment is printed a
 
 You can deactivate the currently active virtualenv by using the command `source deactivate`.
 
-```text
+```bash
 source deactivate
 ```
 
   Before
 
-  ```text
+  ```bash
   (demo) mlops@ubuntu:~$ source deactivate
   ```
 
   After
 
-  ```text
+  ```bash
   mlops@ubuntu:~$ 
   ```

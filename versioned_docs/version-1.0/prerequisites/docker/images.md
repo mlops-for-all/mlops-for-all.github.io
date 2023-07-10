@@ -206,7 +206,7 @@ docker images | grep my-image
 
 정상적으로 수행된다면 다음과 같이 출력됩니다.
 
-```text
+```bash
 my-image     v1.0.0    143114710b2d   3 seconds ago   87.9MB
 ```
 
@@ -220,7 +220,7 @@ docker run my-image:v1.0.0
 
 정상적으로 수행된다면 다음과 같이 나옵니다.
 
-```text
+```bash
 hello
 ```
 
@@ -234,6 +234,6 @@ docker run -e TEST=bye my-image:v1.0.0
 
 정상적으로 수행된다면 다음과 같이 나옵니다.
 
-```text
+```bash
 bye
 ```

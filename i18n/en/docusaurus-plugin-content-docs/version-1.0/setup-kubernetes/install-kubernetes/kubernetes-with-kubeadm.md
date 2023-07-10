@@ -15,7 +15,7 @@ Please refer to [Install Prerequisite](../../setup-kubernetes/install-prerequisi
 
 Change the configuration of the network for Kubernetes.
 
-```text
+```bash
 sudo modprobe br_netfilter
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -37,7 +37,7 @@ sudo sysctl --system
 
 Install kubeadm, kubelet, and kubectl using the following commands. It's important to prevent accidental changes to the versions of these components, as it can lead to unexpected issues.
 
-```text
+```bash
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl &&
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg &&
@@ -49,24 +49,24 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 Check if kubeadm, kubelet, and kubectl are installed correctly.
 
-```text
+```bash
 mlops@ubuntu:~$ kubeadm version
 kubeadm version: &version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.7", GitCommit:"1f86634ff08f37e54e8bfcd86bc90b61c98f84d4", GitTreeState:"clean", BuildDate:"2021-11-17T14:40:08Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
-```text
+```bash
 mlops@ubuntu:~$ kubelet --version
 Kubernetes v1.21.7
 ```
 
-```text
+```bash
 mlops@ubuntu:~$ kubectl version --client
 Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.7", GitCommit:"1f86634ff08f37e54e8bfcd86bc90b61c98f84d4", GitTreeState:"clean", BuildDate:"2021-11-17T14:41:19Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
 Now we will use kubeadm to install Kubernetes.
 
-```text
+```bash
 kubeadm config images list
 kubeadm config images pull
 
@@ -75,7 +75,7 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 Through kubectl, copy the admin certificate to the path $HOME/.kube/config to control the Kubernetes cluster.
 
-```text
+```bash
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -83,13 +83,13 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 Install CNI. There are various kinds of CNI, which is responsible for setting up the network inside Kubernetes, and in *MLOps for All*, flannel is used.
 
-```text
+```bash
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.13.0/Documentation/kube-flannel.yml
 ```
 
 There are two types of Kubernetes nodes: `Master Node` and `Worker Node`. For stability, it is generally recommended that only tasks to control the Kubernetes cluster are run on the `Master Node`, however this manual assumes a single cluster, so all types of tasks can be run on the Master Node.
 
-```text
+```bash
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
@@ -97,7 +97,7 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 Copy the kubeconfig file created in the cluster to the **client** to control the cluster through kubectl.
 
-```text
+```bash
 mkdir -p $HOME/.kube
 scp -p {CLUSTER_USER_ID}@{CLUSTER_IP}:~/.kube/config ~/.kube/config
 ```
@@ -115,13 +115,13 @@ Please refer to [Setup Kubernetes Modules](../../setup-kubernetes/install-kubern
 
 Finally, check if the nodes are Ready and verify the OS, Docker, and Kubernetes versions.
 
-```text
+```bash
 kubectl get nodes
 ```
 
 When the node is in the "Ready" state, the output will be similar to the following:
 
-```text
+```bash
 NAME     STATUS   ROLES                  AGE     VERSION
 ubuntu   Ready    control-plane,master   2m55s   v1.21.7
 ```

@@ -77,7 +77,8 @@ When there is a greater demand for personalized recommendations and a need for m
 
 By considering these examples, it becomes evident that challenges can arise between the machine learning team and the operations team. MLOps aims to address these challenges and provide a methodology and set of practices to facilitate the development, deployment, and operation of machine learning models in a collaborative and efficient manner.
 
-![graph2](./img/graph2.png)
+![graph](./img/graph.png)
+
 If we represent the concepts explained earlier on a graph, with model complexity on the x-axis and model performance on the y-axis, we can observe an upward trend where the model performance improves as the complexity increases. This often leads to the emergence of separate machine learning teams specializing in transitioning from traditional machine learning to deep learning.
 
 If there are only a few models to manage, collaboration between teams can be sufficient to address the challenges. However, as the number of models to develop increases, silos similar to those observed in DevOps can emerge.

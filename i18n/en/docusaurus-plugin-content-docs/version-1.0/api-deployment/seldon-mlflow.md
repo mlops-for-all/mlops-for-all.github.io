@@ -13,7 +13,7 @@ On this page, we will learn how to create an API using a model saved in the [MLf
 
 The initContainer needs credentials to access minio and download the model. The credentials for access to minio are as follows.
 
-```text
+```bash
 apiVersion: v1
 type: Opaque
 kind: Secret
@@ -38,13 +38,13 @@ The values that need to be entered in data are as follows.
 
 The encoding can be done using the following command.
 
-```text
+```bash
 echo -n minio | base64
 ```
 
 Then the following values will be output.
 
-```text
+```bash
 bWluaW8=
 ```
 
@@ -57,7 +57,7 @@ If you do the encoding for the entire value, it will look like this:
 
 You can generate a yaml file through the following command to create the secret.
 
-```text
+```bash
 cat <<EOF > seldon-init-container-secret.yaml
 apiVersion: v1
 kind: Secret
@@ -75,13 +75,13 @@ EOF
 
 Create the secret through the following command.
 
-```text
+```bash
 kubectl apply -f seldon-init-container-secret.yaml
 ```
 
 If performed normally, it will be output as follows.
 
-```text
+```bash
 secret/seldon-init-container-secret created
 ```
 
@@ -89,7 +89,7 @@ secret/seldon-init-container-secret created
 
 Now let's write the yaml file to create Seldon Core.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -164,7 +164,7 @@ This process involves providing the environment variables required to access Min
 
 First, let's generate the YAML file based on the specification defined above.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -222,32 +222,32 @@ EOF
 
 Create a seldon pod.
 
-```text
+```bash
 kubectl apply -f seldon-mlflow.yaml
 
 ```
 
 If it is performed normally, it will be outputted as follows.
 
-```text
+```bash
 seldondeployment.machinelearning.seldon.io/seldon-example created
 ```
 
 Now we wait until the pod is up and running properly.
 
-```text
+```bash
 kubectl get po -n kubeflow-user-example-com | grep seldon
 ```
 
 If it is outputted similarly to the following, the API has been created normally.
 
-```text
+```bash
 seldon-example-model-0-model-5c949bd894-c5f28      3/3     Running     0          69s
 ```
 
 You can confirm the execution through the following request on the API created through the CLI.
 
-```text
+```bash
 curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
 -H 'Content-Type: application/json' \
 -d '{
@@ -272,6 +272,6 @@ curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/pr
 
 If executed normally, you can get the following results.
 
-```text
+```bash
 {"data":{"names":[],"ndarray":["Virginica"]},"meta":{"requestPath":{"model":"ghcr.io/mlops-for-all/mlflowserver:e141f57"}}}
 ```

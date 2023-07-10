@@ -11,7 +11,7 @@ contributors: ["Jongseob Jeon"]
 파이프라인 업로드는 kubeflow 대시보드 UI를 통해 진행할 수 있습니다.
 [Install Kubeflow](../setup-components/install-components-kf.md#정상-설치-확인) 에서 사용한 방법을 이용해 포트포워딩합니다.
 
-```text
+```bash
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 ```
 

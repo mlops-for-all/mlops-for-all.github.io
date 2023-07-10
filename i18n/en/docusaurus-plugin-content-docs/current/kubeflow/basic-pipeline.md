@@ -165,7 +165,7 @@ The compiled result is as follows.
 <details>
   <summary>example_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:

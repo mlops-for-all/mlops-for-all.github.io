@@ -26,7 +26,7 @@ Ubuntu OS까지는 설치되어 있는 데스크탑을 k8s cluster로 구축한 
 
 자세한 구축 방법은 3가지 도구마다 다르기에 다음과 같은 흐름으로 구성되어 있습니다.
 
-```text
+```bash
 3. Setup Prerequisite
 4. Setup Kubernetes
   4.1. with k3s

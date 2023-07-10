@@ -23,25 +23,25 @@ contributors: ["Jaeyeon Kim"]
 
 ### Helm Repository 추가
 
-```text
+```bash
 helm repo add seldonio https://storage.googleapis.com/seldon-charts
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 추가된 것을 의미합니다.
 
-```text
+```bash
 "seldonio" has been added to your repositories
 ```
 
 ### Helm Repository 업데이트
 
-```text
+```bash
 helm repo update
 ```
 
 다음과 같은 메시지가 출력되면 정상적으로 업데이트된 것을 의미합니다.
 
-```text
+```bash
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "seldonio" chart repository
 ...Successfully got an update from the "datawire" chart repository
@@ -52,7 +52,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 seldon-core-analytics Helm Chart 1.12.0 버전을 설치합니다.
 
-```text
+```bash
 helm install seldon-core-analytics seldonio/seldon-core-analytics \
   --namespace seldon-system \
   --version 1.12.0
@@ -60,7 +60,7 @@ helm install seldon-core-analytics seldonio/seldon-core-analytics \
 
 다음과 같은 메시지가 출력되어야 합니다.
 
-```text
+```bash
 생략...
 NAME: seldon-core-analytics
 LAST DEPLOYED: Tue Dec 14 18:29:38 2021
@@ -71,13 +71,13 @@ REVISION: 1
 
 정상적으로 설치되었는지 확인합니다.
 
-```text
+```bash
 kubectl get pod -n seldon-system | grep seldon-core-analytics
 ```
 
 seldon-system namespace 에 6개의 seldon-core-analytics 관련 pod 가 Running 이 될 때까지 기다립니다.
 
-```text
+```bash
 seldon-core-analytics-grafana-657c956c88-ng8wn                  2/2     Running   0          114s
 seldon-core-analytics-kube-state-metrics-94bb6cb9-svs82         1/1     Running   0          114s
 seldon-core-analytics-prometheus-alertmanager-64cf7b8f5-nxbl8   2/2     Running   0          114s
@@ -92,7 +92,7 @@ seldon-core-analytics-prometheus-seldon-685c664894-7cr45        2/2     Running 
 
 우선 클라이언트 노드에서 접속하기 위해, 포트포워딩을 수행합니다.
 
-```text
+```bash
 kubectl port-forward svc/seldon-core-analytics-grafana -n seldon-system 8090:80
 ```
 

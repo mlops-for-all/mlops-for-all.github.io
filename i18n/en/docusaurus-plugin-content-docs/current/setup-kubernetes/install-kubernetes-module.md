@@ -21,7 +21,7 @@ Helm is one of the package management tools that helps to deploy and manage reso
 
 - For Linux amd64
 
-  ```text
+  ```bash
   wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
   ```
 
@@ -29,19 +29,19 @@ Helm is one of the package management tools that helps to deploy and manage reso
 
 2. Unzip the file to use helm and move the file to its desired location.
 
-  ```text
+  ```bash
   tar -zxvf helm-v3.7.1-linux-amd64.tar.gz
   sudo mv linux-amd64/helm /usr/local/bin/helm
   ```
 
 3. Check to see if the installation was successful:
-  ```text
+  ```bash
   helm help
   ```
 
   If you see the following message, it means that it has been installed normally. 
 
-  ```text
+  ```bash
   The Kubernetes package manager
 
   Common actions for Helm:
@@ -70,7 +70,7 @@ Kustomize is one of the package management tools that helps to deploy and manage
 
 - For Linux amd64
 
-  ```text
+  ```bash
   wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
   ```
 
@@ -78,20 +78,20 @@ Kustomize is one of the package management tools that helps to deploy and manage
 
 2. Unzip to use kustomize, and change the file location. 
 
-  ```text
+  ```bash
   tar -zxvf kustomize_v3.10.0_linux_amd64.tar.gz
   sudo mv kustomize /usr/local/bin/kustomize
   ```
 
 3. Check if it is installed correctly.
 
-  ```text
+  ```bash
   kustomize help
   ```
 
   If you see the following message, it means that it has been installed normally.
 
-  ```text
+  ```bash
   Manages declarative configuration of Kubernetes.
   See https://sigs.k8s.io/kustomize
 
@@ -112,13 +112,13 @@ Kustomize is one of the package management tools that helps to deploy and manage
 
 1. The CSI Plugin is a module that is responsible for storage within Kubernetes. Install the CSI Plugin, Local Path Provisioner, which is easy to use in single node clusters.
 
-  ```text
+  ```bash
   kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/local-path-storage.yaml
   ```
 
   If you see the following messages, it means that the installation was successful: 
 
-  ```text
+  ```bash
   namespace/local-path-storage created
   serviceaccount/local-path-provisioner-service-account created
   clusterrole.rbac.authorization.k8s.io/local-path-provisioner-role created
@@ -130,38 +130,38 @@ Kustomize is one of the package management tools that helps to deploy and manage
 
 2. Also, check if the provisioner pod in the local-path-storage namespace is Running by executing the following command:
 
-  ```text
+  ```bash
   kubectl -n local-path-storage get pod
   ```
 
 If successful, it will display the following output:
 
-  ```text
+  ```bash
   NAME                                     READY     STATUS    RESTARTS   AGE
   local-path-provisioner-d744ccf98-xfcbk   1/1       Running   0          7m
   ```
 
 4. Execute the following command to change the default storage class:
 
-  ```text
+  ```bash
   kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
   ```
 
   If the command is successful, the following output will be displayed:
 
-  ```text
+  ```bash
   storageclass.storage.k8s.io/local-path patched
   ```
 
 5. Verify that the default storage class has been set:
 
-  ```text
+  ```bash
   kubectl get sc
   ```
 
   Check if there is a storage class with the name `local-path (default)` in the NAME column:
 
-  ```text
+  ```bash
   NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
   local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  2h
   ```

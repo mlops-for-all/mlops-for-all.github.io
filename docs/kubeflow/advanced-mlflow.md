@@ -103,13 +103,13 @@ save_model(
 
 로컬에서 작업하면 다음과 같은 svc 폴더가 생기며 아래와 같은 파일들이 생성됩니다.
 
-```text
+```bash
 ls svc
 ```
 
 위의 명령어를 실행하면 다음의 출력값을 확인할 수 있습니다.
 
-```text
+```bash
 MLmodel            conda.yaml         input_example.json model.pkl          requirements.txt
 ```
 
@@ -117,7 +117,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - MLmodel
 
-    ```text
+    ```bash
     flavors:
       python_function:
         env: conda.yaml
@@ -142,7 +142,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - conda.yaml
 
-    ```text
+    ```bash
     channels:
     - conda-forge
     dependencies:
@@ -158,7 +158,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - input_example.json
 
-    ```text
+    ```bash
     {
         "columns": 
         [
@@ -176,7 +176,7 @@ MLmodel            conda.yaml         input_example.json model.pkl          requ
 
 - requirements.txt
 
-    ```text
+    ```bash
     mlflow
     dill
     pandas
@@ -543,7 +543,7 @@ if __name__ == "__main__":
   <details>
     <summary>mlflow_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -929,7 +929,7 @@ spec:
 
 mlflow service를 포트포워딩해서 MLflow ui에 접속합니다.
 
-```text
+```bash
 kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
 ```
 

@@ -26,7 +26,7 @@ In this *MLOps for ALL*, in order to use the components that will be built for M
 The scope of this **Setup Kubernetes** section is to build a k8s cluster on a desktop that already has Ubuntu OS installed and to confirm that external client nodes can access the Kubernetes cluster.
 
 The detailed setup procedure is composed of the following flow, as each of the three tools has its own setup procedure.
-```text
+```bash
 3. Setup Prerequisite
 4. Setup Kubernetes
   4.1. with k3s

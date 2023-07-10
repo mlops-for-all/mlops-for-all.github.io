@@ -15,7 +15,7 @@ Let's deploy our trained model as an API using SeldonDeployment. SeldonDeploymen
 
 We will conduct the SeldonDeployment related practice in a new namespace called seldon-deploy. After creating the namespace, set seldon-deploy as the current namespace.
 
-```text
+```bash
 kubectl create namespace seldon-deploy
 kubectl config set-context --current --namespace=seldon-deploy
 ```
@@ -26,7 +26,7 @@ Generate a yaml file to deploy SeldonDeployment.
 In this page, we will use a publicly available iris model.
 Because this iris model is trained through the sklearn framework, we use SKLEARN_SERVER.
 
-```text
+```bash
 cat <<EOF > iris-sdep.yaml
 apiVersion: machinelearning.seldon.io/v1alpha2
 kind: SeldonDeployment
@@ -48,19 +48,19 @@ EOF
 
 Deploy yaml file.
 
-```text
+```bash
 kubectl apply -f iris-sdep.yaml
 ```
 
 Check if the deployment was successful through the following command.
 
-```text
+```bash
 kubectl get pods --selector seldon-app=sklearn-default -n seldon-deploy
 ```
 
 If everyone runs, similar results will be printed.
 
-```text
+```bash
 NAME                                            READY   STATUS    RESTARTS   AGE
 sklearn-default-0-classifier-5fdfd7bb77-ls9tr   2/2     Running   0          5m
 ```
@@ -76,20 +76,20 @@ Now, send a inference request to the deployed model to get the inference result.
 
 Therefore, first set the url of the Ambassador Ingress Gateway as an environment variable.
 
-```text
+```bash
 export NODE_IP=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="InternalIP")].address }')
 export NODE_PORT=$(kubectl get service ambassador -n seldon-system -o jsonpath="{.spec.ports[0].nodePort}")
 ```
 
 Check the set url.
 
-```text
+```bash
 echo "NODE_IP"=$NODE_IP
 echo "NODE_PORT"=$NODE_PORT
 ```
 
 It should be outputted similarly as follows, and if set through the cloud, you can check that internal IP address is set.
-```text
+```bash
 NODE_IP=192.168.0.19
 NODE_PORT=30486
 ```
@@ -97,7 +97,7 @@ NODE_PORT=30486
 ### namespace / seldon-deployment-name
 
 This refers to the `namespace` and `seldon-deployment-name` where the SeldonDeployment is deployed and used to define the values defined in the metadata when defining the spec.
-```text
+```bash
 metadata:
   name: sklearn
   namespace: seldon-deploy
@@ -140,7 +140,7 @@ In the Swagger UI, select the `/seldon/seldon-deploy/sklearn/api/v1.0/prediction
 
 Enter the following data into the Request body.
 
-```text
+```bash
 {
   "data": {
     "ndarray":[[1.0, 2.0, 5.0, 6.0]]
@@ -156,7 +156,7 @@ You can click the `Execute` button to obtain the inference result.
 
 If everything is executed successfully, you will obtain the following inference result.
 
-```text
+```bash
 {
   "data": {
     "names": [
@@ -185,13 +185,13 @@ If everything is executed successfully, you will obtain the following inference 
 Also, you can use http client CLI tools such as curl to make API requests.
 For example, requesting `/predictions` as follows
 
-```text
+```bash
 curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
 -H 'Content-Type: application/json' \
 -d '{ "data": { "ndarray": [[1,2,3,4]] } }'
 ```
 
 You can confirm that the following response is outputted normally.
-```text
+```bash
 {"data":{"names":["t:0","t:1","t:2"],"ndarray":[[0.0006985194531162835,0.00366803903943666,0.995633441507447]]},"meta":{"requestPath":{"classifier":"seldonio/sklearnserver:1.11.2"}}}
 ```

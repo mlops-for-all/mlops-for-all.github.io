@@ -12,7 +12,7 @@ On this page, we describe the components that need to be installed or configured
 ## Install apt packages
 
 In order to enable smooth communication between the Client and the Cluster, Port-Forwarding needs to be performed. To enable Port-Forwarding, the following packages need to be installed on the **Cluster**.
-```text
+```bash
 sudo apt-get update
 sudo apt-get install -y socat
 ```
@@ -21,19 +21,19 @@ sudo apt-get install -y socat
 
 1. Install apt packages for docker.
 
-   ```text
+   ```bash
    sudo apt-get update && sudo apt-get install -y ca-certificates curl gnupg lsb-release
    ```
 
 2. add docker official GPG key.
 
-   ```text
+   ```bash
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
    ```
 
 3. When installing Docker using the apt package manager, configure it to retrieve from the stable repository:
 
-   ```text
+   ```bash
    echo \
    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
@@ -41,39 +41,39 @@ sudo apt-get install -y socat
 
 4. Check the currently available Docker versions for installation:
 
-   ```text
+   ```bash
    sudo apt-get update && apt-cache madison docker-ce
    ```
 
    Verify if the version `5:20.10.11~3-0~ubuntu-focal` is listed among the output:
 
-   ```text
+   ```bash
    apt-cache madison docker-ce | grep 5:20.10.11~3-0~ubuntu-focal
    ```
 
    If the addition was successful, the following output will be displayed:
 
-   ```text
+   ```bash
    docker-ce | 5:20.10.11~3-0~ubuntu-focal | https://download.docker.com/linux/ubuntu focal/stable amd64 Packages
    ```
 
 5. Install Docker version `5:20.10.11~3-0~ubuntu-focal`:
 
-   ```text
+   ```bash
    sudo apt-get install -y containerd.io docker-ce=5:20.10.11~3-0~ubuntu-focal docker-ce-cli=5:20.10.11~3-0~ubuntu-focal
 
    ```
 
 6. Check docker is installed.
 
-   ```text
+   ```bash
    sudo docker run hello-world
    ```
 
 
    If added successfully, it will output as follows:
 
-   ```text
+   ```bash
    mlops@ubuntu:~$ sudo docker run hello-world
 
    Hello from Docker!
@@ -100,7 +100,7 @@ sudo apt-get install -y socat
       
 7. Add permissions to use Docker commands without the `sudo` keyword by executing the following commands:
 
-   ```text
+   ```bash
    sudo groupadd docker
    sudo usermod -aG docker $USER
    newgrp docker
@@ -108,13 +108,13 @@ sudo apt-get install -y socat
 
 8. To verify that you can now use Docker commands without `sudo`, run the `docker run` command again:
 
-   ```text
+   ```bash
    docker run hello-world
    ```
 
    If you see the following message after executing the command, it means that the permissions have been successfully added:
 
-   ```text
+   ```bash
    mlops@ubuntu:~$ docker run hello-world
 
    Hello from Docker!
@@ -144,7 +144,7 @@ sudo apt-get install -y socat
 In order for kubelet to work properly, **cluster** nodes must turn off the virtual memory called swap. The following command turns off the swap.  
 **(When using cluster and client on the same desktop, turning off swap memory may result in a slowdown in speed)**
 
-```text
+```bash
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 sudo swapoff -a
 ```
@@ -155,25 +155,25 @@ kubectl is a client tool used to make API requests to a Kubernetes cluster. It n
 
 1. Download kubectl version v1.21.7 to the current folder:
 
-   ```text
+   ```bash
    curl -LO https://dl.k8s.io/release/v1.21.7/bin/linux/amd64/kubectl
    ```
 
 2. Change the file permissions and move it to the appropriate location to make kubectl executable:
 
-   ```text
+   ```bash
    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
    ```
 
 3. Verify that kubectl is installed correctly:
 
-   ```text
+   ```bash
    kubectl version --client
    ```
 
    If you see the following message, it means that kubectl is installed successfully:
 
-   ```text
+   ```bash
    Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.7", GitCommit:"1f86634ff08f37e54e8bfcd86bc90b61c98f84d4", GitTreeState:"clean", BuildDate:"2021-11-17T14:41:19Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
    ```
 

@@ -27,20 +27,20 @@ If you are using kube-proxy in IPVS mode, starting from Kubernetes v1.14.2, you 
 By default, Kube-router enables strict ARP, so this feature is not required if you are using Kube-router as a service proxy.  
 Before applying strict ARP mode, check the current mode.
 
-```text
+```bash
 # see what changes would be made, returns nonzero returncode if different
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
 grep strictARP
 ```
 
-```text
+```bash
 strictARP: false
 ```
 
 If strictARP: false is outputted, run the following to change it to strictARP: true.
 (If strictARP: true is already outputted, you do not need to execute the following command).
 
-```text
+```bash
 # actually apply the changes, returns nonzero returncode on errors only
 kubectl get configmap kube-proxy -n kube-system -o yaml | \
 sed -e "s/strictARP: false/strictARP: true/" | \
@@ -49,7 +49,7 @@ kubectl apply -f - -n kube-system
 
 If performed normally, it will be output as follows.
 
-```text
+```bash
 Warning: resource configmaps/kube-proxy is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
 configmap/kube-proxy configured
 ```
@@ -58,7 +58,7 @@ configmap/kube-proxy configured
 
 #### 1. Install MetalLB.
 
-```text
+```bash
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.11.0/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.11.0/manifests/metallb.yaml
 ```
@@ -67,13 +67,13 @@ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.11.0/manif
 
 Wait until both pods in the metallb-system namespace are Running.
 
-```text
+```bash
 kubectl get pod -n metallb-system
 ```
 
 When everthing is Running, similar results will be output.
 
-```text
+```bash
 NAME                          READY   STATUS    RESTARTS   AGE
 controller-7dcc8764f4-8n92q   1/1     Running   1          1m
 speaker-fnf8l                 1/1     Running   1          1m
@@ -110,7 +110,7 @@ In case the cluster node and the client node are separated, the range of 192.168
 
 #### metallb_config.yaml
 
-```text
+```bash
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -143,13 +143,13 @@ configmap/config created
 
 First, before getting the load-balancing feature from MetalLB, check the current status by changing the type of the istio-ingressgateway service in the istio-system namespace to `LoadBalancer` to provide the Kubeflow Dashboard.
 
-```text
+```bash
 kubectl get svc/istio-ingressgateway -n istio-system
 ```
 
 The type of this service is ClusterIP and you can see that the External-IP value is `none`.
 
-```text
+```bash
 NAME                   TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)                                        AGE
 istio-ingressgateway   ClusterIP   10.103.72.5   <none>        15021/TCP,80/TCP,443/TCP,31400/TCP,15443/TCP   4h21m
 ```
@@ -157,11 +157,11 @@ istio-ingressgateway   ClusterIP   10.103.72.5   <none>        15021/TCP,80/TCP,
 Change the type to LoadBalancer and if you want to input a desired IP address, add the loadBalancerIP item.  
 If you do not add it, IP addresses will be assigned sequentially from the IP address pool set above.
 
-```text
+```bash
 kubectl edit svc/istio-ingressgateway -n istio-system
 ```
 
-```text
+```bash
 spec:
   clusterIP: 10.103.72.5
   clusterIPs:
@@ -202,11 +202,11 @@ status:
 
 If you check again, you will see that the External-IP value is `192.168.35.100`.
 
-```text
+```bash
 kubectl get svc/istio-ingressgateway -n istio-system
 ```
 
-```text
+```bash
 NAME                   TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)                                                                      AGE
 istio-ingressgateway   LoadBalancer   10.103.72.5   192.168.35.100   15021:31054/TCP,80:30853/TCP,443:30443/TCP,31400:30012/TCP,15443:31650/TCP   5h1m
 ```
@@ -219,24 +219,24 @@ Open a web browser and connect to [http://192.168.35.100](http://192.168.35.100)
 
 First, we check the current status before changing the type of minio-service, which provides the Dashboard of minio, in the kubeflow namespace to LoadBalancer to receive the load balancing function from MetalLB.
 
-```text
+```bash
 kubectl get svc/minio-service -n kubeflow
 ```
 
 The type of this service is ClusterIP and you can confirm that the External-IP value is `none`.
 
-```text
+```bash
 NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 minio-service   ClusterIP   10.109.209.87   <none>        9000/TCP   5h14m
 ```
 
 Change the type to LoadBalancer and if you want to enter an IP address, add the loadBalancerIP item. If you do not add, the IP address will be assigned sequentially from the IP address pool set above.
 
-```text
+```bash
 kubectl edit svc/minio-service -n kubeflow
 ```
 
-```text
+```bash
 apiVersion: v1
 kind: Service
 metadata:
@@ -274,11 +274,11 @@ status:
 
 If we check again, we can see that the External-IP value is `192.168.35.101`.
 
-```text
+```bash
 kubectl get svc/minio-service -n kubeflow
 ```
 
-```text
+```bash
 NAME            TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
 minio-service   LoadBalancer   10.109.209.87   192.168.35.101   9000:31371/TCP   5h21m
 ```
@@ -291,13 +291,13 @@ Open a web browser and connect to [http://192.168.35.101:9000](http://192.168.35
 
 First, we check the current status before changing the type of mlflow-server-service service in the mlflow-system namespace that provides the mlflow Dashboard to LoadBalancer to receive load balancing function from MetalLB.
 
-```text
+```bash
 kubectl get svc/mlflow-server-service -n mlflow-system
 ```
 
 The type of this service is ClusterIP and you can confirm that the External-IP value is `none`.
 
-```text
+```bash
 NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 mlflow-server-service   ClusterIP   10.111.173.209   <none>        5000/TCP   4m50s
 ```
@@ -305,11 +305,11 @@ mlflow-server-service   ClusterIP   10.111.173.209   <none>        5000/TCP   4m
 Change the type to LoadBalancer and if you want to input the desired IP address, add the loadBalancerIP item.  
 If you do not add it, the IP address will be assigned sequentially from the IP address pool set above.
 
-```text
+```bash
 kubectl edit svc/mlflow-server-service -n mlflow-system
 ```
 
-```text
+```bash
 apiVersion: v1
 kind: Service
 metadata:
@@ -345,11 +345,11 @@ status:
 
 If we check again, we can see that the External-IP value is `192.168.35.102`.
 
-```text
+```bash
 kubectl get svc/mlflow-server-service -n mlflow-system
 ```
 
-```text
+```bash
 NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)          AGE
 mlflow-server-service   LoadBalancer   10.111.173.209   192.168.35.102   5000:32287/TCP   6m11s
 ```
@@ -362,13 +362,13 @@ Open the web browser and connect to [http://192.168.35.102:5000](http://192.168.
 
 First, check the current status before changing the type of seldon-core-analytics-grafana service in the seldon-system namespace which provides Grafana's Dashboard to receive Load Balancing function from MetalLB.
 
-```text
+```bash
 kubectl get svc/seldon-core-analytics-grafana -n seldon-system
 ```
 
 The type of the corresponding service is ClusterIP, and you can see that the External-IP value is `none`.
 
-```text
+```bash
 NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 seldon-core-analytics-grafana   ClusterIP   10.109.20.161   <none>        80/TCP    94s
 ```
@@ -376,11 +376,11 @@ seldon-core-analytics-grafana   ClusterIP   10.109.20.161   <none>        80/TCP
 Change the type to LoadBalancer and if you want to enter an IP address, add the loadBalancerIP item.  
 If not, an IP address will be assigned sequentially from the IP address pool set above.
 
-```text
+```bash
 kubectl edit svc/seldon-core-analytics-grafana -n seldon-system
 ```
 
-```text
+```bash
 apiVersion: v1
 kind: Service
 metadata:
@@ -422,11 +422,11 @@ status:
 
 If you check again, you can see that the External-IP value is `192.168.35.103`.
 
-```text
+```bash
 kubectl get svc/seldon-core-analytics-grafana -n seldon-system
 ```
 
-```text
+```bash
 NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)        AGE
 seldon-core-analytics-grafana   LoadBalancer   10.109.20.161   192.168.35.103   80:31191/TCP   5m14s
 ```

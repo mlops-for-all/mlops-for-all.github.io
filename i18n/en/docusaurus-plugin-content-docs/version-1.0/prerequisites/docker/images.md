@@ -132,7 +132,7 @@ The command above means to build an image with the name "my-image" and the tag "
 docker images | grep my-image
 ```
 If performed normally, it will output as follows.
-```text
+```bash
 my-image     v1.0.0    143114710b2d   3 seconds ago   87.9MB
 ```
 
@@ -142,7 +142,7 @@ docker run my-image:v1.0.0
 ```
 
 If performed normally, it will result in the following.
-```text
+```bash
 hello
 ```
 
@@ -151,7 +151,7 @@ Let's run a docker container and change the value of the `TEST` env var at the t
 docker run -e TEST=bye my-image:v1.0.0
 ```
 If performed normally, it will be as follows.
-```text
+```bash
 bye
 ```
 

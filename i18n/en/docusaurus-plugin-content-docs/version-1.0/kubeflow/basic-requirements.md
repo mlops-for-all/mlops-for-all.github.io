@@ -11,7 +11,7 @@ The packages and versions required for the practice are as follows:
 
 - requirements.txt
 
-  ```text
+  ```bash
   kfp==1.8.9
   scikit-learn==1.0.1
   mlflow==1.21.0
@@ -21,13 +21,13 @@ The packages and versions required for the practice are as follows:
 
 Activate the [Python virtual environment](../appendix/pyenv.md#python-가상환경-생성) created in the previous section.
 
-```text
+```bash
 pyenv activate demo
 ```
 
 We are proceeding with the package installation.
 
-```text
+```bash
 pip3 install -U pip
 pip3 install kfp==1.8.9 scikit-learn==1.0.1 mlflow==1.21.0 pandas==1.3.4 dill==0.3.4
 ```

@@ -206,7 +206,7 @@ docker run --restart=always ubuntu
 Run `watch -n1 docker ps` to check if it is restarting.
 If it is running normally, `Restarting (0)` will be printed in STATUS.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                         PORTS     NAMES
 a911850276e8   ubuntu    "bash"    35 seconds ago   Restarting (0) 6 seconds ago             hungry_vaughan
 ```

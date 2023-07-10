@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
 If you run the script above, you will get a `train_from_csv.yaml` file like the one below.
 
-```text
+```bash
 name: Train from csv
 inputs:
 - {name: train_data, type: csv}
@@ -130,7 +130,7 @@ During the process of converting Kubeflow, there are two ways to add packages:
 
 Let's check what arguments the function `create_component_from_func` used to compile the components can receive.
 
-```text
+```bash
 def create_component_from_func(
     func: Callable,
     output_component_file: Optional[str] = None,
@@ -165,7 +165,7 @@ RUN pip install dill pandas scikit-learn
 Let's build the image using the Dockerfile above. The Docker hub we will use for the practice is ghcr.  
 You can choose a Docker hub according to your environment and upload it.
 
-```text
+```bash
 docker build . -f Dockerfile -t ghcr.io/mlops-for-all/base-image
 docker push ghcr.io/mlops-for-all/base-image
 ```
@@ -206,7 +206,7 @@ if __name__ == "__main__":
 
 If you compile the generated component, it will appear as follows.
 
-```text
+```bash
 name: Train from csv
 inputs:
 - {name: train_data, type: csv}
@@ -310,7 +310,7 @@ if __name__ == "__main__":
 
 If you execute the script, the `train_from_csv.yaml` file will be generated.
 
-```text
+```bash
 name: Train from csv
 inputs:
 - {name: train_data, type: csv}
@@ -388,7 +388,7 @@ If we take a closer look at the order in which the components written above are 
 
 When the generated yaml file is closely examined, the following lines are automatically added, so that the necessary packages are installed and the program runs smoothly without errors.
 
-```text
+```bash
     command:
     - sh
     - -c

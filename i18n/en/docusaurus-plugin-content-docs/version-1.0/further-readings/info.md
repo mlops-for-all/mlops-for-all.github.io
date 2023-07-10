@@ -1,5 +1,5 @@
 ---
-title: "Further REadings"
+title: "Further Readings"
 date: 2021-12-21
 lastmod: 2021-12-21
 ---

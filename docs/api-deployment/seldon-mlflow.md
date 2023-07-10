@@ -14,7 +14,7 @@ contributors: ["Jongseob Jeon"]
 initContainer가 minio에 접근해서 모델을 다운로드받으려면 credentials가 필요합니다.
 minio에 접근하기 위한 credentials는 다음과 같습니다.
 
-```text
+```bash
 apiVersion: v1
 type: Opaque
 kind: Secret
@@ -39,13 +39,13 @@ data에 입력되어야 하는 값들은 다음과 같습니다.
 
 인코딩은 다음 명령어를 통해서 할 수 있습니다.
 
-```text
+```bash
 echo -n minio | base64
 ```
 
 그러면 다음과 같은 값이 출력됩니다.
 
-```text
+```bash
 bWluaW8=
 ```
 
@@ -58,7 +58,7 @@ bWluaW8=
 
 다음 명령어를 통해 secret을 생성할 수 있는 yaml파일을 생성합니다.
 
-```text
+```bash
 cat <<EOF > seldon-init-container-secret.yaml
 apiVersion: v1
 kind: Secret
@@ -76,13 +76,13 @@ EOF
 
 다음 명령어를 통해 secret을 생성합니다.
 
-```text
+```bash
 kubectl apply -f seldon-init-container-secret.yaml
 ```
 
 정상적으로 수행되면 다음과 같이 출력됩니다.
 
-```text
+```bash
 secret/seldon-init-container-secret created
 ```
 
@@ -90,7 +90,7 @@ secret/seldon-init-container-secret created
 
 이제 Seldon Core를 생성하는 yaml파일을 작성합니다.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -165,7 +165,7 @@ minio에 접근해서 모델을 다운로드 받는 데 필요한 환경변수�
 
 우선 위에서 정의한 스펙을 yaml 파일로 생성하겠습니다.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -223,32 +223,32 @@ EOF
 
 seldon pod을 생성합니다.
 
-```text
+```bash
 kubectl apply -f seldon-mlflow.yaml
 
 ```
 
 정상적으로 수행되면 다음과 같이 출력됩니다.
 
-```text
+```bash
 seldondeployment.machinelearning.seldon.io/seldon-example created
 ```
 
 이제 pod이 정상적으로 뜰 때까지 기다립니다.
 
-```text
+```bash
 kubectl get po -n kubeflow-user-example-com | grep seldon
 ```
 
 다음과 비슷하게 출력되면 정상적으로 API를 생성했습니다.
 
-```text
+```bash
 seldon-example-model-0-model-5c949bd894-c5f28      3/3     Running     0          69s
 ```
 
 CLI를 이용해 생성된 API에는 다음 request를 통해 실행을 확인할 수 있습니다.
 
-```text
+```bash
 curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/predictions \
 -H 'Content-Type: application/json' \
 -d '{
@@ -273,6 +273,6 @@ curl -X POST http://$NODE_IP:$NODE_PORT/seldon/seldon-deploy/sklearn/api/v1.0/pr
 
 정상적으로 실행될 경우 다음과 같은 결과를 받을 수 있습니다.
 
-```text
+```bash
 {"data":{"names":[],"ndarray":["Virginica"]},"meta":{"requestPath":{"model":"ghcr.io/mlops-for-all/mlflowserver:e141f57"}}}
 ```

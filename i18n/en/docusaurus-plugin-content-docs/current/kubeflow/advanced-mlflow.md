@@ -100,13 +100,13 @@ save_model(
 
 If you work locally, a svc folder will be created and the following files will be generated.
 
-```text
+```bash
 ls svc
 ```
 
 If you execute the command above, you can check the following output value.
 
-```text
+```bash
 MLmodel            conda.yaml         input_example.json model.pkl          requirements.txt
 ```
 
@@ -114,7 +114,7 @@ Each file will be as follows if checked.
 
 - MLmodel
 
-    ```text
+    ```bash
     flavors:
       python_function:
         env: conda.yaml
@@ -139,7 +139,7 @@ Each file will be as follows if checked.
 
 - conda.yaml
 
-    ```text
+    ```bash
     channels:
     - conda-forge
     dependencies:
@@ -155,7 +155,7 @@ Each file will be as follows if checked.
 
 - input_example.json
 
-    ```text
+    ```bash
     {
         "columns": 
         [
@@ -173,7 +173,7 @@ Each file will be as follows if checked.
 
 - requirements.txt
 
-    ```text
+    ```bash
     mlflow
     dill
     pandas
@@ -540,7 +540,7 @@ if __name__ == "__main__":
   <details>
     <summary>mlflow_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -926,7 +926,7 @@ After generating the mlflow_pipeline.yaml file after execution, upload the pipel
 
 Port-forward the mlflow service to access the MLflow UI.
 
-```text
+```bash
 kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
 ```
 

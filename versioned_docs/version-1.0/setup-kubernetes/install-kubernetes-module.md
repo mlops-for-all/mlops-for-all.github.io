@@ -20,7 +20,7 @@ Helm은 쿠버네티스 패키지와 관련된 자원을 한 번에 배포하고
 
 - For Linux amd64
 
-  ```text
+  ```bash
   wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
   ```
 
@@ -28,20 +28,20 @@ Helm은 쿠버네티스 패키지와 관련된 자원을 한 번에 배포하고
 
 2. helm을 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
-  ```text
+  ```bash
   tar -zxvf helm-v3.7.1-linux-amd64.tar.gz
   sudo mv linux-amd64/helm /usr/local/bin/helm
   ```
 
 3. 정상적으로 설치되었는지 확인합니다.
 
-  ```text
+  ```bash
   helm help
   ```
 
   다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
-  ```text
+  ```bash
   The Kubernetes package manager
 
   Common actions for Helm:
@@ -70,7 +70,7 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 - For Linux amd64
 
-  ```text
+  ```bash
   wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
   ```
 
@@ -78,20 +78,20 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 2. kustomize 를 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
 
-  ```text
+  ```bash
   tar -zxvf kustomize_v3.10.0_linux_amd64.tar.gz
   sudo mv kustomize /usr/local/bin/kustomize
   ```
 
 3. 정상적으로 설치되었는지 확인합니다.
 
-  ```text
+  ```bash
   kustomize help
   ```
 
   다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
-  ```text
+  ```bash
   Manages declarative configuration of Kubernetes.
   See https://sigs.k8s.io/kustomize
 
@@ -112,13 +112,13 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 1. CSI Plugin은 kubernetes 내의 스토리지를 담당하는 모듈입니다. 단일 노드 클러스터에서 쉽게 사용할 수 있는 CSI Plugin인 Local Path Provisioner를 설치합니다.
 
-  ```text
+  ```bash
   kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/local-path-storage.yaml
   ```
 
   다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
-  ```text
+  ```bash
   namespace/local-path-storage created
   serviceaccount/local-path-provisioner-service-account created
   clusterrole.rbac.authorization.k8s.io/local-path-provisioner-role created
@@ -130,38 +130,38 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 2. 또한, 다음과 같이 local-path-storage namespace 에 provisioner pod이 Running 인지 확인합니다.
 
-  ```text
+  ```bash
   kubectl -n local-path-storage get pod
   ```
 
   정상적으로 수행되면 아래와 같이 출력됩니다.
 
-  ```text
+  ```bash
   NAME                                     READY     STATUS    RESTARTS   AGE
   local-path-provisioner-d744ccf98-xfcbk   1/1       Running   0          7m
   ```
 
 4. 다음을 수행하여 default storage class로 변경합니다.
 
-  ```text
+  ```bash
   kubectl patch storageclass local-path  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
   ```
 
   정상적으로 수행되면 아래와 같이 출력됩니다.
 
-  ```text
+  ```bash
   storageclass.storage.k8s.io/local-path patched
   ```
 
 5. default storage class로 설정되었는지 확인합니다.
 
-  ```text
+  ```bash
   kubectl get sc
   ```
 
   다음과 같이 NAME에 `local-path (default)` 인 storage class가 존재하는 것을 확인합니다.
 
-  ```text
+  ```bash
   NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
   local-path (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  2h
   ```

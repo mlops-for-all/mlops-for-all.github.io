@@ -11,7 +11,7 @@ Now, let's upload the pipeline we created directly to kubeflow.
 Pipeline uploads can be done through the kubeflow dashboard UI.
 Use the method used in [Install Kubeflow](../setup-components/install-components-kf.md) to do port forwarding.
 
-```text
+```bash
 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80
 ```
 

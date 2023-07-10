@@ -17,20 +17,20 @@ Please refer to [Install Prerequisite](../../setup-kubernetes/install-prerequisi
 
 Install the v1.24.0 version of the Minikube binary to use Minikube.
 
-```text
+```bash
 wget https://github.com/kubernetes/minikube/releases/download/v1.24.0/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ```
 
 Check if it is installed properly.
 
-```text
+```bash
 minikube version
 ```
 
 If this message appears, it means the installation was successful.
 
-```text
+```bash
 mlops@ubuntu:~$ minikube version
 minikube version: v1.24.0
 commit: 76b94fb3c4e8ac5062daf70d60cf03ddcc0a741b
@@ -43,13 +43,13 @@ To facilitate the smooth use of GPUs and communication between cluster and clien
 
 Switch to root user.
 
-```text
+```bash
 sudo su
 ```
 
 Run `minikube start` to build the Kubernetes cluster for Kubeflow's smooth operation, specifying the Kubernetes version as v1.21.7 and adding `--extra-config`.
 
-```text
+```bash
 minikube start --driver=none \
   --kubernetes-version=v1.21.7 \
   --extra-config=apiserver.service-account-signing-key-file=/var/lib/minikube/certs/sa.key \
@@ -60,20 +60,20 @@ minikube start --driver=none \
 
 When installing Minikube, there are default addons that are installed. We will disable any addons that we do not intend to use.
 
-```text
+```bash
 minikube addons disable storage-provisioner
 minikube addons disable default-storageclass
 ```
 
 Confirm that all addons are disabled.
 
-```text
+```bash
 minikube addons list
 ```
 
 If the following message appears, it means that the installation was successful.
 
-```text
+```bash
 root@ubuntu:/home/mlops# minikube addons list
 |-----------------------------|----------|--------------|-----------------------|
 |         ADDON NAME          | PROFILE  |    STATUS    |      MAINTAINER       |
@@ -118,14 +118,14 @@ If the **client** and **cluster** nodes are separated, first, we need to retriev
 
 1. Check the config on the **cluster**:
 
-  ```text
+  ```bash
   # Cluster node
   minikube kubectl -- config view --flatten
   ```
 
 2. The following information will be displayed:
 
-  ```text
+  ```bash
   apiVersion: v1
   clusters:
   - cluster:
@@ -162,14 +162,14 @@ If the **client** and **cluster** nodes are separated, first, we need to retriev
 
 3. Create the `.kube` folder on the **client** node:
 
-  ```text
+  ```bash
   # Client node
   mkdir -p /home/$USER/.kube
   ```
 
 4. Paste the information obtained from Step 2 into the file and save it:
 
-  ```text
+  ```bash
   vi /home/$USER/.kube/config
   ```
 
@@ -186,13 +186,13 @@ Please refer to [Setup Kubernetes Modules](../../setup-kubernetes/install-kubern
 
 Finally, check that the node is Ready, and check the OS, Docker, and Kubernetes versions.
 
-```text
+```bash
 kubectl get nodes -o wide
 ```
 
 If this message appears, it means that the installation has completed normally.
 
-```text
+```bash
 NAME     STATUS   ROLES                  AGE     VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
 ubuntu   Ready    control-plane,master   2d23h   v1.21.7   192.168.0.75   <none>        Ubuntu 20.04.3 LTS   5.4.0-91-generic   docker://20.10.11
 ```

@@ -11,24 +11,16 @@ contributors: ["Jaeyeon Kim", "Jongsun Shinn", "Youngdon Tae", "SeungTae Kim"]
 
 The biggest barrier when studying MLOps is the difficulty of setting up and using an MLOps system. Using public cloud platforms like AWS or GCP, or commercial tools like Weights & Biases or neptune.ai, can be costly, and starting from scratch to build the entire environment can be overwhelming and confusing.
 
-To address these challenges and help those who haven't been able to start with MLOps, *모두의 MLOps* will guide you on how to build and use an MLOps system from scratch, requiring only a desktop with Ubuntu installed.
+To address these challenges and help those who haven't been able to start with MLOps, *MLOps for ALL* will guide you on how to build and use an MLOps system from scratch, requiring only a desktop with Ubuntu installed.
 
-<p>
-  <details>
-    <summary> For those who cannot prepare a Ubuntu desktop environment, use virtual machines to set up the environment. </summary>
+For those who cannot prepare a Ubuntu desktop environment, use virtual machines to set up the environment.
 
-    If you are using Windows or an Intel-based Mac for the *모두의 MLOps* practical exercises, you can prepare an Ubuntu desktop environment using virtual machine software such as VirtualBox or VMware. Please make sure to meet the recommended specifications when creating the virtual machine.
+> If you are using Windows or an Intel-based Mac for the *MLOps for ALL* practical exercises, you can prepare an Ubuntu desktop environment using virtual machine software such as VirtualBox or VMware. Please make sure to meet the recommended specifications when creating the virtual machine.
+> However, for those using an M1 Mac, as of the date of writing (February 2022), VirtualBox and VMware are not available. ([Check if macOS apps are optimized for M1 Apple Silicon Mac](https://isapplesiliconready.com/kr))
+> Therefore, if you are not using a cloud environment, you can install UTM, Virtual machines for Mac, to use virtual machines. 
+> (Purchasing and downloading software from the App Store is a form of donation-based payment. The free version is sufficient as it only differs in automatic updates.)
+> This virtual machine software supports the *Ubuntu 20.04.3 LTS* practice operating system, enabling you to perform the exercises on an M1 Mac.
 
-    However, for those using an M1 Mac, as of the date of writing (February 2022), VirtualBox and VMware are not available. ([Check if macOS apps are optimized for M1 Apple Silicon Mac](https://isapplesiliconready.com/kr))
-
-    Therefore, if you are not using a cloud environment, you can install UTM, Virtual machines for Mac, to use virtual machines. 
-
-    (Purchasing and downloading software from the App Store is a form of donation-based payment. The free version is sufficient as it only differs in automatic updates.)
-
-    This virtual machine software supports the *Ubuntu 20.04.3 LTS* practice operating system, enabling you to perform the exercises on an M1 Mac.
-
-  </details>
-</p>
 
 However, since it is not possible to use all the elements described in the [Components of MLOps](../introduction/component.md), *MLOps for ALL* will mainly focus on installing the representative open source software and connecting them to each other.
 

@@ -19,25 +19,25 @@ Seldon-Core officially supports only Ambassador and Istio, and *MLOps for everyo
 
 ### Adding Ambassador to the Helm Repository
 
-```text
+```bash
 helm repo add datawire https://www.getambassador.io
 ```
 
 If the following message is displayed, it means it has been added normally.
 
-```text
+```bash
 "datawire" has been added to your repositories
 ```
 
 ### Update Ambassador - Helm Repository
 
-```text
+```bash
 helm repo update
 ```
 
 If the following message is output, it means that the update has been completed normally.
 
-```text
+```bash
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "datawire" chart repository
 Update Complete. ⎈Happy Helming!⎈
@@ -47,7 +47,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 Install version 6.9.3 of the Ambassador Chart.
 
-```text
+```bash
 helm install ambassador datawire/ambassador \
   --namespace seldon-system \
   --create-namespace \
@@ -59,7 +59,7 @@ helm install ambassador datawire/ambassador \
 
 The following message should be displayed.
 
-```text
+```bash
 생략...
 
 W1206 17:01:36.026326   26635 warnings.go:70] rbac.authorization.k8s.io/v1beta1 Role is deprecated in v1.17+, unavailable in v1.22+; use rbac.authorization.k8s.io/v1 Role
@@ -91,11 +91,11 @@ For help, visit our Slack at http://a8r.io/Slack or view the documentation onlin
 
 Wait until four pods become running in the seldon-system.
 
-```text
+```bash
 kubectl get pod -n seldon-system
 ```
 
-```text
+```bash
 ambassador-7f596c8b57-4s9xh                  1/1     Running   0          7m15s
 ambassador-7f596c8b57-dt6lr                  1/1     Running   0          7m15s
 ambassador-7f596c8b57-h5l6f                  1/1     Running   0          7m15s
@@ -106,7 +106,7 @@ ambassador-agent-77bccdfcd5-d5jxj            1/1     Running   0          7m15s
 
 Install version 1.11.2 of the seldon-core-operator Chart.
 
-```text
+```bash
 helm install seldon-core seldon-core-operator \
     --repo https://storage.googleapis.com/seldon-charts \
     --namespace seldon-system \
@@ -116,7 +116,7 @@ helm install seldon-core seldon-core-operator \
 ```
 The following message should be displayed.
 
-```text
+```bash
 Skip...
 
 W1206 17:05:38.336391   28181 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
@@ -130,11 +130,11 @@ TEST SUITE: None
 
 Wait until one seldon-controller-manager pod is Running in the seldon-system namespace.
 
-```text
+```bash
 kubectl get pod -n seldon-system | grep seldon-controller
 ```
 
-```text
+```bash
 seldon-controller-manager-8457b8b5c7-r2frm   1/1     Running   0          2m22s
 ```
 

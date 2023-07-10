@@ -22,20 +22,20 @@ images: []
 k3s 에서는 기본값으로 containerd를 백엔드로 이용해 설치합니다.
 하지만 저희는 GPU를 사용하기 위해서 docker를 백엔드로 사용해야 하므로 `--docker` 옵션을 통해 백엔드를 docker로 설치하겠습니다.
 
-```text
+```bash
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.7+k3s1 sh -s - server --disable traefik --disable servicelb --disable local-storage --docker
 ```
 
 k3s를 설치 후 k3s config를 확인합니다
 
-```text
+```bash
 sudo cat /etc/rancher/k3s/k3s.yaml
 ```
 
 정상적으로 설치되면 다음과 같은 항목이 출력됩니다.  
 (보안 문제와 관련된 키들은 <...>로 가렸습니다.)
 
-```text
+```bash
 apiVersion: v1
 clusters:
 - cluster:
@@ -64,14 +64,14 @@ users:
 
 k3s config를 클러스터의 kubeconfig로 사용하기 위해서 복사합니다.
 
-```text
+```bash
 mkdir .kube
 sudo cp /etc/rancher/k3s/k3s.yaml .kube/config
 ```
 
 복사된 config 파일에 user가 접근할 수 있는 권한을 줍니다.
 
-```text
+```bash
 sudo chown $USER:$USER .kube/config
 ```
 
@@ -84,7 +84,7 @@ sudo chown $USER:$USER .kube/config
 이 값을 클러스터의 ip에 맞게 수정합니다.  
 (이번 페이지에서 사용하는 클러스터의 ip에 맞춰서 `https://192.168.0.19:6443` 으로 수정했습니다.)
 
-```text
+```bash
 apiVersion: v1
 clusters:
 - cluster:
@@ -122,13 +122,13 @@ users:
 
 최종적으로 node가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
 
-```text
+```bash
 kubectl get nodes -o wide
 ```
 
 다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
 
-```text
+```bash
 NAME    STATUS   ROLES                  AGE   VERSION        INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
 ubuntu   Ready    control-plane,master   11m   v1.21.7+k3s1   192.168.0.19   <none>        Ubuntu 20.04.3 LTS   5.4.0-91-generic   docker://20.10.11
 ```

@@ -61,7 +61,7 @@ if __name__ == "__main__":
   <details>
     <summary>example_pipeline.yaml</summary>
 
-```text
+```bash
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
@@ -369,7 +369,7 @@ if __name__ == "__main__":
 위의 스크립트를 실행하면 생성된 파일에서 `sum-and-print-numbers`를 자세히 보면 resources에 `{nvidia.com/gpu: 1}` 도 추가된 것을 볼 수 있습니다.
 이를 통해 GPU를 할당받을 수 있습니다.
 
-```text
+```bash
   - name: sum-and-print-numbers
     container:
       args: [--number-1, '{{inputs.parameters.print-and-return-number-Output}}', --number-2,
@@ -434,7 +434,7 @@ if __name__ == "__main__":
 
 바뀐 부분만 확인하면 다음과 같습니다.
 
-```text
+```bash
       resources:
         limits: {nvidia.com/gpu: 1, cpu: '16'}
 ```
@@ -476,7 +476,7 @@ if __name__ == "__main__":
 
 바뀐 부분만 확인하면 다음과 같습니다.
 
-```text
+```bash
       resources:
         limits: {nvidia.com/gpu: 1, memory: 1G}
 ```

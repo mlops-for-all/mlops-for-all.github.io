@@ -212,7 +212,7 @@ docker run --restart=always ubuntu
 `watch -n1 docker ps`를 통해 재실행이 되고 있는지 확인합니다.
 정상적으로 수행되고 있다면 다음과 같이 STATUS에 `Restarting (0)` 이 출력됩니다.
 
-```text
+```bash
 CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                         PORTS     NAMES
 a911850276e8   ubuntu    "bash"    35 seconds ago   Restarting (0) 6 seconds ago             hungry_vaughan
 ```

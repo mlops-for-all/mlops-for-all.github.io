@@ -145,19 +145,19 @@ You can click on the link indicated by the red square to download the data.
 Download both files to the same location. Then navigate to the specified path and check the downloaded files.
 
 
-```text
+```bash
 ls
 ```
 
 There are two files as follows.
 
-```text
+```bash
 drop-na-from-csv-output.tgz load-iris-data-target.tgz
 ```
 
 I will try to unzip it.
 
-```text
+```bash
 tar -xzvf load-iris-data-target.tgz ; mv data target.csv
 tar -xzvf drop-na-from-csv-output.tgz ; mv data data.csv
 ```

@@ -212,7 +212,7 @@ When you check the MLflow dashboard, two models will be generated, as shown belo
 ![children-mlflow.png](./img/children-mlflow.png)
 
 After checking the run_id of each one, define the SeldonDeployment spec as follows.
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -294,7 +294,7 @@ spec:
           value: "/mnt/models"
 ```
 Two models have been created so each model's initContainer and container must be defined. This field takes input as an array and the order does not matter. The order in which the models are executed is defined in the graph.
-```text
+```bash
 graph:
   name: scaler
   type: MODEL
@@ -318,7 +318,7 @@ The operation of the graph is to convert the initial value received into a prede
 
 Now let's create the above specifications in a yaml file.
 
-```text
+```bash
 cat <<EOF > multi-model.yaml
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
@@ -403,21 +403,21 @@ EOF
 ```
 
 Create an API through the following command.
-```text
+```bash
 kubectl apply -f multi-model.yaml
 ```
 
 If properly performed, it will be outputted as follows.
-```text
+```bash
 seldondeployment.machinelearning.seldon.io/multi-model-example created
 ```
 
 Check to see if it has been generated normally.
-```text
+```bash
 kubectl get po -n kubeflow-user-example-com | grep multi-model-example
 ```
 
 If it is created normally, a similar pod will be created.
-```text
+```bash
 multi-model-example-model-0-scaler-svc-9955fb795-n9ffw   4/4     Running     0          2m30s
 ```

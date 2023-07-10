@@ -20,38 +20,38 @@ sidebar_position: 2
 
 - node & npm
 
-    ```text
+    ```bash
     npm --version
     ```
 
 - hugo
 
-    ```text
+    ```bash
     hugo version
     ```
 
 1. 필요한 node module을 설치합니다.
 
-    ```text
+    ```bash
     npm install
     ```
 
 2. 프로젝트에서는 각 글의 일관성을 위해서 여러 markdown lint를 적용하고 있습니다.  
   다음 명령어를 실행해 test를 진행한 후 커밋합니다.내용 수정 및 추가 후 lint가 맞는지 확인합니다.
 
-    ```text
+    ```bash
     npm test
     ```
 
 4. lint 확인 완료 후 ci 를 실행합니다.
 
-    ```text
+    ```bash
     npm ci
     ```
 
 4. 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
 
-    ```text
+    ```bash
     npm run start
     ```
 

@@ -20,7 +20,7 @@ Seldon Core가 API 서버를 생성하는 과정을 요약하면 다음과 같�
 
 Seldon Core를 사용할 때, 주로 사용하게 되는 커스텀 리소스인 SeldonDeployment를 정의하는 yaml 파일은 다음과 같습니다.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -84,7 +84,7 @@ SeldonDeployment spe 중 `name` 과 `predictors` 필드는 required 필드입니
 
 ### volumes
 
-```text
+```bash
 volumes:
 - name: model-provision-location
   emptyDir: {}
@@ -96,7 +96,7 @@ array로 입력을 받으며 array의 구성 요소는 `name`과 `emptyDir` 입�
 
 ### initContainer
 
-```text
+```bash
 - name: model-initializer
   image: gcr.io/kfserving/storage-initializer:v0.4.0
   args:
@@ -134,7 +134,7 @@ seldon core에서 권장하는 이미지는 크게 두 가지입니다.
 
 #### args
 
-```text
+```bash
 args:
   - "gs://seldon-models/v1.12.0-dev/sklearn/iris"
   - "/mnt/models"
@@ -146,7 +146,7 @@ array로 구성되며 첫 번째 array의 값은 다운로드받을 모델의 �
 
 ### volumeMounts
 
-```text
+```bash
 volumeMounts:
   - mountPath: /mnt/models
     name: model-provision-location
@@ -157,7 +157,7 @@ volumeMounts:
 
 ### container
 
-```text
+```bash
 containers:
 - name: model
   image: seldonio/sklearnserver:1.8.0-dev
@@ -191,7 +191,7 @@ Seldon Core에서 지원하는 공식 이미지는 다음과 같습니다.
 
 #### volumeMounts
 
-```text
+```bash
 volumeMounts:
 - mountPath: /mnt/models
   name: model-provision-location
@@ -203,7 +203,7 @@ initContainer에서 다운로드받은 데이터가 있는 경로를 알려주�
 
 #### securityContext
 
-```text
+```bash
 securityContext:
   privileged: true
   runAsUser: 0
@@ -215,7 +215,7 @@ securityContext:
 
 ## graph
 
-```text
+```bash
 graph:
   name: model
   type: MODEL

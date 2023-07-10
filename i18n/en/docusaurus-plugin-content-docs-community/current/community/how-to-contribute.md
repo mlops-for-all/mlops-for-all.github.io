@@ -7,7 +7,7 @@ sidebar_position: 2
 
 ### Git Repo 준비
 
-1. [*모두의 MLOps* GitHub Repository](https://github.com/mlops-for-all/mlops-for-all.github.io)에 접속합니다.
+1. [*MLOps for ALL* GitHub Repository](https://github.com/mlops-for-all/mlops-for-all.github.io)에 접속합니다.
 
 2. 여러분의 개인 Repository로 `Fork`합니다.
 
@@ -15,43 +15,43 @@ sidebar_position: 2
 
 ### 환경 설정
 
-1. 모두의 MLOps는 Hugo 와 Node를 이용하고 있습니다.  
+1. MLOps for ALL는 Hugo 와 Node를 이용하고 있습니다.  
   다음 명령어를 통해 필요한 패키지가 설치되어 있는지 확인합니다.
 
 - node & npm
 
-    ```text
+    ```bash
     npm --version
     ```
 
 - hugo
 
-    ```text
+    ```bash
     hugo version
     ```
 
 1. 필요한 node module을 설치합니다.
 
-    ```text
+    ```bash
     npm install
     ```
 
 2. 프로젝트에서는 각 글의 일관성을 위해서 여러 markdown lint를 적용하고 있습니다.  
   다음 명령어를 실행해 test를 진행한 후 커밋합니다.내용 수정 및 추가 후 lint가 맞는지 확인합니다.
 
-    ```text
+    ```bash
     npm test
     ```
 
 4. lint 확인 완료 후 ci 를 실행합니다.
 
-    ```text
+    ```bash
     npm ci
     ```
 
 4. 로컬에서 실행 후 수정한 글이 정상적으로 나오는지 확인합니다.
 
-    ```text
+    ```bash
     npm run start
     ```
 
@@ -91,4 +91,4 @@ draft: false
 
 ## After Pull Request
 
-Pull Request를 생성하면 프로젝트에서는 자동으로 *모두의 MLOps* 운영진에게 리뷰 요청이 전해집니다. 최대 일주일 이내로 확인 후 Comment를 드릴 예정입니다.
+Pull Request를 생성하면 프로젝트에서는 자동으로 *MLOps for ALL* 운영진에게 리뷰 요청이 전해집니다. 최대 일주일 이내로 확인 후 Comment를 드릴 예정입니다.

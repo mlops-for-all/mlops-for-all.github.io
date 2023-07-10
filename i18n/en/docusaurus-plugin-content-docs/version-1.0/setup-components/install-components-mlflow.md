@@ -16,31 +16,31 @@ o store the data managed by MLflow and provide a user interface, we will deploy 
 
 ## Before Install MLflow Tracking Server
 
-### PostgreSQL DB 설치
+### Install PostgreSQL DB
 
 MLflow Tracking Server deploys a PostgreSQL DB for use as a Backend Store to a Kubernetes cluster.
 
 First, create a namespace called `mlflow-system`.
 
-```text
+```bash
 kubectl create ns mlflow-system
 ```
 
 If the following message is output, it means that it has been generated normally.
 
-```text
+```bash
 namespace/mlflow-system created
 ```
 
 Create a Postgresql DB in the `mlflow-system` namespace.
 
-```text
+```bash
 kubectl -n mlflow-system apply -f https://raw.githubusercontent.com/mlops-for-all/helm-charts/b94b5fe4133f769c04b25068b98ccfa7a505aa60/mlflow/manifests/postgres.yaml 
 ```
 
 If performed normally, it will be outputted as follows.
 
-```text
+```bash
 service/postgresql-mlflow-service created
 deployment.apps/postgresql-mlflow created
 persistentvolumeclaim/postgresql-mlflow-pvc created
@@ -48,13 +48,13 @@ persistentvolumeclaim/postgresql-mlflow-pvc created
 
 Wait until one postgresql related pod is running in the mlflow-system namespace.
 
-```text
+```bash
 kubectl get pod -n mlflow-system | grep postgresql
 ```
 
 If it is output similar to the following, it has executed normally.
 
-```text
+```bash
 postgresql-mlflow-7b9bc8c79f-srkh7   1/1     Running   0          38s
 ```
 
@@ -64,7 +64,7 @@ We will utilize the Minio that was installed in the previous Kubeflow installati
 However, in order to separate it for kubeflow and mlflow purposes, we will create a mlflow-specific bucket.  
 First, port-forward the minio-service to access Minio and create the bucket.
 
-```text
+```bash
 kubectl port-forward svc/minio-service -n kubeflow 9000:9000
 ```
 
@@ -95,24 +95,24 @@ If successfully created, you will see a bucket named `mlflow` on the left.
 
 ### Add Helm Repository
 
-```text
+```bash
 helm repo add mlops-for-all https://mlops-for-all.github.io/helm-charts
 ```
 
 If the following message is displayed, it means it has been added successfully.
-```text
+```bash
 "mlops-for-all" has been added to your repositories
 ```
 
 ### Update Helm Repository
 
-```text
+```bash
 helm repo update
 ```
 
 If the following message is displayed, it means that the update has been successfully completed.
 
-```text
+```bash
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "mlops-for-all" chart repository
 Update Complete. ⎈Happy Helming!⎈
@@ -122,7 +122,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 Install mlflow-server Helm Chart version 0.2.0.
 
-```text
+```bash
 helm install mlflow-server mlops-for-all/mlflow-server \
   --namespace mlflow-system \
   --version 0.2.0
@@ -133,7 +133,7 @@ helm install mlflow-server mlops-for-all/mlflow-server \
 
 The following message should be displayed:
 
-```text
+```bash
 NAME: mlflow-server
 LAST DEPLOYED: Sat Dec 18 22:02:13 2021
 NAMESPACE: mlflow-system
@@ -144,14 +144,14 @@ TEST SUITE: None
 
 Check to see if it was installed normally.
 
-```text
+```bash
 kubectl get pod -n mlflow-system | grep mlflow-server
 ```
 
 Wait until one mlflow-server related pod is running in the mlflow-system namespace.  
 If it is output similar to the following, then it has been successfully executed.
 
-```text
+```bash
 mlflow-server-ffd66d858-6hm62        1/1     Running   0          74s
 ```
 
@@ -161,7 +161,7 @@ Let's now check if we can successfully connect to the MLflow Server.
 
 First, we will perform port forwarding in order to connect from the client node.
 
-```text
+```bash
 kubectl port-forward svc/mlflow-server-service -n mlflow-system 5000:5000
 ```
 

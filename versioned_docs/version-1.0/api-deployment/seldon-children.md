@@ -222,7 +222,7 @@ MLflow 대시보드를 확인하면 다음과 같이 두 개의 모델이 생성
 
 각각의 run_id를 확인 후 다음과 같이 SeldonDeployment 스펙을 정의합니다.
 
-```text
+```bash
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
@@ -309,7 +309,7 @@ spec:
 
 모델이 실행하는 순서는 graph에서 정의됩니다.
 
-```text
+```bash
 graph:
   name: scaler
   type: MODEL
@@ -334,7 +334,7 @@ graph의 동작 방식은 처음 받은 값을 정해진 predict_method로 변�
 
 이제 위의 스펙을 yaml파일로 생성해 보겠습니다.
 
-```text
+```bash
 cat <<EOF > multi-model.yaml
 apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
@@ -420,24 +420,24 @@ EOF
 
 다음 명령어를 통해 API를 생성합니다.
 
-```text
+```bash
 kubectl apply -f multi-model.yaml
 ```
 
 정상적으로 수행되면 다음과 같이 출력됩니다.
 
-```text
+```bash
 seldondeployment.machinelearning.seldon.io/multi-model-example created
 ```
 
 정상적으로 생성됐는지 확인합니다.
 
-```text
+```bash
 kubectl get po -n kubeflow-user-example-com | grep multi-model-example
 ```
 
 정상적으로 생성되면 다음과 비슷한 pod이 생성됩니다.
 
-```text
+```bash
 multi-model-example-model-0-scaler-svc-9955fb795-n9ffw   4/4     Running     0          2m30s
 ```
