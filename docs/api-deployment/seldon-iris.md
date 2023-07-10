@@ -120,7 +120,7 @@ SeldonDeployment에서 주로 사용하는 `method-name`은 두 가지가 있습
 
 각각의 method의 자세한 사용 방법은 아래에서 설명합니다.
 
-## Use Swagger
+## Using Swagger
 
 우선 doc method를 사용하는 방법입니다. doc method를 이용하면 seldon에서 생성한 swagger에 접속할 수 있습니다.
 

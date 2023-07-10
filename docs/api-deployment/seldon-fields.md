@@ -128,7 +128,7 @@ seldon core에서 권장하는 이미지는 크게 두 가지입니다.
 각각의 자세한 내용은 다음을 참고 바랍니다.
 
 - [kfserving](https://docs.seldon.io/projects/seldon-core/en/latest/servers/kfserving-storage-initializer.html)
-- [rlone](https://github.com/SeldonIO/seldon-core/tree/master/components/rclone-storage-initializer)
+- [rclone](https://github.com/SeldonIO/seldon-core/tree/master/components/rclone-storage-initializer)
 
 *모두의 MLOps* 에서는 kfserving을 사용합니다.
 
@@ -236,7 +236,7 @@ graph:
 
 type은 크게 4가지가 있습니다.
 
-1. TRANSFROMER
+1. TRANSFORMER
 2. MODEL
 3. OUTPUT_TRANSFORMER
 4. ROUTER
