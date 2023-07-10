@@ -7,13 +7,13 @@ contributors: ["Jongseob Jeon"]
 
 ## Debugging Pipeline
 
-이번 페이지에서는 Kubeflow 컴포넌트를 디버깅하는 방법에 대해서 알아봅니다.
+This page covers how to debug Kubeflow components.
 
 ## Failed Component
 
-이번 페이지에서는 [Component - MLFlow](../kubeflow/advanced-mlflow.md#mlflow-pipeline) 에서 이용한 파이프라인을 조금 수정해서 사용합니다.
+We will modify a pipeline used in [Component - MLFlow](../kubeflow/advanced-mlflow.md#mlflow-pipeline) in this page.
 
-우선 컴포넌트가 실패하도록 파이프라인을 변경하도록 하겠습니다.
+First, let's modify the pipeline so that the component fails.
 
 ```python
 from functools import partial
@@ -119,55 +119,54 @@ if __name__ == "__main__":
 
 ```
 
-수정한 점은 다음과 같습니다.
+The modifications are as follows:
 
-1. 데이터를 불러오는 `load_iris_data` 컴포넌트에서 `sepal length (cm)` 피처에 `None` 값을 주입
-2. `drop_na_from_csv` 컴포넌트에서 `drop_na()` 함수를 이용해 na 값이 포함된 `row`를 제거
+1. In the `load_iris_data` component for loading data, `None` was injected into the `sepal length (cm)` feature.
+2. In the `drop_na_from_csv` component, use the `drop_na()` function to remove rows with na values.
 
-이제 파이프라인을 업로드하고 실행해 보겠습니다.  
-실행 후 Run을 눌러서 확인해보면 `Train from csv` 컴포넌트에서 실패했다고 나옵니다.
+Now let's upload and run the pipeline.  
+After running, if you press Run you will see that it has failed in the `Train from csv` component.
 
 ![debug-0.png](./img/debug-0.png)
 
-실패한 컴포넌트를 클릭하고 로그를 확인해서 실패한 이유를 확인해 보겠습니다.
+Click on the failed component and check the log to see the reason for the failure.
 
 ![debug-2.png](./img/debug-2.png)
 
-로그를 확인하면 데이터의 개수가 0이여서 실행되지 않았다고 나옵니다.  
-분명 정상적으로 데이터를 전달했는데 왜 데이터의 개수가 0개일까요?  
+If the log shows that the data count is 0 and the component did not run, there may be an issue with the input data.  
+Let's investigate what might be the problem.
 
-이제 입력받은 데이터에 어떤 문제가 있었는지 확인해 보겠습니다.  
-우선 컴포넌트를 클릭하고 Input/Ouput 탭에서 입력값으로 들어간 데이터들을 다운로드 받습니다.  
-다운로드는 빨간색 네모로 표시된 곳의 링크를 클릭하면 됩니다.
+First, click on the component and go to the Input/Output tab to download the input data.  
+You can click on the link indicated by the red square to download the data.
+
 
 ![debug-5.png](./img/debug-5.png)
 
-두 개의 파일을 같은 경로에 다운로드합니다.  
-그리고 해당 경로로 이동해서 파일을 확인합니다.
+Download both files to the same location. Then navigate to the specified path and check the downloaded files.
+
 
 ```text
 ls
 ```
 
-다음과 같이 두 개의 파일이 있습니다.
+There are two files as follows.
 
 ```text
 drop-na-from-csv-output.tgz load-iris-data-target.tgz
 ```
 
-압축을 풀어보겠습니다.
+I will try to unzip it.
 
 ```text
 tar -xzvf load-iris-data-target.tgz ; mv data target.csv
 tar -xzvf drop-na-from-csv-output.tgz ; mv data data.csv
 ```
 
-그리고 이를 주피터 노트북을 이용해 컴포넌트 코드를 실행합니다.
-
+And then run the component code using a Jupyter notebook.
 ![debug-3.png](./img/debug-3.png)
 
-디버깅을 해본 결과 dropna 할 때 column을 기준으로 drop을 해야 하는데 row를 기준으로 drop을 해서 데이터가 모두 사라졌습니다.
-이제 문제의 원인을 알아냈으니 column을 기준으로 drop이 되게 컴포넌트를 수정합니다.
+Debugging revealed that dropping the data was based on rows instead of columns, resulting in all the data being removed.
+Now that we know the cause of the problem, we can modify the component to drop based on columns.
 
 ```python
 @partial(
@@ -185,6 +184,6 @@ def drop_na_from_csv(
     data.to_csv(output_path, index=False)
 ```
 
-수정 후 파이프라인을 다시 업로드하고 실행하면 다음과 같이 정상적으로 수행하는 것을 확인할 수 있습니다.
+After modifying, upload the pipeline again and run it to confirm that it is running normally as follows.
 
 ![debug-6.png](./img/debug-6.png)

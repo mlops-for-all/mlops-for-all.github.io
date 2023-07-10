@@ -15,25 +15,24 @@ images: []
 
 ## 1. Prerequisite
 
-쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성 요소들을 **클러스터에** 설치합니다.
+Before setting up a Kubernetes cluster, install the necessary components on the **cluster**.
 
-[Install Prerequisite](../../setup-kubernetes/install-prerequisite.md)을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
+Please refer to [Install Prerequisite](../../setup-kubernetes/install-prerequisite.md) to install the necessary components on the **cluster** before installing Kubernetes.
 
-k3s 에서는 기본값으로 containerd를 백엔드로 이용해 설치합니다.
-하지만 저희는 GPU를 사용하기 위해서 docker를 백엔드로 사용해야 하므로 `--docker` 옵션을 통해 백엔드를 docker로 설치하겠습니다.
+k3s uses containerd as the backend by default.
+However, we need to use docker as the backend to use GPU, so we will install the backend with the `--docker` option.
 
 ```text
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.7+k3s1 sh -s - server --disable traefik --disable servicelb --disable local-storage --docker
 ```
 
-k3s를 설치 후 k3s config를 확인합니다
+After installing k3s, check the k3s config.
 
 ```text
 sudo cat /etc/rancher/k3s/k3s.yaml
 ```
 
-정상적으로 설치되면 다음과 같은 항목이 출력됩니다.  
-(보안 문제와 관련된 키들은 <...>로 가렸습니다.)
+If installed correctly, the following items will be output. (Security related keys are hidden with <...>.)
 
 ```text
 apiVersion: v1
@@ -60,29 +59,29 @@ users:
     <...>
 ```
 
-## 2. 쿠버네티스 클러스터 셋업
+## 2. Setup Kubernetes Cluster
 
-k3s config를 클러스터의 kubeconfig로 사용하기 위해서 복사합니다.
+Set up the Kubernetes cluster by copying the k3s config to be used as the cluster’s kubeconfig.
 
 ```text
 mkdir .kube
 sudo cp /etc/rancher/k3s/k3s.yaml .kube/config
 ```
 
-복사된 config 파일에 user가 접근할 수 있는 권한을 줍니다.
+Grant user access permission to the copied config file.
 
 ```text
 sudo chown $USER:$USER .kube/config
 ```
 
-## 3. 쿠버네티스 클라이언트 셋업
+## 3. Setup Kubernetes Client
 
-이제 클러스터에서 설정한 kubeconfig를 로컬로 이동합니다.
-로컬에서는 경로를 `~/.kube/config`로 설정합니다.
+Now move the kubeconfig configured in the cluster to the local.
+Set the path to `~/.kube/config` on the local.
 
-처음 복사한 config 파일에는 server ip가 `https://127.0.0.1:6443` 으로 되어 있습니다.  
-이 값을 클러스터의 ip에 맞게 수정합니다.  
-(이번 페이지에서 사용하는 클러스터의 ip에 맞춰서 `https://192.168.0.19:6443` 으로 수정했습니다.)
+The config file copied at first has the server ip set to `https://127.0.0.1:6443`. 
+Modify this value to match the ip of the cluster. 
+(We modified it to `https://192.168.0.19:6443` to match the ip of the cluster used in this page.)
 
 ```text
 apiVersion: v1
@@ -109,24 +108,24 @@ users:
     <...>
 ```
 
-## 4. 쿠버네티스 기본 모듈 설치
+## 4. Install Kubernetes Default Modules
 
-[Setup Kubernetes Modules](../../setup-kubernetes/install-kubernetes-module.md)을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
+Please refer to [Setup Kubernetes Modules](../../setup-kubernetes/install-kubernetes-module.md) to install the following components:
 
 - helm
 - kustomize
 - CSI plugin
 - [Optional] nvidia-docker, nvidia-device-plugin
 
-## 5. 정상 설치 확인
+## 5. Verify Successful Installation
 
-최종적으로 node가 Ready 인지, OS, Docker, Kubernetes 버전을 확인합니다.
+Finally, check if the nodes are Ready and verify the OS, Docker, and Kubernetes versions.
 
 ```text
 kubectl get nodes -o wide
 ```
 
-다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
+If you see the following message, it means that the installation was successful.
 
 ```text
 NAME    STATUS   ROLES                  AGE   VERSION        INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME

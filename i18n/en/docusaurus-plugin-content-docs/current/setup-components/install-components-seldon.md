@@ -9,33 +9,33 @@ contributors: ["Jaeyeon Kim"]
 
 ## Seldon-Core
 
-Seldon-Core는 쿠버네티스 환경에 수많은 머신러닝 모델을 배포하고 관리할 수 있는 오픈소스 프레임워크 중 하나입니다.  
-더 자세한 내용은 Seldon-Core 의 공식 [제품 설명 페이지](https://www.seldon.io/tech/products/core/) 와 [깃헙](https://github.com/SeldonIO/seldon-core) 그리고 API Deployment 파트를 참고해주시기를 바랍니다.
+Seldon-Core is one of the open source frameworks that can deploy and manage numerous machine learning models in Kubernetes environments.  
+For more details, please refer to the official [product description page](https://www.seldon.io/tech/products/core/) and [GitHub](https://github.com/SeldonIO/seldon-core) of Seldon-Core and API Deployment part.
 
-## Selon-Core 설치
+## Installing Seldon-Core
 
-Seldon-Core를 사용하기 위해서는 쿠버네티스의 인그레스(Ingress)를 담당하는 Ambassador 와 Istio 와 같은 [모듈이 필요합니다](https://docs.seldon.io/projects/seldon-core/en/latest/workflow/install.html).  
-Seldon-Core 에서는 Ambassador 와 Istio 만을 공식적으로 지원하며, *모두의 MLOps*에서는 Ambassador를 사용해 Seldon-core를 사용하므로 Ambassador를 설치하겠습니다.
+In order to use Seldon-Core, modules such as Ambassador, which is responsible for Ingress of Kubernetes, and Istio are required [here](https://docs.seldon.io/projects/seldon-core/en/latest/workflow/install.html).  
+Seldon-Core officially supports only Ambassador and Istio, and *MLOps for everyone* will use Ambassador to use Seldon-core, so we will install Ambassador.
 
-### Ambassador - Helm Repository 추가
+### Adding Ambassador to the Helm Repository
 
 ```text
 helm repo add datawire https://www.getambassador.io
 ```
 
-다음과 같은 메시지가 출력되면 정상적으로 추가된 것을 의미합니다.
+If the following message is displayed, it means it has been added normally.
 
 ```text
 "datawire" has been added to your repositories
 ```
 
-### Ambassador - Helm Repository 업데이트
+### Update Ambassador - Helm Repository
 
 ```text
 helm repo update
 ```
 
-다음과 같은 메시지가 출력되면 정상적으로 업데이트된 것을 의미합니다.
+If the following message is output, it means that the update has been completed normally.
 
 ```text
 Hang tight while we grab the latest from your chart repositories...
@@ -45,7 +45,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 ### Ambassador - Helm Install
 
-ambassador Chart 6.9.3 버전을 설치합니다.
+Install version 6.9.3 of the Ambassador Chart.
 
 ```text
 helm install ambassador datawire/ambassador \
@@ -57,7 +57,7 @@ helm install ambassador datawire/ambassador \
   --version 6.9.3
 ```
 
-다음과 같은 메시지가 출력되어야 합니다.
+The following message should be displayed.
 
 ```text
 생략...
@@ -89,7 +89,7 @@ NOTE: It may take a few minutes for the LoadBalancer IP to be available.
 For help, visit our Slack at http://a8r.io/Slack or view the documentation online at https://www.getambassador.io.
 ```
 
-seldon-system 에 4 개의 pod 가 Running 이 될 때까지 기다립니다.
+Wait until four pods become running in the seldon-system.
 
 ```text
 kubectl get pod -n seldon-system
@@ -104,7 +104,7 @@ ambassador-agent-77bccdfcd5-d5jxj            1/1     Running   0          7m15s
 
 ### Seldon-Core - Helm Install
 
-seldon-core-operator Chart 1.11.2 버전을 설치합니다.
+Install version 1.11.2 of the seldon-core-operator Chart.
 
 ```text
 helm install seldon-core seldon-core-operator \
@@ -114,11 +114,10 @@ helm install seldon-core seldon-core-operator \
     --set ambassador.enabled=true \
     --version 1.11.2
 ```
-
-다음과 같은 메시지가 출력되어야 합니다.
+The following message should be displayed.
 
 ```text
-생략...
+Skip...
 
 W1206 17:05:38.336391   28181 warnings.go:70] admissionregistration.k8s.io/v1beta1 ValidatingWebhookConfiguration is deprecated in v1.16+, unavailable in v1.22+; use admissionregistration.k8s.io/v1 ValidatingWebhookConfiguration
 NAME: seldon-core
@@ -129,7 +128,7 @@ REVISION: 1
 TEST SUITE: None
 ```
 
-seldon-system namespace 에 1 개의 seldon-controller-manager pod 가 Running 이 될 때까지 기다립니다.
+Wait until one seldon-controller-manager pod is Running in the seldon-system namespace.
 
 ```text
 kubectl get pod -n seldon-system | grep seldon-controller

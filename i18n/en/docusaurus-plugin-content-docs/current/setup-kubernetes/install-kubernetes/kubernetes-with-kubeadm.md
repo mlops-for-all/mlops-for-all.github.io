@@ -9,11 +9,11 @@ contributors: ["Youngcheol Jang"]
 
 ## 1. Prerequisite
 
-쿠버네티스 클러스터를 구축하기에 앞서, 필요한 구성 요소들을 **클러스터에** 설치합니다.
+Before building a Kubernetes cluster, install the necessary components to the **cluster**.
 
-[Install Prerequisite](../../setup-kubernetes/install-prerequisite.md)을 참고하여 Kubernetes를 설치하기 전에 필요한 요소들을 **클러스터에** 설치해 주시기 바랍니다.
+Please refer to [Install Prerequisite](../../setup-kubernetes/install-prerequisite.md) and install the necessary components to the **cluster**.
 
-쿠버네티스를 위한 네트워크의 설정을 변경합니다.
+Change the configuration of the network for Kubernetes.
 
 ```text
 sudo modprobe br_netfilter
@@ -29,14 +29,13 @@ EOF
 sudo sysctl --system
 ```
 
-## 2. 쿠버네티스 클러스터 셋업
+## 2. Setup Kubernetes Cluster
 
-- kubeadm : kubelet을 서비스에 등록하고, 클러스터 컴포넌트들 사이의 통신을 위한 인증서 발급 등 설치 과정 자동화
-- kubelet : container 리소스를 실행, 종료를 해 주는 컨테이너 핸들러
-- kubectl : 쿠버네티스 클러스터를 터미널에서 확인, 조작하기 위한 CLI 도구
+- kubeadm : Automates the installation process by registering kubelet as a service and issuing certificates for communication between cluster components.
+- kubelet : Container handler responsible for starting and stopping container resources.
+- kubectl : CLI tool used to interact with and manage Kubernetes clusters from the terminal.
 
-다음 명령어를 통해 kubeadm, kubelet, kubectl을 설치합니다.
-실수로 이 컴포넌트들의 버전이 변경하면, 예기치 않은 장애를 낳을 수 있으므로 컴포넌트들이 변경되지 않도록 설정합니다.
+Install kubeadm, kubelet, and kubectl using the following commands. It's important to prevent accidental changes to the versions of these components, as it can lead to unexpected issues.
 
 ```text
 sudo apt-get update
@@ -48,7 +47,7 @@ sudo apt-get install -y kubelet=1.21.7-00 kubeadm=1.21.7-00 kubectl=1.21.7-00 &&
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
 
-kubeadm, kubelet, kubectl 이 잘 설치되었는지 확인합니다.
+Check if kubeadm, kubelet, and kubectl are installed correctly.
 
 ```text
 mlops@ubuntu:~$ kubeadm version
@@ -65,7 +64,7 @@ mlops@ubuntu:~$ kubectl version --client
 Client Version: version.Info{Major:"1", Minor:"21", GitVersion:"v1.21.7", GitCommit:"1f86634ff08f37e54e8bfcd86bc90b61c98f84d4", GitTreeState:"clean", BuildDate:"2021-11-17T14:41:19Z", GoVersion:"go1.16.10", Compiler:"gc", Platform:"linux/amd64"}
 ```
 
-이제 kubeadm을 사용하여 쿠버네티스를 설치합니다.
+Now we will use kubeadm to install Kubernetes.
 
 ```text
 kubeadm config images list
@@ -74,7 +73,7 @@ kubeadm config images pull
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
 
-kubectl을 통해서 쿠버네티스 클러스터를 제어할 수 있도록 admin 인증서를 $HOME/.kube/config 경로에 복사합니다.
+Through kubectl, copy the admin certificate to the path $HOME/.kube/config to control the Kubernetes cluster.
 
 ```text
 mkdir -p $HOME/.kube
@@ -82,48 +81,45 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-CNI를 설치합니다.
-쿠버네티스 내부의 네트워크 설정을 전담하는 CNI는 여러 종류가 있으며, *모두의 MLOps*에서는 flannel을 사용합니다.
+Install CNI. There are various kinds of CNI, which is responsible for setting up the network inside Kubernetes, and in *MLOps for All*, flannel is used.
 
 ```text
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.13.0/Documentation/kube-flannel.yml
 ```
 
-쿠버네티스 노드의 종류에는 크게 `마스터 노드`와 `워커 노드`가 있습니다.
-안정성을 위하여 `마스터 노드`에는 쿠버네티스 클러스터를 제어하는 작업만 실행되도록 하는 것이 일반적이지만,
-이 매뉴얼에서는 싱글 클러스터를 가정하고 있으므로 마스터 노드에 모든 종류의 작업이 실행될 수 있도록 설정합니다.
+There are two types of Kubernetes nodes: `Master Node` and `Worker Node`. For stability, it is generally recommended that only tasks to control the Kubernetes cluster are run on the `Master Node`, however this manual assumes a single cluster, so all types of tasks can be run on the Master Node.
 
 ```text
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
-## 3. 쿠버네티스 클라이언트 셋업
+## 3. Setup Kubernetes Client
 
-클러스터에 생성된 kubeconfig 파일을 **클라이언트**에 복사하여 kubectl을 통해 클러스터를 제어할 수 있도록 합니다.
+Copy the kubeconfig file created in the cluster to the **client** to control the cluster through kubectl.
 
 ```text
 mkdir -p $HOME/.kube
 scp -p {CLUSTER_USER_ID}@{CLUSTER_IP}:~/.kube/config ~/.kube/config
 ```
 
-## 4. 쿠버네티스 기본 모듈 설치
+## 4. Install Kubernetes Default Modules
 
-[Setup Kubernetes Modules](../../setup-kubernetes/install-kubernetes-module.md)을 참고하여 다음 컴포넌트들을 설치해 주시기 바랍니다.
+Please refer to [Setup Kubernetes Modules](../../setup-kubernetes/install-kubernetes-module.md) to install the following components:
 
 - helm
 - kustomize
 - CSI plugin
 - [Optional] nvidia-docker, nvidia-device-plugin
 
-## 5. 정상 설치 확인
+## 5. Verify Successful Installation
 
-다음 명령어를 통해 노드의 STATUS가 Ready 상태가 되었는지 확인합니다.
+Finally, check if the nodes are Ready and verify the OS, Docker, and Kubernetes versions.
 
 ```text
 kubectl get nodes
 ```
 
-Ready 가 되면 다음과 비슷한 결과가 출력됩니다.
+When the node is in the "Ready" state, the output will be similar to the following:
 
 ```text
 NAME     STATUS   ROLES                  AGE     VERSION

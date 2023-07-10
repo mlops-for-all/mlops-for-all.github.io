@@ -7,30 +7,28 @@ contributors: ["Jongseob Jeon", "Jaeyeon Kim"]
 
 ## Why Kubernetes ?
 
-머신러닝 모델을 서비스화하기 위해서는 모델 개발 외에도 많은 **부가적인** 기능들이 필요합니다.
+To operationalize machine learning models, additional functionalities beyond model development are required.
 
-1. 학습 단계
-    - 모델 학습 명령의 스케줄 관리
-    - 학습된 모델의 Reproducibility 보장
-2. 배포 단계
-    - 트래픽 분산
-    - 서비스 장애 모니터링
-    - 장애 시 트러블슈팅
+1. Training Phase
+   - Schedule management for model training commands
+   - Ensuring reproducibility of trained models
+2. Deployment Phase
+   - Traffic distribution
+   - Monitoring service failures
+   - Troubleshooting in case of failures
 
-다행히도 이런 기능들에 대한 needs는 소프트웨어 개발 쪽에서 이미 많은 고민을 거쳐 발전되어 왔습니다.  
-따라서 머신러닝 모델을 배포할 때도 이런 고민의 결과물들을 활용하면 큰 도움을 받을 수 있습니다.
-MLOps에서 대표적으로 활용하는 소프트웨어 제품이 바로 도커와 쿠버네티스입니다.
+Fortunately, the software development field has already put a lot of thought and effort into addressing these needs. Therefore, when deploying machine learning models, leveraging the outcomes of these considerations can be highly beneficial. Docker and Kubernetes are two prominent software products widely used in MLOps to address these needs.
 
-## 도커와 쿠버네티스
+## Docker & Kubernetes
 
-### 기술 이름이 아니라 제품 이름
+### Not a software but  a product
 
-도커와 쿠버네티스는 각각 컨테이너라이제이션(Containerization) 기능과 컨테이너 오케스트레이션(Container Orchestration) 기능을 제공하는 대표 소프트웨어(제품)입니다.
+Docker and Kubernetes are representative software (products) that provide containerization and container orchestration functions respectively.
 
-#### 도커
+#### Docker
 
-도커는 과거에 대세였지만 유료화 관련 정책들을 하나씩 추가하면서 점점 사용 빈도가 하락세입니다.
-하지만 2022년 3월 기준으로 아직까지도 가장 일반적으로 사용되는 컨테이너 가상화 소프트웨어입니다.
+Docker was the mainstream in the past, but its usage has been decreasing gradually with the addition of various paid policy.  
+However, as of March 2022, it is still the most commonly used container virtualization software.
 
 ![sysdig-2019.png](./img/sysdig-2019.png)
 
@@ -40,9 +38,9 @@ MLOps에서 대표적으로 활용하는 소프트웨어 제품이 바로 도커
 
 <center> [from sysdig 2021]  </center>
 
-#### 쿠버네티스
+#### Kubernetes
 
-쿠버네티스는 지금까지는 비교 대상조차 거의 없는 제품입니다.
+Kubernetes: Kubernetes is a product that has almost no comparison so far.
 
 ![cncf-survey.png](./img/cncf-survey.png)
 
@@ -52,34 +50,33 @@ MLOps에서 대표적으로 활용하는 소프트웨어 제품이 바로 도커
 
 <center> [from t4.ai]  </center>
 
-### **재미있는 오픈소스 역사 이야기**
+### History of Open source
 
-#### 초기 도커 & 쿠버네티스
+#### Initial Docker & Kubernetes
 
-초기 도커 개발시에는 Docker Engine이라는 **하나의 패키지**에 API, CLI, 네트워크, 스토리지 등 여러 기능들을 모두 포함했으나, **MSA** 의 철학을 담아 **하나씩 분리**하기 시작했습니다.  
-하지만 초기의 쿠버네티스는 컨테이너 가상화를 위해 Docker Engine을 내장하고 있었습니다.  
-따라서 도커 버전이 업데이트될 때마다 Docker Engine 의 인터페이스가 변경되어 쿠버네티스에서 크게 영향을 받는 일이 계속해서 발생하였습니다.
+At the beginning of Docker development, **one package** called Docker Engine contained multiple features such as API, CLI, networking, storage, etc., but it began to be **divided one by one** according to the philosophy of **MSA**.  
+However, the initial Kubernetes included Docker Engine for container virtualization.  
+Therefore, whenever the Docker version was updated, the interface of Docker Engine changed and Kubernetes was greatly affected.
 
 #### Open Container Initiative
 
-그래서 **이런 불편함을 해소**하고자, 도커를 중심으로 구글 등 컨테이너 기술에 관심있는 **여러 집단**들이 한데 모여 **Open Container Initiative,** 이하 **OCI**라는 프로젝트를 시작하여 컨테이너에 관한 **표준**을 정하는 일들을 시작하였습니다.  
-도커에서도 인터페이스를 **한 번 더 분리**해서, OCI 표준을 준수하는 **containerd**라는 Container Runtime 를 개발하고, **dockerd** 가 containerd 의 API 를 호출하도록 추상화 레이어를 추가하였습니다.
+In order to alleviate such inconveniences, many groups interested in container technology such as Google have come together to start the Open Container Initiative (OCI) project to set standards for containers.  
+Docker further separated its interface and developed Containerd, a Container Runtime that adheres to the OCI standard, and added an abstraction layer so that dockerd calls the API of Containerd.
 
-이러한 흐름에 맞추어서 쿠버네티스에서도 이제부터는 도커만을 지원하지 않고, **OCI 표준을** 준수하고, 정해진 스펙을 지키는 컨테이너 런타임은 무엇이든 쿠버네티스에서 사용할 수 있도록, Container Runtime Interface, 이하 **CRI 스펙**을 버전 1.5부터 제공하기 시작했습니다.
+In accordance with this flow, Kubernetes also now supports not only Docker, but any Container Runtime that adheres to the OCI standard and the specified specifications with the Container Runtime Interface (CRI) specification, starting from version 1.5. 
 
 #### CRI-O
 
-Red Hat, Intel, SUSE, IBM에서 **OCI 표준+CRI 스펙을** 따라 Kubernetes 전용 Container Runtime 을 목적으로 개발한 컨테이너 런타임입니다.
+CRI-O is a container runtime developed by Red Hat, Intel, SUSE, and IBM, which adheres to the OCI standard + CRI specifications, specifically for Kubernetes.
 
-#### 지금의 도커 & 쿠버네티스
+#### Current docker & kubernetes
 
-쿠버네티스는 Docker Engine 을 디폴트 컨테이너 런타임으로 사용해왔지만, 도커의 API 가 **CRI** 스펙에 맞지 않아(*OCI 는 따름*) 도커의 API를 **CRI**와 호환되게 바꿔주는 **dockershim**을 쿠버네티스 자체적으로 개발 및 지원해왔었는데,(*도커 측이 아니라 쿠버네티스 측에서 지원했다는 점이 굉장히 큰 짐이었습니다.*) 이걸 쿠버네티스 **v1.20 부터는 Deprecated하고,** **v1.23 부터는 지원을 포기**하기로 결정하였습니다.
+Currently, Docker and Kubernetes have been using Docker Engine as the default container runtime, but since Docker's API did not match the CRI specification (*OCI follows*), Kubernetes developed and supported a **dockershim** to make Docker's API compatible with CRI, (*it was a huge burden for Kubernetes, not for Docker*). This was **deprecated from Kubernetes v1.20 and abandoned from v1.23**.
 
-- v1.23 은 2021 년 12월 릴리즈
+- v1.23 will be released in December 2021
 
-그래서 쿠버네티스 v1.23 부터는 도커를 native 하게 쓸 수 없습니다다.  
-그렇지만 **사용자들은 이런 변화에 크게 관련이 있진 않습니다.**
-왜냐하면 Docker Engine을 통해 만들어진 도커 이미지는 OCI 표준을 준수하기 때문에, 쿠버네티스가 어떤 컨테이너 런타임으로 이루어져있든 사용 가능하기 때문입니다.
+So from Kubernetes v1.23, you can no longer use Docker natively. 
+However, **users are not much affected by this change** because Docker images created through Docker Engine comply with the OCI standard, so they can be used regardless of what container runtime Kubernetes is made of.
 
 ### References
 

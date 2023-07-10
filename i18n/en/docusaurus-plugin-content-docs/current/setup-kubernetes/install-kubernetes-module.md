@@ -9,14 +9,15 @@ contributors: ["Jaeyeon Kim"]
 
 ## Setup Kubernetes Modules
 
-이번 페이지에서는 클러스터에서 사용할 모듈을 클라이언트 노드에서 설치하는 과정에 관해서 설명합니다.  
-앞으로 소개되는 과정은 모두 **클라이언트 노드**에서 진행됩니다.
+
+On this page, we will explain how to install the modules that will be used on the cluster from the client nodes.  
+All the processes introduced here will be done on the **client nodes**.
 
 ## Helm
 
-Helm은 쿠버네티스 패키지와 관련된 자원을 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
+Helm is one of the package management tools that helps to deploy and manage resources related to Kubernetes packages at once.
 
-1. 현재 폴더에 Helm v3.7.1 버전을 내려받습니다.
+1. Download Helm version 3.7.1 into the current folder.
 
 - For Linux amd64
 
@@ -24,22 +25,21 @@ Helm은 쿠버네티스 패키지와 관련된 자원을 한 번에 배포하고
   wget https://get.helm.sh/helm-v3.7.1-linux-amd64.tar.gz
   ```
 
-- 다른 OS는 [공식 홈페이지](https://github.com/helm/helm/releases/tag/v3.7.1)를 참고하시어, 클라이언트 노드의 OS와 CPU에 맞는 바이너리의 다운 경로를 확인하시기 바랍니다.
+- Other OS refer to the [official website](https://github.com/helm/helm/releases/tag/v3.7.1) for the download path of the binary that matches the OS and CPU of your client node.
 
-2. helm을 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
+2. Unzip the file to use helm and move the file to its desired location.
 
   ```text
   tar -zxvf helm-v3.7.1-linux-amd64.tar.gz
   sudo mv linux-amd64/helm /usr/local/bin/helm
   ```
 
-3. 정상적으로 설치되었는지 확인합니다.
-
+3. Check to see if the installation was successful:
   ```text
   helm help
   ```
 
-  다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
+  If you see the following message, it means that it has been installed normally. 
 
   ```text
   The Kubernetes package manager
@@ -64,9 +64,9 @@ Helm은 쿠버네티스 패키지와 관련된 자원을 한 번에 배포하고
 
 ## Kustomize
 
-kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관리할 수 있게 도와주는 패키지 매니징 도구 중 하나입니다.
+Kustomize is one of the package management tools that helps to deploy and manage multiple Kubernetes resources at once.
 
-1. 현재 폴더에 kustomize v3.10.0 버전의 바이너리를 다운받습니다.
+1. Download the binary version of kustomize v3.10.0 in the current folder.
 
 - For Linux amd64
 
@@ -74,22 +74,22 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
   wget https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv3.10.0/kustomize_v3.10.0_linux_amd64.tar.gz
   ```
 
-- 다른 OS는 [kustomize/v3.10.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/kustomize%2Fv3.10.0)에서 확인 후 다운로드 받습니다.
+- Other OS can be downloaded from [kustomize/v3.10.0](https://github.com/kubernetes-sigs/kustomize/releases/tag/kustomize%2Fv3.10.0) after checking.
 
-2. kustomize 를 사용할 수 있도록 압축을 풀고, 파일의 위치를 변경합니다.
+2. Unzip to use kustomize, and change the file location. 
 
   ```text
   tar -zxvf kustomize_v3.10.0_linux_amd64.tar.gz
   sudo mv kustomize /usr/local/bin/kustomize
   ```
 
-3. 정상적으로 설치되었는지 확인합니다.
+3. Check if it is installed correctly.
 
   ```text
   kustomize help
   ```
 
-  다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
+  If you see the following message, it means that it has been installed normally.
 
   ```text
   Manages declarative configuration of Kubernetes.
@@ -110,13 +110,13 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
 
 ## CSI Plugin : Local Path Provisioner
 
-1. CSI Plugin은 kubernetes 내의 스토리지를 담당하는 모듈입니다. 단일 노드 클러스터에서 쉽게 사용할 수 있는 CSI Plugin인 Local Path Provisioner를 설치합니다.
+1. The CSI Plugin is a module that is responsible for storage within Kubernetes. Install the CSI Plugin, Local Path Provisioner, which is easy to use in single node clusters.
 
   ```text
   kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/v0.0.20/deploy/local-path-storage.yaml
   ```
 
-  다음과 같은 메시지가 보이면 정상적으로 설치된 것을 의미합니다.
+  If you see the following messages, it means that the installation was successful: 
 
   ```text
   namespace/local-path-storage created
@@ -128,38 +128,38 @@ kustomize 또한 여러 쿠버네티스 리소스를 한 번에 배포하고 관
   configmap/local-path-config created
   ```
 
-2. 또한, 다음과 같이 local-path-storage namespace 에 provisioner pod이 Running 인지 확인합니다.
+2. Also, check if the provisioner pod in the local-path-storage namespace is Running by executing the following command:
 
   ```text
   kubectl -n local-path-storage get pod
   ```
 
-  정상적으로 수행되면 아래와 같이 출력됩니다.
+If successful, it will display the following output:
 
   ```text
   NAME                                     READY     STATUS    RESTARTS   AGE
   local-path-provisioner-d744ccf98-xfcbk   1/1       Running   0          7m
   ```
 
-4. 다음을 수행하여 default storage class로 변경합니다.
+4. Execute the following command to change the default storage class:
 
   ```text
-  kubectl patch storageclass local-path  -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+  kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
   ```
 
-  정상적으로 수행되면 아래와 같이 출력됩니다.
+  If the command is successful, the following output will be displayed:
 
   ```text
   storageclass.storage.k8s.io/local-path patched
   ```
 
-5. default storage class로 설정되었는지 확인합니다.
+5. Verify that the default storage class has been set:
 
   ```text
   kubectl get sc
   ```
 
-  다음과 같이 NAME에 `local-path (default)` 인 storage class가 존재하는 것을 확인합니다.
+  Check if there is a storage class with the name `local-path (default)` in the NAME column:
 
   ```text
   NAME                   PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE

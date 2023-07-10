@@ -9,23 +9,23 @@ contributors: ["Jaeyeon Kim"]
 
 ## Setup Kubernetes Cluster
 
-쿠버네티스를 처음 배우시는 분들에게 첫 진입 장벽은 쿠버네티스 실습 환경을 구축하는 것입니다.
+For those learning Kubernetes for the first time, the first barrier to entry is setting up a Kubernetes practice environment.
 
-프로덕션 레벨의 쿠버네티스 클러스터를 구축할 수 있게 공식적으로 지원하는 도구는 kubeadm 이지만, 사용자들이 조금 더 쉽게 구축할 수 있도록 도와주는 kubespray, kops 등의 도구도 존재하며, 학습 목적을 위해서 컴팩트한 쿠버네티스 클러스터를 정말 쉽게 구축할 수 있도록 도와주는 k3s, minikube, microk8s, kind 등의 도구도 존재합니다.
+The official tool that supports building a production-level Kubernetes cluster is kubeadm, but there are also tools such as kubespray and kops that help users set up more easily, and tools such as k3s, minikube, microk8s, and kind that help you set up a compact Kubernetes cluster easily for learning purposes.
 
-각각의 도구는 장단점이 다르기에 사용자마다 선호하는 도구가 다른 점을 고려하여, 본 글에서는 kubeadm, k3s, minikube의 3가지 도구를 활용하여 쿠버네티스 클러스터를 구축하는 방법을 다룹니다.
-각 도구에 대한 자세한 비교는 다음 쿠버네티스 [공식 문서](https://kubernetes.io/ko/docs/tasks/tools/)를 확인해주시기를 바랍니다.
+Each tool has its own advantages and disadvantages, so considering the preferences of each user, this article will use three tools: kubeadm, k3s, and minikube to set up a Kubernetes cluster.
+For detailed comparisons of each tool, please refer to the official Kubernetes [documentation](https://kubernetes.io/ko/docs/tasks/tools/).
 
-*모두의 MLOps*에서 권장하는 툴은 **k3s**로 쿠버네티스 클러스터를 구축할 때 쉽게 할 수 있다는 장점이 있습니다.  
-만약 쿠버네티스의 모든 기능을 사용하고 노드 구성까지 활용하고 싶다면 **kubeadm**을 권장해 드립니다.  
-**minikube** 는 저희가 설명하는 컴포넌트 외에도 다른 쿠버네티스를 add-on 형식으로 쉽게 설치할 수 있다는 장점이 있습니다.
+*MLOps for ALL* recommends **k3s** as a tool that is easy to use when setting up a Kubernetes cluster.
 
-본 *모두의 MLOps*에서는 구축하게 될 MLOps 구성 요소들을 원활히 사용하기 위해, 각각의 도구를 활용해 쿠버네티스 클러스터를 구축할 때, 추가로 설정해 주어야 하는 부분이 추가되어 있습니다.
+If you want to use all the features of Kubernetes and configure the nodes, we recommend **kubeadm**.  
+**minikube** has the advantage of being able to easily install other Kubernetes in an add-on format, in addition to the components we describe.
 
-Ubuntu OS까지는 설치되어 있는 데스크탑을 k8s cluster로 구축한 뒤, 외부 클라이언트 노드에서 쿠버네티스 클러스터에 접근하는 것을 확인하는 것까지가 본 **Setup Kubernetes**단원의 범위입니다.
+In this *MLOps for ALL*, in order to use the components that will be built for MLOps smoothly, there are additional settings that must be configured when building the Kubernetes cluster using each of the tools.
 
-자세한 구축 방법은 3가지 도구마다 다르기에 다음과 같은 흐름으로 구성되어 있습니다.
+The scope of this **Setup Kubernetes** section is to build a k8s cluster on a desktop that already has Ubuntu OS installed and to confirm that external client nodes can access the Kubernetes cluster.
 
+The detailed setup procedure is composed of the following flow, as each of the three tools has its own setup procedure.
 ```text
 3. Setup Prerequisite
 4. Setup Kubernetes
@@ -35,4 +35,4 @@ Ubuntu OS까지는 설치되어 있는 데스크탑을 k8s cluster로 구축한 
 5. Setup Kubernetes Modules
 ```
 
-그럼 이제 각각의 도구를 활용해 쿠버네티스 클러스터를 구축해보겠습니다. 반드시 모든 도구를 사용해 볼 필요는 없으며, 이 중 여러분이 익숙하신 도구를 활용해주시면 충분합니다.
+Let's now build a Kubernetes cluster by using each of the tools. You don't have to use all the tools, and you can use the tools that you are familiar with.
