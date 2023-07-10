@@ -1,26 +1,26 @@
 ---
-title: "1. Python 가상환경 설치"
+title: "1. Install Python virtual environment"
 sidebar_position: 1
 ---
 
-## 파이썬 가상환경
+## Python virtual environment
 
-Python 환경을 사용하다 보면 여러 버전의 Python 환경을 사용하고 싶은 경우나, 여러 프로젝트별 패키지 버전을 따로 관리하고 싶은 경우가 발생합니다.
+When working with Python, there may be cases where you want to use multiple versions of Python environments or manage package versions separately for different projects.
 
-이처럼 Python 환경 혹은 Python Package 환경을 가상화하여 관리하는 것을 쉽게 도와주는 도구로는 pyenv, conda, virtualenv, venv 등이 존재합니다.
+To easily manage Python environments or Python package environments in a virtualized manner, there are tools available such as pyenv, conda, virtualenv, and venv.
 
-이 중 *모두의 MLOps*에서는 [pyenv](https://github.com/pyenv/pyenv)와 [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)를 설치하는 방법을 다룹니다.  
-pyenv는 Python 버전을 관리하는 것을 도와주며, pyenv-virtualenv는 pyenv의 plugin으로써 파이썬 패키지 환경을 관리하는 것을 도와줍니다.
+Among these, *모두의 MLOps* covers the installation of [pyenv](https://github.com/pyenv/pyenv) and [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv).  
+pyenv helps manage Python versions, while pyenv-virtualenv is a plugin for pyenv that helps manage Python package environments.
 
-## pyenv 설치
+## Installing pyenv
 
 ### Prerequisites
 
-운영 체제별로 Prerequisites가 다릅니다. [다음 페이지](https://github.com/pyenv/pyenv/wiki#suggested-build-environment)를 참고하여 필수 패키지들을 설치해주시기 바랍니다.
+Prerequisites vary depending on the operating system. Please refer to the [following page](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) and install the required packages accordingly.
 
-### 설치 - macOS
+### Installation - macOS
 
-1. pyenv, pyenv-virtualenv 설치
+1. Install pyenv, pyenv-virtualenv
 
 ```text
 brew update
@@ -28,9 +28,9 @@ brew install pyenv
 brew install pyenv-virtualenv
 ```
 
-2. pyenv 설정
+2. Set pyenv
 
-macOS의 경우 카탈리나 버전 이후 기본 shell이 zsh로 변경되었기 때문에 zsh을 사용하는 경우를 가정하였습니다.
+For macOS, assuming the use of zsh since the default shell has changed to zsh in Catalina version and later, setting up pyenv.
 
 ```text
 echo 'eval "$(pyenv init -)"' >> ~/.zshrc
@@ -38,7 +38,7 @@ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-pyenv 명령이 정상적으로 수행되는지 확인합니다.
+Check if the pyenv command is executed properly.
 
 ```text
 pyenv --help
@@ -83,15 +83,15 @@ See `pyenv help <command>' for information on a specific command.
 For full documentation, see: https://github.com/pyenv/pyenv#readme
 ```
 
-### 설치 - Ubuntu
+### Installation - Ubuntu
 
-1. pyenv, pyenv-virtualenv 설치
+1. Install pyenv and pyenv-virtualenv
 
 ```text
 curl https://pyenv.run | bash
 ```
 
-다음과 같은 내용이 출력되면 정상적으로 설치된 것을 의미합니다.
+If the following content is output, it means that the installation is successful.
 
 ```text
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -100,7 +100,7 @@ curl https://pyenv.run | bash
 Cloning into '/home/mlops/.pyenv'...
 r
 ...
-중략...
+Skip...
 ...
 remote: Enumerating objects: 10, done.
 remote: Counting objects: 100% (10/10), done.
@@ -121,16 +121,15 @@ eval "$(pyenv virtualenv-init -)"
 
 ```
 
-2. pyenv 설정
+2. Set pyenv
 
-기본 shell로 bash shell을 사용하는 경우를 가정하였습니다.
-bash에서 pyenv와 pyenv-virtualenv 를 사용할 수 있도록 설정합니다.
+Assuming the use of bash shell as the default shell, configure pyenv and pyenv-virtualenv to be used in bash.
 
 ```text
 sudo vi ~/.bashrc
 ```
 
-다음 문자열을 입력한 후 저장합니다.
+Enter the following string and save it.
 
 ```text
 export PATH="$HOME/.pyenv/bin:$PATH"
@@ -138,19 +137,19 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 ```
 
-shell을 restart 합니다.
+Restart the shell.
 
 ```text
 exec $SHELL
 ```
 
-pyenv 명령이 정상적으로 수행되는지 확인합니다.
+Check if the pyenv command is executed properly.
 
 ```text
 pyenv --help
 ```
 
-다음과 같은 메시지가 출력되면 정상적으로 설정된 것을 의미합니다.
+If the following message is displayed, it means that the settings have been configured correctly.
 
 ```text
 $ pyenv
@@ -193,18 +192,18 @@ See `pyenv help <command>' for information on a specific command.
 For full documentation, see: https://github.com/pyenv/pyenv#readme
 ```
 
-## pyenv 사용
+## Using pyenv
 
-### Python 버전 설치
+### Install python version
 
-`pyenv install <Python-Version>` 명령을 통해 원하는 파이썬 버전을 설치할 수 있습니다.
-이번 페이지에서는 예시로 kubeflow에서 기본으로 사용하는 파이썬 3.7.12 버전을 설치하겠습니다.
+Using the `pyenv install <Python-Version>` command, you can install the desired Python version.  
+In this page, we will install the Python 3.7.12 version that is used by Kubeflow by default as an example.
 
 ```text
 pyenv install 3.7.12
 ```
 
-정상적으로 설치되면 다음과 같은 메시지가 출력됩니다.
+If installed normally, the following message will be printed.
 
 ```text
 $ pyenv install 3.7.12
@@ -222,12 +221,11 @@ patching file Modules/_decimal/libmpdec/mpdecimal.h
 Installed Python-3.7.12 to /home/mlops/.pyenv/versions/3.7.12
 ```
 
-### Python 가상환경 생성
+### Create python virtual environment
 
-`pyenv virtualenv <Installed-Python-Version> <가상환경-이름>` 명령을 통해 원하는 파이썬 버전의 파이썬 가상환경을 생성할 수 있습니다.
+Create a Python virtual environment with the `pyenv virtualenv <Installed-Python-Version> <Virtual-Environment-Name>` command to create a Python virtual environment with the desired Python version.
 
-예시로 Python 3.7.12 버전의 `demo`라는 이름의 Python 가상환경을 생성하겠습니다.
-
+For example, let's create a Python virtual environment called `demo` with Python 3.7.12 version.
 ```text
 pyenv virtualenv 3.7.12 demo
 ```
@@ -239,17 +237,18 @@ Requirement already satisfied: setuptools in /home/mlops/.pyenv/versions/3.7.12/
 Requirement already satisfied: pip in /home/mlops/.pyenv/versions/3.7.12/envs/demo/lib/python3.7/site-packages (20.1.1)
 ```
 
-### Python 가상환경 사용
+### Activating python virtual environment
 
-`pyenv activate <가상환경 이름>` 명령을 통해 위와 같은 방식으로 생성한 가상환경을 사용할 수 있습니다.
+Use the `pyenv activate <environment name>` command to use the virtual environment created in this way.
 
-예시로는 `demo`라는 이름의 Python 가상환경을 사용하겠습니다.
+For example, we will use a Python virtual environment called `demo`.
 
 ```text
 pyenv activate demo
 ```
 
-다음과 같이 현재 가상환경의 정보가 shell의 맨 앞에 출력되는 것을 확인할 수 있습니다.
+
+You can see that the information of the current virtual environment is printed at the front of the shell.
 
   Before
 
@@ -264,9 +263,9 @@ pyenv activate demo
   (demo) mlops@ubuntu:~$ 
   ```
 
-### Python 가상환경 비활성화
+### Deactivating python virtual environment
 
-`source deactivate` 명령을 통해 현재 사용 중인 가상환경을 비활성화할 수 있습니다.
+You can deactivate the currently active virtualenv by using the command `source deactivate`.
 
 ```text
 source deactivate
