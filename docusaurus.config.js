@@ -40,7 +40,8 @@ const config = {
         id: "community",
         path: "community",
         routeBasePath: "community",
-        editUrl: "https://github.com/mlops-for-all/mlops-for-all.github.io/tree/main/",
+        editUrl:
+          "https://github.com/mlops-for-all/mlops-for-all.github.io/tree/main/",
         editCurrentVersion: true,
         sidebarPath: require.resolve("./sidebarsCommunity.js"),
         showLastUpdateAuthor: true,
@@ -133,9 +134,9 @@ const config = {
       footer: {
         style: "dark",
         logo: {
-          alt: 'MakinaRocks',
-          src: '/img/makinarocks.png',
-          href: 'https://makinarocks.ai',
+          alt: "MakinaRocks",
+          src: "/img/makinarocks.png",
+          href: "https://makinarocks.ai",
         },
         copyright: `Copyright © 2021-${new Date().getFullYear()} MakinaRocks. Built with Docusaurus.`,
       },
