@@ -23,3 +23,5 @@ v1/
 .vscode
 
 openai.env
+.envrc
+__pycache__
