@@ -23,7 +23,7 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: <a href="https://mlops-for-mle.github.io/">MLOps for MLE</a>,
+    title: <a href="https://mlops-for-mle.github.io/tutorial">MLOps for MLE</a>,
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
