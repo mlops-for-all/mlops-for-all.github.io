@@ -3,8 +3,8 @@ title: "3. Install Prerequisite"
 description: "Install docker"
 sidebar_position: 3
 date: 2021-12-13
-lastmod: 2021-12-20
-contributors: ["Jaeyeon Kim", "Jongsun Shinn", "Sangwoo Shim"]
+lastmod: 2023-09-29
+contributors: ["Jaeyeon Kim", "Jongsun Shinn", "Sangwoo Shim", "Minwook Je"]
 ---
 
 
@@ -158,7 +158,11 @@ kubectl 은 쿠버네티스 클러스터에 API를 요청할 때 사용하는 �
 
    ```bash
    curl -LO https://dl.k8s.io/release/v1.21.7/bin/linux/amd64/kubectl
+
+   # Or if you use arm64
+   curl -LO https://dl.k8s.io/release/v1.21.7/bin/linux/arm64/kubectl
    ```
+
 
 2. kubectl 을 사용할 수 있도록 파일의 권한과 위치를 변경합니다.
 
