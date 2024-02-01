@@ -14,3 +14,9 @@ sidebar_position: 1
 ### Suggestion
 
 제안점은 [Ideas](https://github.com/mlops-for-all/mlops-for-all.github.io/discussions/categories/ideas)를 통해 제안해 주시면 됩니다.
+
+### Copyright
+
+1. 본 문서를 “비상업적 목적” 사용 시 하기와 같이 출처를 반드시 표시해주세요.
+    - MLOps for ALL, https://mlops-for-all.github.io/
+2. 상업적 용도로 인용/사용/차용하고자 하는 경우 마키나락스(contact@makinarocks.ai)로 사전에 문의주시기 바랍니다.
