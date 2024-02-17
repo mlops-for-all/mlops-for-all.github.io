@@ -56,7 +56,7 @@ contributors: ["Youngcheol Jang"]
  모델 서빙(Model serving)은 상용 환경에 모델을 배포하고 서빙하기 위한 다음과 같은 기능들을 제공합니다.
 
 - 저 지연 추론과 고가용성 추론 기능 제공
-- 다양한 ML 모델 서빙 프레임워크 지원(Tensorflow Serving, TorchServe, NVIDIA Triton, Scikit-learn, XGGoost. etc)
+- 다양한 ML 모델 서빙 프레임워크 지원(Tensorflow Serving, TorchServe, NVIDIA Triton, Scikit-learn, XGBoost. etc)
 - 복잡한 형태의 추론 루틴 기능 제공, 예를 들어 전처리(preprocess) 또는 후처리(postprocess) 기능과 최종 결과를 위해 다수의 모델이 사용되는 경우를 말합니다.
 - 순간적으로 치솟는 추론 요청을 처리하기 위한 오토 스케일링(autoscaling) 기능 제공
 - 추론 요청과 추론 결과에 대한 로깅 기능 제공
