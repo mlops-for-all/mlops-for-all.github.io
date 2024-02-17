@@ -4,7 +4,7 @@ description: "Levels of MLOps"
 sidebar_position: 2
 date: 2021-12-03
 lastmod: 2022-03-05
-contributors: ["Jongseob Jeon"]
+contributors: ["Jongseob Jeon", "Chanmin Cho"]
 
 ---
 
@@ -76,6 +76,12 @@ There is a simple solution to address this blind spot. It involves checking whet
 
 To summarize, for Continuous Training (CT), both Auto Retrain and Auto Deploy are necessary. They complement each other's weaknesses and enable the model's performance to be maintained continuously.
 
+
+### Model Serving
+
+![level-1-modelserving](./img/level-1-modelserving.png)
+
+Machine learning pipelines in production continuously deploy the latest models based on new data to your prediction service. This process involves automatically deploying trained and validated models to online prediction services.
 
 
 ## Level 2: Automating the CI/CD Pipeline

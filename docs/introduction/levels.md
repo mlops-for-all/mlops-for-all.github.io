@@ -4,7 +4,7 @@ description: "Levels of MLOps"
 sidebar_position: 2
 date: 2021-12-03
 lastmod: 2022-03-05
-contributors: ["Jongseob Jeon"]
+contributors: ["Jongseob Jeon", "Chanmin Cho"]
 
 ---
 
@@ -80,6 +80,13 @@ Real World에서 데이터는 Data Shift라는 데이터의 분포가 계속해�
 이러한 Blind Spot을 해결하는 방법은 간단할 수 있습니다. 바로 모델 A에 대한 모델이 과거에 있었는지 확인하고 만약 있었다면 새로운 모델을 바로 학습하기 보다는 이 전 모델을 이용해 다시 예측을 하면 이런 Blind Spot을 해결할 수 있습니다. 이렇게 모델와 같은 메타 데이터를 이용해 모델을 자동으로 변환해주는 것을 Auto Deploy라고 합니다.
 
 정리하자면 CT를 위해서는 Auto Retraining의과 Auto Deploy 두 가지 기능이 필요합니다. 둘은 서로의 단점을 보완해 계속해서 모델의 성능을 유지할 수 있게 합니다.
+
+### Model Serving
+
+![level-1-modelserving](./img/level-1-modelserving.png)
+
+프로덕션 환경에서의 머신러닝 파이프라인은 새로운 데이터에 기반한 최신 모델을 예측 서비스에 지속적으로 배포합니다. 이 과정에서, 훈련되고 검증된 모델을 온라인 예측 서비스에 자동적으로 배포하는 작업이 포함됩니다.
+
 
 ## 2단계: CI/CD 파이프라인의 자동화
 
